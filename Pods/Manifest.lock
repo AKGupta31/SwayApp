@@ -1,0 +1,20 @@
+PODS:
+  - Alamofire (5.4.1)
+  - ViewControllerDescribable (1.0.2)
+
+DEPENDENCIES:
+  - Alamofire
+  - ViewControllerDescribable
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - ViewControllerDescribable
+
+SPEC CHECKSUMS:
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
+
+PODFILE CHECKSUM: d3c321b3c803ecaa136f1a3afec2cd4e18727160
+
+COCOAPODS: 1.10.1

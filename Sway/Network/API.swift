@@ -1,0 +1,204 @@
+//
+//  API.swift
+//  Sway
+//
+//  Created by Admin on 12/04/21.
+//
+
+
+import Foundation
+import Alamofire
+
+
+typealias SuccessCompletionBlock<T> = ( _ response: T ) -> Void
+typealias FailureCompletionBlock = ( _ error : String ) -> Void
+typealias ErrorFailureCompletionBlock = ( _ status: ResponseStatus ) -> Void
+
+/// API request method used for all requests
+struct Api {
+    
+    static var session: Session?
+
+//    static func requestNew<T: Codable>(endpoint: Endpoint, type: T.Type, successHandler: @escaping SuccessCompletionBlock<T>, failureHandler: @escaping ErrorFailureCompletionBlock) {
+//        guard let url = URL(string: endpoint.path) else {
+//            failureHandler(.init(msg: "Error in request url"))
+//            return
+//        }
+//        
+//        print("NEW REQUEST STARTED AT: \(Date())")
+//        
+//        var customRefreshRetrier: RequestRetrier & RequestAdapter = CustomRequestRetrier(endpoint: endpoint)
+//        let interceptor = Interceptor(adapter: customRefreshRetrier, retrier: customRefreshRetrier)
+//        
+//        
+//        
+//        AF.request(url,
+//                   method: endpoint.method,
+//                   parameters: endpoint.parameters,
+//                   encoding: endpoint.encoding,
+//                   headers: endpoint.header,
+//                   interceptor: interceptor)
+//            .validate()
+//            .responseJSON { (response) in
+//                
+//                print("NEW REQUEST: \n\n Now: \(Date()) \n Url: \(endpoint.path) \n Parameters: \(endpoint.parameters) \n Value: \n \(String(describing: response.value)) \n Header: \(String(describing: endpoint.header)) \n Validation Error: \(String(describing: response.error?.localizedDescription)) \n\n")
+//                
+//                switch response.result {
+//                
+//                case .failure(let error):
+//                    
+//                    let errorMessage = error.localizedDescription
+//                    failureHandler(.init(msg: errorMessage))
+//                    return
+//                    
+//                case .success(let value):
+//                    
+//                    guard let dictionary = value as? [String: Any] else {failureHandler(.init(msg: "popup_title_error".localized));return}
+//                    
+//                    do {
+//                        let apiResponse: ApiResponse = try unbox(dictionary: dictionary)
+//                        guard let status = apiResponse.status else {failureHandler(.init(msg: "popup_title_error".localized));return}
+//                        
+//                        if status.code != 200 {
+//                            handleError(status: status, failureHandler: failureHandler)
+//                        } else {
+//                            //call success handler for requests that receive data = nil by nature(login, register, etc)
+//                            
+//                            if !apiResponse.jwt.isEmpty {
+//                                SharedData.shared.token = apiResponse.jwt
+//                            }
+//                            if T.self == EmptyResponseObject.self,
+//                               let emptyObject = EmptyResponseObject() as? T {
+//                                successHandler(emptyObject)
+//                            }else {
+//                                //handle decodable
+//                                handleSuccessNew(type: type, response: response, successHandler: successHandler, failureHandler: failureHandler)
+//                            }
+//                        }
+//                        
+//                    } catch (let error) {
+//                        failureHandler(.init(msg: error.localizedDescription))
+//                    }
+//                }
+//            }
+//    }
+    /// Handles status code errors, convert errors, validation errors, expired token error
+    static private func handleError(status: ResponseStatus, failureHandler: @escaping ErrorFailureCompletionBlock) {
+        
+        if status.code == 404 {
+            let error = "Error URL Not Found: \(String(describing: status.msg))"
+            print(error)
+            failureHandler(.init(code: status.code, msg: error))
+        } else {
+            failureHandler(status)
+        }
+    }
+    
+    /// Handles status code errors, convert errors, validation errors, expired token error
+    static private func handleErrorNew(status: ResponseStatus, failureHandler: @escaping FailureCompletionBlock) {
+        
+        if status.code == 404 {
+            let error = "Error URL Not Found: \(String(describing: status.msg))"
+            print(error)
+            failureHandler(.init(error.localized))
+            //            failureHandler(.init(code: status.code, msg: error))
+        } else {
+            failureHandler(status.msg)
+        }
+    }
+    
+  
+    
+    /// Parses response to the generic requested type
+    static private func handleSuccessNew<T: Codable>(type: T.Type, response: DataResponse<Any, AFError>, successHandler: @escaping SuccessCompletionBlock<T>, failureHandler: @escaping ErrorFailureCompletionBlock) {
+        if let value = response.data {
+            do {
+                let decodableObject = try JSONDecoder().decode(T.self, from: value)
+                    successHandler(decodableObject)
+                }catch {
+                    failureHandler(.init(msg: error.localizedDescription))
+                }
+        }else {
+            failureHandler(.init(msg: "Unable to get body data"))
+        }
+    }
+
+        static func multipartFormData(endPoint:Endpoint, params: [String: Any],success: @escaping (_ response: Any) -> Void, failure: @escaping (_ error: String) -> Void, connectionFailed: @escaping (_ error: String) -> Void) {
+            
+            guard let url = URL(string: endPoint.path) else {
+                failure("Error in request url")
+                //            failureHandler(.init("Error in request url"))
+                return
+            }
+            
+            let request = try! URLRequest(url: url,method: endPoint.method)
+            AF.upload(multipartFormData: { multiPart in
+                for (key, value) in params {
+                    if let temp = value as? String {
+                        multiPart.append(temp.data(using: .utf8)!, withName: key)
+                    }else if let temp = value as? Int {
+                        multiPart.append("\(temp)".data(using: .utf8)!, withName: key)
+                    }else if let temp = value as? NSArray {
+                        temp.forEach({ element in
+                            let keyObj = key + "[]"
+                            if let string = element as? String {
+                                multiPart.append(string.data(using: .utf8)!, withName: keyObj)
+                            } else
+                            if let num = element as? Int {
+                                let value = "\(num)"
+                                multiPart.append(value.data(using: .utf8)!, withName: keyObj)
+                            }
+                        })
+                    }else if let data = value as? Data {
+                        let randomStr = String.randomString(length: 16)
+                        multiPart.append(data, withName: key, fileName: key + randomStr + ".jpg", mimeType: "image/jpeg")
+                    }
+                }
+            }, with:request)
+            .uploadProgress(queue: .main, closure: { progress in
+                //Current upload progress of file
+                print("Upload Progress: \(progress.fractionCompleted)")
+            })
+            .responseJSON(completionHandler: { response in
+                //Do what ever you want to do with response
+                print("NEW REQUEST: \n\n Now: \(Date()) \n Url: \(endPoint.path) \n Parameters: \(endPoint.parameters) \n Value: \n \(String(describing: response.value)) \n Header: \(String(describing: endPoint.header)) \n Validation Error: \(String(describing: response.error?.localizedDescription)) \n\n")
+                
+                switch response.result {
+                
+                case .failure(let error):
+                    
+                    let errorMessage = error.localizedDescription
+                    failure(errorMessage)
+                    return
+                    
+                case .success(_):
+                    debugPrint(response)
+                    if response.response?.statusCode == 200 {
+                        if let value = response.data {
+                            
+                            if let jsonData = try? JSONSerialization.jsonObject(with: value, options: .fragmentsAllowed) {
+                                print(jsonData)
+                                //                            print("Response: \n",String(data: jsonData, encoding: String.Encoding.utf8) ?? "nil")
+                                success(jsonData as Any)
+                            }
+                            //                        success(value as Any)
+                        }
+                    } else {
+                        if let val = response.data {
+                            let res = val as AnyObject
+                            if let msg = res.object(forKey: "Message") as? String{
+                                failure(msg)
+                            }else {
+                                failure("")
+                            }
+                        }else {
+                            failure("Invalid response")
+                            print("didn't get value from server")
+                        }
+                        
+                    }
+                    
+                }
+            })
+        }
+    }

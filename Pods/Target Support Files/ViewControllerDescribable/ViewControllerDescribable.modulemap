@@ -1,0 +1,6 @@
+framework module ViewControllerDescribable {
+  umbrella header "ViewControllerDescribable-umbrella.h"
+
+  export *
+  module * { export * }
+}

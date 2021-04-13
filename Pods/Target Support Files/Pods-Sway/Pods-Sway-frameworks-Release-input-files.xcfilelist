@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-Sway/Pods-Sway-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/ViewControllerDescribable/ViewControllerDescribable.framework
