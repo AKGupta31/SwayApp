@@ -17,6 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        openSplashScreen {
+            
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,6 +50,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+
+}
+
+extension SceneDelegate {
+    private func openSplashScreen(completion: @escaping () -> Void) {
+        self.window?.rootViewController = IntroViewController.instantiated()
+    }
 
 }
 

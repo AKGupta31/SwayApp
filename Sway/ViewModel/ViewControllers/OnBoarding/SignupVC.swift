@@ -15,7 +15,8 @@ class SignupVC: BaseViewController {
 
         lblLogin.setupLabelWithTappableArea(regularText: "Already have an account?", tappableText: "Log in")
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnLabel))
-        self.view.addGestureRecognizer(tapGestureRecognizer)
+        self.lblLogin.isUserInteractionEnabled = true
+        self.lblLogin.addGestureRecognizer(tapGestureRecognizer)
         // Do any additional setup after loading the view.
     }
     

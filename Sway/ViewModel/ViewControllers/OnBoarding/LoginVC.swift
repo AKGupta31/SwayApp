@@ -18,6 +18,11 @@ class LoginVC: BaseViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func actionLoginWithEmail(_ sender: UIButton) {
+        self.navigationController?.push(LoginViaCredentialsVC.self)
+    }
+    
+    
 
 }
 

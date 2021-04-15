@@ -8,5 +8,6 @@ target 'Sway' do
   # Pods for Sway
 pod 'Alamofire'
 pod 'ViewControllerDescribable'
+pod 'SkyFloatingLabelTextField', '~> 3.0'
 
 end

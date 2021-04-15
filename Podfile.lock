@@ -1,20 +1,24 @@
 PODS:
   - Alamofire (5.4.1)
+  - SkyFloatingLabelTextField (3.8.0)
   - ViewControllerDescribable (1.0.2)
 
 DEPENDENCIES:
   - Alamofire
+  - SkyFloatingLabelTextField (~> 3.0)
   - ViewControllerDescribable
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - SkyFloatingLabelTextField
     - ViewControllerDescribable
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: d3c321b3c803ecaa136f1a3afec2cd4e18727160
+PODFILE CHECKSUM: 085fd6327b13739c11872be3fd156f3a27f51c92
 
 COCOAPODS: 1.10.1
