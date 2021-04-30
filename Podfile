@@ -17,6 +17,7 @@ pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'SVProgressHUD'
 pod 'Toast-Swift', '~> 5.0.1'
+#pod 'OTPFieldView'
 
 
 end

@@ -22,6 +22,13 @@ struct SocialSignupResponse : Codable {
         case signupModel = "data"
     }
 
+    init(statusCode:Int,message:String) {
+        self.statusCode = statusCode
+        self.message = message
+        self.type = nil
+        self.signupModel = nil
+    }
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         statusCode = try values.decodeIfPresent(Int.self, forKey: .statusCode)

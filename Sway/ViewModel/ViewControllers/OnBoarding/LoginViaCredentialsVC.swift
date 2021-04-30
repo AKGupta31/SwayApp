@@ -10,6 +10,11 @@ import ViewControllerDescribable
 import Toast_Swift
 
 import SkyFloatingLabelTextField
+
+enum LoginResponseTypes:String {
+    case emailNotVerified = "EMAIL_NOT_VERIFIED"
+}
+
 class LoginViaCredentialsVC: BaseViewController {
     @IBOutlet weak var passwordField: CustomFloatingLabelField!
     @IBOutlet weak var btnPasswordEye: UIButton!
@@ -42,18 +47,32 @@ class LoginViaCredentialsVC: BaseViewController {
     }
     
     @IBAction func actionLogin(_ sender: UIButton) {
-        
+       
         if let message = isValidFields(),message.isEmpty == false{
             AlertView.showAlert(with: "Opps!!!", message: message)
             return
         }
         guard let email = emailField.text?.trimmingCharacters(in: .whitespaces) else {return}
         guard let password = passwordField.text else {return}
-        LoginRegisterEndpoint.login(with: email, password: password) { (response) in
+        showLoader()
+        LoginRegisterEndpoint.login(with: email, password: password) {[weak self]
+            (response) in
+            self?.hideLoader()
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300{
-                self.view.makeToast("This is a piece of toast", duration: 3.0, position: .top)
+                self?.view.makeToast("Login Success", duration: 3.0, position: .center)
             }else{
-                AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                //failures cases
+                if response.type == LoginResponseTypes.emailNotVerified.rawValue {
+                    self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
+                        vc.email = email
+                        vc.password = password
+                    })
+//                    self.navigationController?.push(VerifyOtpVC.self)
+                }else {
+                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                }
+                
+                
             }
         } failure: { (status) in
             AlertView.showAlert(with: "Error!!!", message: status.msg)
@@ -61,6 +80,11 @@ class LoginViaCredentialsVC: BaseViewController {
 
         
     }
+    
+    @IBAction func actionBack(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     
     func isValidFields() -> String?{
         guard let email = emailField.text?.trimmingCharacters(in: .whitespaces) else {return "Email should not be empty"}

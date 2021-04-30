@@ -13,6 +13,7 @@ enum Endpoint {
     case login(email:String,password:String)
     case socialRegister(socialId: String, email: String, firstName: String,lastName:String, type: SocialMediaType, profilePicture: String)
     case socialLogin(type:SocialMediaType,socialId:String)
+    case verifyEmail(email:String,otp:String)
     
     
     /// GET, POST or PUT method for each request
@@ -20,6 +21,8 @@ enum Endpoint {
         switch self {
         case .login,.socialRegister,.socialLogin:
             return .post
+        case .verifyEmail:
+            return .get
         }
     }
     
@@ -41,6 +44,8 @@ enum Endpoint {
             return Constants.Networking.kBaseUrl + interMediate + "login"
         case .socialRegister,.socialLogin:
             return Constants.Networking.kBaseUrl + interMediate + "social-signup"
+        case .verifyEmail:
+            return Constants.Networking.kBaseUrl + interMediate + "verify-email"
         }
     }
     
@@ -53,6 +58,8 @@ enum Endpoint {
             return ["socialLoginType":type.rawValue,"socialId":socialId,"email":email,"firstName":firstName,"lastName":lastName,"profilePicture":profilePicture,"deviceId":DataManager.shared.deviceId,"deviceToken":DataManager.shared.deviceToken]
         case .socialLogin(let type,let socialId):
             return ["socialLoginType":type.rawValue,"socialId":socialId,"deviceId":DataManager.shared.deviceId,"deviceToken":DataManager.shared.deviceToken]
+        case .verifyEmail(let email,let otp):
+            return ["email":email,"otp":otp,"deviceId":DataManager.shared.deviceId,"deviceToken":DataManager.shared.deviceToken]
         }
     }
     
@@ -61,6 +68,9 @@ enum Endpoint {
         let headers = ["platform":"2","timezone":"0","api_key":"1234","language":"en"]
         switch self {
         case .socialRegister,.socialLogin,.login:
+            return HTTPHeaders(headers)
+        case .verifyEmail:
+//            let header = ["platform":"2","timezone":"0","api_key":"1234"]
             return HTTPHeaders(headers)
         
         }

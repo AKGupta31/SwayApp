@@ -56,12 +56,13 @@ extension GoogleSignInManager {
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300 {
                 DataManager.shared.isLoggedIn = true
                 UserManager.saveSocialMediaCredentials(type: .google, token: accessToken, socialId: idToken, userId: response.signupModel?.userId ?? "")
-                self?.responseCallback?(response)
+                self?.responseCallback?(true, response)
             }else {
                 //failure
                 LoginRegisterEndpoint.socialRegister(socialId: userId, email: email, firstName: user.profile.givenName, lastName: user.profile.familyName, type: .google,image:user.profile.imageURL(withDimension: 0)!.path) { (response) in
                     self?.handleResponse(response: response)
                 } failure: { (error) in
+                    GIDSignIn.sharedInstance()?.signOut()
                     DataManager.shared.isLoggedIn = false
                     NotificationCenter.default.post(Notification(name: Constants.Notifications.hideLoader))
                     AlertView.showAlert(with: "Error!!!", message: error.msg)
@@ -72,6 +73,7 @@ extension GoogleSignInManager {
             LoginRegisterEndpoint.socialRegister(socialId: userId, email: email, firstName: user.profile.givenName, lastName: user.profile.familyName, type: .google,image: user.profile.imageURL(withDimension: 0)!.path) { [weak self](response) in
                 self?.handleResponse(response: response)
             } failure: { (error) in
+                GIDSignIn.sharedInstance()?.signOut()
                 DataManager.shared.isLoggedIn = false
                 NotificationCenter.default.post(Notification(name: Constants.Notifications.hideLoader))
                 AlertView.showAlert(with: "Error!!!", message: status.msg)
@@ -81,7 +83,7 @@ extension GoogleSignInManager {
     
     func handleResponse(response:SocialSignupResponse){
         if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300 {
-            self.responseCallback?(response)
+            self.responseCallback?(true,response)
         }else {
             DataManager.shared.isLoggedIn = false
             NotificationCenter.default.post(Notification(name: Constants.Notifications.hideLoader))

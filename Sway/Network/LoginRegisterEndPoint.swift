@@ -35,6 +35,10 @@ class LoginRegisterEndpoint {
     static func login(with email: String,password:String, success: @escaping SuccessCompletionBlock<LoginResponse>, failure: @escaping ErrorFailureCompletionBlock) {
         Api.requestNew(endpoint: .login(email: email, password: password), type: LoginResponse.self, successHandler: success, failureHandler: failure)
     }
+    
+    static func verifyEmail(with email: String,otp:String, success: @escaping SuccessCompletionBlock<LoginResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .verifyEmail(email: email, otp: otp), type: LoginResponse.self, successHandler: success, failureHandler: failure)
+    }
 }
     
     

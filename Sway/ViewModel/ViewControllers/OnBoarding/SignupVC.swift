@@ -26,23 +26,49 @@ class SignupVC: BaseViewController {
     
     @IBAction func actionAppleSignup(_ sender: UIButton) {
         if #available(iOS 13.0, *) {
-            appleManager.logIn(from: self)
+            showLoader()
+            appleManager.logIn(from: self) { [weak self](isSuccess, response) in
+                self?.hideLoader()
+                if isSuccess {
+                    self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
+                }else {
+                    //show error
+                    AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+                }
+            }
         } else {
             // Fallback on earlier versions
         }
     }
     
     @IBAction func actionGoogleSignIn(_ sender: UIButton) {
-        GoogleSignInManager.shared.signIn(presentingVC: self) { (response) in
+        GoogleSignInManager.shared.signIn(presentingVC: self) { (isSuccess,response) in
             self.hideLoader()
+            if isSuccess {
+                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
+            }else {
+                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+            }
         }
     }
     
     @IBAction func actionFacebookSignup(_ sender: UIButton) {
-        FacebookLoginManager.shared.login(viewController: self) { (response) in
+        showLoader()
+        FacebookLoginManager.shared.login(viewController: self) { (isSuccess,response) in
             self.hideLoader()
+            if isSuccess {
+                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
+            }else {
+                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+            }
         }
     }
+    
+    @IBAction func actionEmail(_ sender: UIButton) {
+        self.view.makeToast("This feature has not been implemented yet", duration: 3.0, position: .center)
+//        self.navigationController?.push(VerifyOtpVC.self)
+    }
+    
     
     
     @objc private func tappedOnLabel(gesture: UITapGestureRecognizer) {

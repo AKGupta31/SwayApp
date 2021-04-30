@@ -9,7 +9,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-typealias LoginSuccessBlock = ((SocialSignupResponse?) -> ())
+typealias LoginSuccessBlock = ((_ success:Bool,SocialSignupResponse?) -> ())
 
 class FacebookLoginManager {
     
@@ -37,7 +37,7 @@ class FacebookLoginManager {
 //                 try to login with this token to the backend
                 LoginRegisterEndpoint.socialLogin(socialId: accessToken!.userID, type: .facebook) {[weak self] (response) in
                     if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300 {
-                        self?.responseCallback?(response)
+                        self?.responseCallback?(true,response)
                     }else {
                         self?.requestEmailAndNameFromFB(accessToken: accessToken!)
                     }
@@ -67,7 +67,7 @@ class FacebookLoginManager {
                     
                     LoginRegisterEndpoint.socialRegister(socialId: socialId, email: email, firstName: firstName, lastName: lastName, type: .facebook, image: image) { [weak self](response) in
                         print(response)
-                        self?.responseCallback?(response)
+                        self?.responseCallback?(true,response)
                     } failure: { (status) in
                         print(status)
                         AlertView.showAlert(with: "Error!!!", message: status.msg)

@@ -29,15 +29,30 @@ class LoginVC: BaseViewController {
     
     @IBAction func actionLoginWithApple(_ sender: UIButton) {
         if #available(iOS 13.0, *) {
-            appleManager.logIn(from: self)
+            showLoader()
+            appleManager.logIn(from: self) { [weak self](isSuccess, response) in
+                self?.hideLoader()
+                if isSuccess {
+                    self?.view.makeToast("Login Success", duration: 3.0, position: .center)
+                }else {
+                    AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+                }
+            }
         } else {
             // Fallback on earlier versions
         }
     }
     
     @IBAction func actionFacebook(_ sender: UIButton) {
-        FacebookLoginManager.shared.login(viewController: self) { (response) in
+        FacebookLoginManager.shared.login(viewController: self) { (isSuccess,response) in
             self.hideLoader()
+            if isSuccess {
+                self.view.makeToast("Login Success", duration: 3.0, position: .center)
+            }else {
+                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+            }
+           
+            
         }
     }
     

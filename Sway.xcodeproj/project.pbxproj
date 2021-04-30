@@ -76,6 +76,9 @@
 		84E20C702625F65A002DBAF5 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84E20C6E2625F65A002DBAF5 /* CircularStd-Bold.otf */; };
 		84E20C712625F65A002DBAF5 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84E20C6F2625F65A002DBAF5 /* CircularStd-Book.otf */; };
 		84E9CAE3263A7C9700FFEE9A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CAE2263A7C9700FFEE9A /* AlertView.swift */; };
+		84E9CB78263BF52E00FFEE9A /* VerifyOtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */; };
+		84E9CC0F263C11D400FFEE9A /* OTPFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CC0D263C11D400FFEE9A /* OTPFieldView.swift */; };
+		84E9CC10263C11D400FFEE9A /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +154,9 @@
 		84E20C6E2625F65A002DBAF5 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
 		84E20C6F2625F65A002DBAF5 /* CircularStd-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Book.otf"; sourceTree = "<group>"; };
 		84E9CAE2263A7C9700FFEE9A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOtpVC.swift; sourceTree = "<group>"; };
+		84E9CC0D263C11D400FFEE9A /* OTPFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
+		84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
 		8DEECC3064A268C35B7B4764 /* Pods-Sway.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sway.release.xcconfig"; path = "Target Support Files/Pods-Sway/Pods-Sway.release.xcconfig"; sourceTree = "<group>"; };
 		C42456E3907844C9B1664FEC /* Pods-Sway.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sway.debug.xcconfig"; path = "Target Support Files/Pods-Sway/Pods-Sway.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -399,6 +405,7 @@
 		84595B8E262D57D5009605F5 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				84E9CC0C263C11AB00FFEE9A /* OtpFieldView */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -412,6 +419,7 @@
 				843B99392628026900DA1681 /* Register1VC.swift */,
 				843B993C26281C9500DA1681 /* IntroViewController.swift */,
 				8498092E2637BEFE00E546A3 /* GuestNewsFeed.swift */,
+				84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -437,6 +445,15 @@
 				84E20C6F2625F65A002DBAF5 /* CircularStd-Book.otf */,
 			);
 			path = CircularStd;
+			sourceTree = "<group>";
+		};
+		84E9CC0C263C11AB00FFEE9A /* OtpFieldView */ = {
+			isa = PBXGroup;
+			children = (
+				84E9CC0D263C11D400FFEE9A /* OTPFieldView.swift */,
+				84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */,
+			);
+			path = OtpFieldView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -595,6 +612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84E9CC0F263C11D400FFEE9A /* OTPFieldView.swift in Sources */,
 				84595BBA262DB125009605F5 /* Utility.swift in Sources */,
 				84E20C5A2625D644002DBAF5 /* SignupVC.swift in Sources */,
 				84E20C6B2625DDED002DBAF5 /* CustomView.swift in Sources */,
@@ -623,6 +641,7 @@
 				84595B8B262D5755009605F5 /* DataManager.swift in Sources */,
 				84347060262478C100566FB2 /* EndPoint.swift in Sources */,
 				84595B87262D5730009605F5 /* SocialLoginManager.swift in Sources */,
+				84E9CC10263C11D400FFEE9A /* OTPTextField.swift in Sources */,
 				84595BA3262D9F58009605F5 /* KeyChain.swift in Sources */,
 				8498092F2637BEFE00E546A3 /* GuestNewsFeed.swift in Sources */,
 				8453F7B326272D2700EC9B83 /* CustomButton.swift in Sources */,
@@ -636,6 +655,7 @@
 				8434706926247C5400566FB2 /* String+Ext.swift in Sources */,
 				84595BA0262D9F35009605F5 /* UserDataKeyChain.swift in Sources */,
 				8434705A2624780100566FB2 /* LoginRegisterEndPoint.swift in Sources */,
+				84E9CB78263BF52E00FFEE9A /* VerifyOtpVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,10 +807,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A86RHVT47W;
 				INFOPLIST_FILE = Sway/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thumbsplit.Thumbsplitlive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -808,10 +830,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A86RHVT47W;
 				INFOPLIST_FILE = Sway/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thumbsplit.Thumbsplitlive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
