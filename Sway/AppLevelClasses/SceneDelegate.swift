@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -17,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        (UIApplication.shared.delegate as? AppDelegate)?.window = window
         openSplashScreen {
             
         }
@@ -55,7 +57,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     private func openSplashScreen(completion: @escaping () -> Void) {
-        self.window?.rootViewController = IntroViewController.instantiated()
+        let rootVC = UINavigationController(rootViewController: IntroViewController.instantiated())
+        rootVC.setNavigationBarHidden(true, animated: false)
+        self.window?.rootViewController = rootVC
     }
 
 }

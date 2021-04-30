@@ -11,6 +11,11 @@ import ViewControllerDescribable
 class LoginVC: BaseViewController {
     @IBOutlet weak var lblSignup: UILabel!
     
+    @available(iOS 13.0, *)
+    private lazy var appleManager: AppleLoginManager = {
+        return AppleLoginManager()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,8 +27,28 @@ class LoginVC: BaseViewController {
         self.navigationController?.push(LoginViaCredentialsVC.self)
     }
     
+    @IBAction func actionLoginWithApple(_ sender: UIButton) {
+        if #available(iOS 13.0, *) {
+            appleManager.logIn(from: self)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
     
-
+    @IBAction func actionFacebook(_ sender: UIButton) {
+        FacebookLoginManager.shared.login(viewController: self) { (response) in
+            self.hideLoader()
+        }
+    }
+    
+    @IBAction func actionCross(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    @IBAction func actionBack(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
 }
 
 

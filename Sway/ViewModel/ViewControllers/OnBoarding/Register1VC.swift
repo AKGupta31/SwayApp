@@ -25,7 +25,10 @@ class Register1VC: BaseViewController {
         // Do any additional setup after loading the view.
     }
    
-
+    @IBAction func actionCross(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 
 }
 

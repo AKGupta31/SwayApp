@@ -22,4 +22,11 @@ extension String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
+    
+    func startsWith(string: String) -> Bool {
+        guard let range = range(of: string, options:[.caseInsensitive]) else {
+            return false
+        }
+        return range.lowerBound == startIndex
+    }
 }

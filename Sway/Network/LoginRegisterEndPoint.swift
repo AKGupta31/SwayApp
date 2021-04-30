@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum SocialMediaType: String {
+    case facebook = "FACEBOOK"
+    case google = "GOOGLE"
+    case apple = "APPLE"
+}
+
+
 class LoginRegisterEndpoint {
     
     /* Reference Function
@@ -16,6 +23,18 @@ class LoginRegisterEndpoint {
         Api.requestNew(endpoint: Endpoint.login(email: email, password: password, isForRefreshToken: isForRefreshToken), type: LoginResponse.self, successHandler: success, failureHandler: failure)
     }
  */
+    
+    static func socialRegister(socialId: String, email: String, firstName:String,lastName:String, type: SocialMediaType, image: String, success: @escaping SuccessCompletionBlock<SocialSignupResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .socialRegister(socialId: socialId, email: email, firstName: firstName, lastName: lastName, type: type, profilePicture: image), type: SocialSignupResponse.self, successHandler: success, failureHandler: failure)
+    }
+    
+    static func socialLogin(socialId: String,type:SocialMediaType, success: @escaping SuccessCompletionBlock<SocialSignupResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .socialLogin(type: type, socialId: socialId), type: SocialSignupResponse.self, successHandler: success, failureHandler: failure)
+    }
+    
+    static func login(with email: String,password:String, success: @escaping SuccessCompletionBlock<LoginResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .login(email: email, password: password), type: LoginResponse.self, successHandler: success, failureHandler: failure)
+    }
 }
     
     

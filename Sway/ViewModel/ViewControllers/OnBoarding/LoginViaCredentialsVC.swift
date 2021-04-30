@@ -7,6 +7,7 @@
 
 import UIKit
 import ViewControllerDescribable
+import Toast_Swift
 
 import SkyFloatingLabelTextField
 class LoginViaCredentialsVC: BaseViewController {
@@ -17,8 +18,6 @@ class LoginViaCredentialsVC: BaseViewController {
     @IBOutlet weak var emailField: SkyFloatingLabelTextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         signupLabel.setupLabelWithTappableArea(regularText: "Don’t have an account?", tappableText: "Sign up")
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnLabel))
         self.signupLabel.addGestureRecognizer(tapGestureRecognizer)
@@ -42,6 +41,38 @@ class LoginViaCredentialsVC: BaseViewController {
         }
     }
     
+    @IBAction func actionLogin(_ sender: UIButton) {
+        
+        if let message = isValidFields(),message.isEmpty == false{
+            AlertView.showAlert(with: "Opps!!!", message: message)
+            return
+        }
+        guard let email = emailField.text?.trimmingCharacters(in: .whitespaces) else {return}
+        guard let password = passwordField.text else {return}
+        LoginRegisterEndpoint.login(with: email, password: password) { (response) in
+            if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300{
+                self.view.makeToast("This is a piece of toast", duration: 3.0, position: .top)
+            }else{
+                AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+            }
+        } failure: { (status) in
+            AlertView.showAlert(with: "Error!!!", message: status.msg)
+        }
+
+        
+    }
+    
+    func isValidFields() -> String?{
+        guard let email = emailField.text?.trimmingCharacters(in: .whitespaces) else {return "Email should not be empty"}
+        guard let password = passwordField.text else {return "Password should not be empty"}
+        var message :String? = nil
+        if !Utility.isValidEmailAddress(email: email){
+            message = "log_in_validation_error_email_invalid".localized
+        }else if !Utility.isValidPassword(password: password) {
+            message = "log_in_validation_error_password_invalid".localized
+        }
+        return message
+    }
     
 }
 

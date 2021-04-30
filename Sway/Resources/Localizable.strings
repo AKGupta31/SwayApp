@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  Sway
+
+  Created by Admin on 19/04/21.
+  
+*/
+
+"log_in_sign_in" = "Sign In";
+"log_in_sign_up" = "Sign Up";
+"log_in_validation_error_email_invalid" = "This email address is invalid.";
+"log_in_validation_error_password_invalid" = "This password is too short.";
