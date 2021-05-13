@@ -55,7 +55,10 @@ extension GoogleSignInManager {
         LoginRegisterEndpoint.socialLogin(socialId: userId, type: .google) { [weak self](response) in
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300 {
                 DataManager.shared.isLoggedIn = true
-                UserManager.saveSocialMediaCredentials(type: .google, token: accessToken, socialId: idToken, userId: response.signupModel?.userId ?? "")
+                DataManager.shared.loggedInUser = response.data
+                SwayUserDefaults.shared.loggedInUser = response.data
+                
+                UserManager.saveSocialMediaCredentials(type: .google, token: accessToken, socialId: idToken, userId: response.data?._id ?? "")
                 self?.responseCallback?(true, response)
             }else {
                 //failure

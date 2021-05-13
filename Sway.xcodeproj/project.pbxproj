@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3EB2C82B1704CE8607E3479A /* Pods_Sway.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C80A2425B47D718A9E515A5 /* Pods_Sway.framework */; };
+		842364E82642FD5E001DA7E6 /* AWSUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842364E72642FD5E001DA7E6 /* AWSUploadController.swift */; };
+		842365F22643CD33001DA7E6 /* VerifyOtpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842365F12643CD33001DA7E6 /* VerifyOtpResponse.swift */; };
+		842365F52643FF80001DA7E6 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842365F42643FF80001DA7E6 /* HomeVC.swift */; };
+		842365F826441649001DA7E6 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842365F726441649001DA7E6 /* UserDefaults.swift */; };
 		843423FE26314B480025700B /* GoogleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843423FD26314B480025700B /* GoogleSignInManager.swift */; };
 		84342403263176040025700B /* FacebookLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84342402263176040025700B /* FacebookLoginManager.swift */; };
 		84347030262470D500566FB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434702F262470D500566FB2 /* AppDelegate.swift */; };
@@ -26,6 +30,9 @@
 		843B993A2628026900DA1681 /* Register1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B99392628026900DA1681 /* Register1VC.swift */; };
 		843B993D26281C9500DA1681 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B993C26281C9500DA1681 /* IntroViewController.swift */; };
 		843B9940262820CD00DA1681 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 843B993F262820CC00DA1681 /* CircularStd-Medium.otf */; };
+		8444ADAF2641B43800D54580 /* SetupPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444ADAE2641B43800D54580 /* SetupPasswordVC.swift */; };
+		8444ADB22642BC3500D54580 /* SetProfilePictureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444ADB12642BC3500D54580 /* SetProfilePictureVC.swift */; };
+		844D4DD826417999006DF6F2 /* EmptyDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D4DD726417999006DF6F2 /* EmptyDataResponse.swift */; };
 		8453011926388CF200FD31C7 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8453011826388CF200FD31C7 /* LoginResponse.swift */; };
 		8453B3902625D32A002EB22F /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8453B37E2625D32A002EB22F /* Poppins-ExtraBold.ttf */; };
 		8453B3912625D32A002EB22F /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8453B37F2625D32A002EB22F /* Poppins-BoldItalic.ttf */; };
@@ -58,8 +65,16 @@
 		84595BA9262DA3D0009605F5 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84595BA8262DA3D0009605F5 /* UserManager.swift */; };
 		84595BBA262DB125009605F5 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84595BB9262DB125009605F5 /* Utility.swift */; };
 		84595BBD262DB2DB009605F5 /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84595BBC262DB2DB009605F5 /* UIApplication+Ext.swift */; };
+		8459E8DA26458A7F00A7DB8D /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459E8D926458A7F00A7DB8D /* ForgotPasswordVC.swift */; };
+		8459E8DD2648EE0700A7DB8D /* PasswordChangeSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459E8DC2648EE0600A7DB8D /* PasswordChangeSuccessVC.swift */; };
+		847D64ED264BB7F5006E8F95 /* GoalOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D64EC264BB7F5006E8F95 /* GoalOptionView.swift */; };
+		847D64F0264BBE7E006E8F95 /* SelectGoalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D64EF264BBE7E006E8F95 /* SelectGoalVC.swift */; };
+		847D64F3264BDA32006E8F95 /* OnboardingEndVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D64F2264BDA32006E8F95 /* OnboardingEndVC.swift */; };
+		847D64F6264BEF61006E8F95 /* OnboardingStartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D64F5264BEF60006E8F95 /* OnboardingStartVC.swift */; };
 		848DCFBD2626DA2B00B0E934 /* LoginViaCredentialsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848DCFBC2626DA2B00B0E934 /* LoginViaCredentialsVC.swift */; };
 		848DCFC02626DC8600B0E934 /* CustomFloatingLabelField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848DCFBF2626DC8600B0E934 /* CustomFloatingLabelField.swift */; };
+		84971163264A40E900BB09DE /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84971162264A40E900BB09DE /* Onboarding.storyboard */; };
+		84971167264A415D00BB09DE /* HowOldVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84971166264A415D00BB09DE /* HowOldVC.swift */; };
 		8498092F2637BEFE00E546A3 /* GuestNewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8498092E2637BEFE00E546A3 /* GuestNewsFeed.swift */; };
 		84AC57AC262EECDB00F8BD76 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AC57AB262EECDB00F8BD76 /* GoogleService-Info.plist */; };
 		84C6D2362625F8F600DD2CBC /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C6D2352625F8F600DD2CBC /* UILabel+Ext.swift */; };
@@ -83,6 +98,10 @@
 
 /* Begin PBXFileReference section */
 		7C80A2425B47D718A9E515A5 /* Pods_Sway.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sway.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		842364E72642FD5E001DA7E6 /* AWSUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSUploadController.swift; sourceTree = "<group>"; };
+		842365F12643CD33001DA7E6 /* VerifyOtpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOtpResponse.swift; sourceTree = "<group>"; };
+		842365F42643FF80001DA7E6 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		842365F726441649001DA7E6 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		843423FD26314B480025700B /* GoogleSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInManager.swift; sourceTree = "<group>"; };
 		84342402263176040025700B /* FacebookLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginManager.swift; sourceTree = "<group>"; };
 		8434702C262470D500566FB2 /* Sway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sway.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +122,9 @@
 		843B99392628026900DA1681 /* Register1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register1VC.swift; sourceTree = "<group>"; };
 		843B993C26281C9500DA1681 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		843B993F262820CC00DA1681 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
+		8444ADAE2641B43800D54580 /* SetupPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupPasswordVC.swift; sourceTree = "<group>"; };
+		8444ADB12642BC3500D54580 /* SetProfilePictureVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfilePictureVC.swift; sourceTree = "<group>"; };
+		844D4DD726417999006DF6F2 /* EmptyDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataResponse.swift; sourceTree = "<group>"; };
 		8453011826388CF200FD31C7 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		8453B37E2625D32A002EB22F /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
 		8453B37F2625D32A002EB22F /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -136,8 +158,16 @@
 		84595BB7262DB030009605F5 /* Sway.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sway.entitlements; sourceTree = "<group>"; };
 		84595BB9262DB125009605F5 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		84595BBC262DB2DB009605F5 /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
+		8459E8D926458A7F00A7DB8D /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
+		8459E8DC2648EE0600A7DB8D /* PasswordChangeSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeSuccessVC.swift; sourceTree = "<group>"; };
+		847D64EC264BB7F5006E8F95 /* GoalOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOptionView.swift; sourceTree = "<group>"; };
+		847D64EF264BBE7E006E8F95 /* SelectGoalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGoalVC.swift; sourceTree = "<group>"; };
+		847D64F2264BDA32006E8F95 /* OnboardingEndVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingEndVC.swift; sourceTree = "<group>"; };
+		847D64F5264BEF60006E8F95 /* OnboardingStartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStartVC.swift; sourceTree = "<group>"; };
 		848DCFBC2626DA2B00B0E934 /* LoginViaCredentialsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViaCredentialsVC.swift; sourceTree = "<group>"; };
 		848DCFBF2626DC8600B0E934 /* CustomFloatingLabelField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFloatingLabelField.swift; sourceTree = "<group>"; };
+		84971162264A40E900BB09DE /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		84971166264A415D00BB09DE /* HowOldVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowOldVC.swift; sourceTree = "<group>"; };
 		8498092E2637BEFE00E546A3 /* GuestNewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestNewsFeed.swift; sourceTree = "<group>"; };
 		84AC57AB262EECDB00F8BD76 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84C6D2352625F8F600DD2CBC /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
@@ -241,6 +271,8 @@
 				84595B9C262D61C3009605F5 /* SocialSignupResponse.swift */,
 				84595BA5262D9FA6009605F5 /* UserData.swift */,
 				8453011826388CF200FD31C7 /* LoginResponse.swift */,
+				844D4DD726417999006DF6F2 /* EmptyDataResponse.swift */,
+				842365F12643CD33001DA7E6 /* VerifyOtpResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -269,6 +301,7 @@
 			children = (
 				84347035262470D500566FB2 /* Main.storyboard */,
 				8434703A262470D900566FB2 /* LaunchScreen.storyboard */,
+				84971162264A40E900BB09DE /* Onboarding.storyboard */,
 			);
 			path = StoryBoards;
 			sourceTree = "<group>";
@@ -276,6 +309,7 @@
 		843470482624744400566FB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				847D64EC264BB7F5006E8F95 /* GoalOptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -295,6 +329,7 @@
 		8434704A2624747B00566FB2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				84971165264A413A00BB09DE /* OnBoarding1 */,
 				84E20C582625D634002DBAF5 /* OnBoarding */,
 				84347033262470D500566FB2 /* ViewController.swift */,
 			);
@@ -398,6 +433,7 @@
 				84595B9F262D9F35009605F5 /* UserDataKeyChain.swift */,
 				84595BA2262D9F58009605F5 /* KeyChain.swift */,
 				84595BA8262DA3D0009605F5 /* UserManager.swift */,
+				842365F726441649001DA7E6 /* UserDefaults.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -405,9 +441,21 @@
 		84595B8E262D57D5009605F5 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				842364E72642FD5E001DA7E6 /* AWSUploadController.swift */,
 				84E9CC0C263C11AB00FFEE9A /* OtpFieldView */,
 			);
 			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		84971165264A413A00BB09DE /* OnBoarding1 */ = {
+			isa = PBXGroup;
+			children = (
+				84971166264A415D00BB09DE /* HowOldVC.swift */,
+				847D64EF264BBE7E006E8F95 /* SelectGoalVC.swift */,
+				847D64F2264BDA32006E8F95 /* OnboardingEndVC.swift */,
+				847D64F5264BEF60006E8F95 /* OnboardingStartVC.swift */,
+			);
+			path = OnBoarding1;
 			sourceTree = "<group>";
 		};
 		84E20C582625D634002DBAF5 /* OnBoarding */ = {
@@ -420,6 +468,11 @@
 				843B993C26281C9500DA1681 /* IntroViewController.swift */,
 				8498092E2637BEFE00E546A3 /* GuestNewsFeed.swift */,
 				84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */,
+				8444ADAE2641B43800D54580 /* SetupPasswordVC.swift */,
+				8444ADB12642BC3500D54580 /* SetProfilePictureVC.swift */,
+				842365F42643FF80001DA7E6 /* HomeVC.swift */,
+				8459E8D926458A7F00A7DB8D /* ForgotPasswordVC.swift */,
+				8459E8DC2648EE0600A7DB8D /* PasswordChangeSuccessVC.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -527,6 +580,7 @@
 				8453B3952625D32A002EB22F /* Poppins-ExtraLight.ttf in Resources */,
 				84595B97262D5AC8009605F5 /* Localizable.strings in Resources */,
 				8453B3942625D32A002EB22F /* Poppins-Bold.ttf in Resources */,
+				84971163264A40E900BB09DE /* Onboarding.storyboard in Resources */,
 				84AC57AC262EECDB00F8BD76 /* GoogleService-Info.plist in Resources */,
 				8453B3992625D32A002EB22F /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				8453B3982625D32A002EB22F /* Poppins-SemiBoldItalic.ttf in Resources */,
@@ -617,6 +671,7 @@
 				84E20C5A2625D644002DBAF5 /* SignupVC.swift in Sources */,
 				84E20C6B2625DDED002DBAF5 /* CustomView.swift in Sources */,
 				84347034262470D500566FB2 /* ViewController.swift in Sources */,
+				842365F826441649001DA7E6 /* UserDefaults.swift in Sources */,
 				84C6D23C2625FC1600DD2CBC /* LoginVC.swift in Sources */,
 				84E9CAE3263A7C9700FFEE9A /* AlertView.swift in Sources */,
 				84342403263176040025700B /* FacebookLoginManager.swift in Sources */,
@@ -625,30 +680,43 @@
 				84E20C562625D5D0002DBAF5 /* UIStoryboard+Ext.swift in Sources */,
 				84C6D2392625F9AC00DD2CBC /* UIFont+Ext.swift in Sources */,
 				848DCFBD2626DA2B00B0E934 /* LoginViaCredentialsVC.swift in Sources */,
+				8459E8DD2648EE0700A7DB8D /* PasswordChangeSuccessVC.swift in Sources */,
+				847D64F3264BDA32006E8F95 /* OnboardingEndVC.swift in Sources */,
+				8444ADB22642BC3500D54580 /* SetProfilePictureVC.swift in Sources */,
 				84595B9D262D61C3009605F5 /* SocialSignupResponse.swift in Sources */,
+				842365F22643CD33001DA7E6 /* VerifyOtpResponse.swift in Sources */,
 				84E20C652625DA97002DBAF5 /* BaseViewController.swift in Sources */,
+				847D64F6264BEF61006E8F95 /* OnboardingStartVC.swift in Sources */,
 				84347032262470D500566FB2 /* SceneDelegate.swift in Sources */,
 				8453011926388CF200FD31C7 /* LoginResponse.swift in Sources */,
 				8434704F262474B900566FB2 /* Constants.swift in Sources */,
 				84595B83262D5713009605F5 /* AppleLoginManager.swift in Sources */,
+				847D64ED264BB7F5006E8F95 /* GoalOptionView.swift in Sources */,
+				842365F52643FF80001DA7E6 /* HomeVC.swift in Sources */,
 				848DCFC02626DC8600B0E934 /* CustomFloatingLabelField.swift in Sources */,
 				843423FE26314B480025700B /* GoogleSignInManager.swift in Sources */,
+				8444ADAF2641B43800D54580 /* SetupPasswordVC.swift in Sources */,
 				84595BBD262DB2DB009605F5 /* UIApplication+Ext.swift in Sources */,
 				84C6D23F2625FD6000DD2CBC /* UITapGesture+Ext.swift in Sources */,
 				84595BA9262DA3D0009605F5 /* UserManager.swift in Sources */,
+				844D4DD826417999006DF6F2 /* EmptyDataResponse.swift in Sources */,
 				8434705D2624782400566FB2 /* API.swift in Sources */,
 				84E20C682625DAF3002DBAF5 /* RoundCornerView.swift in Sources */,
 				84595B8B262D5755009605F5 /* DataManager.swift in Sources */,
 				84347060262478C100566FB2 /* EndPoint.swift in Sources */,
+				8459E8DA26458A7F00A7DB8D /* ForgotPasswordVC.swift in Sources */,
 				84595B87262D5730009605F5 /* SocialLoginManager.swift in Sources */,
 				84E9CC10263C11D400FFEE9A /* OTPTextField.swift in Sources */,
 				84595BA3262D9F58009605F5 /* KeyChain.swift in Sources */,
 				8498092F2637BEFE00E546A3 /* GuestNewsFeed.swift in Sources */,
+				847D64F0264BBE7E006E8F95 /* SelectGoalVC.swift in Sources */,
 				8453F7B326272D2700EC9B83 /* CustomButton.swift in Sources */,
+				84971167264A415D00BB09DE /* HowOldVC.swift in Sources */,
 				84E20C5F2625D886002DBAF5 /* TopRoundCornerView.swift in Sources */,
 				84595B9A262D5B67009605F5 /* AppleLoginManagersDelegate.swift in Sources */,
 				843B993A2628026900DA1681 /* Register1VC.swift in Sources */,
 				843B993D26281C9500DA1681 /* IntroViewController.swift in Sources */,
+				842364E82642FD5E001DA7E6 /* AWSUploadController.swift in Sources */,
 				84595BA6262D9FA6009605F5 /* UserData.swift in Sources */,
 				84C6D2362625F8F600DD2CBC /* UILabel+Ext.swift in Sources */,
 				8434706626247B8500566FB2 /* CustomRefreshRetrier.swift in Sources */,

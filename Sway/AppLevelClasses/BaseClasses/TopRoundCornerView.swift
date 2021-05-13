@@ -20,13 +20,13 @@ final class TopRoundCornerView : UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if shadowLayer == nil {
+//        if shadowLayer == nil {
             shadowLayer = CAShapeLayer()
             let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: [.topRight,.topLeft], cornerRadii: CGSize(width: 25, height: 25))
             shadowLayer.path = path.cgPath
             shadowLayer.fillColor = UIColor.white.cgColor
             layer.mask = shadowLayer
-        }
+//        }
     }
     
 }

@@ -72,7 +72,6 @@ import UIKit
     public var defaultBackgroundColor: UIColor = UIColor.clear
     public var filledBackgroundColor: UIColor = UIColor.clear
     public var defaultBorderColor: UIColor = UIColor.gray
-//    public var filledBorderColor: UIColor = UIColor.clear
     public var activeCursorBoxColor: UIColor = UIColor.clear
     public var errorBorderColor: UIColor?
     

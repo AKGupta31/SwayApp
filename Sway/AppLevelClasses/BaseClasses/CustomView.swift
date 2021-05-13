@@ -35,4 +35,11 @@ class CustomView:UIView {
             self.clipsToBounds = true
         }
     }
+    
+    @IBInspectable var isCircle:Bool = true{
+        didSet {
+            self.layer.cornerRadius = self.frame.height / 2
+            self.clipsToBounds = true
+        }
+    }
 }

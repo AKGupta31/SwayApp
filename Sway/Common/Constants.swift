@@ -13,7 +13,9 @@ class Constants {
     
     
     struct Networking {
-        static let kBaseUrl = "http://swaydevapi.appskeeper.in/api"
+        
+        static let kBaseUrl = "http://swayqaapi.appskeeper.in/api"
+//        static let kBaseUrl = "http://swaydevapi.appskeeper.in/api"
     }
     
     struct Notifications {
@@ -23,4 +25,23 @@ class Constants {
         
     }
     
+    struct S3BucketCredentials{
+        static let s3PoolApiKey = "us-east-1:b1f250f2-66a7-4d07-96e9-01817149a439"
+        static let s3BucketName = "appinventiv-development"
+        static let s3BaseUrl = "https://appinventiv-development.s3.amazonaws.com/"
+    }
+    
 }
+
+// MARK: - Media Enum
+enum MediaTypes : String {
+    case kImage  = "public.image"
+    case kVideo  = "public.movie"
+}
+
+enum S3MediaType: Int {
+    case image = 1
+    case video = 2
+}
+
+

@@ -5,6 +5,22 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - AWSAuthCore (2.23.3):
+    - AWSCore (= 2.23.3)
+  - AWSCognitoIdentityProvider (2.23.3):
+    - AWSCognitoIdentityProviderASF (= 2.23.3)
+    - AWSCore (= 2.23.3)
+  - AWSCognitoIdentityProviderASF (2.23.3)
+  - AWSCore (2.23.3)
+  - AWSMobileClient (2.23.3):
+    - AWSAuthCore (= 2.23.3)
+    - AWSCognitoIdentityProvider (= 2.23.3)
+    - AWSCognitoIdentityProviderASF (= 2.23.3)
+    - AWSCore (= 2.23.3)
+  - AWSPinpoint (2.23.3):
+    - AWSCore (= 2.23.3)
+  - AWSS3 (2.23.3):
+    - AWSCore (= 2.23.3)
   - FBSDKCoreKit (9.2.0):
     - FBSDKCoreKit/Basics (= 9.2.0)
     - FBSDKCoreKit/Core (= 9.2.0)
@@ -90,11 +106,15 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.5.0)
+  - IQKeyboardManagerSwift (6.5.6)
+  - KDCircularProgress (1.5.4)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - OTPFieldView (1.0.1)
+  - Player (0.13.3)
   - PromisesObjC (1.2.12)
   - SkyFloatingLabelTextField (3.8.0)
   - SVProgressHUD (2.2.5)
@@ -104,11 +124,18 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - AWSMobileClient
+  - AWSPinpoint
+  - AWSS3
   - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
   - GoogleSignIn
+  - IQKeyboardManagerSwift
+  - KDCircularProgress
+  - OTPFieldView
+  - Player (~> 0.13.2)
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
   - SwiftKeychainWrapper
@@ -119,6 +146,13 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AppAuth
+    - AWSAuthCore
+    - AWSCognitoIdentityProvider
+    - AWSCognitoIdentityProviderASF
+    - AWSCore
+    - AWSMobileClient
+    - AWSPinpoint
+    - AWSS3
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
@@ -133,7 +167,11 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - IQKeyboardManagerSwift
+    - KDCircularProgress
     - nanopb
+    - OTPFieldView
+    - Player
     - PromisesObjC
     - SkyFloatingLabelTextField
     - SVProgressHUD
@@ -144,6 +182,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  AWSAuthCore: 2aaf8dec7f50e3f7606857bdca0db9263faed0c5
+  AWSCognitoIdentityProvider: fcd9b00fec0ef5ac6768548af948ad033b52da98
+  AWSCognitoIdentityProviderASF: 719578cca39b3233bd67e656bdf04d409e8fc255
+  AWSCore: c60e635b1a61cb27b6dfff646ce9f402be870b62
+  AWSMobileClient: bdfc148fc11b846331f2bec4a7063c95e66c329e
+  AWSPinpoint: 72c99dbf5c37464f87cbf4515d6d027c996ddc96
+  AWSS3: d8e8a6d7328e7fa1468788c4d7efa71d7f3a6caa
   FBSDKCoreKit: dace5abafc2fd9272733e6d027bcf18102712117
   FBSDKLoginKit: 43f377b451d391f5bc9dd774f51a391db1072029
   Firebase: fffddd0bab8677d07376538365faa93ff3889b39
@@ -158,7 +203,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
   GTMAppAuth: 5b53231ef6920f149ab84b2969cb0ab572da3077
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
+  KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  OTPFieldView: 700a752fe62c41d1c4914c78aa500fb30d97c255
+  Player: e1889a481f14b3bc4065b62bed304c3de3b47dfe
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
@@ -166,6 +215,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: 281e170d22b000a9d88b263efd209c61a99ac6ef
+PODFILE CHECKSUM: f82f787fa7896243c273efd02e1f797161e01e85
 
 COCOAPODS: 1.10.1

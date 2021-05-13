@@ -15,26 +15,30 @@ class FacebookLoginManager {
     
     var responseCallback:LoginSuccessBlock?
     static let shared = FacebookLoginManager()
-   
+    
     private init(){}
     
     func login(viewController: UIViewController,callBack:@escaping LoginSuccessBlock) {
         self.responseCallback = callBack
         let loginManager = LoginManager()
-       
+        
         // login to Facebook in order to obtain token
         loginManager.logOut()
         loginManager.authType = .reauthorize
         loginManager.logIn(permissions: [Permission.publicProfile, Permission.email], viewController: viewController) {(loginResult) in
             switch loginResult {
             case .failed:
-                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account failed")
-                break
+                let response = SocialSignupResponse(statusCode: 500, message: "Login failed: Connection to social media account failed")
+                self.responseCallback?(false,response)
+//                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account failed",on: viewController)
+//                break
             case .cancelled:
-                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account cancelled by user")
-                break
+                let response = SocialSignupResponse(statusCode: 500, message: "Login failed: Connection to social media account cancelled by user")
+                self.responseCallback?(false,response)
+//                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account cancelled by user",on: viewController)
+                
             case .success(_, _, let accessToken):
-//                 try to login with this token to the backend
+                //                 try to login with this token to the backend
                 LoginRegisterEndpoint.socialLogin(socialId: accessToken!.userID, type: .facebook) {[weak self] (response) in
                     if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300 {
                         self?.responseCallback?(true,response)
@@ -64,15 +68,34 @@ class FacebookLoginManager {
                     if let data = dic["picture"] as? [String:Any],let imageDic = data["data"] as? [String:Any]{
                         image = imageDic["url"] as? String ?? ""
                     }
-                    
-                    LoginRegisterEndpoint.socialRegister(socialId: socialId, email: email, firstName: firstName, lastName: lastName, type: .facebook, image: image) { [weak self](response) in
-                        print(response)
-                        self?.responseCallback?(true,response)
-                    } failure: { (status) in
-                        print(status)
-                        AlertView.showAlert(with: "Error!!!", message: status.msg)
+                    if email.isEmpty || firstName.isEmpty || lastName.isEmpty {
+                        var nav:UINavigationController?
+                        if let topVC = UIApplication.topViewController{
+                            if let navigationController = topVC as? UINavigationController {
+                                nav = navigationController
+                            }else {
+                                nav = topVC.navigationController
+                            }
+                        }
+                        nav?.push(Register1VC.self, animated: true, configuration: { (vc) in
+                            vc.type = .SOCIAL_SIGNUP
+                            vc.email = email
+                            vc.firstName = firstName
+                            vc.lastName = lastName
+                            vc.socialId = socialId
+                            vc.image = image
+                        })
+                    }else {
+                        LoginRegisterEndpoint.socialRegister(socialId: socialId, email: email, firstName: firstName, lastName: lastName, type: .facebook, image: image) { [weak self](response) in
+                            print(response)
+                            self?.responseCallback?(true,response)
+                        } failure: { (status) in
+                            print(status)
+                            AlertView.showAlert(with: "Error!!!", message: status.msg)
+                        }
                     }
-
+                    
+                    
                 }
                 
             } else {
@@ -91,7 +114,7 @@ class FacebookLoginManager {
                 self.showAlertViewForEmail(viewController: viewController, successHandler: successHandler, failureHandler: failureHandler)
             } else {
                 if let result = result as? [String:String],
-                    let email: String = result["email"] {
+                   let email: String = result["email"] {
                     successHandler(email)
                 } else {
                     self.showAlertViewForEmail(viewController: viewController, successHandler: successHandler, failureHandler: failureHandler);

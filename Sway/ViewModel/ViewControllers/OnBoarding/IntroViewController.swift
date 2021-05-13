@@ -10,7 +10,6 @@ import ViewControllerDescribable
 
 class IntroViewController: BaseViewController {
     @IBOutlet weak var blackGrdientBottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var blackGrdientView: UIView!
     
     lazy var gradientLayer:CAGradientLayer = {
@@ -19,7 +18,6 @@ class IntroViewController: BaseViewController {
         gl.colors = [color.withAlphaComponent(0).cgColor,color.cgColor]
         return gl
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,16 +32,11 @@ class IntroViewController: BaseViewController {
         self.blackGrdientView.isUserInteractionEnabled = true
         gesture.direction = .up
         self.blackGrdientView.addGestureRecognizer(gesture)
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView(_:)))
-//        self.blackGrdientView.isUserInteractionEnabled = true
-//        self.blackGrdientView.addGestureRecognizer(tapGesture)
     }
     
     @objc func tapOnView(_ gesture:UITapGestureRecognizer){
         self.navigationController?.push(SignupVC.self)
     }
-    
     
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
         if gesture.direction == .up {

@@ -14,7 +14,7 @@ class BaseViewController:UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action:#selector(emptyViewTapped(_:)))
@@ -34,6 +34,7 @@ class BaseViewController:UIViewController {
     @objc func showLoader(){
         DispatchQueue.main.async {
             SVProgressHUD.show()
+            SVProgressHUD.setDefaultMaskType(.clear)
         }
         
     }
@@ -46,4 +47,5 @@ class BaseViewController:UIViewController {
         self.view.endEditing(true)
     }
 }
+
 

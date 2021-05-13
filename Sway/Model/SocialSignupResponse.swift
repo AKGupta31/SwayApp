@@ -5,28 +5,28 @@
 //  Created by Admin on 19/04/21.
 //
 
-import Foundation
+
 
 import Foundation
 struct SocialSignupResponse : Codable {
     let statusCode : Int?
     let message : String?
     let type : String?
-    let signupModel : SignupModel?
+    let data : LoginResponseData?
 
     enum CodingKeys: String, CodingKey {
 
         case statusCode = "statusCode"
         case message = "message"
         case type = "type"
-        case signupModel = "data"
+        case data = "data"
     }
 
     init(statusCode:Int,message:String) {
         self.statusCode = statusCode
         self.message = message
         self.type = nil
-        self.signupModel = nil
+        self.data = nil
     }
     
     init(from decoder: Decoder) throws {
@@ -34,7 +34,7 @@ struct SocialSignupResponse : Codable {
         statusCode = try values.decodeIfPresent(Int.self, forKey: .statusCode)
         message = try values.decodeIfPresent(String.self, forKey: .message)
         type = try values.decodeIfPresent(String.self, forKey: .type)
-        signupModel = try values.decodeIfPresent(SignupModel.self, forKey: .signupModel)
+        data = try values.decodeIfPresent(LoginResponseData.self, forKey: .data)
     }
 
 }

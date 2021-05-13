@@ -5,7 +5,6 @@
 //  Created by Admin on 27/04/21.
 //
 
-import Foundation
 
 import Foundation
 struct LoginResponse : Codable {
@@ -20,6 +19,13 @@ struct LoginResponse : Codable {
         case type = "type"
         case message = "message"
         case data = "data"
+    }
+    
+    init(statusCode:Int,message:String) {
+        self.statusCode = statusCode
+        self.message = message
+        self.type = nil
+        self.data = nil
     }
 
     init(from decoder: Decoder) throws {
@@ -36,12 +42,21 @@ struct LoginResponseData : Codable {
     let email : String?
     let isEmailVerified : Bool?
     let _id : String?
+    let accessToken:String?
+    let firstName: String?
+    let lastName:String?
+    let userType: String?
+  
 
     enum CodingKeys: String, CodingKey {
 
         case email = "email"
         case isEmailVerified = "isEmailVerified"
         case _id = "_id"
+        case accessToken = "accessToken"
+        case firstName = "firstName"
+        case lastName = "lastName"
+        case userType = "userType"
     }
 
     init(from decoder: Decoder) throws {
@@ -49,6 +64,10 @@ struct LoginResponseData : Codable {
         email = try values.decodeIfPresent(String.self, forKey: .email)
         isEmailVerified = try values.decodeIfPresent(Bool.self, forKey: .isEmailVerified)
         _id = try values.decodeIfPresent(String.self, forKey: ._id)
+        accessToken = try values.decodeIfPresent(String.self, forKey: .accessToken)
+        firstName = try values.decodeIfPresent(String.self, forKey: .firstName)
+        lastName = try values.decodeIfPresent(String.self, forKey: .lastName)
+        userType = try values.decodeIfPresent(String.self, forKey: .userType)
     }
 
 }

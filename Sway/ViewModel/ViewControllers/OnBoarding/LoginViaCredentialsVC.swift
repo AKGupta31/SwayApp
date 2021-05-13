@@ -21,6 +21,7 @@ class LoginViaCredentialsVC: BaseViewController {
     
     @IBOutlet weak var signupLabel: UILabel!
     @IBOutlet weak var emailField: SkyFloatingLabelTextField!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         signupLabel.setupLabelWithTappableArea(regularText: "Don’t have an account?", tappableText: "Sign up")
@@ -59,13 +60,14 @@ class LoginViaCredentialsVC: BaseViewController {
             (response) in
             self?.hideLoader()
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300{
-                self?.view.makeToast("Login Success", duration: 3.0, position: .center)
+                DataManager.shared.setLoggedInUser(user: response.data)
+                self?.navigationController?.push(HowOldVC.self)
             }else{
                 //failures cases
                 if response.type == LoginResponseTypes.emailNotVerified.rawValue {
                     self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
                         vc.email = email
-                        vc.password = password
+                        vc.type = .LOGIN
                     })
 //                    self.navigationController?.push(VerifyOtpVC.self)
                 }else {
@@ -85,6 +87,9 @@ class LoginViaCredentialsVC: BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func actionForgotPassword(_ sender: UIButton) {
+        self.navigationController?.push(ForgotPasswordVC.self)
+    }
     
     func isValidFields() -> String?{
         guard let email = emailField.text?.trimmingCharacters(in: .whitespaces) else {return "Email should not be empty"}

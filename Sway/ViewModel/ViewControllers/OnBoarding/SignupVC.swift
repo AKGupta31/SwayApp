@@ -30,7 +30,9 @@ class SignupVC: BaseViewController {
             appleManager.logIn(from: self) { [weak self](isSuccess, response) in
                 self?.hideLoader()
                 if isSuccess {
-                    self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
+                    DataManager.shared.setLoggedInUser(user: response?.data)
+                    self?.navigationController?.push(HomeVC.self)
+//                    self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
                 }else {
                     //show error
                     AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
@@ -45,7 +47,9 @@ class SignupVC: BaseViewController {
         GoogleSignInManager.shared.signIn(presentingVC: self) { (isSuccess,response) in
             self.hideLoader()
             if isSuccess {
-                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
+                DataManager.shared.setLoggedInUser(user: response?.data)
+                self.navigationController?.push(HomeVC.self)
+//                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
             }else {
                 AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
             }
@@ -57,16 +61,19 @@ class SignupVC: BaseViewController {
         FacebookLoginManager.shared.login(viewController: self) { (isSuccess,response) in
             self.hideLoader()
             if isSuccess {
-                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
+                DataManager.shared.setLoggedInUser(user: response?.data)
+                self.navigationController?.push(HomeVC.self)
+//                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
             }else {
-                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error",on: self)
             }
         }
     }
     
     @IBAction func actionEmail(_ sender: UIButton) {
-        self.view.makeToast("This feature has not been implemented yet", duration: 3.0, position: .center)
+//        self.view.makeToast("This feature has not been implemented yet", duration: 3.0, position: .center)
 //        self.navigationController?.push(VerifyOtpVC.self)
+        self.navigationController?.push(Register1VC.self)
     }
     
     
@@ -77,7 +84,11 @@ class SignupVC: BaseViewController {
         let range = nsString.range(of: "Log in")
         
         if gesture.didTapAttributedTextInLabel(label: lblLogin, inRange: range) {
-            self.navigationController?.push(LoginVC.self)
+            if let vcs = self.navigationController?.viewControllers, let  _ = vcs[vcs.count - 2] as? LoginVC{
+                self.navigationController?.popViewController(animated: true)
+            }else{
+                self.navigationController?.push(LoginVC.self)
+            }
         }
     }
     

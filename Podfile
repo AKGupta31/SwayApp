@@ -17,7 +17,13 @@ pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'SVProgressHUD'
 pod 'Toast-Swift', '~> 5.0.1'
-#pod 'OTPFieldView'
+pod 'KDCircularProgress'
+pod 'IQKeyboardManagerSwift'
+pod 'AWSMobileClient'
+pod 'AWSPinpoint'
+pod 'OTPFieldView'
+pod 'AWSS3'
+pod "Player", "~> 0.13.2"
 
 
 end

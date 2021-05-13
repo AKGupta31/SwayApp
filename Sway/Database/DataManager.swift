@@ -12,6 +12,13 @@ class DataManager {
     private init() {}
     
     var isLoggedIn = false
-    var deviceId = "ashish"
-    var deviceToken = "ashish123"
+    var loggedInUser:LoginResponseData? = nil
+    var deviceId = "ashishadafada"
+    var deviceToken = "ashish1233222"
+    
+    func setLoggedInUser(user:LoginResponseData?){
+        SwayUserDefaults.shared.loggedInUser = user
+        loggedInUser = user
+        isLoggedIn = user != nil
+    }
 }

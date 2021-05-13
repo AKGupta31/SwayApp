@@ -30,7 +30,7 @@ extension AppleLoginManagerDelegates: ASAuthorizationControllerDelegate {
         //2
         //prompt user for user profile image
         
-        let profileImage = ""
+//        let profileImage = ""
 
         // 2
     
@@ -44,9 +44,8 @@ extension AppleLoginManagerDelegates: ASAuthorizationControllerDelegate {
         // 3
 
         guard let identityToken = credential.identityToken else {return}
-
         let token = String(data: identityToken, encoding: .utf8) ?? ""
-        LoginRegisterEndpoint.socialRegister(socialId: credential.user, email:userData.email, firstName: userData.name.givenName ?? "", lastName: userData.name.middleName ?? " " + (userData.name.familyName ?? " "), type: .apple, image: "https://i.picsum.photos/id/182/200/300.jpg?hmac=W6MnOpe7fP0LlNAyWl6rzWbjyLOM3ix2TXRcFx7vEPE") { [weak self](socialSignupResponse) in
+        LoginRegisterEndpoint.socialRegister(socialId: credential.user, email:userData.email, firstName: userData.name.givenName ?? "", lastName: userData.name.middleName ?? " " + (userData.name.familyName ?? " "), type: .apple, image: "") { [weak self](socialSignupResponse) in
             if let statusCode = socialSignupResponse.statusCode,statusCode >= 200 && statusCode < 300 {
                 self?.signInCompletion?(true,socialSignupResponse)
                 UserManager.saveSocialMediaCredentials(type: .apple, token: token, socialId: token, userId: credential.user)
@@ -67,7 +66,7 @@ extension AppleLoginManagerDelegates: ASAuthorizationControllerDelegate {
         let token = String(data: identityToken, encoding: .utf8) ?? ""
         
         LoginRegisterEndpoint.socialLogin(socialId: credential.user, type: .apple) { [weak self](response) in
-            if let code = response.statusCode,code >= 200 && code > 300 {
+            if let code = response.statusCode,code >= 200 && code < 300 {
                 self?.signInCompletion?(true,response)
                 UserManager.saveSocialMediaCredentials(type: .apple, token: token, socialId: token, userId: credential.user)
             }else {

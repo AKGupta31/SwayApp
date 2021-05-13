@@ -53,6 +53,7 @@ import UIKit
     }
     
     public func initalizeUI(forFieldType type: DisplayType) {
+        self.textColor = UIColor(named: "kThemeNavyBlue")
         switch type {
         case .circular:
             layer.cornerRadius = bounds.size.width / 2
