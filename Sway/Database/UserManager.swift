@@ -7,6 +7,11 @@
 
 import SwiftKeychainWrapper
 
+enum UserEnum:Int {
+   case USER_BLOCKED = 434
+   case USER_DELETED = 435
+}
+
 class UserManager {
     
     class KeychainConstants {

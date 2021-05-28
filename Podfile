@@ -24,6 +24,9 @@ pod 'AWSPinpoint'
 pod 'OTPFieldView'
 pod 'AWSS3'
 pod "Player", "~> 0.13.2"
+pod 'SDWebImage', '~> 5.0'
+pod 'GrowingTextView'
+pod 'ActiveLabel'
 
 
 end

@@ -9,7 +9,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-typealias LoginSuccessBlock = ((_ success:Bool,SocialSignupResponse?) -> ())
+typealias LoginSuccessBlock = ((_ success:Bool,LoginResponse?) -> ())
 
 class FacebookLoginManager {
     
@@ -28,12 +28,12 @@ class FacebookLoginManager {
         loginManager.logIn(permissions: [Permission.publicProfile, Permission.email], viewController: viewController) {(loginResult) in
             switch loginResult {
             case .failed:
-                let response = SocialSignupResponse(statusCode: 500, message: "Login failed: Connection to social media account failed")
+                let response = LoginResponse(statusCode: 500, message: "Login failed: Connection to social media account failed")
                 self.responseCallback?(false,response)
 //                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account failed",on: viewController)
 //                break
             case .cancelled:
-                let response = SocialSignupResponse(statusCode: 500, message: "Login failed: Connection to social media account cancelled by user")
+                let response = LoginResponse(statusCode: 500, message: "Login failed: Connection to social media account cancelled by user")
                 self.responseCallback?(false,response)
 //                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account cancelled by user",on: viewController)
                 
@@ -43,10 +43,10 @@ class FacebookLoginManager {
                     if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300 {
                         self?.responseCallback?(true,response)
                     }else {
-                        self?.requestEmailAndNameFromFB(accessToken: accessToken!)
+                        self?.requestEmailAndNameFromFB(accessToken: accessToken!, viewController: viewController)
                     }
                 } failure: { [weak self] (status) in
-                    self?.requestEmailAndNameFromFB(accessToken: accessToken!)
+                    self?.requestEmailAndNameFromFB(accessToken: accessToken!, viewController: viewController)
                 }
             }
         }
@@ -54,7 +54,7 @@ class FacebookLoginManager {
     
     
     
-    func requestEmailAndNameFromFB(accessToken:FBSDKCoreKit.AccessToken){
+    func requestEmailAndNameFromFB(accessToken:FBSDKCoreKit.AccessToken,viewController:UIViewController){
         let req = GraphRequest(graphPath: "me", parameters: ["fields":"email,first_name,last_name,picture.type(large)"], tokenString: accessToken.tokenString, version: nil, httpMethod: .get)
         req.start { (connection, result, error) in
             if(error == nil) {
@@ -77,6 +77,7 @@ class FacebookLoginManager {
                                 nav = topVC.navigationController
                             }
                         }
+                        (viewController as? BaseViewController)?.hideLoader()
                         nav?.push(Register1VC.self, animated: true, configuration: { (vc) in
                             vc.type = .SOCIAL_SIGNUP
                             vc.email = email
@@ -91,7 +92,9 @@ class FacebookLoginManager {
                             self?.responseCallback?(true,response)
                         } failure: { (status) in
                             print(status)
-                            AlertView.showAlert(with: "Error!!!", message: status.msg)
+                            let response = LoginResponse(statusCode: status.code, message: status.msg)
+                            self.responseCallback?(false,response)
+//                            AlertView.showAlert(with: "Error!!!", message: status.msg)
                         }
                     }
                     

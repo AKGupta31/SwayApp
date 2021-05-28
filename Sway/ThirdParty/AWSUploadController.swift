@@ -14,6 +14,9 @@ import AVKit
 import AVFoundation
 
 
+typealias progressBlock = (_ progress: Double) -> Void //2
+typealias completionBlock = (_ response: Any?, _ error: Error?) -> Void //3
+
 class AWSUploadController {
     // MARK: CANCEL REQUEST
     //=======================
@@ -64,13 +67,15 @@ class AWSUploadController {
     
     ///upload file func without use of delegates : - it is using closures
     static func uploadFileToAWS(file: FileUploadModel,
-                         success: @escaping(_ url: String, _ uri: String) -> Void,
-                         progress: ((_ progressPercent:Float) -> Void)? = nil,
-                         faliure: @escaping(_ message: String) -> Void) {
+                                success: @escaping(_ url: String, _ uri: String) -> Void,
+                                progress: ((_ progressPercent:Float) -> Void)? = nil,
+                                faliure: @escaping(_ message: String) -> Void) {
         
         guard let imageURL = URL(string: file.uri) else { return }
+        let fileExt = imageURL.pathExtension
+        //        let name = "\(Constants.S3BucketCredentials.s3BucketName)\(Int(Date().timeIntervalSince1970))_\(String.randomString(length: 8))\(file.contentType == .image ? ".jpeg" : ".mp4")"
         
-        let name = "\(Constants.S3BucketCredentials.s3BucketName)\(Int(Date().timeIntervalSince1970))_\(String.randomString(length: 8))\(file.contentType == .image ? ".jpeg" : ".mp4")"
+        let name = "\(Constants.S3BucketCredentials.s3BucketName)\(Int(Date().timeIntervalSince1970))_\(String.randomString(length: 8))\("." + fileExt)"
         
         let expression = AWSS3TransferUtilityUploadExpression()
         let transferUtility = AWSS3TransferUtility.default()
@@ -85,7 +90,7 @@ class AWSUploadController {
         // For public read
         expression.setValue("public-read", forRequestParameter: "x-amz-acl")
         expression.setValue("public-read", forRequestHeader: "x-amz-acl" )
-
+        
         var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
         completionHandler = { (task, error) -> Void in
             DispatchQueue.main.async(execute: {
@@ -108,18 +113,79 @@ class AWSUploadController {
                 
                 if let error = task.error {
                     print("error is: \(error.localizedDescription)")
-                    print(task.error)
+                    print(task.error ?? "")
                 }
                 
                 if let _ = task.result {
                     print(task)
-                    print(task.result)
+                    print(task.result ?? "")
                 }
                 return nil
             }
         }
     }
+    
+  
+    
+    func uploadVideoToS3(url: URL,
+                         success: @escaping (Bool, String, String) -> Void,
+                         progress: @escaping (CGFloat) -> Void,
+                         failure: @escaping (Error) -> Void) {
+        
+        let expression = AWSS3TransferUtilityUploadExpression()
+        let transferUtility = AWSS3TransferUtility.default()
+        let pathExt = url.pathExtension
+        let name = "\(Int(Date().timeIntervalSince1970))." + pathExt
+        let progressBlock: AWSS3TransferUtilityProgressBlock = {(task, progres) in
+            DispatchQueue.main.async(execute: {
+                progress(CGFloat(progres.fractionCompleted))
+            })
+        }
+        
+        expression.progressBlock = progressBlock
+        expression.setValue("public-read", forRequestParameter: "x-amz-acl")
+        expression.setValue("public-read", forRequestHeader: "x-amz-acl" )
+        
+        let completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock = { (task, error) -> Void in
+            DispatchQueue.main.async(execute: {
+                if let error = error {
+                    print("Failed with error: \(error)")
+                    failure(error)
+                } else {
+                    let imageURL = "\(Constants.S3BucketCredentials.s3BaseUrl)\(name)"
+                    print(imageURL)
+                    success(true, imageURL, name)
+                }
+            })
+        }
+        do {
+            let data = try  Data(contentsOf: url)
+            transferUtility.uploadData(
+                data,
+                bucket: "\(Constants.S3BucketCredentials.s3BucketName)",
+                key: "\(name)",
+                contentType: "video/mp4",
+                expression: expression,
+                completionHandler: completionHandler).continueWith { (task) -> AnyObject? in
+                    if let error = task.error {
+                        print("Error: \(error.localizedDescription)")
+                        failure(error)
+                    }
+                    
+                    if task.result != nil {
+                        // Do something with uploadTask.
+                    }
+                    return nil
+                }
+        }catch {
+            print("error ",error.localizedDescription)
+        }
+    }
+    
 }
+
+
+
 extension UIImage {
     
     // MARK: - Uploading image function with S3 server...
@@ -179,7 +245,7 @@ extension UIImage {
                     // Do something with uploadTask.
                 }
                 return nil
-        }
+            }
     } 
 }
 
@@ -202,7 +268,7 @@ final class FileUploadModel: Hashable, Equatable {
     var stateChanged: ((_ newState: FileUploadStatus)-> Void)?
     
     fileprivate weak var uploadRequest:AWSS3TransferUtilityUploadTask?
-//    fileprivate weak var uploadRequest: AWSS3TransferManagerUploadRequest?
+    //    fileprivate weak var uploadRequest: AWSS3TransferManagerUploadRequest?
     var status: FileUploadStatus = .unknown {
         didSet {
             if status == .canceled {
@@ -268,7 +334,7 @@ final class FileUploadModel: Hashable, Equatable {
     static func == (lhs: FileUploadModel, rhs: FileUploadModel) -> Bool {
         return (lhs.uri == rhs.uri)
     }
-        
+    
     var hashValue: Int {
         return uri.hashValue
     }

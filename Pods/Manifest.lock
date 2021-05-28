@@ -1,4 +1,5 @@
 PODS:
+  - ActiveLabel (1.1.0)
   - Alamofire (5.4.1)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
@@ -102,6 +103,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.3.1):
     - GoogleUtilities/Logger
+  - GrowingTextView (0.7.2)
   - GTMAppAuth (1.2.1):
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
@@ -116,6 +118,9 @@ PODS:
   - OTPFieldView (1.0.1)
   - Player (0.13.3)
   - PromisesObjC (1.2.12)
+  - SDWebImage (5.11.0):
+    - SDWebImage/Core (= 5.11.0)
+  - SDWebImage/Core (5.11.0)
   - SkyFloatingLabelTextField (3.8.0)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (4.0.1)
@@ -123,6 +128,7 @@ PODS:
   - ViewControllerDescribable (1.0.2)
 
 DEPENDENCIES:
+  - ActiveLabel
   - Alamofire
   - AWSMobileClient
   - AWSPinpoint
@@ -132,10 +138,12 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - GoogleSignIn
+  - GrowingTextView
   - IQKeyboardManagerSwift
   - KDCircularProgress
   - OTPFieldView
   - Player (~> 0.13.2)
+  - SDWebImage (~> 5.0)
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
   - SwiftKeychainWrapper
@@ -144,6 +152,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - ActiveLabel
     - Alamofire
     - AppAuth
     - AWSAuthCore
@@ -165,6 +174,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleUtilities
+    - GrowingTextView
     - GTMAppAuth
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
@@ -173,6 +183,7 @@ SPEC REPOS:
     - OTPFieldView
     - Player
     - PromisesObjC
+    - SDWebImage
     - SkyFloatingLabelTextField
     - SVProgressHUD
     - SwiftKeychainWrapper
@@ -180,6 +191,7 @@ SPEC REPOS:
     - ViewControllerDescribable
 
 SPEC CHECKSUMS:
+  ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   AWSAuthCore: 2aaf8dec7f50e3f7606857bdca0db9263faed0c5
@@ -201,6 +213,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
+  GrowingTextView: 876bf42005b5e4a4fd740597db12caaf41f0fe6c
   GTMAppAuth: 5b53231ef6920f149ab84b2969cb0ab572da3077
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
@@ -209,12 +222,13 @@ SPEC CHECKSUMS:
   OTPFieldView: 700a752fe62c41d1c4914c78aa500fb30d97c255
   Player: e1889a481f14b3bc4065b62bed304c3de3b47dfe
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: f82f787fa7896243c273efd02e1f797161e01e85
+PODFILE CHECKSUM: 76e950e0d024bef2e2e984948ef931b14f77f519
 
 COCOAPODS: 1.10.1

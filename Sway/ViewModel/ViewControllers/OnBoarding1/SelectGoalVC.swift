@@ -21,7 +21,7 @@ class SelectGoalVC: BaseViewController {
     var progress:KDCircularProgress!
     private var isSwipeGestureAdded = false
     
-    typealias GoalModel = (String)
+//    typealias GoalModel = (String)
     var goals = ["Lose Weight","Gain Muscle","Get Pre-baby Body Back","Have Fun","Dance More","Get Toned"]
     var selectedCount = 0 {
         didSet {
@@ -37,7 +37,6 @@ class SelectGoalVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTitle()
         getActions()
         
@@ -61,6 +60,7 @@ class SelectGoalVC: BaseViewController {
     }
     
     @IBAction func actionSkip(_ sender: UIButton) {
+        updateStatus(goals: [])
         self.navigationController?.push(OnboardingEndVC.self, animated: true, configuration: { (vc) in
             
         })
@@ -68,10 +68,12 @@ class SelectGoalVC: BaseViewController {
     
     
     @objc func getActions(){
+        var viewIndex = 0
         for subView  in stackViewGoals.subviews {
             if let hStackView = subView as? UIStackView {
                 for subView in hStackView.subviews {
                     if let goalView = subView as? GoalOptionView {
+                        goalView.model = GoalOptionModel(title: goals[viewIndex])
                         goalView.onClick = {[weak self](goalView) in
                             goalView.isSelected = !goalView.isSelected
                             if goalView.isSelected {
@@ -81,9 +83,26 @@ class SelectGoalVC: BaseViewController {
                             }
                         }
                     }
+                    viewIndex += 1
                 }
             }
         }
+    }
+    
+    func getSelectedGoalTitles() -> [String]{
+       var goals = [String]()
+        for subView  in stackViewGoals.subviews {
+            if let hStackView = subView as? UIStackView {
+                for subView in hStackView.subviews {
+                    if let goalView = subView as? GoalOptionView {
+                        if goalView.isSelected {
+                            goals.append(goalView.model.title)
+                        }
+                    }
+                }
+            }
+        }
+        return goals
     }
     
     fileprivate func setupTitle(){
@@ -113,6 +132,17 @@ class SelectGoalVC: BaseViewController {
         progressViewInnerCircle.backgroundColor = UIColor(named: "k245246250")
     }
     
+    func updateStatus(goals:[String]){
+        LoginRegisterEndpoint.updateOnboardingScreenStatus(key: "goal", value: goals) { (response) in
+            if response.statusCode == 200 {
+                SwayUserDefaults.shared.onBoardingScreenStatus = .PROFILE_GOAL
+            }
+            
+        } failure: { (status) in
+            
+        }
+
+    }
     
 }
 
@@ -120,7 +150,6 @@ extension SelectGoalVC:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
             print("scroll downward")
-            
         }else {
             print("scroll upword")
             if selectedCount > 0 {
@@ -128,6 +157,7 @@ extension SelectGoalVC:UIScrollViewDelegate {
                 let contentYoffset = scrollView.contentOffset.y
                 let distanceFromBottom = scrollView.contentSize.height - contentYoffset
                 if distanceFromBottom <= height {
+                    updateStatus(goals: getSelectedGoalTitles())
                     self.navigationController?.push(OnboardingEndVC.self)
                 }else {
                     print("don't call api")

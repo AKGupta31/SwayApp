@@ -7,10 +7,15 @@
 
 import UIKit
 
+struct GoalOptionModel{
+    var title = ""
+}
+
 class GoalOptionView: UIView {
 
     private var overlayView:UIView? = nil
     var onClick:((GoalOptionView) ->())? = nil
+    var model:GoalOptionModel!
     var isSelected:Bool = false {
         didSet {
             if isSelected{

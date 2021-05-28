@@ -16,7 +16,7 @@ enum VerifyOtpType:Int {
     case SOCIAL_SIGNUP
 }
 
-class VerifyOtpVC: BaseViewController {
+class VerifyOtpVC: BaseLoginVC {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     @IBOutlet weak var lblTitle: UILabel!
@@ -120,7 +120,7 @@ class VerifyOtpVC: BaseViewController {
                             LoginRegisterEndpoint.socialRegister(socialId: self!.socialId!, email: self!.email, firstName: self!.firstName, lastName: self!.sirName, type: .facebook, image: self!.image!) { [weak self](response) in
                                 self?.hideLoader()
                                 if response.statusCode == 200 {
-                                    self?.navigationController?.push(HomeVC.self)
+                                    self?.goToNextScreen(response: response)
                                 }else {
                                     AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unkown error")
                                 }

@@ -34,7 +34,15 @@ class BaseViewController:UIViewController {
     @objc func showLoader(){
         DispatchQueue.main.async {
             SVProgressHUD.show()
+            
+        }
+        
+    }
+    
+    @objc func showProgress(progress:Float){
+        DispatchQueue.main.async {
             SVProgressHUD.setDefaultMaskType(.clear)
+            SVProgressHUD.showProgress(progress)
         }
         
     }
@@ -46,6 +54,32 @@ class BaseViewController:UIViewController {
     @objc func emptyViewTapped(_ gesture:UITapGestureRecognizer){
         self.view.endEditing(true)
     }
+    
 }
 
+
+class BaseLoginVC:BaseViewController{
+    
+    func goToNextScreen(response:LoginResponse?){
+        guard let profileSetup = response?.data?.profileStep else {
+            return
+        }
+        let onBoardingStatus = OnboardingStatus(rawValue: profileSetup - 1) ?? .NONE
+        SwayUserDefaults.shared.onBoardingScreenStatus = onBoardingStatus
+        switch onBoardingStatus {
+        case .NONE:
+            self.navigationController?.push(OnboardingStartVC.self)
+        case .INTRO__VIDEO_ONE:fallthrough
+        case .INTRO__VIDEO_TWO:fallthrough
+        case .INTRO__VIDEO_THREE:
+            self.navigationController?.push(HowOldVC.self)
+        case .PROFILE_AGE:
+            self.navigationController?.push(SelectGoalVC.self)
+        case .PROFILE_GOAL:
+            self.navigationController?.push(OnboardingEndVC.self)
+        case .CHALLENGE_SCREEN:
+            self.navigationController?.push(SwayTabbarVC.self)
+        }
+    }
+}
 

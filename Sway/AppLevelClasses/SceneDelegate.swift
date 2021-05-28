@@ -6,19 +6,25 @@
 //
 
 import UIKit
-
+import AVFoundation
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         (UIApplication.shared.delegate as? AppDelegate)?.window = window
+        window?.overrideUserInterfaceStyle = .light
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+        }catch {
+            print("error",error.localizedDescription)
+        }
+        
         openSplashScreen()
     }
 
@@ -56,10 +62,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate {
     private func openSplashScreen() {
         var rootVC:UINavigationController!
-        if let user = SwayUserDefaults.shared.loggedInUser {
+    if let user = SwayUserDefaults.shared.loggedInUser {
             DataManager.shared.loggedInUser = user
             DataManager.shared.isLoggedIn = true
-            rootVC = UINavigationController(rootViewController: OnboardingStartVC.instantiated())
+           switch SwayUserDefaults.shared.onBoardingScreenStatus {
+            case .NONE:
+                rootVC = UINavigationController(rootViewController: OnboardingStartVC.instantiated())
+            case .INTRO__VIDEO_ONE:
+                rootVC = UINavigationController(rootViewController:HowOldVC.instantiated())
+            case .PROFILE_AGE:
+                rootVC = UINavigationController(rootViewController:SelectGoalVC.instantiated())
+            case .PROFILE_GOAL:
+                rootVC = UINavigationController(rootViewController: OnboardingEndVC.instantiated())
+            case .CHALLENGE_SCREEN:
+                rootVC = UINavigationController(rootViewController: SwayTabbarVC.instantiated())
+            default:
+                rootVC = UINavigationController(rootViewController: OnboardingStartVC.instantiated())
+            }
+            
         }else {
             rootVC = UINavigationController(rootViewController: IntroViewController.instantiated())
         }
@@ -67,6 +87,15 @@ extension SceneDelegate {
         self.window?.rootViewController = rootVC
         
     }
+    
+    func logoutUser(){
+        DataManager.shared.setLoggedInUser(user: nil)
+        let rootVC = UINavigationController(rootViewController: LoginVC.instantiated())
+        rootVC.setNavigationBarHidden(true, animated: false)
+        self.window?.rootViewController = rootVC
+    }
 
 }
+
+
 

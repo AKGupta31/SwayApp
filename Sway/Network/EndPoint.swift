@@ -18,16 +18,31 @@ enum Endpoint {
     case signup(token: String,fName:String,lName:String,password:String,imageUrl:String)
     case forgotPassword(email:String)
     case resetPassword(email:String,password:String)
+    case updateOnboardingStatus(key:String,value:Any)
+    case getVideos(videoFor:Int)
+    
+    case getFeeds(page:Int,limit:Int,userId:String)
+    case postFeed(feedId:String,caption:String,feedType:WorkoutType,url:String,thumbnailUrl:String,mediaType:MediaTypes)
+    case deleteFeed(feedId:String)
+    case likeFeed(feedId:String)
+    case getPredefinedComments
+    case getComments(feedId:String,pageNumber:Int,limit:Int)
+    case postComment(feedId:String,comment:String)
+//    case updateFeed(feedId:String,caption:String,feedType:WorkoutType,url:String,thumbnailUrl:String,mediaType:MediaTypes)
 
     
     
     /// GET, POST or PUT method for each request
     var method:Alamofire.HTTPMethod {
         switch self {
-        case .login,.socialRegister,.socialLogin,.getOtpOnEmail,.signup,.forgotPassword,.resetPassword:
+        case .login,.socialRegister,.socialLogin,.getOtpOnEmail,.signup,.forgotPassword,.resetPassword,.likeFeed,.postComment:
             return .post
-        case .verifyEmail:
+        case .updateOnboardingStatus,.deleteFeed:
+            return .put
+        case .verifyEmail,.getVideos,.getFeeds,.getPredefinedComments,.getComments:
             return .get
+        case .postFeed(let feedId,_,_,_,_,_):
+            return feedId.isEmpty ? .post : .patch
         }
     }
     
@@ -64,6 +79,28 @@ enum Endpoint {
             return  Constants.Networking.kBaseUrl + interMediate + "forgot-password"
         case .resetPassword:
             return Constants.Networking.kBaseUrl + interMediate + "reset-password"
+        case .updateOnboardingStatus:
+            return Constants.Networking.kBaseUrl + interMediate + "profile"
+        case .getVideos(let videoFor):
+            return Constants.Networking.kBaseUrl + interMediate + "video/\(videoFor.description)"
+        case .getFeeds(let page,let limit,let userId):
+            let queryToAppend = userId.isEmpty ? "" : "&userId=\(userId)"
+           return Constants.Networking.kBaseUrl + interMediate +  "feed?pageNo=\(page)&limit=\(limit)" + queryToAppend
+        case .postFeed(let feedId,_,_,_,_,_):
+            if feedId.isEmpty {
+                return  Constants.Networking.kBaseUrl + interMediate +  "feed"
+            }
+            return Constants.Networking.kBaseUrl + interMediate + "feed/\(feedId)"
+        case .deleteFeed:
+            return  Constants.Networking.kBaseUrl + interMediate +  "update-feed-status"
+        case .likeFeed:
+            return Constants.Networking.kBaseUrl + interMediate + "like"
+        case .getPredefinedComments:
+            return Constants.Networking.kBaseUrl + interMediate + "pre-comment"
+        case .getComments(let feedId,let pageNumber,let limit):
+            return  Constants.Networking.kBaseUrl + interMediate + "comment?postId=\(feedId)&pageNo=\(pageNumber)&limit=\(limit)"
+        case .postComment:
+            return Constants.Networking.kBaseUrl + interMediate + "comment"
         }
     }
     
@@ -97,20 +134,40 @@ enum Endpoint {
             return ["email":email]
         case .resetPassword(let email,let password):
             return ["email":email,"password":password]
+        case .updateOnboardingStatus(let key,let value):
+            return [key:value]
+        case .getVideos,.getFeeds,.getPredefinedComments,.getComments:
+            return [:]
+        case .postFeed(_,let caption,let feedType,let url,let thumbnailUrl,let mediaType):
+        var mediaDic = [String:Any]()
+        mediaDic["url"] = url
+        mediaDic["thumbnailImage"] = thumbnailUrl
+        mediaDic["type"] = mediaType.intVal
+        var mainDict = [String:Any]()
+        mainDict["caption"] = caption
+            mainDict["feedType"] = feedType.rawValue.description
+        mainDict["media"] = mediaDic as Any
+        return mainDict
+        case .deleteFeed(let feedId):
+            return ["feedId":feedId,"status":"DELETED"]
+        case .likeFeed(let feedId):
+            return  ["postId":feedId]
+        case .postComment(let feedId,let comment):
+            return ["postId":feedId,"comment":comment]
         }
     }
     
     /// http header for each request (if needed)
     var header:HTTPHeaders? {
-        let headers = ["platform":"2","timezone":"0","api_key":"1234","language":"en"]
+        var headers = ["platform":"2","timezone":"0","api_key":"1234","language":"en"]
         switch self {
         case .socialRegister,.socialLogin,.login,.getOtpOnEmail,.signup,.forgotPassword,.resetPassword:
             return HTTPHeaders(headers)
         case .verifyEmail:
-//            let header = ["platform":"2","timezone":"0","api_key":"1234"]
             return HTTPHeaders(headers)
-        
-        
+        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment:
+            headers["authorization"] = "bearer " + (DataManager.shared.loggedInUser?.user?.accessToken ?? "")
+            return HTTPHeaders(headers)
         }
     }
 }

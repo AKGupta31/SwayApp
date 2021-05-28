@@ -58,7 +58,7 @@ extension GoogleSignInManager {
                 DataManager.shared.loggedInUser = response.data
                 SwayUserDefaults.shared.loggedInUser = response.data
                 
-                UserManager.saveSocialMediaCredentials(type: .google, token: accessToken, socialId: idToken, userId: response.data?._id ?? "")
+                UserManager.saveSocialMediaCredentials(type: .google, token: accessToken, socialId: idToken, userId: response.data?.user?._id ?? "")
                 self?.responseCallback?(true, response)
             }else {
                 //failure
@@ -84,7 +84,7 @@ extension GoogleSignInManager {
         }
     }
     
-    func handleResponse(response:SocialSignupResponse){
+    func handleResponse(response:LoginResponse){
         if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300 {
             self.responseCallback?(true,response)
         }else {

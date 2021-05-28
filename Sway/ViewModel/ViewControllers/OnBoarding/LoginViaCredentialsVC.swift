@@ -15,7 +15,7 @@ enum LoginResponseTypes:String {
     case emailNotVerified = "EMAIL_NOT_VERIFIED"
 }
 
-class LoginViaCredentialsVC: BaseViewController {
+class LoginViaCredentialsVC: BaseLoginVC {
     @IBOutlet weak var passwordField: CustomFloatingLabelField!
     @IBOutlet weak var btnPasswordEye: UIButton!
     
@@ -61,7 +61,8 @@ class LoginViaCredentialsVC: BaseViewController {
             self?.hideLoader()
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode < 300{
                 DataManager.shared.setLoggedInUser(user: response.data)
-                self?.navigationController?.push(HowOldVC.self)
+                self?.goToNextScreen(response: response)
+//                self?.navigationController?.push(OnboardingStartVC.self)
             }else{
                 //failures cases
                 if response.type == LoginResponseTypes.emailNotVerified.rawValue {

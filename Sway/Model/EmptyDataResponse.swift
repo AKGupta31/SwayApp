@@ -8,12 +8,11 @@
 import Foundation
 struct EmptyDataResponse : Codable {
     let statusCode : Int?
-    let message : String?
+    var message : String = "Unknown error"
     let type : String?
    
 
     enum CodingKeys: String, CodingKey {
-
         case statusCode = "statusCode"
         case message = "message"
         case type = "type"
@@ -28,7 +27,7 @@ struct EmptyDataResponse : Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         statusCode = try values.decodeIfPresent(Int.self, forKey: .statusCode)
-        message = try values.decodeIfPresent(String.self, forKey: .message)
+        message = try values.decodeIfPresent(String.self, forKey: .message) ?? "Unknown error"
         type = try values.decodeIfPresent(String.self, forKey: .type)
     }
 

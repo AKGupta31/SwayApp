@@ -39,35 +39,91 @@ struct LoginResponse : Codable {
 }
 
 struct LoginResponseData : Codable {
-    let email : String?
-    let isEmailVerified : Bool?
-    let _id : String?
-    let accessToken:String?
-    let firstName: String?
-    let lastName:String?
-    let userType: String?
-  
-
+    let profileStep : Int?
+    let user : User?
     enum CodingKeys: String, CodingKey {
 
-        case email = "email"
-        case isEmailVerified = "isEmailVerified"
-        case _id = "_id"
-        case accessToken = "accessToken"
-        case firstName = "firstName"
-        case lastName = "lastName"
-        case userType = "userType"
+        case profileStep = "profileStep"
+        case user = "user"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        email = try values.decodeIfPresent(String.self, forKey: .email)
-        isEmailVerified = try values.decodeIfPresent(Bool.self, forKey: .isEmailVerified)
-        _id = try values.decodeIfPresent(String.self, forKey: ._id)
-        accessToken = try values.decodeIfPresent(String.self, forKey: .accessToken)
-        firstName = try values.decodeIfPresent(String.self, forKey: .firstName)
-        lastName = try values.decodeIfPresent(String.self, forKey: .lastName)
-        userType = try values.decodeIfPresent(String.self, forKey: .userType)
+        profileStep = try values.decodeIfPresent(Int.self, forKey: .profileStep)
+        user = try values.decodeIfPresent(User.self, forKey: .user)
     }
 
 }
+
+struct User : Codable {
+    let _id : String?
+    let isIntroVideoOneSeen : Bool?
+    let isIntroVideoTwoSeen : Bool?
+    let firstName : String?
+    let lastName : String?
+    let fullName : String?
+    let isFacebookLogin : Bool?
+    let isGoogleLogin : Bool?
+    let isAppleLogin : Bool?
+    let isEmailVerified : Bool?
+    let profilePicture : String?
+    let isProfileComplete : Bool?
+    let userType : String?
+    let status : String?
+    let salt : String?
+    let hash : String?
+    let email : String?
+    let createdAt : Int?
+    let updatedAt : Int?
+    let accessToken : String?
+
+    enum CodingKeys: String, CodingKey {
+
+        case _id = "_id"
+        case isIntroVideoOneSeen = "isIntroVideoOneSeen"
+        case isIntroVideoTwoSeen = "isIntroVideoTwoSeen"
+        case firstName = "firstName"
+        case lastName = "lastName"
+        case fullName = "fullName"
+        case isFacebookLogin = "isFacebookLogin"
+        case isGoogleLogin = "isGoogleLogin"
+        case isAppleLogin = "isAppleLogin"
+        case isEmailVerified = "isEmailVerified"
+        case profilePicture = "profilePicture"
+        case isProfileComplete = "isProfileComplete"
+        case userType = "userType"
+        case status = "status"
+        case salt = "salt"
+        case hash = "hash"
+        case email = "email"
+        case createdAt = "createdAt"
+        case updatedAt = "updatedAt"
+        case accessToken = "accessToken"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        _id = try values.decodeIfPresent(String.self, forKey: ._id)
+        isIntroVideoOneSeen = try values.decodeIfPresent(Bool.self, forKey: .isIntroVideoOneSeen)
+        isIntroVideoTwoSeen = try values.decodeIfPresent(Bool.self, forKey: .isIntroVideoTwoSeen)
+        firstName = try values.decodeIfPresent(String.self, forKey: .firstName)
+        lastName = try values.decodeIfPresent(String.self, forKey: .lastName)
+        fullName = try values.decodeIfPresent(String.self, forKey: .fullName)
+        isFacebookLogin = try values.decodeIfPresent(Bool.self, forKey: .isFacebookLogin)
+        isGoogleLogin = try values.decodeIfPresent(Bool.self, forKey: .isGoogleLogin)
+        isAppleLogin = try values.decodeIfPresent(Bool.self, forKey: .isAppleLogin)
+        isEmailVerified = try values.decodeIfPresent(Bool.self, forKey: .isEmailVerified)
+        profilePicture = try values.decodeIfPresent(String.self, forKey: .profilePicture)
+        isProfileComplete = try values.decodeIfPresent(Bool.self, forKey: .isProfileComplete)
+        userType = try values.decodeIfPresent(String.self, forKey: .userType)
+        status = try values.decodeIfPresent(String.self, forKey: .status)
+        salt = try values.decodeIfPresent(String.self, forKey: .salt)
+        hash = try values.decodeIfPresent(String.self, forKey: .hash)
+        email = try values.decodeIfPresent(String.self, forKey: .email)
+        createdAt = try values.decodeIfPresent(Int.self, forKey: .createdAt)
+        updatedAt = try values.decodeIfPresent(Int.self, forKey: .updatedAt)
+        accessToken = try values.decodeIfPresent(String.self, forKey: .accessToken)
+    }
+
+}
+

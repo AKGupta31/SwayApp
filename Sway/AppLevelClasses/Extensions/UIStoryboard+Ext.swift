@@ -11,5 +11,6 @@ extension UIStoryboard {
    enum Name: String, StoryboardNameDescribable {
        case main = "Main"
        case onBoarding = "Onboarding"
+       case home = "Home"
    }
 }

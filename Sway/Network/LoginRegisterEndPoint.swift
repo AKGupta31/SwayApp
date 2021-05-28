@@ -24,12 +24,12 @@ class LoginRegisterEndpoint {
     }
  */
     
-    static func socialRegister(socialId: String, email: String, firstName:String,lastName:String, type: SocialMediaType, image: String, success: @escaping SuccessCompletionBlock<SocialSignupResponse>, failure: @escaping ErrorFailureCompletionBlock) {
-        Api.requestNew(endpoint: .socialRegister(socialId: socialId, email: email, firstName: firstName, lastName: lastName, type: type, profilePicture: image), type: SocialSignupResponse.self, successHandler: success, failureHandler: failure)
+    static func socialRegister(socialId: String, email: String, firstName:String,lastName:String, type: SocialMediaType, image: String, success: @escaping SuccessCompletionBlock<LoginResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .socialRegister(socialId: socialId, email: email, firstName: firstName, lastName: lastName, type: type, profilePicture: image), type: LoginResponse.self, successHandler: success, failureHandler: failure)
     }
     
-    static func socialLogin(socialId: String,type:SocialMediaType, success: @escaping SuccessCompletionBlock<SocialSignupResponse>, failure: @escaping ErrorFailureCompletionBlock) {
-        Api.requestNew(endpoint: .socialLogin(type: type, socialId: socialId), type: SocialSignupResponse.self, successHandler: success, failureHandler: failure)
+    static func socialLogin(socialId: String,type:SocialMediaType, success: @escaping SuccessCompletionBlock<LoginResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .socialLogin(type: type, socialId: socialId), type: LoginResponse.self, successHandler: success, failureHandler: failure)
     }
     
     static func login(with email: String,password:String, success: @escaping SuccessCompletionBlock<LoginResponse>, failure: @escaping ErrorFailureCompletionBlock) {
@@ -54,6 +54,14 @@ class LoginRegisterEndpoint {
     
     static func resetPassword(with email: String,password:String, success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {
         Api.requestNew(endpoint: .resetPassword(email: email, password: password), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
+    }
+    
+    static func updateOnboardingScreenStatus(key: String,value:Any, success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .updateOnboardingStatus(key: key, value: value), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
+    }
+    
+    static func getVideos(type: Int,success: @escaping SuccessCompletionBlock<VideoResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .getVideos(videoFor: type), type: VideoResponse.self, successHandler: success, failureHandler: failure)
     }
 }
     

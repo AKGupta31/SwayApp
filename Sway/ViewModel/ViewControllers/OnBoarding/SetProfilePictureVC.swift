@@ -12,6 +12,8 @@ import KDCircularProgress
 class SetProfilePictureVC: BaseViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var mainContainerView: UIView!
+    @IBOutlet weak var mainContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var btnUploadPhoto: UIButton!
     @IBOutlet weak var btnProfileImage: UIButton!
     @IBOutlet weak var lblTitle: UILabel!
@@ -35,7 +37,25 @@ class SetProfilePictureVC: BaseViewController {
         setupViews()
         setupProgress()
         scrollView.delegate = self
+        btnProfileImage.imageView?.contentMode = .scaleAspectFill
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if mainContainerHeight.constant < scrollView.frame.height {
+            mainContainerHeight.constant = scrollView.frame.height
+            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
+            self.mainContainerView.isUserInteractionEnabled = true
+            gesture.direction = .up
+            self.mainContainerView.addGestureRecognizer(gesture)
+        }
+    }
+    
+    @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
+        if gesture.direction == .up {
+            signupApi()
+        }
     }
     
     
@@ -89,6 +109,9 @@ extension SetProfilePictureVC:UIScrollViewDelegate {
                signupApi()
             }
         }else{
+            if profileImage != nil && profilePicture.isEmpty {
+                AlertView.showAlert(with: "Alert!!!", message: "Please wait while we are uploading your profile picture")
+            }
             print("do not call api")
         }
     }
@@ -149,7 +172,7 @@ extension SetProfilePictureVC {
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
 extension SetProfilePictureVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             self.btnProfileImage.setImage(image, for: .normal)
             profileImage = image
             progressViewInnerCircle.backgroundColor = UIColor(named: "kThemeYellow")
@@ -162,7 +185,6 @@ extension SetProfilePictureVC: UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true)
     }
-    
     private func uploadImageOnAws(selectedImage: UIImage) {
         selectedImage.uploadImageToS3(uploadFolderName: "", success: { [weak self] (status, urlString, imageName) in
             print("url is ",urlString)

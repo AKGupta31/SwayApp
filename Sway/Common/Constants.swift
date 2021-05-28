@@ -31,12 +31,22 @@ class Constants {
         static let s3BaseUrl = "https://appinventiv-development.s3.amazonaws.com/"
     }
     
+    
 }
 
 // MARK: - Media Enum
 enum MediaTypes : String {
     case kImage  = "public.image"
     case kVideo  = "public.movie"
+    
+    var intVal:Int {
+        switch self {
+        case .kImage:
+            return 1
+        case .kVideo:
+            return 2
+        }
+    }
 }
 
 enum S3MediaType: Int {

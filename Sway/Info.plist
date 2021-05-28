@@ -26,19 +26,30 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.819933948321-p030m6j0eqhf28bg9ug03d63p5ggcmlg</string>
-				<string>fb1385439288474621</string>
+				<string>fb224415792778012</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>1385439288474621</string>
+	<string>224415792778012</string>
 	<key>FacebookDisplayName</key>
-	<string>Sway</string>
+	<string>Sway App</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbapi20160328</string>
+		<string>fbauth</string>
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
@@ -58,6 +69,7 @@
 	<string>Sway want's to use your photo libarary to add profile image</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Lato-Bold</string>
 		<string>Poppins-Bold</string>
 		<string>Poppins-Regular</string>
 		<string>CircularStd-Book</string>

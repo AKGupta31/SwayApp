@@ -12,6 +12,7 @@ import KDCircularProgress
 
 class Register1VC: BaseViewController {
     
+    @IBOutlet weak var mainContainerView: UIView!
     @IBOutlet weak var progressViewInnerCircle: CustomView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var progressView: UIView!
@@ -59,8 +60,23 @@ class Register1VC: BaseViewController {
         // Do any additional setup after loading the view.
     }
     
-   
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if mainContainerView.frame.height < (self.view.frame.height - self.view.safeAreaInsets.top) {
+            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
+            self.mainContainerView.isUserInteractionEnabled = true
+            gesture.direction = .up
+            self.mainContainerView.addGestureRecognizer(gesture)
+        }
+    }
+    
+    @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
+        if gesture.direction == .up {
+            callRegisterApi()
+        }
+    }
+
   
     fileprivate func setupProgressView(){
         progress = KDCircularProgress(frame:progressView.bounds)
@@ -105,44 +121,53 @@ extension Register1VC:UITextFieldDelegate {
 
 extension Register1VC:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if isAllValid && !isAlreadyCallingApi{
-            let height = scrollView.frame.size.height
-            let contentYoffset = scrollView.contentOffset.y
-            let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-            if distanceFromBottom <= height {
-                let (isValid,error) = isAllFieldsValid()
-                if !isValid {
-                    AlertView.showAlert(with: "Opps!!!", message: error)
-                    isAlreadyCallingApi = false
-                    return
-                }
-                showLoader()
-                LoginRegisterEndpoint.getOtp(on: emailField.text!) { [weak self](response) in
-                    self?.hideLoader()
-                    self?.isAlreadyCallingApi = false
-                    if let statusCode = response.statusCode,statusCode == 200 {
-                        self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
-                            vc.email = self?.emailField.text ?? ""
-                            vc.type = self?.type ?? .SIGNUP
-                            vc.firstName = self?.firstNameField.text ?? ""
-                            vc.sirName = self?.sirnameField.text ?? ""
-                            vc.socialId = self?.socialId
-                            vc.image = self?.image
-                        })
-                    }else {
-                        AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown Error")
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
+            print("scroll downward")
+        }else {
+            print("scroll upword")
+            if isAllValid && !isAlreadyCallingApi{
+                let height = scrollView.frame.size.height
+                let contentYoffset = scrollView.contentOffset.y
+                let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+                if distanceFromBottom <= height {
+                    let (isValid,error) = isAllFieldsValid()
+                    if !isValid {
+                        AlertView.showAlert(with: "Opps!!!", message: error)
+                        isAlreadyCallingApi = false
+                        return
                     }
-                    
-                } failure: { [weak self](status) in
-                    self?.isAlreadyCallingApi = false
-                    self?.hideLoader()
-                    AlertView.showAlert(with: "Error!!!", message: status.msg)
+                    callRegisterApi()
+                }else {
+                    print("don't call api")
                 }
-                
-            }else {
-                print("don't call api")
             }
         }
+    }
+    
+    fileprivate func callRegisterApi(){
+        showLoader()
+        LoginRegisterEndpoint.getOtp(on: emailField.text!) { [weak self](response) in
+            self?.hideLoader()
+            self?.isAlreadyCallingApi = false
+            if let statusCode = response.statusCode,statusCode == 200 {
+                self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
+                    vc.email = self?.emailField.text ?? ""
+                    vc.type = self?.type ?? .SIGNUP
+                    vc.firstName = self?.firstNameField.text ?? ""
+                    vc.sirName = self?.sirnameField.text ?? ""
+                    vc.socialId = self?.socialId
+                    vc.image = self?.image
+                })
+            }else {
+                AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown Error")
+            }
+            
+        } failure: { [weak self](status) in
+            self?.isAlreadyCallingApi = false
+            self?.hideLoader()
+            AlertView.showAlert(with: "Error!!!", message: status.msg)
+        }
+
     }
     
     func isAllFieldsValid() -> (Bool,String){

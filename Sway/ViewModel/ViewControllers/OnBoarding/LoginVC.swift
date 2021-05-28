@@ -8,7 +8,7 @@
 import UIKit
 import ViewControllerDescribable
 
-class LoginVC: BaseViewController {
+class LoginVC: BaseLoginVC {
     @IBOutlet weak var lblSignup: UILabel!
     
     @available(iOS 13.0, *)
@@ -35,12 +35,15 @@ class LoginVC: BaseViewController {
             showLoader()
             appleManager.logIn(from: self) { [weak self](isSuccess, response) in
                 self?.hideLoader()
-                if isSuccess {
-                    self?.navigationController?.push(HomeVC.self)
-//                    self?.view.makeToast("Login Success", duration: 3.0, position: .center)
-                }else {
-                    AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
-                }
+                self?.handleLoginResponse(isSuccess: isSuccess, response: response)
+//                if isSuccess {
+//                    DataManager.shared.setLoggedInUser(user: response?.data)
+//                    self?.goToNextScreen(response: response)
+////                    self?.navigationController?.push(HomeVC.self)
+////                    self?.view.makeToast("Login Success", duration: 3.0, position: .center)
+//                }else {
+//                    AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+//                }
             }
         } else {
             // Fallback on earlier versions
@@ -51,15 +54,24 @@ class LoginVC: BaseViewController {
         self.showLoader()
         FacebookLoginManager.shared.login(viewController: self) {[weak self] (isSuccess,response) in
             self?.hideLoader()
-            if isSuccess {
-                DataManager.shared.setLoggedInUser(user: response?.data)
-                self?.navigationController?.push(HomeVC.self)
-//                self.view.makeToast("Login Success", duration: 3.0, position: .center)
-            }else {
-                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
-            }
-           
-            
+            self?.handleLoginResponse(isSuccess: isSuccess, response: response)
+//            if isSuccess {
+//                DataManager.shared.setLoggedInUser(user: response?.data)
+//
+//                self?.navigationController?.push(HomeVC.self)
+////                self.view.makeToast("Login Success", duration: 3.0, position: .center)
+//            }else {
+//                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+//            }
+        }
+    }
+    
+    fileprivate func handleLoginResponse(isSuccess:Bool,response:LoginResponse?){
+        if isSuccess {
+            DataManager.shared.setLoggedInUser(user: response?.data)
+            self.goToNextScreen(response: response)
+        }else {
+            AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
         }
     }
     

@@ -22,7 +22,10 @@ enum SetPasswordType:String {
 }
 
 class SetupPasswordVC: BaseViewController {
-
+    @IBOutlet weak var mainContainerView: UIView!
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var mainContentViewHeight: NSLayoutConstraint!
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var lblStep: UILabel!
     @IBOutlet weak var btnResetPassword: CustomButton!
@@ -51,6 +54,23 @@ class SetupPasswordVC: BaseViewController {
         updateTitle()
         passwordLogLabel.text = ""
         confirmPasswordLogLabel.text = ""
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if mainContentViewHeight.constant < scrollView.frame.height {
+            mainContentViewHeight.constant = scrollView.frame.height
+            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
+            self.mainContainerView.isUserInteractionEnabled = true
+            gesture.direction = .up
+            self.mainContainerView.addGestureRecognizer(gesture)
+        }
+    }
+    
+    @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
+        if gesture.direction == .up {
+            callSetPasswordApi()
+        }
     }
     
     private func updateTitle(){
@@ -184,30 +204,31 @@ extension SetupPasswordVC:UITextFieldDelegate {
 
 extension SetupPasswordVC:UIScrollViewDelegate{
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if isFieldsValid {
-            let height = scrollView.frame.size.height
-            let contentYoffset = scrollView.contentOffset.y
-            let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-            
-            if distanceFromBottom <= height {
-                let (isValid,error) = isAllFieldsValid()
-                if !isValid {
-                    AlertView.showAlert(with: "Opps!!!", message: error)
-                    return
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
+            print("scroll downward")
+        }else {
+            print("scroll upword")
+            if isFieldsValid {
+                let height = scrollView.frame.size.height
+                let contentYoffset = scrollView.contentOffset.y
+                let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+                if distanceFromBottom <= height {
+                    let (isValid,error) = isAllFieldsValid()
+                    if !isValid {
+                        AlertView.showAlert(with: "Opps!!!", message: error)
+                        return
+                    }
+                    self.navigationController?.push(SetProfilePictureVC.self, animated: true, configuration: { (vc) in
+                        vc.firstName = self.firstName!
+                        vc.password = self.passwordField.text!
+                        vc.lastName = self.sirName!
+                        vc.token = self.token!
+                    })
+                }else {
+                    print("don't call api")
                 }
-                self.navigationController?.push(SetProfilePictureVC.self, animated: true, configuration: { (vc) in
-                    vc.firstName = self.firstName!
-                    vc.password = self.passwordField.text!
-                    vc.lastName = self.sirName!
-                    vc.token = self.token!
-                })
-                
-                
-            }else {
-                print("don't call api")
             }
         }
-        
     }
     
     fileprivate func callSetPasswordApi(){

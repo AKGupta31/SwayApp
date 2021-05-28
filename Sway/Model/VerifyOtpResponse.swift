@@ -34,13 +34,12 @@ struct VerifyOtpResponse : Codable {
 struct VerifyOtpData : Codable {
     let email : String?
     let token : String?
- 
 
     enum CodingKeys: String, CodingKey {
         case email = "email"
         case token = "token"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         email = try values.decodeIfPresent(String.self, forKey: .email)

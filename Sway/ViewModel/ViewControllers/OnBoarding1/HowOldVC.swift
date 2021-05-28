@@ -22,8 +22,9 @@ class HowOldVC: BaseViewController {
     @IBOutlet weak var pickerView: UIPickerView!
    
     @IBOutlet weak var progressView: UIView!
-    
     var progress:KDCircularProgress!
+    
+    var items = [Int]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,8 +33,14 @@ class HowOldVC: BaseViewController {
         pickerView.backgroundColor = UIColor.white
         pickerView.subviews.first?.backgroundColor = UIColor.white
         pickerView.layer.sublayers?[0].backgroundColor = UIColor.white.cgColor
+        
         // Do any additional setup after loading the view.
         setupTitle()
+        for i in 12...80{
+            items.append(i)
+        }
+        
+        
         
         
     }
@@ -41,7 +48,7 @@ class HowOldVC: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         mainContainerHeight.constant = 768 + self.view.safeAreaInsets.top
-        
+        pickerView.subviews[1].backgroundColor = UIColor.clear
         if mainContainerHeight.constant < (self.view.frame.height - self.view.safeAreaInsets.top) {
             let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
             self.mainContainerView.isUserInteractionEnabled = true
@@ -50,8 +57,21 @@ class HowOldVC: BaseViewController {
         }
     }
     
+    @IBAction func actionQuestionMark(_ sender: UIButton) {
+        self.navigationController?.push(OnboardingStartVC.self, animated: true, configuration: { (vc) in
+            vc.videoType = 2
+        })
+    }
+    
+    @IBAction func actionSkip(_ sender: UIButton) {
+        updateStatus(age: 0)
+        self.navigationController?.push(SelectGoalVC.self)
+    }
+    
+    
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
         if gesture.direction == .up {
+            updateStatus(age: 0)
             self.navigationController?.push(SelectGoalVC.self)
         }
     }
@@ -76,7 +96,7 @@ extension HowOldVC:UIPickerViewDelegate,UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 120
+        return items.count
     }
     
     
@@ -97,7 +117,7 @@ extension HowOldVC:UIPickerViewDelegate,UIPickerViewDataSource {
         pickerView.subviews.first?.subviews.last?.backgroundColor = UIColor.white
         let view = UIView(frame: CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 50))
         let label = UILabel(frame: view.bounds)
-        let string = row.description
+        let string = items[row].description
         let attributedString = NSMutableAttributedString(string: string)
         attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "Poppins-Bold", size:28)!, range: _NSRange(location: 0, length: string.count))
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(named: "kThemeNavyBlue")!, range: _NSRange(location: 0, length: string.count))
@@ -142,14 +162,35 @@ extension HowOldVC:UIPickerViewDelegate,UIPickerViewDataSource {
 
 extension HowOldVC:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        let height = scrollView.frame.size.height
-        let contentYoffset = scrollView.contentOffset.y
-        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-        if distanceFromBottom <= height {
-            self.navigationController?.push(SelectGoalVC.self)
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
+            print("scroll downward")
         }else {
-            print("don't call api")
+            print("scroll upword")
+            let height = scrollView.frame.size.height
+            let contentYoffset = scrollView.contentOffset.y
+            let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+            if distanceFromBottom <= height {
+                let selectedRow = pickerView.selectedRow(inComponent: 0)
+                updateStatus(age: items[selectedRow])
+                self.navigationController?.push(SelectGoalVC.self)
+            }else {
+                print("don't call api")
+            }
         }
+        
+        
+    }
+    
+    func updateStatus(age:Int){
+        
+        LoginRegisterEndpoint.updateOnboardingScreenStatus(key: "age", value: age) { (response) in
+            if response.statusCode == 200 {
+                SwayUserDefaults.shared.onBoardingScreenStatus = .PROFILE_AGE
+            }
+        } failure: { (status) in
+            
+        }
+
     }
 }
 

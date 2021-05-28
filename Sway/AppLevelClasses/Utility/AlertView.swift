@@ -9,7 +9,7 @@ import UIKit
 
 class AlertView {
     
-    static func showAlert(with title:String,message:String,on viewController:UIViewController? = nil){
+    static func showAlert(with title:String?,message:String,on viewController:UIViewController? = nil){
         var presentingVC = viewController
         if presentingVC == nil {
             presentingVC = UIApplication.topViewController

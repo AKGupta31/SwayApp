@@ -12,36 +12,96 @@ import Player
 class OnboardingStartVC: BaseViewController {
     @IBOutlet weak var playerView: UIView!
     
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblDescription: UILabel!
+    @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var imgVideoThumb: UIImageView!
-    var player:Player!
+    var player:Player?
+    
+    var videoType = 1
+    
+    private var videoResponse:VideoResponse!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupPlayer()
+        
+        getApiData()
+        self.lblTitle.isHidden = true
+        self.lblDescription.isHidden = true
+        if videoType == 2 {
+            self.btnSkip.setImage(UIImage(named: "ic_cross_white_medium"), for: .normal)
+//            self.lblDescription.text = ""
+//            self.lblTitle.text = "How does my age affect my plan?"
+            
+            
+            self.btnSkip.setTitle(nil, for: .normal)
+        }
         // Do any additional setup after loading the view.
     }
     
+    func getApiData(){
+        if self.videoType == 2 {
+            guard let path = Bundle.main.path(forResource: "HowAgeAffectMyPlan", ofType:"mp4")else {
+                return
+            }
+            let url = URL(fileURLWithPath: path)
+            self.setupPlayer(videoUrl: url)
+        }else {
+            LoginRegisterEndpoint.getVideos(type: videoType) { [weak self](response) in
+                if response.statusCode == 200 {
+                    guard let videoUrlStr = response.data?.media?.url,let videoUrl = URL(string: videoUrlStr) else {return}
+                    self?.setupPlayer(videoUrl: videoUrl)
+                }else {
+                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                }
+            } failure: { (status) in
+                AlertView.showAlert(with: "Error!!!", message: status.msg)
+            }
+        }
+        
+
+    }
+    
    
-    func setupPlayer(){
-       
+    func setupPlayer(videoUrl:URL){
         self.player = Player()
-        self.player.playerDelegate = self
-        self.player.playbackDelegate = self
-        self.player.url = URL(string: "http://techslides.com/demos/sample-videos/small.mp4")!
-        self.player.view.frame = self.view.bounds
-        self.player.fillMode = .resizeAspectFill
-        self.addChild(self.player)
-        self.playerView.addSubview(self.player.view)
-        self.player.didMove(toParent: self)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.player.playFromBeginning()
+        self.player?.playerDelegate = self
+        self.player?.playbackDelegate = self
+        self.player?.url = videoUrl
+            //videoUrl
+        self.player?.view.frame = self.view.bounds
+        self.player?.fillMode = .resizeAspectFill
+        self.player?.volume = 1.0
+        self.addChild(self.player!)
+        self.playerView.addSubview(self.player!.view)
+        self.player?.didMove(toParent: self)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.player?.playFromBeginning()
         }
     }
     
     @IBAction func actionSkip(_ sender: UIButton) {
-        player.pause()
-        player.playerDelegate = nil
-        player.playbackDelegate = nil
-        self.navigationController?.push(HowOldVC.self)
+        player?.pause()
+        player?.playerDelegate = nil
+        player?.playbackDelegate = nil
+        if self.videoType == 2 {
+            self.navigationController?.popViewController(animated: true)
+        }else if self.videoType == 1 {
+            updateStatus()
+            self.navigationController?.push(HowOldVC.self)
+        }
+      
+    }
+    
+    func updateStatus(){
+        LoginRegisterEndpoint.updateOnboardingScreenStatus(key: "isIntroVideoOneSeen", value: true) { (response) in
+            if response.statusCode == 200 {
+                SwayUserDefaults.shared.onBoardingScreenStatus = .INTRO__VIDEO_ONE
+            }
+            
+        } failure: { (status) in
+            
+        }
     }
 }
 
@@ -75,9 +135,15 @@ extension OnboardingStartVC:PlayerDelegate ,PlayerPlaybackDelegate{
     }
     
     func playerPlaybackDidEnd(_ player: Player) {
-        player.playerDelegate = nil
-        player.playbackDelegate = nil
-        self.navigationController?.push(HowOldVC.self)
+        if self.videoType == 2 {
+            self.player?.playFromBeginning()
+        }else {
+            player.playerDelegate = nil
+            player.playbackDelegate = nil
+            self.navigationController?.push(HowOldVC.self)
+            updateStatus()
+        }
+       
     }
     
     func playerPlaybackWillLoop(_ player: Player) {

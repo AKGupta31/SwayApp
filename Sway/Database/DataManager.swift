@@ -9,12 +9,15 @@ import Foundation
 
 class DataManager {
     static let shared = DataManager()
-    private init() {}
+    private init() {
+        
+    }
     
     var isLoggedIn = false
     var loggedInUser:LoginResponseData? = nil
     var deviceId = "ashishadafada"
     var deviceToken = "ashish1233222"
+    var predefinedComments = [PredefinedComment]()
     
     func setLoggedInUser(user:LoginResponseData?){
         SwayUserDefaults.shared.loggedInUser = user

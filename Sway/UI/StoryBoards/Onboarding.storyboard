@@ -55,18 +55,17 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="actionSkip:" destination="ZdZ-ap-5UT" eventType="touchUpInside" id="2pP-lw-toN"/>
                                     <action selector="actionSkip:" destination="8Xj-U0-SfL" eventType="touchUpInside" id="oV9-ZI-j2q"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hey there! " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JGY-Ig-liN">
-                                <rect key="frame" x="16" y="685" width="382" height="61"/>
+                                <rect key="frame" x="16" y="665.5" width="382" height="73"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Its so good to see you here." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbd-uY-qIL">
-                                <rect key="frame" x="16" y="746" width="382" height="84"/>
+                                <rect key="frame" x="16" y="738.5" width="382" height="91.5"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="36"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -90,7 +89,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnSkip" destination="PBP-GU-h6z" id="CRg-zp-ZnB"/>
                         <outlet property="imgVideoThumb" destination="5Vp-1t-4tZ" id="lT8-gN-aDo"/>
+                        <outlet property="lblDescription" destination="fbd-uY-qIL" id="hFH-Nz-1ar"/>
+                        <outlet property="lblTitle" destination="JGY-Ig-liN" id="siG-Jo-Nfh"/>
                         <outlet property="playerView" destination="gwR-mf-1Ov" id="QIC-pP-t9i"/>
                     </connections>
                 </viewController>
@@ -118,6 +120,20 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ust-4K-r5M" userLabel="MainContainer">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                                                 <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iyf-bm-YxV">
+                                                        <rect key="frame" x="352" y="16" width="50" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="36" id="WeW-cv-urT"/>
+                                                            <constraint firstAttribute="width" constant="50" id="ke4-8A-njD"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
+                                                        <state key="normal" title="Skip">
+                                                            <color key="titleColor" name="k124123132"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="actionSkip:" destination="HcZ-q9-WkS" eventType="touchUpInside" id="jig-rQ-Wlk"/>
+                                                        </connections>
+                                                    </button>
                                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yyP-m8-r0k">
                                                         <rect key="frame" x="157" y="313" width="100" height="300"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -213,7 +229,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How does my age affect my plan" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lT6-lB-kdK" userLabel="Step 1/3">
-                                                        <rect key="frame" x="135" y="628.5" width="144" height="35.5"/>
+                                                        <rect key="frame" x="135" y="631" width="144" height="33"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="144" id="3oL-Mt-eTA"/>
                                                         </constraints>
@@ -222,11 +238,15 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vN-ap-M3w">
-                                                        <rect key="frame" x="203" y="664" width="8" height="32"/>
+                                                        <rect key="frame" x="191" y="664" width="32" height="32"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" constant="32" id="PAk-hQ-3TA"/>
                                                             <constraint firstAttribute="height" constant="32" id="QUX-yD-8fk"/>
                                                         </constraints>
                                                         <state key="normal" image="ic_question_mark"/>
+                                                        <connections>
+                                                            <action selector="actionQuestionMark:" destination="HcZ-q9-WkS" eventType="touchUpInside" id="ZSD-w0-QVa"/>
+                                                        </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TiJ-6Z-NrN" userLabel="ProgressView">
                                                         <rect key="frame" x="157" y="696" width="100" height="100"/>
@@ -274,6 +294,7 @@
                                                     <constraint firstItem="xP8-kJ-kzm" firstAttribute="centerX" secondItem="yyP-m8-r0k" secondAttribute="centerX" id="LMk-2R-mAC"/>
                                                     <constraint firstItem="SjI-c3-tHY" firstAttribute="centerX" secondItem="yyP-m8-r0k" secondAttribute="centerX" id="LgN-HX-g0p"/>
                                                     <constraint firstItem="SjI-c3-tHY" firstAttribute="leading" secondItem="yyP-m8-r0k" secondAttribute="leading" id="Nzg-YG-C69"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Iyf-bm-YxV" secondAttribute="trailing" constant="12" id="S20-cy-7v8"/>
                                                     <constraint firstAttribute="bottom" secondItem="TiJ-6Z-NrN" secondAttribute="bottom" constant="16" id="WYN-Ds-d7m"/>
                                                     <constraint firstItem="SjI-c3-tHY" firstAttribute="centerY" secondItem="yyP-m8-r0k" secondAttribute="centerY" constant="-50" id="X8A-xx-ny8"/>
                                                     <constraint firstItem="FZj-wU-evn" firstAttribute="centerX" secondItem="Ust-4K-r5M" secondAttribute="centerX" id="a7P-nm-Z19"/>
@@ -285,6 +306,7 @@
                                                     <constraint firstItem="TiJ-6Z-NrN" firstAttribute="centerX" secondItem="Ust-4K-r5M" secondAttribute="centerX" id="uE6-Jz-6Pd"/>
                                                     <constraint firstItem="AhO-9l-qNv" firstAttribute="leading" secondItem="xP8-kJ-kzm" secondAttribute="leading" id="v9d-pr-TfW"/>
                                                     <constraint firstItem="xP8-kJ-kzm" firstAttribute="leading" secondItem="yyP-m8-r0k" secondAttribute="leading" id="vG6-UZ-sk0"/>
+                                                    <constraint firstItem="Iyf-bm-YxV" firstAttribute="top" secondItem="Ust-4K-r5M" secondAttribute="top" constant="16" id="vjD-mn-SoY"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -378,7 +400,7 @@
                                                                                 <rect key="frame" x="45" y="20" width="35" height="35"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNo-D4-9JD">
-                                                                                <rect key="frame" x="16" y="59" width="93" height="35.5"/>
+                                                                                <rect key="frame" x="16" y="59" width="93" height="33"/>
                                                                                 <string key="text">Lose 
 Weight</string>
                                                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
@@ -404,7 +426,7 @@ Weight</string>
                                                                                 <rect key="frame" x="45" y="20" width="35" height="35"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQo-sR-scf">
-                                                                                <rect key="frame" x="16" y="59" width="93" height="35.5"/>
+                                                                                <rect key="frame" x="16" y="59" width="93" height="33"/>
                                                                                 <string key="text">Gain
 Muscle</string>
                                                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
@@ -435,7 +457,7 @@ Muscle</string>
                                                                                 <rect key="frame" x="44.5" y="20" width="36" height="35"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OjK-Zy-kF5">
-                                                                                <rect key="frame" x="16" y="59" width="93" height="35.5"/>
+                                                                                <rect key="frame" x="16" y="59" width="93" height="33"/>
                                                                                 <string key="text">Get Pre-baby 
 Body Back</string>
                                                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
@@ -461,7 +483,7 @@ Body Back</string>
                                                                                 <rect key="frame" x="45" y="21.5" width="35" height="32"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfE-du-b5O">
-                                                                                <rect key="frame" x="16" y="57.5" width="93" height="35.5"/>
+                                                                                <rect key="frame" x="16" y="57.5" width="93" height="33"/>
                                                                                 <string key="text">Have
 Fun</string>
                                                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
@@ -492,7 +514,7 @@ Fun</string>
                                                                                 <rect key="frame" x="45" y="20" width="35" height="35"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwF-jo-6YX">
-                                                                                <rect key="frame" x="16" y="59" width="93" height="35.5"/>
+                                                                                <rect key="frame" x="16" y="59" width="93" height="33"/>
                                                                                 <string key="text">Dance 
 More</string>
                                                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
@@ -518,7 +540,7 @@ More</string>
                                                                                 <rect key="frame" x="45" y="20" width="35" height="35"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KE0-O1-Nch">
-                                                                                <rect key="frame" x="16" y="59" width="93" height="35.5"/>
+                                                                                <rect key="frame" x="16" y="59" width="93" height="33"/>
                                                                                 <string key="text">Get
 Toned</string>
                                                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
@@ -666,7 +688,7 @@ Toned</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Hx9-YO-Jk0">
-                                <rect key="frame" x="16" y="392" width="382" height="224"/>
+                                <rect key="frame" x="16" y="392" width="382" height="140"/>
                                 <string key="text">One moment, 
 I'm finding the best challenges for you</string>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="40"/>
@@ -717,6 +739,66 @@ I'm finding the best challenges for you</string>
             </objects>
             <point key="canvasLocation" x="2688" y="117"/>
         </scene>
+        <!--Sway TabbarVC-->
+        <scene sceneID="Zat-Kj-Cgn">
+            <objects>
+                <tabBarController storyboardIdentifier="SwayTabbarVC" id="8aa-P1-KGY" customClass="SwayTabbarVC" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5gh-W1-CRs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="6yd-tT-N3J" kind="relationship" relationship="viewControllers" id="Tvp-cF-dug"/>
+                        <segue destination="7LY-ID-yL0" kind="relationship" relationship="viewControllers" id="nGV-p4-DW4"/>
+                        <segue destination="Wy6-F4-5QB" kind="relationship" relationship="viewControllers" id="1V3-mq-tle"/>
+                        <segue destination="TRi-cS-qnh" kind="relationship" relationship="viewControllers" id="fIT-j1-RcQ"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gTb-ZJ-pF5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3517" y="110"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="nDx-iY-LoQ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Home" id="6yd-tT-N3J" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Feeds" image="ic_feed_unselected" selectedImage="ic_feed_selected" id="8ne-bo-VBy"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lDt-Io-gzY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4582" y="-131"/>
+        </scene>
+        <!--Planner-->
+        <scene sceneID="umK-x6-aT4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Planner" id="7LY-ID-yL0" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Srf-nT-q9B"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MHB-cv-tJb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4573" y="2"/>
+        </scene>
+        <!--Workouts-->
+        <scene sceneID="x7O-Ys-1d6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Workouts" id="Wy6-F4-5QB" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="TCs-WX-oKR"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sRU-LS-ybJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4580" y="163"/>
+        </scene>
+        <!--Progress-->
+        <scene sceneID="9gd-aJ-acU">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Progress" id="TRi-cS-qnh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="NRy-Ya-9gs"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mD7-2C-7Iu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4583" y="337"/>
+        </scene>
     </scenes>
     <resources>
         <image name="howOld_bg" width="375" height="812"/>
@@ -724,6 +806,8 @@ I'm finding the best challenges for you</string>
         <image name="ic_back" width="9" height="16.5"/>
         <image name="ic_body" width="36" height="35"/>
         <image name="ic_dance" width="35" height="35"/>
+        <image name="ic_feed_selected" width="21.5" height="21"/>
+        <image name="ic_feed_unselected" width="21.5" height="21"/>
         <image name="ic_fun" width="35" height="32"/>
         <image name="ic_image_3" width="375" height="812"/>
         <image name="ic_loose_weight" width="35" height="35"/>

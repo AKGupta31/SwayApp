@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import SVProgressHUD
 
 
 typealias SuccessCompletionBlock<T> = ( _ response: T ) -> Void
@@ -30,9 +31,9 @@ struct Api {
         
         let customRefreshRetrier: RequestRetrier & RequestAdapter = CustomRequestRetrier(endpoint: endpoint)
         let interceptor = Interceptor(adapter: customRefreshRetrier, retrier: customRefreshRetrier)
-        print("url is ",url)
-        print("params are : ",endpoint.parameters)
-        print("headers are ",endpoint.header ?? "")
+//        print("url is ",url)
+//        print("params are : ",endpoint.parameters)
+//        print("headers are ",endpoint.header ?? "")
         AF.request(url,
                    method: endpoint.method,
                    parameters: endpoint.parameters,
@@ -89,13 +90,27 @@ struct Api {
     static private func handleSuccessNew<T: Codable>(type: T.Type, response: DataResponse<Any, AFError>, successHandler: @escaping SuccessCompletionBlock<T>, failureHandler: @escaping ErrorFailureCompletionBlock) {
         if let value = response.data {
             do {
-                let decodableObject = try JSONDecoder().decode(T.self, from: value)
-                successHandler(decodableObject)
+                let emptyDataResponse = try JSONDecoder().decode(EmptyDataResponse.self, from: value)
+                if emptyDataResponse.statusCode == UserEnum.USER_BLOCKED.rawValue || emptyDataResponse.statusCode == UserEnum.USER_DELETED.rawValue || emptyDataResponse.type == "SESSION_EXPIRED" {
+                    handleUserDeletedOrBlocked()
+                }else {
+                    let decodableObject = try JSONDecoder().decode(T.self, from: value)
+                    successHandler(decodableObject)
+                }
+
             }catch {
                 failureHandler(.init(msg: error.localizedDescription))
             }
         }else {
             failureHandler(.init(msg: "Unable to get body data"))
+        }
+    }
+    
+    static func handleUserDeletedOrBlocked(){
+        SVProgressHUD.dismiss()
+        let scene = UIApplication.shared.connectedScenes.first
+        if let sceneDelegate = scene?.delegate as? SceneDelegate {
+            sceneDelegate.logoutUser()
         }
     }
     
@@ -176,5 +191,41 @@ struct Api {
                 
             }
         })
+    }
+    
+    static func downloadFile(with url:URL,progressBlock:((_ progress:CGFloat)->())?,completion:((_ url:URL?,_ error:Error?)->())?){
+        let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory,in: .userDomainMask,options: .removePreviousFile)
+    
+//        FileManager.init().clearTmpDirectory()
+
+        AF.download(
+            url,
+            method: .get,
+            encoding: JSONEncoding.default,
+            headers: nil,
+            to: destination).downloadProgress(closure: { (progress) in
+                //progress closure
+                print("download",progress)
+                progressBlock?(CGFloat(progress.fractionCompleted))
+            }).response(completionHandler: { (defaultDownloadResponse) in
+                //here you able to access the DefaultDownloadResponse
+                //result closure
+                completion?(defaultDownloadResponse.fileURL,defaultDownloadResponse.error)
+//                print("url is ",defaultDownloadResponse.fileURL)
+            })
+    }
+}
+
+extension FileManager {
+    func clearTmpDirectory() {
+        do {
+            let tmpDirectory = try contentsOfDirectory(atPath: NSTemporaryDirectory())
+            try tmpDirectory.forEach {[unowned self] file in
+                let path = String.init(format: "%@%@", NSTemporaryDirectory(), file)
+                try self.removeItem(atPath: path)
+            }
+        } catch {
+            print(error)
+        }
     }
 }

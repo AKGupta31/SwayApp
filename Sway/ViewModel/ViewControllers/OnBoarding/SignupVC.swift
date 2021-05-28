@@ -7,7 +7,7 @@
 
 import UIKit
 import ViewControllerDescribable
-class SignupVC: BaseViewController {
+class SignupVC: BaseLoginVC {
 
     @IBOutlet weak var lblLogin: UILabel!
     @available(iOS 13.0, *)
@@ -29,14 +29,15 @@ class SignupVC: BaseViewController {
             showLoader()
             appleManager.logIn(from: self) { [weak self](isSuccess, response) in
                 self?.hideLoader()
-                if isSuccess {
-                    DataManager.shared.setLoggedInUser(user: response?.data)
-                    self?.navigationController?.push(HomeVC.self)
-//                    self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
-                }else {
-                    //show error
-                    AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
-                }
+                self?.handleSignupResponse(isSuccess: isSuccess, response: response)
+//                if isSuccess {
+//                    DataManager.shared.setLoggedInUser(user: response?.data)
+//                    self?.navigationController?.push(HomeVC.self)
+////                    self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
+//                }else {
+//                    //show error
+//                    AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+//                }
             }
         } else {
             // Fallback on earlier versions
@@ -44,29 +45,40 @@ class SignupVC: BaseViewController {
     }
     
     @IBAction func actionGoogleSignIn(_ sender: UIButton) {
-        GoogleSignInManager.shared.signIn(presentingVC: self) { (isSuccess,response) in
-            self.hideLoader()
-            if isSuccess {
-                DataManager.shared.setLoggedInUser(user: response?.data)
-                self.navigationController?.push(HomeVC.self)
-//                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
-            }else {
-                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
-            }
+        GoogleSignInManager.shared.signIn(presentingVC: self) { [weak self] (isSuccess,response) in
+            self?.hideLoader()
+            self?.handleSignupResponse(isSuccess: isSuccess, response: response)
+//            if isSuccess {
+//                DataManager.shared.setLoggedInUser(user: response?.data)
+//                self.navigationController?.push(HomeVC.self)
+////                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
+//            }else {
+//                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+//            }
+        }
+    }
+    
+    fileprivate func handleSignupResponse(isSuccess:Bool,response:LoginResponse?){
+        if isSuccess {
+            DataManager.shared.setLoggedInUser(user: response?.data)
+            self.goToNextScreen(response: response)
+        }else {
+            AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
         }
     }
     
     @IBAction func actionFacebookSignup(_ sender: UIButton) {
         showLoader()
-        FacebookLoginManager.shared.login(viewController: self) { (isSuccess,response) in
-            self.hideLoader()
-            if isSuccess {
-                DataManager.shared.setLoggedInUser(user: response?.data)
-                self.navigationController?.push(HomeVC.self)
-//                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
-            }else {
-                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error",on: self)
-            }
+        FacebookLoginManager.shared.login(viewController: self) { [weak self](isSuccess,response) in
+            self?.hideLoader()
+            self?.handleSignupResponse(isSuccess: isSuccess, response: response)
+//            if isSuccess {
+//                DataManager.shared.setLoggedInUser(user: response?.data)
+//                self.navigationController?.push(HomeVC.self)
+////                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
+//            }else {
+//                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error",on: self)
+//            }
         }
     }
     

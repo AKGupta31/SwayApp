@@ -17,10 +17,22 @@ class OnboardingEndVC: BaseViewController {
     }
 
     @IBAction func actionViewMyChallange(_ sender: UIButton) {
+        updateStatus()
+        self.navigationController?.push(SwayTabbarVC.self)
     }
     
     @IBAction func actionCross(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func updateStatus(){
+        LoginRegisterEndpoint.updateOnboardingScreenStatus(key: "isChallengeScreenSeen", value: true) { (response) in
+            if response.statusCode == 200 {
+                SwayUserDefaults.shared.onBoardingScreenStatus = .CHALLENGE_SCREEN
+            }
+        } failure: { (status) in
+            
+        }
     }
 }
 

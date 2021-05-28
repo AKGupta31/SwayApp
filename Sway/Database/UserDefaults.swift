@@ -7,6 +7,16 @@
 
 import Foundation
 
+enum OnboardingStatus:Int {
+    case NONE = 500
+    case INTRO__VIDEO_ONE = 511
+    case INTRO__VIDEO_TWO = 512
+    case INTRO__VIDEO_THREE = 513
+    case PROFILE_AGE = 514
+    case PROFILE_GOAL = 515
+    case CHALLENGE_SCREEN = 516
+}
+
 class SwayUserDefaults {
     
     
@@ -15,6 +25,7 @@ class SwayUserDefaults {
     
     struct Keys{
         static let kLoggedInUser = "LoggedInUser"
+        static let kOnBoardingStatus = "OnBoardingStatus"
     }
     
     var loggedInUser:LoginResponseData? {
@@ -33,6 +44,15 @@ class SwayUserDefaults {
                 }
             }
             return nil
+        }
+    }
+    
+    var onBoardingScreenStatus:OnboardingStatus {
+        get {
+            let status = UserDefaults.standard.integer(forKey: Keys.kOnBoardingStatus)
+            return OnboardingStatus(rawValue:status) ?? .NONE
+        }set {
+            UserDefaults.standard.setValue(newValue.rawValue, forKey: Keys.kOnBoardingStatus)
         }
     }
 
