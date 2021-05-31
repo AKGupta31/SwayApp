@@ -65,10 +65,11 @@ class MySubmissionCell: UICollectionViewCell {
         }else {
             imgThumbnail.sd_setImage(with: viewModel.thumbUrl, placeholderImage: UIImage(named: "ic_video_placeholder"), options: SDWebImageOptions.continueInBackground, context: nil, progress: nil, completed: nil)
         }
-        isApproved = viewModel.isApproved
+        isApproved = viewModel.status == .APPROVED
         isEditMode = false
-        lblStatus.text = viewModel.isApproved ? "Approved" : "Submitted"
+        lblStatus.text = viewModel.status == .APPROVED ? "Approved" : "Submitted"
         btnLikeCount.setTitle(viewModel.likeCount.description, for: .normal)
+        btnEditPost.isHidden = viewModel.status == .NOT_APPROVED
     }
     
     @IBAction func actionCross(_ sender: UIButton) {

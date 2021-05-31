@@ -91,7 +91,6 @@ class AddVideoVC: BaseViewController {
     
     
     @IBAction func actionSubmitForReview(_ sender: UIButton) {
-        showLoader()
         viewModel.actionSubmit()
     }
     

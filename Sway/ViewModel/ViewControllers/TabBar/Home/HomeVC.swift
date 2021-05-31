@@ -35,6 +35,8 @@ class HomeVC: BaseViewController {
         
         //adding refresh control for pull to refresh
         refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .clear
+        
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
         self.tableViewFeeds.refreshControl = refreshControl
         

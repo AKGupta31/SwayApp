@@ -31,6 +31,7 @@ class AddVideoViewModel:NSObject {
     var isSubmitClicked = false
     var isEditMode = false
     var feedId:String = ""
+    var isAlreadyUploading = false
     init(videoUrl:URL?,thumbnail:UIImage){
         self.videoUrl = videoUrl
         self.thumbnail = thumbnail
@@ -53,37 +54,45 @@ class AddVideoViewModel:NSObject {
     }
     
     func uploadFileToAws(){
-        if let url = videoUrl {
-            AWSUploadController.init().uploadVideoToS3(url: url) { [weak self] (isSuccess, url, fileName) in
-                print("success ",isSuccess)
-                print("url 1 ",url)
-                print("url2 ",fileName)
-                if let sSelf = self {
-                    sSelf.uploadedMediaUrl = url
-                    if sSelf.isSubmitClicked {
-                        sSelf.actionSubmit() // Call this function if user has already clicked on the submit post button
+        if Api.isConnectedToNetwork() {
+            isAlreadyUploading = true
+            if let url = videoUrl {
+                AWSUploadController.init().uploadVideoToS3(url: url) { [weak self] (isSuccess, url, fileName) in
+                    print("success ",isSuccess)
+                    print("url 1 ",url)
+                    print("url2 ",fileName)
+                    if let sSelf = self {
+                        sSelf.uploadedMediaUrl = url
+                        if sSelf.isSubmitClicked {
+                            sSelf.actionSubmit() // Call this function if user has already clicked on the submit post button
+                        }
                     }
+                } progress: { (progress) in
+                    print("progress ",progress)
+                } failure: {[weak self] (error) in
+                    self?.isAlreadyUploading = false
+                    AlertView.showAlert(with: "Error!!!", message: error.localizedDescription)
                 }
-            } progress: { (progress) in
-                print("progress ",progress)
-            } failure: { (error) in
-                AlertView.showAlert(with: "Error!!!", message: error.localizedDescription)
+            } else {
+                self.thumbnail.uploadImageToS3(uploadFolderName: "", compressionRatio: 1.0) {[weak self] (isSuccess, url, fileName) in
+                    if let sSelf = self {
+                        sSelf.uploadedMediaUrl = url
+                        if sSelf.isSubmitClicked {
+                            sSelf.actionSubmit() // Call this function if user has already clicked on the submit post button
+                        }
+                    }
+                } progress: { (progress) in
+                    print("progress ",progress)
+                } failure: { [weak self] (error) in
+                    self?.isAlreadyUploading = false
+                    print("error ",error.localizedDescription)
+                }
             }
+            uploadThumbnail()
+            
         }else {
-            self.thumbnail.uploadImageToS3(uploadFolderName: "", compressionRatio: 1.0) {[weak self] (isSuccess, url, fileName) in
-                if let sSelf = self {
-                    sSelf.uploadedMediaUrl = url
-                    if sSelf.isSubmitClicked {
-                        sSelf.actionSubmit() // Call this function if user has already clicked on the submit post button
-                    }
-                }
-            } progress: { (progress) in
-                print("progress ",progress)
-            } failure: { (error) in
-                print("error ",error.localizedDescription)
-            }
+            delegate?.showAlert(with: "Error!!!", message: "No internet connection")
         }
-        uploadThumbnail()
     }
     
     private func uploadThumbnail(){
@@ -104,36 +113,43 @@ class AddVideoViewModel:NSObject {
             }
             
         } progress: { (progress) in
-            print("progress ",progress)
+            print("progress thumbnail ",progress)
         } failure: { (error) in
             print("error ",error.localizedDescription)
         }
     }
     
     func actionSubmit(){
-        isSubmitClicked = true
-        if self.uploadedMediaUrl == nil || self.uploadedThumbnailUrl == nil {
-            print("its uploading still")
-            (self.delegate as? BaseViewController)?.hideLoader()
-        }else {
-            let (isValid,message) = areFieldsValid()
-            if isValid == false {
-                delegate?.showAlert(with: "Opps!!!", message: message)
-                return
-            }
-            FeedsEndPoint.postFeed(feedId:self.feedId, caption: caption!, feedType: workoutType, url: uploadedMediaUrl!, thumbnailUrl: uploadedThumbnailUrl!, mediaType: mediaType) { [weak self](response) in
-                print("response ",response)
-               
-                if response.statusCode == 200 {
-                    self?.delegate?.videoPostedSuccessfully()
-                }else {
-                    self?.delegate?.showAlert(with: "Error!!!", message: response.message)
+        if Api.isConnectedToNetwork() {
+            isSubmitClicked = true
+            (self.delegate as? BaseViewController)?.showLoader()
+            if (self.uploadedMediaUrl == nil || self.uploadedThumbnailUrl == nil ) && isAlreadyUploading == false{
+                uploadFileToAws()
+            } else if (self.uploadedMediaUrl == nil || self.uploadedThumbnailUrl == nil) {
+                print("its uploading still")
+            }else {
+                let (isValid,message) = areFieldsValid()
+                if isValid == false {
+                    delegate?.showAlert(with: "Opps!!!", message: message)
+                    return
                 }
-            } failure: {[weak self] (status) in
-                self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
+                FeedsEndPoint.postFeed(feedId:self.feedId, caption: caption!, feedType: workoutType, url: uploadedMediaUrl!, thumbnailUrl: uploadedThumbnailUrl!, mediaType: mediaType) { [weak self](response) in
+                    print("response ",response)
+                    
+                    if response.statusCode == 200 {
+                        self?.delegate?.videoPostedSuccessfully()
+                    }else {
+                        self?.delegate?.showAlert(with: "Error!!!", message: response.message)
+                    }
+                } failure: {[weak self] (status) in
+                    self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
+                }
+                
             }
-
+        }else {
+            delegate?.showAlert(with: "Error!!!", message: "No internet connection")
         }
+        
     }
     
     func areFieldsValid() -> (Bool,String) {

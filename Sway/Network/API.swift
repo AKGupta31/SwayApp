@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SVProgressHUD
+import SystemConfiguration
 
 
 typealias SuccessCompletionBlock<T> = ( _ response: T ) -> Void
@@ -18,46 +19,75 @@ typealias ErrorFailureCompletionBlock = ( _ status: ResponseStatus ) -> Void
 /// API request method used for all requests
 struct Api {
     
+    static func isConnectedToNetwork() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                SCNetworkReachabilityCreateWithAddress(nil, $0)
+            }
+        }) else {
+            return false
+        }
+        
+        var flags: SCNetworkReachabilityFlags = []
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+            return false
+        }
+        
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        
+        return (isReachable && !needsConnection)
+    }
+    
+    
     static var session: Session?
     
     static func requestNew<T: Codable>(endpoint: Endpoint, type: T.Type, successHandler: @escaping SuccessCompletionBlock<T>, failureHandler: @escaping ErrorFailureCompletionBlock) {
-        guard let url = URL(string: endpoint.path) else {
-            failureHandler(.init(msg: "Error in request url"))
-            return
-        }
-        let credentials = URLCredential(user: "sway", password: "sway@123", persistence: .forSession)
-        
-        print("NEW REQUEST STARTED AT: \(Date())")
-        
-        let customRefreshRetrier: RequestRetrier & RequestAdapter = CustomRequestRetrier(endpoint: endpoint)
-        let interceptor = Interceptor(adapter: customRefreshRetrier, retrier: customRefreshRetrier)
-//        print("url is ",url)
-//        print("params are : ",endpoint.parameters)
-//        print("headers are ",endpoint.header ?? "")
-        AF.request(url,
-                   method: endpoint.method,
-                   parameters: endpoint.parameters,
-                   encoding: endpoint.encoding,
-                   headers: endpoint.header,
-                   interceptor: interceptor)
-            .validate(contentType:["application/json"])
-            .authenticate(with: credentials)
-            .responseJSON { (response) in
-                
-                print("NEW REQUEST: \n\n Now: \(Date()) \n Url: \(endpoint.path) \n Parameters: \(endpoint.parameters) \n Value: \n \(String(describing: response.value)) \n Header: \(String(describing: endpoint.header)) \n Validation Error: \(String(describing: response.error?.localizedDescription)) \n\n")
-                
-                switch response.result {
-                
-                case .failure(let error):
-                    
-                    let errorMessage = error.localizedDescription
-                    failureHandler(.init(msg: errorMessage))
-                    return
-                    
-                case .success(let value):
-                    handleSuccessNew(type: type, response: response, successHandler: successHandler, failureHandler: failureHandler)
-                }
+        if isConnectedToNetwork() {
+            guard let url = URL(string: endpoint.path) else {
+                failureHandler(.init(msg: "Error in request url"))
+                return
             }
+            let credentials = URLCredential(user: "sway", password: "sway@123", persistence: .forSession)
+            
+            print("NEW REQUEST STARTED AT: \(Date())")
+            
+            let customRefreshRetrier: RequestRetrier & RequestAdapter = CustomRequestRetrier(endpoint: endpoint)
+            let interceptor = Interceptor(adapter: customRefreshRetrier, retrier: customRefreshRetrier)
+    //        print("url is ",url)
+    //        print("params are : ",endpoint.parameters)
+    //        print("headers are ",endpoint.header ?? "")
+            AF.request(url,
+                       method: endpoint.method,
+                       parameters: endpoint.parameters,
+                       encoding: endpoint.encoding,
+                       headers: endpoint.header,
+                       interceptor: interceptor)
+                .validate(contentType:["application/json"])
+                .authenticate(with: credentials)
+                .responseJSON { (response) in
+                    
+                    print("NEW REQUEST: \n\n Now: \(Date()) \n Url: \(endpoint.path) \n Parameters: \(endpoint.parameters) \n Value: \n \(String(describing: response.value)) \n Header: \(String(describing: endpoint.header)) \n Validation Error: \(String(describing: response.error?.localizedDescription)) \n\n")
+                    
+                    switch response.result {
+                    
+                    case .failure(let error):
+                        
+                        let errorMessage = error.localizedDescription
+                        failureHandler(.init(msg: errorMessage))
+                        return
+                        
+                    case .success(let value):
+                        handleSuccessNew(type: type, response: response, successHandler: successHandler, failureHandler: failureHandler)
+                    }
+                }
+        }else {
+            failureHandler(.init(code: 100, msg: "No internet connection"))
+        }
     }
     /// Handles status code errors, convert errors, validation errors, expired token error
     static private func handleError(status: ResponseStatus, failureHandler: @escaping ErrorFailureCompletionBlock) {

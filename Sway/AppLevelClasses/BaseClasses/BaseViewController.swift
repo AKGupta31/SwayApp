@@ -32,11 +32,7 @@ class BaseViewController:UIViewController {
     }
     
     @objc func showLoader(){
-        DispatchQueue.main.async {
-            SVProgressHUD.show()
-            
-        }
-        
+        SVProgressHUD.show()
     }
     
     @objc func showProgress(progress:Float){

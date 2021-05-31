@@ -13,8 +13,8 @@ class Constants {
     
     
     struct Networking {
-        
-        static let kBaseUrl = "http://swayqaapi.appskeeper.in/api"
+        static let kBaseUrl = "http://swaystgapi.appskeeper.in/api"
+//        static let kBaseUrl = "http://swayqaapi.appskeeper.in/api"
 //        static let kBaseUrl = "http://swaydevapi.appskeeper.in/api"
     }
     

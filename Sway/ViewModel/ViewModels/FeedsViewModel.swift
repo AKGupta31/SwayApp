@@ -36,10 +36,11 @@ class FeedsViewModel {
     private func fetchMoreData(isRefreshData:Bool){
         (delegate as? BaseViewController)?.showLoader()
         guard let userId = DataManager.shared.loggedInUser?.user?._id else {return}
-        FeedsEndPoint.getFeeds(page: currentPage, limit: PAGE_SIZE, userId: mySubmissionsOnly ? userId : "") { [weak self](response) in
+        FeedsEndPoint.getFeeds(page: currentPage, limit: PAGE_SIZE, userId: mySubmissionsOnly ? userId : "") { [weak self](response) in  
             if response.statusCode == 401 && response.message == "Missing authentication" && !self!.isFetchedAgainIfAuthFailed {
                 self!.isFetchedAgainIfAuthFailed = true
                 self?.fetchMoreData(isRefreshData: isRefreshData)
+                self?.getPredefinedComments() // because comments are also not loaded
             }
             if isRefreshData {
                 self?.feeds.removeAll()
@@ -155,6 +156,9 @@ class FeedsViewModel {
     func refreshData(){
         currentPage = 1
         fetchMoreData(isRefreshData: true)
+        if DataManager.shared.predefinedComments.count <= 0 {
+            getPredefinedComments()
+        }
     }
     
     
@@ -168,6 +172,12 @@ class FeedsViewModel {
     }
     
 
+}
+
+enum FeedStatus:Int {
+    case UNDER_REVIEW = 1 //submitted
+    case APPROVED = 2 // approved
+    case NOT_APPROVED = 3 // rejected
 }
 
 class FeedViewModel{
@@ -213,12 +223,17 @@ class FeedViewModel{
         }
         return .kVideo
     }
-    var isApproved:Bool {
-        return model.adminApproved == 2
+//    var isApproved:Bool {
+//        return model.adminApproved == 2
+//    }
+    
+    var status:FeedStatus {
+        return FeedStatus(rawValue: model.adminApproved ?? 1) ?? .NOT_APPROVED
     }
     
+    
     var likeCount:Int {
-        return model.likeCount ?? 0
+        return model.likeCount
     }
     
     var commentCount:Int {

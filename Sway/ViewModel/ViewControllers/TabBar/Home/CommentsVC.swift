@@ -18,6 +18,7 @@ class CommentsVC: UIViewController {
     
     var feedId:String!
     var viewModel:CommentsViewModel!
+    var refreshControl:UIRefreshControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         predefinedCommentsCV.dataSource = self
@@ -26,7 +27,16 @@ class CommentsVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         txtViewComments.delegate = self
+        //adding refresh control for pull to refresh
+        refreshControl = UIRefreshControl()
+        refreshControl.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
+        self.tableView.refreshControl = refreshControl
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func refreshData(_ refreshControl:UIRefreshControl){
+        viewModel.refreshData()
     }
     
     @IBAction func tapOnEmptySpace(_ sender: UIButton) {
@@ -72,6 +82,7 @@ extension CommentsVC: UITextViewDelegate {
 
 extension CommentsVC:CommentsViewModelDelegate {
     func reloadData() {
+        refreshControl.endRefreshing()
         lblCommentsCount.text = viewModel.totalCommentsTitle
         tableView.reloadData()
     }
@@ -126,7 +137,14 @@ extension CommentsVC:UICollectionViewDataSource, UICollectionViewDelegate , UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.postComment(comment: viewModel.getPredefinedComment(at: indexPath).name ?? "")
+        let previousText = txtViewComments.text ?? ""
+        let selectedComment = viewModel.getPredefinedComment(at: indexPath).name ?? ""
+        let newTotalComment = previousText + " " + selectedComment
+        if newTotalComment.count <= 200 {
+            txtViewComments.text = newTotalComment
+        }
+        
+//        viewModel.postComment(comment: viewModel.getPredefinedComment(at: indexPath).name ?? "")
     }
     
     //MARK: Delegate flow layout

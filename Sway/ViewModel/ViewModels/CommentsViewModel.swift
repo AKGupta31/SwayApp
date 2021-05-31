@@ -101,6 +101,11 @@ class CommentsViewModel:NSObject {
         }
     }
     
+    func refreshData(){
+        currentPage = 1
+        getComments(isRefreshData: true)
+    }
+    
 }
 
 class CommentViewModel:NSObject{

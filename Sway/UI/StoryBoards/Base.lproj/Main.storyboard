@@ -2371,32 +2371,66 @@ profile image</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PasswordChange" translatesAutoresizingMaskIntoConstraints="NO" id="JKg-7k-nNB">
-                                <rect key="frame" x="93" y="68" width="228" height="324"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sxn-c7-BKZ">
-                                <rect key="frame" x="366" y="60" width="36" height="36"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4O-Q1-4K5">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="798"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uih-0J-DZe">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PasswordChange" translatesAutoresizingMaskIntoConstraints="NO" id="JKg-7k-nNB">
+                                                <rect key="frame" x="89" y="28" width="228" height="324"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sxn-c7-BKZ">
+                                                <rect key="frame" x="366" y="20" width="36" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="36" id="27l-UP-5sw"/>
+                                                    <constraint firstAttribute="width" constant="36" id="Vxj-qk-QOP"/>
+                                                </constraints>
+                                                <state key="normal" image="ic_cross"/>
+                                                <connections>
+                                                    <action selector="actionCross:" destination="VMi-oT-BoO" eventType="touchUpInside" id="iTg-zs-st9"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Changed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SzW-Ca-bom">
+                                                <rect key="frame" x="16" y="360" width="374" height="121.5"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your password has been changed successfully" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eMq-dK-fjx">
+                                                <rect key="frame" x="52" y="489.5" width="302" height="16.5"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
+                                                <color key="textColor" name="kThemeNavyBlue"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="eMq-dK-fjx" firstAttribute="top" secondItem="SzW-Ca-bom" secondAttribute="bottom" constant="8" symbolic="YES" id="8UE-nl-4fU"/>
+                                            <constraint firstItem="eMq-dK-fjx" firstAttribute="leading" secondItem="SzW-Ca-bom" secondAttribute="leading" constant="36" id="DoZ-w3-Rgt"/>
+                                            <constraint firstItem="SzW-Ca-bom" firstAttribute="top" secondItem="JKg-7k-nNB" secondAttribute="bottom" constant="8" id="Dsp-0E-U91"/>
+                                            <constraint firstItem="JKg-7k-nNB" firstAttribute="top" secondItem="sxn-c7-BKZ" secondAttribute="bottom" constant="-28" id="L6q-Sq-98r"/>
+                                            <constraint firstAttribute="trailing" secondItem="sxn-c7-BKZ" secondAttribute="trailing" constant="12" id="Mdj-Nn-31z"/>
+                                            <constraint firstItem="eMq-dK-fjx" firstAttribute="centerX" secondItem="SzW-Ca-bom" secondAttribute="centerX" id="N4J-ea-pwd"/>
+                                            <constraint firstItem="SzW-Ca-bom" firstAttribute="centerX" secondItem="uih-0J-DZe" secondAttribute="centerX" constant="-4" id="TLI-7c-rtn"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eMq-dK-fjx" secondAttribute="bottom" constant="16" id="YbO-Oa-7pK"/>
+                                            <constraint firstAttribute="bottom" secondItem="eMq-dK-fjx" secondAttribute="bottom" priority="251" constant="72" id="cvR-Pa-OGI"/>
+                                            <constraint firstItem="sxn-c7-BKZ" firstAttribute="top" secondItem="uih-0J-DZe" secondAttribute="top" constant="20" symbolic="YES" id="hTC-eK-CVR"/>
+                                            <constraint firstItem="JKg-7k-nNB" firstAttribute="centerX" secondItem="uih-0J-DZe" secondAttribute="centerX" constant="-4" id="mrY-0w-VjK"/>
+                                            <constraint firstItem="SzW-Ca-bom" firstAttribute="leading" secondItem="uih-0J-DZe" secondAttribute="leading" constant="16" id="vkL-87-jTC"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="27l-UP-5sw"/>
-                                    <constraint firstAttribute="width" constant="36" id="Vxj-qk-QOP"/>
+                                    <constraint firstItem="uih-0J-DZe" firstAttribute="leading" secondItem="u4O-Q1-4K5" secondAttribute="leading" id="3DD-zk-TtM"/>
+                                    <constraint firstAttribute="trailing" secondItem="uih-0J-DZe" secondAttribute="trailing" id="4Zk-js-Gfz"/>
+                                    <constraint firstItem="uih-0J-DZe" firstAttribute="top" secondItem="u4O-Q1-4K5" secondAttribute="top" id="JP2-1Y-6A8"/>
+                                    <constraint firstAttribute="trailing" secondItem="uih-0J-DZe" secondAttribute="trailing" id="Vt5-qk-AOM"/>
+                                    <constraint firstAttribute="bottom" secondItem="uih-0J-DZe" secondAttribute="bottom" id="vbr-Mz-m4p"/>
+                                    <constraint firstItem="uih-0J-DZe" firstAttribute="width" secondItem="u4O-Q1-4K5" secondAttribute="width" id="xgF-79-S0E"/>
                                 </constraints>
-                                <state key="normal" image="ic_cross"/>
-                                <connections>
-                                    <action selector="actionCross:" destination="VMi-oT-BoO" eventType="touchUpInside" id="iTg-zs-st9"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Changed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SzW-Ca-bom">
-                                <rect key="frame" x="20" y="400" width="374" height="121.5"/>
-                                <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your password has been changed successfully" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eMq-dK-fjx">
-                                <rect key="frame" x="44" y="529.5" width="326" height="16.5"/>
-                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
-                                <color key="textColor" name="kThemeNavyBlue"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zz0-5m-z4N" customClass="CustomButton" customModule="Sway" customModuleProvider="target">
                                 <rect key="frame" x="16" y="786" width="382" height="56"/>
                                 <color key="backgroundColor" name="kThemeYellow"/>
@@ -2418,21 +2452,15 @@ profile image</string>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vaJ-d9-g65"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="zz0-5m-z4N" firstAttribute="leading" secondItem="vaJ-d9-g65" secondAttribute="leading" constant="16" id="04F-Xh-c2k"/>
-                            <constraint firstItem="JKg-7k-nNB" firstAttribute="centerX" secondItem="jx7-Qo-kPV" secondAttribute="centerX" id="0yf-3o-meB"/>
-                            <constraint firstItem="JKg-7k-nNB" firstAttribute="top" secondItem="vaJ-d9-g65" secondAttribute="top" constant="24" id="3k4-kR-bG9"/>
-                            <constraint firstItem="SzW-Ca-bom" firstAttribute="top" secondItem="JKg-7k-nNB" secondAttribute="bottom" constant="8" id="Dfy-7O-MC0"/>
-                            <constraint firstItem="eMq-dK-fjx" firstAttribute="leading" secondItem="SzW-Ca-bom" secondAttribute="leading" constant="24" id="KHC-Jh-aqC"/>
+                            <constraint firstItem="u4O-Q1-4K5" firstAttribute="top" secondItem="jx7-Qo-kPV" secondAttribute="top" id="Fe2-NH-WeZ"/>
                             <constraint firstItem="vaJ-d9-g65" firstAttribute="bottom" secondItem="zz0-5m-z4N" secondAttribute="bottom" constant="20" id="L8H-pq-Mya"/>
-                            <constraint firstItem="sxn-c7-BKZ" firstAttribute="top" secondItem="vaJ-d9-g65" secondAttribute="top" constant="16" id="OHy-SN-fAt"/>
-                            <constraint firstItem="SzW-Ca-bom" firstAttribute="leading" secondItem="vaJ-d9-g65" secondAttribute="leading" constant="20" id="Paa-Ya-DeV"/>
                             <constraint firstItem="vaJ-d9-g65" firstAttribute="trailing" secondItem="zz0-5m-z4N" secondAttribute="trailing" constant="16" id="akB-zP-zJ5"/>
-                            <constraint firstItem="SzW-Ca-bom" firstAttribute="centerX" secondItem="jx7-Qo-kPV" secondAttribute="centerX" id="bnS-fN-BY6"/>
-                            <constraint firstItem="eMq-dK-fjx" firstAttribute="top" secondItem="SzW-Ca-bom" secondAttribute="bottom" constant="8" symbolic="YES" id="jfK-4K-KeJ"/>
-                            <constraint firstItem="vaJ-d9-g65" firstAttribute="trailing" secondItem="sxn-c7-BKZ" secondAttribute="trailing" constant="12" id="qaM-lb-aES"/>
-                            <constraint firstItem="eMq-dK-fjx" firstAttribute="centerX" secondItem="SzW-Ca-bom" secondAttribute="centerX" id="xxB-EY-HT1"/>
+                            <constraint firstItem="zz0-5m-z4N" firstAttribute="top" secondItem="u4O-Q1-4K5" secondAttribute="bottom" constant="-12" id="qZa-k1-0Cr"/>
+                            <constraint firstItem="u4O-Q1-4K5" firstAttribute="leading" secondItem="jx7-Qo-kPV" secondAttribute="leading" id="vjD-yh-4Ud"/>
+                            <constraint firstAttribute="trailing" secondItem="u4O-Q1-4K5" secondAttribute="trailing" id="zrt-eW-MTL"/>
                         </constraints>
                     </view>
                     <connections>

@@ -26,7 +26,8 @@ class PasswordChangeSuccessVC: BaseViewController {
         if type == .postSubmitted {
             setupLabelForPostSubmitted()
             self.titlelmageView.image = UIImage(named: "ic_post_submitted")
-            lblDescription.text = "Great work! Keep it up! Lets get ready to really burn some calories!"
+            lblDescription.isHidden = true
+            lblDescription.text = nil
         }else {
             setupLabelForPasswordChanged()
         }
@@ -71,11 +72,11 @@ class PasswordChangeSuccessVC: BaseViewController {
     }
     
     func setupLabelForPostSubmitted(){
-        let attributedString = NSMutableAttributedString(string: "Your Post submitted!", attributes: [
+        let attributedString = NSMutableAttributedString(string: "Your Post has been submitted for review!", attributes: [
           .font: UIFont(name: "Poppins-Bold", size: 52.0)!,
           .foregroundColor: UIColor(red: 5.0 / 255.0, green: 9.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
         ])
-        attributedString.addAttribute(.foregroundColor, value: UIColor(red: 94.0 / 255.0, green: 0.0, blue: 1.0, alpha: 1.0), range: NSRange(location: 10, length: 10))
+        attributedString.addAttribute(.foregroundColor, value: UIColor(red: 94.0 / 255.0, green: 0.0, blue: 1.0, alpha: 1.0), range: NSRange(location: 19, length: 21))
         lblTitle.attributedText = attributedString
 
     }

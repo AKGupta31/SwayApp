@@ -13,11 +13,16 @@ class MySubmissionsVC: BaseViewController {
     @IBOutlet weak var collectionViewSubmissions: UICollectionView!
     
     var viewModel:FeedsViewModel!
-    
+    var refreshControl:UIRefreshControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewSubmissions.dataSource = self
         collectionViewSubmissions.delegate = self
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .clear
+        refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
+        self.collectionViewSubmissions.addSubview(refreshControl)
         if viewModel == nil {
             viewModel = FeedsViewModel(delegate: self, mySubmissionsOnly: true)
         }
@@ -28,6 +33,11 @@ class MySubmissionsVC: BaseViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    @objc func refreshData(_ refreshControl:UIRefreshControl){
+        refreshControl.endRefreshing()
+        viewModel.refreshData()
+    }
+    
 }
 
 extension MySubmissionsVC: FeedsViewModelDelegate {
@@ -36,6 +46,7 @@ extension MySubmissionsVC: FeedsViewModelDelegate {
     }
     
     func showAlert(with title: String?, message: String) {
+        hideLoader()
         AlertView.showAlert(with: title, message: message)
     }
     
