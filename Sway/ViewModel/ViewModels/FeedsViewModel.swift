@@ -14,7 +14,7 @@ protocol BaseVMDelegate:class{
 
 protocol FeedsViewModelDelegate: BaseVMDelegate{
     func reloadRow(at indexPath:IndexPath)
-    func likeApi(isSuccess:Bool)
+    func likeApi(isSuccess:Bool,indexPath:IndexPath)
 }
 
 class FeedsViewModel {
@@ -84,16 +84,16 @@ class FeedsViewModel {
             if response.statusCode == 200 {
                 self?.feeds[indexPath.row].isLike = isLike
                 self?.feeds[indexPath.row].likeCount = newCount
-                self?.delegate?.likeApi(isSuccess: true)
+                self?.delegate?.likeApi(isSuccess: true,indexPath:indexPath)
             }else{
                 self?.delegate?.showAlert(with: "Error!!!", message: response.message)
-                self?.delegate?.likeApi(isSuccess: false)
+                self?.delegate?.likeApi(isSuccess: false,indexPath:indexPath)
             }
            
         } failure: { [weak self](status) in
             (self?.delegate as? BaseViewController)?.hideLoader()
             self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
-            self?.delegate?.likeApi(isSuccess: false)
+            self?.delegate?.likeApi(isSuccess: false,indexPath: indexPath)
         }
 
     }

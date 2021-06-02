@@ -14,7 +14,7 @@ class BaseViewController:UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action:#selector(emptyViewTapped(_:)))
@@ -79,3 +79,12 @@ class BaseLoginVC:BaseViewController{
     }
 }
 
+
+class BaseTabBarViewController:BaseViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.edgesForExtendedLayout = [.left,.right,.top]
+        self.extendedLayoutIncludesOpaqueBars = false
+    }
+}

@@ -44,8 +44,8 @@ class LoginRegisterEndpoint {
         Api.requestNew(endpoint: .getOtpOnEmail(email: email), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
     }
     
-    static func signup(token: String,fName:String,lName:String,password:String,imageUrl:String,success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {
-        Api.requestNew(endpoint: .signup(token: token, fName: fName, lName: lName, password: password, imageUrl: imageUrl), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
+    static func signup(token: String,fName:String,lName:String,password:String,imageUrl:String,success: @escaping SuccessCompletionBlock<LoginResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .signup(token: token, fName: fName, lName: lName, password: password, imageUrl: imageUrl), type: LoginResponse.self, successHandler: success, failureHandler: failure)
     }
     
     static func forgotPassword(with email: String, success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {

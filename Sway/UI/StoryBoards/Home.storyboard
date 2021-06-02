@@ -50,15 +50,48 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_static_background" translatesAutoresizingMaskIntoConstraints="NO" id="fdr-s0-hLe">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7db-RP-RFk" userLabel="Likes" customClass="CustomTextLocationButton" customModule="Sway" customModuleProvider="target">
+                                                    <rect key="frame" x="335.5" y="656" width="61" height="34"/>
+                                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
+                                                    <state key="normal" title="571k" image="ic_like">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="spacing">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYS-7X-nkw" userLabel="Comments" customClass="CustomTextLocationButton" customModule="Sway" customModuleProvider="target">
+                                                    <rect key="frame" x="338" y="722" width="56" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="r9X-xb-LFH"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
+                                                    <state key="normal" title="300" image="ic_comment">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="spacing">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="fdr-s0-hLe" secondAttribute="trailing" id="5uF-cu-rIj"/>
                                                 <constraint firstItem="fdr-s0-hLe" firstAttribute="leading" secondItem="4OL-me-UIS" secondAttribute="leading" id="FGD-kA-OmU"/>
+                                                <constraint firstItem="7db-RP-RFk" firstAttribute="centerX" secondItem="bYS-7X-nkw" secondAttribute="centerX" id="Pz7-9h-TdR"/>
+                                                <constraint firstAttribute="bottom" secondItem="bYS-7X-nkw" secondAttribute="bottom" constant="140" id="V2a-bw-PyR"/>
                                                 <constraint firstItem="fdr-s0-hLe" firstAttribute="top" secondItem="4OL-me-UIS" secondAttribute="top" id="fs9-Wv-vul"/>
+                                                <constraint firstItem="bYS-7X-nkw" firstAttribute="top" secondItem="7db-RP-RFk" secondAttribute="bottom" constant="32" id="kNg-66-wOe"/>
                                                 <constraint firstAttribute="bottom" secondItem="fdr-s0-hLe" secondAttribute="bottom" id="lb4-eG-Emg"/>
+                                                <constraint firstAttribute="trailing" secondItem="bYS-7X-nkw" secondAttribute="trailing" constant="20" id="otR-ax-Gft"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="btnComments" destination="bYS-7X-nkw" id="M4C-O4-P81"/>
+                                            <outlet property="btnLikes" destination="7db-RP-RFk" id="h36-9I-khG"/>
                                             <outlet property="imgVideoPlaceholder" destination="fdr-s0-hLe" id="HAg-ix-cL8"/>
                                         </connections>
                                     </tableViewCell>
@@ -71,21 +104,6 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_play" translatesAutoresizingMaskIntoConstraints="NO" id="hop-2Y-3E1">
                                 <rect key="frame" x="177" y="418" width="60" height="60"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7b-6Z-8m2" userLabel="Likes" customClass="CustomTextLocationButton" customModule="Sway" customModuleProvider="target">
-                                <rect key="frame" x="334.5" y="611" width="61" height="34"/>
-                                <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
-                                <state key="normal" title="571k" image="ic_like">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="spacing">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="actionLike:" destination="jyp-v0-VV8" eventType="touchUpInside" id="dhP-Hq-34e"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl2-8X-Y4i" userLabel="BtnAdd">
                                 <rect key="frame" x="335" y="743" width="60" height="60"/>
                                 <state key="normal" image="ic_add"/>
@@ -120,24 +138,6 @@
                                     <action selector="actionMySubmission:" destination="jyp-v0-VV8" eventType="touchUpInside" id="RhZ-5P-tEz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahg-FI-7dW" userLabel="Comments" customClass="CustomTextLocationButton" customModule="Sway" customModuleProvider="target">
-                                <rect key="frame" x="337" y="677" width="56" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="oqb-Je-7ub"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
-                                <state key="normal" title="300" image="ic_comment">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="spacing">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="actionComments:" destination="jyp-v0-VV8" eventType="touchUpInside" id="v7V-WM-4ff"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feel great to release energy. Ready to start the day now!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hgb-rK-lST">
                                 <rect key="frame" x="16" y="762" width="295.5" height="33"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
@@ -155,20 +155,16 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="wUh-eK-dTm" firstAttribute="bottom" secondItem="pl2-8X-Y4i" secondAttribute="bottom" constant="10" id="2Kr-kU-9W1"/>
-                            <constraint firstItem="Ahg-FI-7dW" firstAttribute="centerX" secondItem="pl2-8X-Y4i" secondAttribute="centerX" id="99G-54-xEg"/>
                             <constraint firstItem="wUh-eK-dTm" firstAttribute="trailing" secondItem="pl2-8X-Y4i" secondAttribute="trailing" constant="19" id="9w0-cx-UcF"/>
                             <constraint firstItem="tJy-oX-cm5" firstAttribute="centerY" secondItem="yEM-eC-SrN" secondAttribute="centerY" id="Azi-4s-l0Z"/>
                             <constraint firstItem="Hgb-rK-lST" firstAttribute="top" secondItem="FaO-jZ-awp" secondAttribute="bottom" constant="2" id="BDs-MH-D88"/>
                             <constraint firstItem="hop-2Y-3E1" firstAttribute="centerY" secondItem="PNL-2k-69e" secondAttribute="centerY" id="BS4-NM-Usa"/>
                             <constraint firstItem="iu6-D9-adV" firstAttribute="leading" secondItem="wUh-eK-dTm" secondAttribute="leading" id="Dd0-TK-hCz"/>
-                            <constraint firstItem="t7b-6Z-8m2" firstAttribute="centerX" secondItem="Ahg-FI-7dW" secondAttribute="centerX" id="Ek0-IF-Fsz"/>
-                            <constraint firstItem="yEM-eC-SrN" firstAttribute="centerX" secondItem="Ahg-FI-7dW" secondAttribute="centerX" id="GLH-se-GIv"/>
-                            <constraint firstItem="pl2-8X-Y4i" firstAttribute="top" secondItem="Ahg-FI-7dW" secondAttribute="bottom" constant="32" id="HI8-g8-l8Y"/>
                             <constraint firstItem="tJy-oX-cm5" firstAttribute="leading" secondItem="wUh-eK-dTm" secondAttribute="leading" constant="12" id="NfH-Wo-PO8"/>
                             <constraint firstItem="yEM-eC-SrN" firstAttribute="top" secondItem="wUh-eK-dTm" secondAttribute="top" constant="12" id="QCy-T7-NxV"/>
                             <constraint firstAttribute="bottom" secondItem="iu6-D9-adV" secondAttribute="bottom" id="VaO-oq-u8C"/>
-                            <constraint firstItem="Ahg-FI-7dW" firstAttribute="top" secondItem="t7b-6Z-8m2" secondAttribute="bottom" constant="32" id="aVn-Rh-F6e"/>
                             <constraint firstItem="hop-2Y-3E1" firstAttribute="centerX" secondItem="PNL-2k-69e" secondAttribute="centerX" id="eX8-xg-Lht"/>
+                            <constraint firstItem="yEM-eC-SrN" firstAttribute="centerX" secondItem="pl2-8X-Y4i" secondAttribute="centerX" id="fI6-pA-JWx"/>
                             <constraint firstItem="wUh-eK-dTm" firstAttribute="bottom" secondItem="Hgb-rK-lST" secondAttribute="bottom" constant="18" id="ga6-sR-Mve"/>
                             <constraint firstItem="iu6-D9-adV" firstAttribute="top" secondItem="PNL-2k-69e" secondAttribute="top" id="iy5-De-Mfl"/>
                             <constraint firstItem="Hgb-rK-lST" firstAttribute="leading" secondItem="wUh-eK-dTm" secondAttribute="leading" constant="16" id="k68-cZ-EPJ"/>
@@ -180,8 +176,6 @@
                     <navigationItem key="navigationItem" id="2Fw-xy-JOz"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="btnComments" destination="Ahg-FI-7dW" id="y3I-Sh-0B3"/>
-                        <outlet property="btnLikes" destination="t7b-6Z-8m2" id="OXh-dS-jHh"/>
                         <outlet property="imgPlay" destination="hop-2Y-3E1" id="2iw-XS-AF4"/>
                         <outlet property="lblPostDescription" destination="Hgb-rK-lST" id="qHi-C5-AJB"/>
                         <outlet property="lblPostUser" destination="FaO-jZ-awp" id="iHt-fV-JWd"/>

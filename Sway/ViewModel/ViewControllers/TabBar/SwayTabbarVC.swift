@@ -13,6 +13,7 @@ class SwayTabbarVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -21,6 +22,9 @@ class SwayTabbarVC: UITabBarController {
 
 extension SwayTabbarVC {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if selectedIndex == 0 {
+            print("selected index ",selectedIndex)
+        }
 //        if selectedIndex == 0 {
 //            self.tabBar.backgroundImage = UIImage()
 //            self.tabBar.backgroundColor = UIColor.clear
@@ -28,6 +32,7 @@ extension SwayTabbarVC {
 //            self.tabBar.backgroundColor = UIColor.white
 //        }
     }
+    
 }
 
 extension SwayTabbarVC:ViewControllerDescribable {

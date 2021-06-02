@@ -27,6 +27,8 @@ pod "Player", "~> 0.13.2"
 pod 'SDWebImage', '~> 5.0'
 pod 'GrowingTextView'
 pod 'ActiveLabel'
+pod 'CropViewController'
+
 
 
 end

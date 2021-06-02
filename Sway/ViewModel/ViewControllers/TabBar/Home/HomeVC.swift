@@ -11,14 +11,15 @@ import Player
 import AVFoundation
 import SDWebImage
 import ActiveLabel
-class HomeVC: BaseViewController {
+
+class HomeVC: BaseTabBarViewController {
     @IBOutlet weak var lblPostUser: ActiveLabel!
     
     @IBOutlet weak var lblPostDescription: UILabel!
     
     @IBOutlet weak var imgPlay: UIImageView!
-    @IBOutlet weak var btnComments: CustomTextLocationButton!
-    @IBOutlet weak var btnLikes: CustomTextLocationButton!
+//    @IBOutlet weak var btnComments: CustomTextLocationButton!
+//    @IBOutlet weak var btnLikes: CustomTextLocationButton!
     @IBOutlet weak var tableViewFeeds: UITableView!
     var player:Player!
     
@@ -32,17 +33,17 @@ class HomeVC: BaseViewController {
         }
         tableViewFeeds.contentInsetAdjustmentBehavior  = .never
         self.imgPlay.isHidden = true
-        
         //adding refresh control for pull to refresh
         refreshControl = UIRefreshControl()
         refreshControl.tintColor = .clear
-        
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
         self.tableViewFeeds.refreshControl = refreshControl
-        
+        self.tableViewFeeds.tableFooterView = nil
         DispatchQueue.global(qos: .background).async {
             self.viewModel.getPredefinedComments()
         }
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -58,12 +59,6 @@ class HomeVC: BaseViewController {
         self.navigationController?.push(MySubmissionsVC.self)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        if tableViewFeeds != nil {
-            tableViewFeeds.reloadData()
-        }
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
@@ -82,15 +77,22 @@ class HomeVC: BaseViewController {
         }
     }
     
-    @IBAction func actionLike(_ sender: UIButton) {
-        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first{
+    @objc func actionLike(_ sender: UIButton) {
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        if let cell = tableViewFeeds.cellForRow(at: indexPath) as? FeedsCell {
             viewModel.likeFeed(at: indexPath)
             let feedVM = viewModel.getFeedViewModel(at: indexPath.row)
             let isLiked = !feedVM.isLiked
-            self.btnLikes.setImage(UIImage(named: isLiked ? "ic_liked" : "ic_like"), for: .normal)
+            
+            cell.btnLikes.setImage(UIImage(named: isLiked ? "ic_liked" : "ic_like"), for: .normal)
             let likes = isLiked ? feedVM.likeCount + 1 : feedVM.likeCount - 1
-            self.btnLikes.setTitle(likes.description, for: .normal)
+            cell.btnLikes.setTitle(likes.description, for: .normal)
+            sender.rotate()
         }
+//        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first{
+           
+//        }
+        
     }
     
     @IBAction func actionAdd(_ sender: UIButton) {
@@ -98,12 +100,16 @@ class HomeVC: BaseViewController {
     }
     
     @IBAction func actionComments(_ sender: UIButton) {
-        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first{
-            self.tabBarController?.present(CommentsVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
-                vc.modalPresentationStyle = .overCurrentContext
-                vc.viewModel = self.viewModel.getCommentsViewModel(index: indexPath.row)
-            }, completion: nil)
-        }
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        self.tabBarController?.present(CommentsVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.viewModel = self.viewModel.getCommentsViewModel(index: indexPath.row)
+        }, completion: nil)
+        
+        
+        //        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first{
+        //
+        //        }
         
     }
     
@@ -130,7 +136,13 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfItems
+        let numberOfItems = viewModel.numberOfItems
+        if numberOfItems <= 0 {
+            tableView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "No News feed is available, please click on the \u{0002B} option to upload the news feed", to: tableView)
+        }else {
+            tableView.backgroundView = nil
+        }
+        return numberOfItems
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -139,11 +151,15 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == viewModel.numberOfItems - 1 {
             viewModel.loadMoreData()
         }
+        cell.btnLikes.tag = indexPath.row
+        cell.btnComments.tag = indexPath.row
+        cell.btnLikes.addTarget(self, action: #selector(actionLike(_:)), for: .touchUpInside)
+        cell.btnComments.addTarget(self, action: #selector(actionComments(_:)), for: .touchUpInside)
         return cell
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        btnLikes.isEnabled = true
+//        btnLikes.isEnabled = true
         if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first,let cell = tableViewFeeds.cellForRow(at: indexPath) as? FeedsCell{
             if cell.viewModel.mediaType == .kImage{
                 if player != nil{
@@ -154,10 +170,10 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
             }else {
                 self.setupPlayer(url: cell.viewModel.mediaUrl, cell: cell)
             }
-            self.btnLikes.setImage(UIImage(named: cell.viewModel.isLiked ? "ic_liked" :
-                                           "ic_like"), for: .normal)
-            self.btnLikes.setTitle(cell.viewModel.likeCount.description, for: .normal)
-            self.btnComments.setTitle(cell.viewModel.commentCount.description, for: .normal)
+//            self.btnLikes.setImage(UIImage(named: cell.viewModel.isLiked ? "ic_liked" :
+//                                           "ic_like"), for: .normal)
+//            self.btnLikes.setTitle(cell.viewModel.likeCount.description, for: .normal)
+//            self.btnComments.setTitle(cell.viewModel.commentCount.description, for: .normal)
             lblPostUser.enabledTypes = [.mention]
             lblPostUser.mentionColor = UIColor.white
             lblPostDescription.text = cell.viewModel.caption
@@ -182,7 +198,11 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
         self.player.view.frame = cell.bounds
         self.player.fillMode = .resizeAspectFill
         self.addChild(self.player)
-        cell.addSubview(self.player.view)
+        cell.contentView.insertSubview(self.player.view, at: 1)
+//        cell.addSubview(self.player.view)
+        
+//        cell.bringSubviewToFront(cell.btnComments)
+//        cell.bringSubviewToFront(cell.btnLikes)
         let tapOnPlayer = UITapGestureRecognizer(target: self, action: #selector(tapOnPlayerView(_:)))
         self.player.view.addGestureRecognizer(tapOnPlayer)
         self.player.didMove(toParent: self)
@@ -216,20 +236,26 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
 }
 
 extension HomeVC:FeedsViewModelDelegate {
-    func likeApi(isSuccess: Bool) {
-        btnLikes.isEnabled = true
-        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first {
-           let vm = viewModel.getFeedViewModel(at: indexPath.row)
-            self.btnLikes.setImage(UIImage(named: vm.isLiked ? "ic_liked" :
-                                           "ic_like"), for: .normal)
-            self.btnLikes.setTitle(vm.likeCount.description, for: .normal)
+    func likeApi(isSuccess: Bool,indexPath:IndexPath) {
+        if let cell = tableViewFeeds.cellForRow(at: indexPath) as? FeedsCell {
+            let vm = viewModel.getFeedViewModel(at: indexPath.row)
+             cell.btnLikes.setImage(UIImage(named: vm.isLiked ? "ic_liked" :
+                                            "ic_like"), for: .normal)
+             cell.btnLikes.setTitle(vm.likeCount.description, for: .normal)
         }
-        
+//        btnLikes.isEnabled = true
+//        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first {
+//           let vm = viewModel.getFeedViewModel(at: indexPath.row)
+//            self.btnLikes.setImage(UIImage(named: vm.isLiked ? "ic_liked" :
+//                                           "ic_like"), for: .normal)
+//            self.btnLikes.setTitle(vm.likeCount.description, for: .normal)
+//        }
+//
     }
     
     func showAlert(with title: String?, message: String) {
         hideLoader()
-        btnLikes.isEnabled = true
+//        btnLikes.isEnabled = true
         AlertView.showAlert(with: title, message: message,on: self)
     }
     
@@ -329,7 +355,7 @@ extension HomeVC{
         imagePicker.sourceType = soucrType
         imagePicker.mediaTypes = [MediaType]
         imagePicker.allowsEditing = true
-        imagePicker.videoMaximumDuration = 30.0
+        imagePicker.videoMaximumDuration = 60
         self.present(imagePicker, animated: true)
     }
     
@@ -352,6 +378,7 @@ extension HomeVC{
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
 extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        self.dismiss(animated: true)
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
                 vc.viewModel = AddVideoViewModel(videoUrl: nil,thumbnail:image)
@@ -360,16 +387,21 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         else if  let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
            let thumbnail =  VideoUtility.shared.getImageFromUrl(url: videoURL) ?? UIImage()
-            
+           let asset = AVURLAsset(url: videoURL)
+            if asset.duration.seconds < 10 {
+                showAlert(with: "Oops!!", message: "Please add video of duration between 10-60 seconds")
+            }else {
+                self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
+                    vc.viewModel = AddVideoViewModel(videoUrl: videoURL,thumbnail:thumbnail)
+                })
+            }
             
             
 //            let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".MP4")
-            self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
-                vc.viewModel = AddVideoViewModel(videoUrl: videoURL,thumbnail:thumbnail)
-            })
+         
 
         }
-        self.dismiss(animated: true)
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -381,5 +413,18 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
 extension HomeVC:ViewControllerDescribable {
     static var storyboardName: StoryboardNameDescribable {
         return UIStoryboard.Name.main
+    }
+}
+
+
+extension UIView{
+    func rotate() {
+        let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotation.toValue = NSNumber(value: Double.pi * 2)
+        rotation.duration = 0.35
+        rotation.isCumulative = true
+        rotation.repeatCount = 1
+        rotation.isRemovedOnCompletion = true
+        self.layer.add(rotation, forKey: "rotationAnimation")
     }
 }

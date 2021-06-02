@@ -32,6 +32,7 @@ class CommentsVC: UIViewController {
         refreshControl.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
+      
         // Do any additional setup after loading the view.
     }
     
@@ -52,17 +53,6 @@ class CommentsVC: UIViewController {
             viewModel.postComment(comment: text)
         }
     }
-    
-    func addNoDataLabel(strMessage: String,to view:UIView) -> UILabel {
-        let noDataLabel = UILabel(frame:view.bounds)
-        noDataLabel.text = strMessage
-        noDataLabel.textColor = UIColor(named: "kThemeNavyBlue_50")
-        noDataLabel.textAlignment = .center
-        noDataLabel.numberOfLines = 1
-        noDataLabel.font = UIFont(name: "CircularStd-Book", size: 14)
-        return noDataLabel
-    }
-    
 }
 
 extension CommentsVC: UITextViewDelegate {
@@ -106,7 +96,7 @@ extension CommentsVC:UITableViewDataSource, UITableViewDelegate {
         if viewModel.commentsCount > 0 {
             tableView.backgroundView = nil
         }else {
-            tableView.backgroundView = addNoDataLabel(strMessage: "Be the first to comment!", to: tableView)
+            tableView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "Be the first to comment!", to: tableView)
         }
         return viewModel.commentsCount
     }

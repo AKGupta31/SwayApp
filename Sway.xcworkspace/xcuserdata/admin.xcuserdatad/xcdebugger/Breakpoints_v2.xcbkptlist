@@ -23,16 +23,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "340EBB04-3A53-4D41-9C22-8AA60E0B313B"
+            uuid = "B93D6A89-AAE8-42A2-97EB-A73D67E45394"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sway/Network/LoginRegisterEndPoint.swift"
+            filePath = "Sway/ViewModel/ViewControllers/TabBar/Home/CommentsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "updateOnboardingScreenStatus(key:value:success:failure:)"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "reloadData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

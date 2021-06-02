@@ -8,7 +8,7 @@
 import UIKit
 import ViewControllerDescribable
 
-class IntroViewController: BaseViewController {
+class IntroViewController: UIViewController {
     @IBOutlet weak var blackGrdientBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var blackGrdientView: UIView!
     
@@ -18,6 +18,10 @@ class IntroViewController: BaseViewController {
         gl.colors = [color.withAlphaComponent(0).cgColor,color.cgColor]
         return gl
     }()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +33,9 @@ class IntroViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
-        self.blackGrdientView.isUserInteractionEnabled = true
+        self.view.isUserInteractionEnabled = true
         gesture.direction = .up
-        self.blackGrdientView.addGestureRecognizer(gesture)
+        self.view.addGestureRecognizer(gesture)
     }
     
     @objc func tapOnView(_ gesture:UITapGestureRecognizer){
@@ -45,7 +49,8 @@ class IntroViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+        self.blackGrdientView.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             self.gradientLayer.frame = self.blackGrdientView.bounds
             self.blackGrdientBottomConstraint.constant = 0
             self.blackGrdientView.isHidden = false

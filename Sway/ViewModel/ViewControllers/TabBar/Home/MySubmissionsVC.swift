@@ -8,7 +8,7 @@
 import UIKit
 import ViewControllerDescribable
 
-class MySubmissionsVC: BaseViewController {
+class MySubmissionsVC: BaseTabBarViewController {
     
     @IBOutlet weak var collectionViewSubmissions: UICollectionView!
     
@@ -18,7 +18,6 @@ class MySubmissionsVC: BaseViewController {
         super.viewDidLoad()
         collectionViewSubmissions.dataSource = self
         collectionViewSubmissions.delegate = self
-        
         refreshControl = UIRefreshControl()
         refreshControl.tintColor = .clear
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
@@ -28,6 +27,10 @@ class MySubmissionsVC: BaseViewController {
         }
     }
     
+    
+
+
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
@@ -54,7 +57,7 @@ extension MySubmissionsVC: FeedsViewModelDelegate {
         self.collectionViewSubmissions.reloadItems(at: [indexPath])
     }
     
-    func likeApi(isSuccess: Bool) {}
+    func likeApi(isSuccess: Bool,indexPath:IndexPath) {}
     
     
 }
@@ -65,7 +68,13 @@ extension MySubmissionsVC:UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfItems
+        let numberOfItems = viewModel.numberOfItems
+        if numberOfItems <= 0 {
+            collectionView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "You haven't posted any newsfeed yet", to: collectionView)
+        }else {
+            collectionView.backgroundView = nil
+        }
+        return numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

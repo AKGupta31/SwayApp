@@ -8,6 +8,7 @@
 import UIKit
 import ViewControllerDescribable
 import KDCircularProgress
+import CropViewController
 
 class SetProfilePictureVC: BaseViewController {
     @IBOutlet weak var scrollView: UIScrollView!
@@ -32,6 +33,8 @@ class SetProfilePictureVC: BaseViewController {
             btnUploadPhoto.setTitle(profileImage == nil ? "Upload photo" : "Change Photo", for: .normal)
         }
     }
+    
+    var isAlreadySwipedUp = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -54,7 +57,13 @@ class SetProfilePictureVC: BaseViewController {
     
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
         if gesture.direction == .up {
-            signupApi()
+            if profileImage != nil && profilePicture.isEmpty == false {
+                signupApi()
+            }else {
+                isAlreadySwipedUp = true
+                showLoader()
+            }
+            
         }
     }
     
@@ -100,20 +109,24 @@ class SetProfilePictureVC: BaseViewController {
 
 extension SetProfilePictureVC:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if self.profileImage != nil && profilePicture.isEmpty == false{
-            print("call api")
-            let height = scrollView.frame.size.height
-            let contentYoffset = scrollView.contentOffset.y
-            let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-            if distanceFromBottom <= height {
-               signupApi()
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        if distanceFromBottom <= height {
+            if self.profileImage != nil && profilePicture.isEmpty == false{
+                signupApi()
+            }else if profileImage != nil && profilePicture.isEmpty {
+                isAlreadySwipedUp = true
+                showLoader()
             }
-        }else{
-            if profileImage != nil && profilePicture.isEmpty {
-                AlertView.showAlert(with: "Alert!!!", message: "Please wait while we are uploading your profile picture")
-            }
-            print("do not call api")
         }
+        
+//        else{
+////            if profileImage != nil && profilePicture.isEmpty {
+////                AlertView.showAlert(with: "Alert!!!", message: "Please wait while we are uploading your profile picture")
+////            }
+////            print("do not call api")
+//        }
     }
     
     fileprivate func signupApi(){
@@ -121,19 +134,23 @@ extension SetProfilePictureVC:UIScrollViewDelegate {
         LoginRegisterEndpoint.signup(token: token, fName: firstName, lName: lastName, password: password, imageUrl: profilePicture) {[weak self] (response) in
             self?.hideLoader()
             if response.statusCode == 200 {
+                DataManager.shared.setLoggedInUser(user: response.data)
                 self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     guard var viewControllers = self?.navigationController?.viewControllers else {return}
-                    viewControllers.removeLast()
-                    viewControllers.removeLast()
-                    viewControllers.removeLast()
-                    viewControllers.removeLast()
-                    let loginVC = LoginViaCredentialsVC.instantiated()
-                    viewControllers.append(loginVC)
+                    viewControllers.removeAll()
+//                    viewControllers.removeLast()
+//                    viewControllers.removeLast()
+//                    viewControllers.removeLast()
+//                    viewControllers.removeLast()
+//                    let loginVC = LoginViaCredentialsVC.instantiated()
+                    
+                    let onboardingStart = OnboardingStartVC.instantiated()
+                    viewControllers.append(onboardingStart)
                     self?.navigationController?.setViewControllers(viewControllers, animated: true)
                 }
             }else {
-                AlertView.showAlert(with: "Error!!!", message: response.message ?? "")
+                AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
             }
         } failure: { [weak self] (status) in
             self?.hideLoader()
@@ -162,8 +179,7 @@ extension SetProfilePictureVC {
         imagePicker.delegate = self
         imagePicker.sourceType = soucrType
         imagePicker.mediaTypes = [MediaType]
-        imagePicker.allowsEditing = true
-        imagePicker.videoMaximumDuration = 30.0
+        imagePicker.allowsEditing = false
         self.present(imagePicker, animated: true)
     }
     
@@ -172,14 +188,15 @@ extension SetProfilePictureVC {
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
 extension SetProfilePictureVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            self.btnProfileImage.setImage(image, for: .normal)
-            profileImage = image
-            progressViewInnerCircle.backgroundColor = UIColor(named: "kThemeYellow")
-            progress.set(colors: UIColor(named: "kThemeBlue")!)
-            uploadImageOnAws(selectedImage: image)
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            let cropVC = CropViewController(croppingStyle: .circular, image: image)
+            cropVC.delegate = self
+            self.navigationController?.pushViewController(cropVC, animated: true)
+            
         }
-        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            picker.dismiss(animated: true)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -189,6 +206,9 @@ extension SetProfilePictureVC: UIImagePickerControllerDelegate, UINavigationCont
         selectedImage.uploadImageToS3(uploadFolderName: "", success: { [weak self] (status, urlString, imageName) in
             print("url is ",urlString)
             self?.profilePicture = urlString
+            if self?.isAlreadySwipedUp == true {
+                self?.signupApi()
+            }
         }, progress: { (value) in
             print(value)
         }, failure: { (error) in
@@ -196,6 +216,21 @@ extension SetProfilePictureVC: UIImagePickerControllerDelegate, UINavigationCont
                 AlertView.showAlert(with: "Error!!!", message: error.localizedDescription)
             }
         })
+    }
+}
+
+extension SetProfilePictureVC:CropViewControllerDelegate {
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        self.navigationController?.popToViewController(self, animated: true)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        self.btnProfileImage.setImage(image, for: .normal)
+        profileImage = image
+        progressViewInnerCircle.backgroundColor = UIColor(named: "kThemeYellow")
+        progress.set(colors: UIColor(named: "kThemeBlue")!)
+        uploadImageOnAws(selectedImage: image)
+        self.navigationController?.popToViewController(self, animated: true)
     }
 }
 
