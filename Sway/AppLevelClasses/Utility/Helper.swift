@@ -13,14 +13,18 @@ import UIKit
 class Helper {
     private init(){}
     static let shared = Helper()
-    func addNoDataLabel(strMessage: String,to view:UIView) -> UILabel {
-        let noDataLabel = UILabel(frame:CGRect(x: 36, y: view.bounds.midY, width: view.frame.width - 72, height: 72))
+    func addNoDataLabel(strMessage: String,to view:UIView,offSet:CGPoint = .zero) -> UIView {
+        let bgView = UIView(frame: view.bounds)
+        bgView.backgroundColor = UIColor.white
+        let topOffSet = offSet.y
+        let noDataLabel = UILabel(frame:CGRect(x: 36, y: view.bounds.midY + topOffSet, width: view.frame.width - 72, height: 72))
         noDataLabel.text = strMessage
         noDataLabel.textColor = UIColor(named: "kThemeNavyBlue_50")
         noDataLabel.textAlignment = .center
         noDataLabel.numberOfLines = 0
         noDataLabel.font = UIFont(name: "CircularStd-Book", size: 14)
-        return noDataLabel
+        bgView.addSubview(noDataLabel)
+        return bgView
     }
     
 }

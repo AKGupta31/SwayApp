@@ -759,11 +759,11 @@ I'm finding the best challenges for you</string>
             </objects>
             <point key="canvasLocation" x="3517" y="110"/>
         </scene>
-        <!--Home-->
+        <!--Feed-->
         <scene sceneID="nDx-iY-LoQ">
             <objects>
-                <viewControllerPlaceholder storyboardName="Home" id="6yd-tT-N3J" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feeds" image="ic_feed_unselected" selectedImage="ic_feed_selected" id="8ne-bo-VBy"/>
+                <viewControllerPlaceholder storyboardName="Feed" id="6yd-tT-N3J" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" id="8ne-bo-VBy"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lDt-Io-gzY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -806,8 +806,6 @@ I'm finding the best challenges for you</string>
         <image name="ic_back" width="9" height="16.5"/>
         <image name="ic_body" width="36" height="35"/>
         <image name="ic_dance" width="35" height="35"/>
-        <image name="ic_feed_selected" width="21.5" height="21"/>
-        <image name="ic_feed_unselected" width="21.5" height="21"/>
         <image name="ic_fun" width="35" height="32"/>
         <image name="ic_image_3" width="375" height="812"/>
         <image name="ic_loose_weight" width="35" height="35"/>

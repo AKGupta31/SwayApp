@@ -50,7 +50,7 @@ class LoginViaCredentialsVC: BaseLoginVC {
     @IBAction func actionLogin(_ sender: UIButton) {
        
         if let message = isValidFields(),message.isEmpty == false{
-            AlertView.showAlert(with: "Opps!!!", message: message)
+            AlertView.showAlert(with: "Error!", message: message)
             return
         }
         guard let email = emailField.text?.trimmingCharacters(in: .whitespaces) else {return}
@@ -72,13 +72,13 @@ class LoginViaCredentialsVC: BaseLoginVC {
                     })
 //                    self.navigationController?.push(VerifyOtpVC.self)
                 }else {
-                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                    AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
                 }
                 
                 
             }
         } failure: { (status) in
-            AlertView.showAlert(with: "Error!!!", message: status.msg)
+            AlertView.showAlert(with: "Error", message: status.msg)
         }
 
         
@@ -93,13 +93,20 @@ class LoginViaCredentialsVC: BaseLoginVC {
     }
     
     func isValidFields() -> String?{
-        guard let email = emailField.text?.trimmingCharacters(in: .whitespaces) else {return "Email should not be empty"}
-        guard let password = passwordField.text else {return "Password should not be empty"}
+        let email = emailField.text?.trimmingCharacters(in: .whitespaces) ?? ""
+        let password = passwordField.text ?? ""
+        if email.isEmpty && password.isEmpty {
+            return "Please enter valid email and password."
+        }else if email.isEmpty == false && password.isEmpty {
+            return "Password is required."
+        }else if email.isEmpty && password.isEmpty == false {
+            return "Email is required."
+        }
         var message :String? = nil
         if !Utility.isValidEmailAddress(email: email){
-            message = "log_in_validation_error_email_invalid".localized
+            message = "This email address is invalid."
         }else if !Utility.isValidPassword(password: password) {
-            message = "log_in_validation_error_password_invalid".localized
+            message = "This password is too short."
         }
         return message
     }

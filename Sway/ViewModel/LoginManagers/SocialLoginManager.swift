@@ -41,7 +41,7 @@ class SocialLoginManager {
     func error(withMessage message: String) {
         DataManager.shared.isLoggedIn = false
         if let topVc = UIApplication.topViewController {
-            AlertView.showAlert(with: "Error!!!", message: message, on: topVc)
+            AlertView.showAlert(with: "Error", message: message, on: topVc)
         }
         
     }

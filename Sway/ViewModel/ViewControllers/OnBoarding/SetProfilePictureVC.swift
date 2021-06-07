@@ -112,14 +112,23 @@ extension SetProfilePictureVC:UIScrollViewDelegate {
         let height = scrollView.frame.size.height
         let contentYoffset = scrollView.contentOffset.y
         let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-        if distanceFromBottom <= height {
-            if self.profileImage != nil && profilePicture.isEmpty == false{
-                signupApi()
-            }else if profileImage != nil && profilePicture.isEmpty {
-                isAlreadySwipedUp = true
-                showLoader()
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
+            print("scroll downward")
+            if contentYoffset <= 0.0 {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }else {
+            print("scroll upword")
+            if distanceFromBottom <= height {
+                if self.profileImage != nil && profilePicture.isEmpty == false{
+                    signupApi()
+                }else if profileImage != nil && profilePicture.isEmpty {
+                    isAlreadySwipedUp = true
+                    showLoader()
+                }
             }
         }
+
         
 //        else{
 ////            if profileImage != nil && profilePicture.isEmpty {
@@ -150,11 +159,11 @@ extension SetProfilePictureVC:UIScrollViewDelegate {
                     self?.navigationController?.setViewControllers(viewControllers, animated: true)
                 }
             }else {
-                AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
             }
         } failure: { [weak self] (status) in
             self?.hideLoader()
-            AlertView.showAlert(with: "Error!!!", message: status.msg)
+            AlertView.showAlert(with: "Error", message: status.msg)
         }
     }
 }
@@ -213,7 +222,7 @@ extension SetProfilePictureVC: UIImagePickerControllerDelegate, UINavigationCont
             print(value)
         }, failure: { (error) in
             DispatchQueue.main.async {
-                AlertView.showAlert(with: "Error!!!", message: error.localizedDescription)
+                AlertView.showAlert(with: "Error", message: error.localizedDescription)
             }
         })
     }
@@ -225,11 +234,13 @@ extension SetProfilePictureVC:CropViewControllerDelegate {
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
-        self.btnProfileImage.setImage(image, for: .normal)
-        profileImage = image
+        let newImage = ImageUtility.shared.getCompressedImage(originalImage: image, maxSize: 200)
+        
+        self.btnProfileImage.setImage(newImage, for: .normal)
+        profileImage = newImage
         progressViewInnerCircle.backgroundColor = UIColor(named: "kThemeYellow")
         progress.set(colors: UIColor(named: "kThemeBlue")!)
-        uploadImageOnAws(selectedImage: image)
+        uploadImageOnAws(selectedImage: newImage)
         self.navigationController?.popToViewController(self, animated: true)
     }
 }

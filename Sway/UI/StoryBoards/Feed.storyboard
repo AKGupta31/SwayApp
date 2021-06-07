@@ -28,10 +28,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--HomeVC-->
+        <!--Feed-->
         <scene sceneID="7rr-l0-mjs">
             <objects>
-                <viewController storyboardIdentifier="HomeVC" id="jyp-v0-VV8" customClass="HomeVC" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" title="Feed" id="jyp-v0-VV8" customClass="HomeVC" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PNL-2k-69e">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,7 +112,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJy-oX-cm5">
-                                <rect key="frame" x="12" y="59" width="48" height="30"/>
+                                <rect key="frame" x="12" y="71" width="48" height="30"/>
                                 <state key="normal" title="Logout">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -121,7 +121,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEM-eC-SrN" userLabel="MyPosts" customClass="CustomTextLocationButton" customModule="Sway" customModuleProvider="target">
-                                <rect key="frame" x="320.5" y="56" width="89" height="36"/>
+                                <rect key="frame" x="320.5" y="68" width="89" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="MnX-Z9-iZH"/>
                                 </constraints>
@@ -139,16 +139,20 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feel great to release energy. Ready to start the day now!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hgb-rK-lST">
-                                <rect key="frame" x="16" y="762" width="295.5" height="33"/>
+                                <rect key="frame" x="16" y="761" width="296.5" height="34"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" name="kThemeNavyBlue_50"/>
+                                <size key="shadowOffset" width="1" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@sarahmagusara" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaO-jZ-awp" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="16" y="743.5" width="108" height="16.5"/>
+                                <rect key="frame" x="16" y="741.5" width="109" height="17.5"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" name="kThemeNavyBlue_50"/>
+                                <size key="shadowOffset" width="1" height="1"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wUh-eK-dTm"/>
@@ -161,7 +165,7 @@
                             <constraint firstItem="hop-2Y-3E1" firstAttribute="centerY" secondItem="PNL-2k-69e" secondAttribute="centerY" id="BS4-NM-Usa"/>
                             <constraint firstItem="iu6-D9-adV" firstAttribute="leading" secondItem="wUh-eK-dTm" secondAttribute="leading" id="Dd0-TK-hCz"/>
                             <constraint firstItem="tJy-oX-cm5" firstAttribute="leading" secondItem="wUh-eK-dTm" secondAttribute="leading" constant="12" id="NfH-Wo-PO8"/>
-                            <constraint firstItem="yEM-eC-SrN" firstAttribute="top" secondItem="wUh-eK-dTm" secondAttribute="top" constant="12" id="QCy-T7-NxV"/>
+                            <constraint firstItem="yEM-eC-SrN" firstAttribute="top" secondItem="wUh-eK-dTm" secondAttribute="top" constant="24" id="QCy-T7-NxV"/>
                             <constraint firstAttribute="bottom" secondItem="iu6-D9-adV" secondAttribute="bottom" id="VaO-oq-u8C"/>
                             <constraint firstItem="hop-2Y-3E1" firstAttribute="centerX" secondItem="PNL-2k-69e" secondAttribute="centerX" id="eX8-xg-Lht"/>
                             <constraint firstItem="yEM-eC-SrN" firstAttribute="centerX" secondItem="pl2-8X-Y4i" secondAttribute="centerX" id="fI6-pA-JWx"/>
@@ -536,6 +540,14 @@
                                                         <constraint firstItem="aKD-44-tyf" firstAttribute="leading" secondItem="qny-Nl-pbB" secondAttribute="leading" constant="4" id="eks-Kc-wEf"/>
                                                     </constraints>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pM8-Xi-uT4">
+                                                    <rect key="frame" x="4" y="4" width="53.5" height="15"/>
+                                                    <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="12"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" name="kThemeNavyBlue_50"/>
+                                                    <size key="shadowOffset" width="1" height="1"/>
+                                                </label>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ex-x9-2EB">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                     <subviews>
@@ -577,14 +589,6 @@
                                                         <constraint firstItem="T1X-Yu-onp" firstAttribute="top" secondItem="4ex-x9-2EB" secondAttribute="top" constant="20" id="p4E-9n-hIl"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pM8-Xi-uT4">
-                                                    <rect key="frame" x="4" y="4" width="53.5" height="15"/>
-                                                    <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="12"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" name="kThemeNavyBlue_50"/>
-                                                    <size key="shadowOffset" width="1" height="1"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RmH-vz-DUO">
                                                     <rect key="frame" x="104" y="4" width="20" height="22"/>
                                                     <constraints>
@@ -845,8 +849,11 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </textView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uv-1r-wYj">
-                                                        <rect key="frame" x="360" y="17" width="30" height="29"/>
-                                                        <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
+                                                        <rect key="frame" x="360" y="-4" width="30" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="WTq-Pf-2lQ"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                         <state key="normal" title="Post">
                                                             <color key="titleColor" name="kThemeBlue"/>
                                                         </state>
@@ -927,12 +934,13 @@
             </objects>
             <point key="canvasLocation" x="3228.985507246377" y="107.8125"/>
         </scene>
-        <!--Home-->
+        <!--Feed-->
         <scene sceneID="BRD-x5-nAG">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="EVD-gT-401" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="ic_feed_unselected" selectedImage="ic_feed_selected" id="J9w-5h-qba"/>
+                    <tabBarItem key="tabBarItem" title="Feed" image="ic_feed_unselected" selectedImage="ic_feed_selected" id="JiK-rc-iZh"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="679-RJ-LHd">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -948,7 +956,7 @@
     </scenes>
     <designables>
         <designable name="FaO-jZ-awp">
-            <size key="intrinsicContentSize" width="108" height="16.5"/>
+            <size key="intrinsicContentSize" width="109" height="17.5"/>
         </designable>
     </designables>
     <resources>

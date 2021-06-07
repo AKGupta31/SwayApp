@@ -13,7 +13,8 @@ class SwayTabbarVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tabBar.isTranslucent = false
+        tabBar.tintColor = UIColor(named: "kThemeNavyBlue")
         // Do any additional setup after loading the view.
     }
     

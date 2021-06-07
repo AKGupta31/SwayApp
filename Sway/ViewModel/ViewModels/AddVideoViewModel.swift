@@ -71,7 +71,7 @@ class AddVideoViewModel:NSObject {
                     print("progress ",progress)
                 } failure: {[weak self] (error) in
                     self?.isAlreadyUploading = false
-                    AlertView.showAlert(with: "Error!!!", message: error.localizedDescription)
+                    AlertView.showAlert(with: "Error", message: error.localizedDescription)
                 }
             } else {
                 self.thumbnail.uploadImageToS3(uploadFolderName: "", compressionRatio: 1.0) {[weak self] (isSuccess, url, fileName) in
@@ -91,7 +91,7 @@ class AddVideoViewModel:NSObject {
             uploadThumbnail()
             
         }else {
-            delegate?.showAlert(with: "Error!!!", message: "No internet connection")
+            delegate?.showAlert(with: "Error", message: "No internet connection")
         }
     }
     
@@ -130,7 +130,7 @@ class AddVideoViewModel:NSObject {
             }else {
                 let (isValid,message) = areFieldsValid()
                 if isValid == false {
-                    delegate?.showAlert(with: "Opps!!!", message: message)
+                    delegate?.showAlert(with: "Oops", message: message)
                     return
                 }
                 FeedsEndPoint.postFeed(feedId:self.feedId, caption: caption!, feedType: workoutType, url: uploadedMediaUrl!, thumbnailUrl: uploadedThumbnailUrl!, mediaType: mediaType) { [weak self](response) in
@@ -139,15 +139,15 @@ class AddVideoViewModel:NSObject {
                     if response.statusCode == 200 {
                         self?.delegate?.videoPostedSuccessfully()
                     }else {
-                        self?.delegate?.showAlert(with: "Error!!!", message: response.message)
+                        self?.delegate?.showAlert(with: "Error", message: response.message)
                     }
                 } failure: {[weak self] (status) in
-                    self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
+                    self?.delegate?.showAlert(with: "Error", message: status.msg)
                 }
                 
             }
         }else {
-            delegate?.showAlert(with: "Error!!!", message: "No internet connection")
+            delegate?.showAlert(with: "Error", message: "No internet connection")
         }
         
     }

@@ -28,6 +28,8 @@ pod 'SDWebImage', '~> 5.0'
 pod 'GrowingTextView'
 pod 'ActiveLabel'
 pod 'CropViewController'
+pod 'CircularCarousel'
+pod 'FAPaginationLayout'
 
 
 

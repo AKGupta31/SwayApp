@@ -30,12 +30,12 @@ class FacebookLoginManager {
             case .failed:
                 let response = LoginResponse(statusCode: 500, message: "Login failed: Connection to social media account failed")
                 self.responseCallback?(false,response)
-//                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account failed",on: viewController)
+//                AlertView.showAlert(with: "Error", message: "Login failed: Connection to social media account failed",on: viewController)
 //                break
             case .cancelled:
                 let response = LoginResponse(statusCode: 500, message: "Login failed: Connection to social media account cancelled by user")
                 self.responseCallback?(false,response)
-//                AlertView.showAlert(with: "Error!!!", message: "Login failed: Connection to social media account cancelled by user",on: viewController)
+//                AlertView.showAlert(with: "Error", message: "Login failed: Connection to social media account cancelled by user",on: viewController)
                 
             case .success(_, _, let accessToken):
                 //                 try to login with this token to the backend
@@ -94,7 +94,7 @@ class FacebookLoginManager {
                             print(status)
                             let response = LoginResponse(statusCode: status.code, message: status.msg)
                             self.responseCallback?(false,response)
-//                            AlertView.showAlert(with: "Error!!!", message: status.msg)
+//                            AlertView.showAlert(with: "Error", message: status.msg)
                         }
                     }
                     
@@ -102,7 +102,7 @@ class FacebookLoginManager {
                 }
                 
             } else {
-                AlertView.showAlert(with: "Error!!!", message: error?.localizedDescription ?? "")
+                AlertView.showAlert(with: "Error", message: error?.localizedDescription ?? "")
                 print("error \(String(describing: error))")
             }
         }

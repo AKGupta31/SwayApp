@@ -59,7 +59,7 @@ class FeedsViewModel {
             }
             self?.delegate?.reloadData()
         } failure: { (status) in
-            self.delegate?.showAlert(with: "Error!!!", message: status.msg)
+            self.delegate?.showAlert(with: "Error", message: status.msg)
         }
 
     }
@@ -78,21 +78,21 @@ class FeedsViewModel {
         let isLike = !feeds[indexPath.row].isLike
         let oldCount = feeds[indexPath.row].likeCount
         let newCount = isLike ? oldCount + 1 : oldCount - 1
-        (self.delegate as? BaseViewController)?.showLoader()
+//        (self.delegate as? BaseViewController)?.showLoader()
         FeedsEndPoint.likeFeed(feedId: feedId) {[weak self] (response) in
-            (self?.delegate as? BaseViewController)?.hideLoader()
+//            (self?.delegate as? BaseViewController)?.hideLoader()
             if response.statusCode == 200 {
                 self?.feeds[indexPath.row].isLike = isLike
                 self?.feeds[indexPath.row].likeCount = newCount
                 self?.delegate?.likeApi(isSuccess: true,indexPath:indexPath)
             }else{
-                self?.delegate?.showAlert(with: "Error!!!", message: response.message)
+                self?.delegate?.showAlert(with: "Error", message: response.message)
                 self?.delegate?.likeApi(isSuccess: false,indexPath:indexPath)
             }
            
         } failure: { [weak self](status) in
-            (self?.delegate as? BaseViewController)?.hideLoader()
-            self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
+//            (self?.delegate as? BaseViewController)?.hideLoader()
+            self?.delegate?.showAlert(with: "Error", message: status.msg)
             self?.delegate?.likeApi(isSuccess: false,indexPath: indexPath)
         }
 
@@ -106,10 +106,10 @@ class FeedsViewModel {
                 self?.feeds.removeAll(where: {$0._id == id})
                 self?.delegate?.reloadData()
             }else{
-                self?.delegate?.showAlert(with: "Error!!!", message: response.message)
+                self?.delegate?.showAlert(with: "Error", message: response.message)
             }
         } failure: { [weak self](status) in
-            self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
+            self?.delegate?.showAlert(with: "Error", message: status.msg)
         }
     }
     
@@ -123,13 +123,13 @@ class FeedsViewModel {
             (self?.delegate as? BaseViewController)?.hideLoader()
             if let err = error {
                 DispatchQueue.main.async {
-                    self?.delegate?.showAlert(with: "Error!!!", message: err.localizedDescription)
+                    self?.delegate?.showAlert(with: "Error", message: err.localizedDescription)
                 }
             }else if let fileUrl = url {
                 VideoUtility.shared.saveVideoToLibrary(url: fileUrl, mediaType: viewModel.mediaType) { [weak self](isSuccess, error) in
                     DispatchQueue.main.async {
                         if let err = error {
-                            self?.delegate?.showAlert(with: "Error!!!", message: err.localizedDescription)
+                            self?.delegate?.showAlert(with: "Error", message: err.localizedDescription)
                         }else {
                             self?.delegate?.showAlert(with: "Congratulations!!!", message: "Your media has been successfully saved to photos")
                         }

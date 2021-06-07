@@ -29,14 +29,14 @@ class GoogleSignInManager:NSObject,GIDSignInDelegate {
             GoogleSignInManager.shared.login(idToken: user.authentication.idToken, accessToken: user.authentication.accessToken, email: user.profile.email, userId: user.userID, user: user)
         } else {
             if let topVc = UIApplication.topViewController {
-                AlertView.showAlert(with: "Error!!!", message: error.localizedDescription, on: topVc)
+                AlertView.showAlert(with: "Error", message: error.localizedDescription, on: topVc)
             }
         }
     }
     
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         NotificationCenter.default.post(Notification(name: Constants.Notifications.hideLoader))
-        AlertView.showAlert(with: "Error!!!", message: error.localizedDescription)
+        AlertView.showAlert(with: "Error", message: error.localizedDescription)
     }
     
     func sign(_ signIn: GIDSignIn!, present viewController: UIViewController!) {
@@ -68,7 +68,7 @@ extension GoogleSignInManager {
                     GIDSignIn.sharedInstance()?.signOut()
                     DataManager.shared.isLoggedIn = false
                     NotificationCenter.default.post(Notification(name: Constants.Notifications.hideLoader))
-                    AlertView.showAlert(with: "Error!!!", message: error.msg)
+                    AlertView.showAlert(with: "Error", message: error.msg)
                 }
             }
           
@@ -79,7 +79,7 @@ extension GoogleSignInManager {
                 GIDSignIn.sharedInstance()?.signOut()
                 DataManager.shared.isLoggedIn = false
                 NotificationCenter.default.post(Notification(name: Constants.Notifications.hideLoader))
-                AlertView.showAlert(with: "Error!!!", message: status.msg)
+                AlertView.showAlert(with: "Error", message: status.msg)
             }
         }
     }
@@ -90,7 +90,7 @@ extension GoogleSignInManager {
         }else {
             DataManager.shared.isLoggedIn = false
             NotificationCenter.default.post(Notification(name: Constants.Notifications.hideLoader))
-            AlertView.showAlert(with: "Error!!!", message: response.message ?? "")
+            AlertView.showAlert(with: "Error", message: response.message ?? "")
         }
     }
     

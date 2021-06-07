@@ -12,12 +12,12 @@
         <!--Planner-->
         <scene sceneID="aXd-Xc-Dhg">
             <objects>
-                <viewController id="IG4-Bx-sNH" sceneMemberID="viewController">
+                <viewController id="IG4-Bx-sNH" customClass="PlannerVC" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="euw-hQ-s8Y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vy3-9T-5B0">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUb-iu-mqU">
                                 <rect key="frame" x="178.5" y="437.5" width="57.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -27,8 +27,8 @@
                         <viewLayoutGuide key="safeArea" id="zIz-7A-utQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vy3-9T-5B0" firstAttribute="centerX" secondItem="euw-hQ-s8Y" secondAttribute="centerX" id="VxK-j8-jNb"/>
-                            <constraint firstItem="vy3-9T-5B0" firstAttribute="centerY" secondItem="euw-hQ-s8Y" secondAttribute="centerY" id="WJj-HK-lKQ"/>
+                            <constraint firstItem="aUb-iu-mqU" firstAttribute="centerX" secondItem="euw-hQ-s8Y" secondAttribute="centerX" id="1pG-lf-4Ke"/>
+                            <constraint firstItem="aUb-iu-mqU" firstAttribute="centerY" secondItem="euw-hQ-s8Y" secondAttribute="centerY" id="FXv-Fx-oqV"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Planner" image="ic_planner_unselected" selectedImage="ic_planner_selected" id="J8Y-iI-Rn4"/>

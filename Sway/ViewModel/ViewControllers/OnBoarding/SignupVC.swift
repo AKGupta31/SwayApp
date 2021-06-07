@@ -36,7 +36,7 @@ class SignupVC: BaseLoginVC {
 ////                    self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
 //                }else {
 //                    //show error
-//                    AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+//                    AlertView.showAlert(with: "Error", message: response?.message ?? "Unknown error")
 //                }
             }
         } else {
@@ -53,7 +53,7 @@ class SignupVC: BaseLoginVC {
 //                self.navigationController?.push(HomeVC.self)
 ////                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
 //            }else {
-//                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+//                AlertView.showAlert(with: "Error", message: response?.message ?? "Unknown error")
 //            }
         }
     }
@@ -63,7 +63,7 @@ class SignupVC: BaseLoginVC {
             DataManager.shared.setLoggedInUser(user: response?.data)
             self.goToNextScreen(response: response)
         }else {
-            AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error")
+            AlertView.showAlert(with: "Error", message: response?.message ?? "Unknown error")
         }
     }
     
@@ -77,7 +77,7 @@ class SignupVC: BaseLoginVC {
 //                self.navigationController?.push(HomeVC.self)
 ////                self.view.makeToast("Signup Success", duration: 3.0, position: .center)
 //            }else {
-//                AlertView.showAlert(with: "Error!!!", message: response?.message ?? "Unknown error",on: self)
+//                AlertView.showAlert(with: "Error", message: response?.message ?? "Unknown error",on: self)
 //            }
         }
     }

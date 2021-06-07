@@ -40,7 +40,7 @@ class ForgotPasswordVC: BaseViewController {
     @IBAction func actionSend(_ sender: UIButton) {
         if isEmailValid {
             showLoader()
-            LoginRegisterEndpoint.forgotPassword(with: self.emailField.text!) {[weak self] (response) in
+            LoginRegisterEndpoint.getOtp(on: self.emailField!.text!, type: .FORGOT_PASSWORD) {[weak self] (response) in
                 self?.hideLoader()
                 if response.statusCode == 200 {
                     self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
@@ -48,12 +48,27 @@ class ForgotPasswordVC: BaseViewController {
                         vc.type = .FORGOT_PASSWORD
                     })
                 }else {
-                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                    AlertView.showAlert(with: "Error", message: response.message)
                 }
-                
-            } failure: { (response) in
-                AlertView.showAlert(with: "Error!!!", message: response.msg)
+            } failure: { [weak self](response) in
+                self?.hideLoader()
+                AlertView.showAlert(with: "Error", message: response.msg)
             }
+
+//            LoginRegisterEndpoint.forgotPassword(with: self.emailField.text!) {[weak self] (response) in
+//                self?.hideLoader()
+//                if response.statusCode == 200 {
+//                    self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
+//                        vc.email = self!.emailField.text!
+//                        vc.type = .FORGOT_PASSWORD
+//                    })
+//                }else {
+//                    AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
+//                }
+//
+//            } failure: { (response) in
+//                AlertView.showAlert(with: "Error", message: response.msg)
+//            }
 
         }
     }

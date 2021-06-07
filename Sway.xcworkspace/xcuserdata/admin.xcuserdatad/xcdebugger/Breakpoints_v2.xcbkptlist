@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "03A1FA35-D81F-4A74-8A9B-B34276515319"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Sway/ViewModel/ViewControllers/OnBoarding1/HowOldVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "pickerView(_:viewForRow:forComponent:reusing:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B93D6A89-AAE8-42A2-97EB-A73D67E45394"
+            uuid = "1C1383CC-6576-453F-B201-6EB939012C53"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sway/ViewModel/ViewControllers/TabBar/Home/CommentsVC.swift"
+            filePath = "Sway/UI/Views/CarouselView/ButtonsCarouselView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "reloadData()"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "numberOfItems(inCarousel:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

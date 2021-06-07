@@ -14,9 +14,9 @@ enum Endpoint {
     case socialRegister(socialId: String, email: String, firstName: String,lastName:String, type: SocialMediaType, profilePicture: String)
     case socialLogin(type:SocialMediaType,socialId:String)
     case verifyEmail(email:String,otp:String,type:VerifyOtpType)
-    case getOtpOnEmail(email:String)
+    case getOtpOnEmail(email:String,type:VerifyOtpType)
     case signup(token: String,fName:String,lName:String,password:String,imageUrl:String)
-    case forgotPassword(email:String)
+//    case forgotPassword(email:String)
     case resetPassword(email:String,password:String)
     case updateOnboardingStatus(key:String,value:Any)
     case getVideos(videoFor:Int)
@@ -35,7 +35,7 @@ enum Endpoint {
     /// GET, POST or PUT method for each request
     var method:Alamofire.HTTPMethod {
         switch self {
-        case .login,.socialRegister,.socialLogin,.getOtpOnEmail,.signup,.forgotPassword,.resetPassword,.likeFeed,.postComment:
+        case .login,.socialRegister,.socialLogin,.getOtpOnEmail,.signup,.resetPassword,.likeFeed,.postComment:
             return .post
         case .updateOnboardingStatus,.deleteFeed:
             return .put
@@ -71,12 +71,16 @@ enum Endpoint {
             default:
                 return Constants.Networking.kBaseUrl + interMediate + "verify-email"
             }
-        case .getOtpOnEmail:
+        case .getOtpOnEmail(_,let type):
+            if type == .FORGOT_PASSWORD {
+                return  Constants.Networking.kBaseUrl + interMediate + "forgot-password"
+            }
+            //else
             return  Constants.Networking.kBaseUrl + interMediate + "send-otp"
         case .signup:
             return  Constants.Networking.kBaseUrl + interMediate + "signup"
-        case .forgotPassword:
-            return  Constants.Networking.kBaseUrl + interMediate + "forgot-password"
+//        case .forgotPassword:
+//            return  Constants.Networking.kBaseUrl + interMediate + "forgot-password"
         case .resetPassword:
             return Constants.Networking.kBaseUrl + interMediate + "reset-password"
         case .updateOnboardingStatus:
@@ -119,7 +123,7 @@ enum Endpoint {
             return ["socialLoginType":type.rawValue,"socialId":socialId,"deviceId":DataManager.shared.deviceId,"deviceToken":DataManager.shared.deviceToken]
         case .verifyEmail(let email,let otp,_):
             return ["email":email,"otp":otp]
-        case .getOtpOnEmail(let email):
+        case .getOtpOnEmail(let email,_):
             return  ["email":email]
         case .signup(let token,let fName,let lName,let password, let imageUrl):
             var dictionary = ["token":token,
@@ -130,8 +134,6 @@ enum Endpoint {
                 dictionary["profilePicture"] = imageUrl
             }
             return dictionary
-        case .forgotPassword(let email):
-            return ["email":email]
         case .resetPassword(let email,let password):
             return ["email":email,"password":password]
         case .updateOnboardingStatus(let key,let value):
@@ -161,7 +163,7 @@ enum Endpoint {
     var header:HTTPHeaders? {
         var headers = ["platform":"2","timezone":"0","api_key":"1234","language":"en"]
         switch self {
-        case .socialRegister,.socialLogin,.login,.getOtpOnEmail,.signup,.forgotPassword,.resetPassword:
+        case .socialRegister,.socialLogin,.login,.getOtpOnEmail,.signup,.resetPassword:
             return HTTPHeaders(headers)
         case .verifyEmail:
             return HTTPHeaders(headers)

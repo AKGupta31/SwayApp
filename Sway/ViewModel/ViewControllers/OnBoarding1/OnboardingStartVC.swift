@@ -52,10 +52,10 @@ class OnboardingStartVC: BaseViewController {
                     guard let videoUrlStr = response.data?.media?.url,let videoUrl = URL(string: videoUrlStr) else {return}
                     self?.setupPlayer(videoUrl: videoUrl)
                 }else {
-                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                    AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
                 }
             } failure: { (status) in
-                AlertView.showAlert(with: "Error!!!", message: status.msg)
+                AlertView.showAlert(with: "Error", message: status.msg)
             }
         }
         

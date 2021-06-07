@@ -185,6 +185,7 @@ extension SetupPasswordVC:UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         let (isValid,_) = isAllFieldsValid()
+        self.isFieldsValid = isValid
         if isValid {
             progressViewInnerCircle.backgroundColor = UIColor(named: "kThemeYellow")
         }else {
@@ -204,18 +205,21 @@ extension SetupPasswordVC:UITextFieldDelegate {
 
 extension SetupPasswordVC:UIScrollViewDelegate{
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
             print("scroll downward")
+            if contentYoffset <= 0.0 {
+                self.navigationController?.popViewController(animated: true)
+            }
         }else {
             print("scroll upword")
             if isFieldsValid {
-                let height = scrollView.frame.size.height
-                let contentYoffset = scrollView.contentOffset.y
-                let distanceFromBottom = scrollView.contentSize.height - contentYoffset
                 if distanceFromBottom <= height {
                     let (isValid,error) = isAllFieldsValid()
                     if !isValid {
-                        AlertView.showAlert(with: "Opps!!!", message: error)
+                        AlertView.showAlert(with: "Error!", message: error)
                         return
                     }
                     self.navigationController?.push(SetProfilePictureVC.self, animated: true, configuration: { (vc) in
@@ -239,10 +243,10 @@ extension SetupPasswordVC:UIScrollViewDelegate{
                 if response.statusCode == 200{
                     self?.navigationController?.push(PasswordChangeSuccessVC.self)
                 }else {
-                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                    AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
                 }
             } failure: { (status) in
-                AlertView.showAlert(with: "Error!!!", message: status.msg)
+                AlertView.showAlert(with: "Error", message: status.msg)
             }
 
         }

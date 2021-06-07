@@ -22,7 +22,9 @@ PODS:
     - AWSCore (= 2.23.3)
   - AWSS3 (2.23.3):
     - AWSCore (= 2.23.3)
+  - CircularCarousel (1.0.0)
   - CropViewController (2.6.0)
+  - FAPaginationLayout (2.0.1)
   - FBSDKCoreKit (9.2.0):
     - FBSDKCoreKit/Basics (= 9.2.0)
     - FBSDKCoreKit/Core (= 9.2.0)
@@ -134,7 +136,9 @@ DEPENDENCIES:
   - AWSMobileClient
   - AWSPinpoint
   - AWSS3
+  - CircularCarousel
   - CropViewController
+  - FAPaginationLayout
   - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase/Analytics
@@ -164,7 +168,9 @@ SPEC REPOS:
     - AWSMobileClient
     - AWSPinpoint
     - AWSS3
+    - CircularCarousel
     - CropViewController
+    - FAPaginationLayout
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
@@ -204,7 +210,9 @@ SPEC CHECKSUMS:
   AWSMobileClient: bdfc148fc11b846331f2bec4a7063c95e66c329e
   AWSPinpoint: 72c99dbf5c37464f87cbf4515d6d027c996ddc96
   AWSS3: d8e8a6d7328e7fa1468788c4d7efa71d7f3a6caa
+  CircularCarousel: 6248f5892c018fc2d115d4d5186be91d46bacbea
   CropViewController: 7093b39ec3cb508531b22d35773e06cecd7378d8
+  FAPaginationLayout: 5f9d95fbd94dff12f863c196640bd797abe68907
   FBSDKCoreKit: dace5abafc2fd9272733e6d027bcf18102712117
   FBSDKLoginKit: 43f377b451d391f5bc9dd774f51a391db1072029
   Firebase: fffddd0bab8677d07376538365faa93ff3889b39
@@ -233,6 +241,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: 7efea3feaacd037b183774b08940eab3d76431d6
+PODFILE CHECKSUM: 0275267d29ffc196dde40ba56ba38aeda24971df
 
 COCOAPODS: 1.10.1

@@ -11,6 +11,18 @@ import ViewControllerDescribable
 enum PasswordChangeSuccessVCType:Int {
     case passwordChange
     case postSubmitted
+    case welcomeToSway
+    
+    var mainImageName:String {
+        switch self {
+        case .passwordChange:
+            return "PasswordChange"
+        case .postSubmitted:
+            return "ic_post_submitted"
+        case .welcomeToSway:
+            return "WelcomeToSway"
+        }
+    }
 }
 
 class PasswordChangeSuccessVC: BaseViewController {
@@ -23,12 +35,15 @@ class PasswordChangeSuccessVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.titlelmageView.image = UIImage(named: type.mainImageName)
         if type == .postSubmitted {
             setupLabelForPostSubmitted()
-            self.titlelmageView.image = UIImage(named: "ic_post_submitted")
             lblDescription.isHidden = true
             lblDescription.text = nil
-        }else {
+        }else if type == .welcomeToSway{
+            setupLabelForWelcomeToSway()
+            lblDescription.text = "Congratulations! Subscription is successful. Let’s get started on your fitness journey!"
+        } else {
             setupLabelForPasswordChanged()
         }
         // Do any additional setup after loading the view.
@@ -36,7 +51,7 @@ class PasswordChangeSuccessVC: BaseViewController {
     
     @IBAction func actionCross(_ sender: UIButton) {
         if self.type == .postSubmitted {
-            self.navigationController?.popToRootViewController(animated: true)
+            self.navigationController?.popViewController(animated: true)
         }else {
             self.navigationController?.popViewController(animated: true)
         }
@@ -45,7 +60,9 @@ class PasswordChangeSuccessVC: BaseViewController {
     @IBAction func actionNext(_ sender: UIButton) {
         if self.type == .postSubmitted {
             self.navigationController?.popToRootViewController(animated: true)
-        }else{
+        }else if type == .welcomeToSway {
+            self.navigationController?.push(SyncWithCalenderVC.self, animated: true, configuration: nil)
+        } else{
             guard var viewControllers = self.navigationController?.viewControllers else {return}
             viewControllers.removeLast()
             viewControllers.removeLast()
@@ -77,6 +94,16 @@ class PasswordChangeSuccessVC: BaseViewController {
           .foregroundColor: UIColor(red: 5.0 / 255.0, green: 9.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
         ])
         attributedString.addAttribute(.foregroundColor, value: UIColor(red: 94.0 / 255.0, green: 0.0, blue: 1.0, alpha: 1.0), range: NSRange(location: 19, length: 21))
+        lblTitle.attributedText = attributedString
+
+    }
+    
+    func setupLabelForWelcomeToSway(){
+        let attributedString = NSMutableAttributedString(string: "Welcome\nto SWAY", attributes: [
+          .font: UIFont(name: "Poppins-Bold", size: 52.0)!,
+          .foregroundColor: UIColor(red: 94.0 / 255.0, green: 0.0, blue: 1.0, alpha: 1.0)
+        ])
+        attributedString.addAttribute(.foregroundColor, value: UIColor(red: 5.0 / 255.0, green: 9.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0), range: NSRange(location: 8, length: 7))
         lblTitle.attributedText = attributedString
 
     }

@@ -42,8 +42,6 @@ class HomeVC: BaseTabBarViewController {
         DispatchQueue.global(qos: .background).async {
             self.viewModel.getPredefinedComments()
         }
-        
-        
         // Do any additional setup after loading the view.
     }
     
@@ -96,15 +94,23 @@ class HomeVC: BaseTabBarViewController {
     }
     
     @IBAction func actionAdd(_ sender: UIButton) {
+        player.pause()
         showAlert()
     }
     
     @IBAction func actionComments(_ sender: UIButton) {
-        let indexPath = IndexPath(row: sender.tag, section: 0)
-        self.tabBarController?.present(CommentsVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.viewModel = self.viewModel.getCommentsViewModel(index: indexPath.row)
-        }, completion: nil)
+        /*Testing */
+//        self.navigationController?.push(SubscriptionVC.self)
+        if player != nil {
+            player.pause()
+        }
+        
+         let indexPath = IndexPath(row: sender.tag, section: 0)
+         self.tabBarController?.present(CommentsVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
+         vc.modalPresentationStyle = .overCurrentContext
+         vc.viewModel = self.viewModel.getCommentsViewModel(index: indexPath.row)
+         }, completion: nil)
+         
         
         
         //        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first{
@@ -114,12 +120,15 @@ class HomeVC: BaseTabBarViewController {
     }
     
     @IBAction func actionSignou(_ sender: UIButton) {
+        if player != nil && player.playbackState == .playing {
+            player.pause()
+            player.playbackDelegate = nil
+        }
         DataManager.shared.setLoggedInUser(user: nil)
-        if var viewControllers = self.tabBarController?.navigationController?.viewControllers {
-            self.tabBarController?.tabBar.isHidden = true
-            viewControllers.removeAll()
-            viewControllers.append(LoginVC.instantiated())
-            self.navigationController?.setViewControllers(viewControllers, animated: true)
+        if var vcs = self.tabBarController?.navigationController?.viewControllers {
+            vcs.removeAll()
+            vcs.append(LoginVC.instantiated())
+            self.tabBarController?.navigationController?.setViewControllers(vcs, animated: true)
         }
     }
     
@@ -138,7 +147,7 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfItems = viewModel.numberOfItems
         if numberOfItems <= 0 {
-            tableView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "No News feed is available, please click on the \u{0002B} option to upload the news feed", to: tableView)
+            tableView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "No News feed is available, please click on the \u{0002B} option to upload the news feed", to: tableView,offSet: CGPoint(x: 0, y: -150))
         }else {
             tableView.backgroundView = nil
         }
@@ -389,7 +398,9 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
            let thumbnail =  VideoUtility.shared.getImageFromUrl(url: videoURL) ?? UIImage()
            let asset = AVURLAsset(url: videoURL)
             if asset.duration.seconds < 10 {
-                showAlert(with: "Oops!!", message: "Please add video of duration between 10-60 seconds")
+                showAlert(with: "Error!", message: "Video must be minimum to 10 seconds")
+            } else if asset.duration.seconds > 60 {
+                showAlert(with: "Error!", message: "Video must be maximum to 60 seconds")
             }else {
                 self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
                     vc.viewModel = AddVideoViewModel(videoUrl: videoURL,thumbnail:thumbnail)

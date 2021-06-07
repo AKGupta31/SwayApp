@@ -60,8 +60,8 @@ class VerifyOtpVC: BaseLoginVC {
     
     private func setupTitleForEmailVerification(){
         let attributedString = NSMutableAttributedString(string: "Email Verification", attributes: [
-          .font: UIFont(name: "Poppins-Bold", size: 46.0)!,
-          .foregroundColor: UIColor(red: 5.0 / 255.0, green: 9.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
+            .font: UIFont(name: "Poppins-Bold", size: 46.0)!,
+            .foregroundColor: UIColor(red: 5.0 / 255.0, green: 9.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
         ])
         attributedString.addAttribute(.foregroundColor, value: UIColor(red: 94.0 / 255.0, green: 0.0, blue: 1.0, alpha: 1.0), range: NSRange(location: 0, length: 5))
         lblTitle.attributedText = attributedString
@@ -69,8 +69,8 @@ class VerifyOtpVC: BaseLoginVC {
     
     private func setupTitleForForgotPassword(){
         let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: [
-          .font: UIFont(name: "Poppins-Bold", size: 46.0)!,
-          .foregroundColor: UIColor(red: 5.0 / 255.0, green: 9.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
+            .font: UIFont(name: "Poppins-Bold", size: 46.0)!,
+            .foregroundColor: UIColor(red: 5.0 / 255.0, green: 9.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
         ])
         attributedString.addAttribute(.foregroundColor, value: UIColor(red: 94.0 / 255.0, green: 0.0, blue: 1.0, alpha: 1.0), range: NSRange(location: 0, length: 6))
         lblTitle.attributedText = attributedString
@@ -92,57 +92,57 @@ class VerifyOtpVC: BaseLoginVC {
         self.otpView.initializeUI()
     }
     
-
+    
     @IBAction func actionVerify(_ sender: UIButton) {
         showLoader()
         LoginRegisterEndpoint.verifyEmail(with: email, otp: enteredOtp,type: self.type) { [weak self](response) in
             self?.hideLoader()
             if let code = response.statusCode,code >= 200 && code < 300 {
-                self?.view.makeToast("Otp verified successfully", duration: 1.0, position: .center) { (isSuccess) in
-//                    if isSuccess {
-                        if self?.type == .SIGNUP {
-                            self?.navigationController?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
-                                vc.email = self?.email
-                                vc.firstName = self?.firstName
-                                vc.sirName = self?.sirName
-                                vc.token = response.data?.token
-                                vc.type = .setPassword
-                            })
-                        }else if self?.type == .LOGIN {
-                            self?.navigationController?.popViewController(animated: true)
-                        }else if self?.type == .FORGOT_PASSWORD {
-                            self?.navigationController?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
-                                vc.type = .resetPassword
-                                vc.email = self?.email
-                            })
-                        }else if self?.type == .SOCIAL_SIGNUP{
-                            self?.showLoader()
-                            LoginRegisterEndpoint.socialRegister(socialId: self!.socialId!, email: self!.email, firstName: self!.firstName, lastName: self!.sirName, type: .facebook, image: self!.image!) { [weak self](response) in
-                                self?.hideLoader()
-                                if response.statusCode == 200 {
-                                    self?.goToNextScreen(response: response)
-                                }else {
-                                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unkown error")
-                                }
-                            } failure: { (status) in
-                                print(status)
-                                AlertView.showAlert(with: "Error!!!", message: status.msg)
+                self?.view.makeToast("Otp verified successfully", duration: 1.0, position: .bottom) { (isSuccess) in
+                    //                    if isSuccess {
+                    if self?.type == .SIGNUP {
+                        self?.navigationController?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
+                            vc.email = self?.email
+                            vc.firstName = self?.firstName
+                            vc.sirName = self?.sirName
+                            vc.token = response.data?.token
+                            vc.type = .setPassword
+                        })
+                    }else if self?.type == .LOGIN {
+                        self?.navigationController?.popViewController(animated: true)
+                    }else if self?.type == .FORGOT_PASSWORD {
+                        self?.navigationController?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
+                            vc.type = .resetPassword
+                            vc.email = self?.email
+                        })
+                    }else if self?.type == .SOCIAL_SIGNUP{
+                        self?.showLoader()
+                        LoginRegisterEndpoint.socialRegister(socialId: self!.socialId!, email: self!.email, firstName: self!.firstName, lastName: self!.sirName, type: .facebook, image: self!.image!) { [weak self](response) in
+                            self?.hideLoader()
+                            if response.statusCode == 200 {
+                                self?.goToNextScreen(response: response)
+                            }else {
+                                AlertView.showAlert(with: "Error", message: response.message ?? "Unkown error")
                             }
+                        } failure: { (status) in
+                            print(status)
+                            AlertView.showAlert(with: "Error", message: status.msg)
                         }
+                    }
                 }
             }else {
-                AlertView.showAlert(with: "Error!!!", message: response.message ?? "")
+                AlertView.showAlert(with: "Error", message: response.message ?? "")
             }
         } failure: { (status) in
-            AlertView.showAlert(with: "Error!!!", message: status.msg)
+            AlertView.showAlert(with: "Error", message: status.msg)
         }
-
+        
     }
     
     @IBAction func actionCross(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
- 
+    
 }
 
 extension VerifyOtpVC: OTPFieldViewDelegate {
@@ -154,21 +154,21 @@ extension VerifyOtpVC: OTPFieldViewDelegate {
         
         if gesture.didTapAttributedTextInLabel(label: resendLabel, inRange: range),!isAlreadyCallingApi {
             showLoader()
-            LoginRegisterEndpoint.getOtp(on: email) { [weak self](response) in
+            
+            LoginRegisterEndpoint.getOtp(on: email,type:self.type) { [weak self](response) in
                 self?.hideLoader()
                 self?.isAlreadyCallingApi = false
                 if let statusCode = response.statusCode,statusCode == 200 {
-                    self?.view.makeToast("Otp has be resent to your email", duration: 1.0, position: .center)
+                    self?.view.makeToast("OTP has been resent on your email id", duration: 1.0, position: .bottom)
                 }else {
-                    AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown Error")
+                    AlertView.showAlert(with: "Error", message: response.message)
                 }
                 
             } failure: { [weak self](status) in
                 self?.isAlreadyCallingApi = false
                 self?.hideLoader()
-                AlertView.showAlert(with: "Error!!!", message: status.msg)
+                AlertView.showAlert(with: "Error", message: status.msg)
             }
-
         }
     }
     

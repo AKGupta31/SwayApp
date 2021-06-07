@@ -60,7 +60,7 @@ class CommentsViewModel:NSObject {
                 self?.comments.append(contentsOf: newComments)
                 self?.delegate?.reloadData()
             }else {
-                self?.delegate?.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                self?.delegate?.showAlert(with: "Error", message: response.message ?? "Unknown error")
             }
             if let nextHit = response.commentData?.nextHit{
                 if nextHit >= 1 {
@@ -70,7 +70,7 @@ class CommentsViewModel:NSObject {
                 }
             }
         } failure: { [weak self](status) in
-            self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
+            self?.delegate?.showAlert(with: "Error", message: status.msg)
         }
 
     }
@@ -84,12 +84,12 @@ class CommentsViewModel:NSObject {
                 self?.totalCommentsCount += 1
                 self?.delegate?.commentPostedSuccessfully()
             }else {
-                self?.delegate?.showAlert(with: "Error!!!", message: response.message ?? "Unknown error")
+                self?.delegate?.showAlert(with: "Error", message: response.message ?? "Unknown error")
             }
            
         } failure: { [weak self](status) in
             (self?.delegate as? BaseViewController)?.hideLoader()
-            self?.delegate?.showAlert(with: "Error!!!", message: status.msg)
+            self?.delegate?.showAlert(with: "Error", message: status.msg)
         }
 
     }

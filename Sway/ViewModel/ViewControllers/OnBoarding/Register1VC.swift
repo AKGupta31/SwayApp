@@ -132,7 +132,7 @@ extension Register1VC:UIScrollViewDelegate {
                 if distanceFromBottom <= height {
                     let (isValid,error) = isAllFieldsValid()
                     if !isValid {
-                        AlertView.showAlert(with: "Opps!!!", message: error)
+                        AlertView.showAlert(with: "Oops", message: error)
                         isAlreadyCallingApi = false
                         return
                     }
@@ -146,26 +146,28 @@ extension Register1VC:UIScrollViewDelegate {
     
     fileprivate func callRegisterApi(){
         showLoader()
-        LoginRegisterEndpoint.getOtp(on: emailField.text!) { [weak self](response) in
+        LoginRegisterEndpoint.getOtp(on: emailField.text!, type: self.type) { [weak self](response) in
             self?.hideLoader()
             self?.isAlreadyCallingApi = false
             if let statusCode = response.statusCode,statusCode == 200 {
-                self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
-                    vc.email = self?.emailField.text ?? ""
-                    vc.type = self?.type ?? .SIGNUP
-                    vc.firstName = self?.firstNameField.text ?? ""
-                    vc.sirName = self?.sirnameField.text ?? ""
-                    vc.socialId = self?.socialId
-                    vc.image = self?.image
+                self?.view.makeToast("Verification code sent successfully",duration:0.5, position: .bottom, title: nil, image: nil, completion: { (onCompletion) in
+                    self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
+                        vc.email = self?.emailField.text ?? ""
+                        vc.type = self?.type ?? .SIGNUP
+                        vc.firstName = self?.firstNameField.text ?? ""
+                        vc.sirName = self?.sirnameField.text ?? ""
+                        vc.socialId = self?.socialId
+                        vc.image = self?.image
+                    })
                 })
             }else {
-                AlertView.showAlert(with: "Error!!!", message: response.message ?? "Unknown Error")
+                AlertView.showAlert(with: "Error", message: response.message)
             }
             
         } failure: { [weak self](status) in
             self?.isAlreadyCallingApi = false
             self?.hideLoader()
-            AlertView.showAlert(with: "Error!!!", message: status.msg)
+            AlertView.showAlert(with: "Error", message: status.msg)
         }
 
     }
