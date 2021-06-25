@@ -15,12 +15,13 @@ enum WorkoutType:Int {
 
 protocol AddVideoViewModelDelegate:BaseVMDelegate {
     func videoPostedSuccessfully()
+    func textViewDidChange(_ textView:UITextView)
 }
 
 class AddVideoViewModel:NSObject {
     
     var videoUrl:URL?
-    let thumbnail:UIImage
+    var thumbnail:UIImage
     var mediaType:MediaTypes = .kImage
     var workoutType:WorkoutType = .DANCE_WORKOUT
     
@@ -32,10 +33,23 @@ class AddVideoViewModel:NSObject {
     var isEditMode = false
     var feedId:String = ""
     var isAlreadyUploading = false
+
+    
     init(videoUrl:URL?,thumbnail:UIImage){
         self.videoUrl = videoUrl
         self.thumbnail = thumbnail
         super.init()
+        mediaType = videoUrl == nil ? .kImage : .kVideo
+        uploadFileToAws()
+    }
+    
+    //for editing the media
+    func updateMedia(videoUrl:URL?,thumbnail:UIImage){
+        self.isAlreadyUploading = false
+        self.uploadedMediaUrl = nil
+        self.uploadedThumbnailUrl = nil
+        self.videoUrl = videoUrl
+        self.thumbnail = thumbnail
         mediaType = videoUrl == nil ? .kImage : .kVideo
         uploadFileToAws()
     }
@@ -166,4 +180,22 @@ extension AddVideoViewModel:UITextViewDelegate {
         caption = textView.text
         delegate?.reloadData()
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        delegate?.textViewDidChange(textView)
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if let char = text.cString(using: String.Encoding.utf8) {
+            let isBackSpace = strcmp(char, "\\b")
+            if (isBackSpace == -92) {
+               return true
+            }
+        }
+        if textView.text.count <= 120 {
+            return true
+        }
+        return false
+    }
+    
 }

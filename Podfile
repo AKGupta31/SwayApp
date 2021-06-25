@@ -30,7 +30,9 @@ pod 'ActiveLabel'
 pod 'CropViewController'
 pod 'CircularCarousel'
 pod 'FAPaginationLayout'
-
-
+pod 'Firebase/Crashlytics'
+pod 'CircularCarousel'
+pod 'UPCarouselFlowLayout'
+pod "FlexiblePageControl"
 
 end

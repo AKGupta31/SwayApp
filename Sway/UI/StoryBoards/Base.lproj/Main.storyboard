@@ -55,7 +55,11 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XP0-aR-nk5">
-                                        <rect key="frame" x="385.5" y="20" width="16.5" height="22"/>
+                                        <rect key="frame" x="370" y="8" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="XP0-aR-nk5" secondAttribute="height" multiplier="1:1" id="9nl-35-ItU"/>
+                                            <constraint firstAttribute="width" constant="36" id="c2R-ku-OuJ"/>
+                                        </constraints>
                                         <state key="normal" image="ic_cross"/>
                                         <connections>
                                             <action selector="actionBack:" destination="059-aJ-o0i" eventType="touchUpInside" id="Q8t-He-8w2"/>
@@ -73,19 +77,19 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9m5-gR-TBx">
-                                        <rect key="frame" x="16" y="78" width="382" height="61"/>
+                                        <rect key="frame" x="16" y="80" width="382" height="61"/>
                                         <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
                                         <color key="textColor" name="kThemeBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="for SWAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QtP-Lz-Yaf">
-                                        <rect key="frame" x="16" y="127" width="382" height="61"/>
+                                        <rect key="frame" x="16" y="129" width="382" height="61"/>
                                         <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
                                         <color key="textColor" name="kThemeNavyBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage your account, train, dance, complete challenges, comment on videos, and so much more." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofH-ir-mA8">
-                                        <rect key="frame" x="16" y="205" width="382" height="33"/>
+                                        <rect key="frame" x="16" y="207" width="382" height="33"/>
                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                         <color key="textColor" name="k124123132"/>
                                         <nil key="highlightedColor"/>
@@ -317,10 +321,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="9m5-gR-TBx" firstAttribute="centerX" secondItem="alK-YZ-U9X" secondAttribute="centerX" id="6LQ-kv-VA5"/>
-                                    <constraint firstAttribute="trailing" secondItem="XP0-aR-nk5" secondAttribute="trailing" constant="12" id="BlE-ii-kEz"/>
+                                    <constraint firstAttribute="trailing" secondItem="XP0-aR-nk5" secondAttribute="trailing" constant="8" id="BlE-ii-kEz"/>
                                     <constraint firstItem="QtP-Lz-Yaf" firstAttribute="leading" secondItem="9m5-gR-TBx" secondAttribute="leading" id="DMq-Yf-cvg"/>
                                     <constraint firstItem="QtP-Lz-Yaf" firstAttribute="top" secondItem="9m5-gR-TBx" secondAttribute="bottom" constant="-12" id="DYu-Sv-hMh"/>
-                                    <constraint firstItem="XP0-aR-nk5" firstAttribute="top" secondItem="alK-YZ-U9X" secondAttribute="top" constant="20" symbolic="YES" id="EX0-5O-nMs"/>
+                                    <constraint firstItem="XP0-aR-nk5" firstAttribute="top" secondItem="alK-YZ-U9X" secondAttribute="top" constant="8" id="EX0-5O-nMs"/>
                                     <constraint firstAttribute="bottom" secondItem="hqj-cd-mpt" secondAttribute="bottom" id="FnO-rk-ycU"/>
                                     <constraint firstItem="ofH-ir-mA8" firstAttribute="centerX" secondItem="alK-YZ-U9X" secondAttribute="centerX" id="H6y-jK-maK"/>
                                     <constraint firstItem="fs1-2W-alW" firstAttribute="leading" secondItem="alK-YZ-U9X" secondAttribute="leading" constant="16" id="Mnd-2Y-mXH"/>
@@ -390,7 +394,11 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBO-uV-tGf">
-                                        <rect key="frame" x="385.5" y="20" width="16.5" height="22"/>
+                                        <rect key="frame" x="370" y="8" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="kBO-uV-tGf" secondAttribute="height" multiplier="1:1" id="4Ox-aj-yAc"/>
+                                            <constraint firstAttribute="width" constant="36" id="tvY-nI-Qbc"/>
+                                        </constraints>
                                         <state key="normal" image="ic_cross"/>
                                         <connections>
                                             <action selector="actionCross:" destination="cfQ-gK-B1s" eventType="touchUpInside" id="NyM-ed-FYs"/>
@@ -408,19 +416,19 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZI-f3-dVA">
-                                        <rect key="frame" x="16" y="78" width="382" height="61"/>
+                                        <rect key="frame" x="16" y="80" width="382" height="61"/>
                                         <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
                                         <color key="textColor" name="kThemeBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to SWAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPi-bH-Wa9">
-                                        <rect key="frame" x="16" y="127" width="382" height="61"/>
+                                        <rect key="frame" x="16" y="129" width="382" height="61"/>
                                         <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
                                         <color key="textColor" name="kThemeNavyBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage your account, train, dance, complete challenges, comment on videos, and so much more." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Upc-hG-QQN">
-                                        <rect key="frame" x="16" y="205" width="382" height="33"/>
+                                        <rect key="frame" x="16" y="207" width="382" height="33"/>
                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                         <color key="textColor" name="k124123132"/>
                                         <nil key="highlightedColor"/>
@@ -609,7 +617,7 @@
                                     <constraint firstAttribute="trailing" secondItem="u28-h2-y3S" secondAttribute="trailing" id="E0G-d2-iFH"/>
                                     <constraint firstItem="Upc-hG-QQN" firstAttribute="leading" secondItem="3Wr-NP-rgk" secondAttribute="leading" constant="16" id="JnU-vV-2UD"/>
                                     <constraint firstItem="5qB-PL-KGU" firstAttribute="centerX" secondItem="3Wr-NP-rgk" secondAttribute="centerX" id="NUa-wF-Q5k"/>
-                                    <constraint firstAttribute="trailing" secondItem="kBO-uV-tGf" secondAttribute="trailing" constant="12" id="T05-Gz-EpV"/>
+                                    <constraint firstAttribute="trailing" secondItem="kBO-uV-tGf" secondAttribute="trailing" constant="8" id="T05-Gz-EpV"/>
                                     <constraint firstItem="2in-0j-8Xr" firstAttribute="centerX" secondItem="3Wr-NP-rgk" secondAttribute="centerX" id="TR0-sd-k0R"/>
                                     <constraint firstItem="vPi-bH-Wa9" firstAttribute="leading" secondItem="LZI-f3-dVA" secondAttribute="leading" id="Zyl-0U-Wsg"/>
                                     <constraint firstItem="Upc-hG-QQN" firstAttribute="top" secondItem="vPi-bH-Wa9" secondAttribute="bottom" constant="17" id="eg7-o5-L2q"/>
@@ -620,7 +628,7 @@
                                     <constraint firstItem="LZI-f3-dVA" firstAttribute="leading" secondItem="3Wr-NP-rgk" secondAttribute="leading" constant="16" id="pml-U0-yKq"/>
                                     <constraint firstItem="5qB-PL-KGU" firstAttribute="leading" secondItem="3Wr-NP-rgk" secondAttribute="leading" constant="16" id="wR1-0T-q5d"/>
                                     <constraint firstItem="LZI-f3-dVA" firstAttribute="centerX" secondItem="3Wr-NP-rgk" secondAttribute="centerX" id="ykP-0d-OTa"/>
-                                    <constraint firstItem="kBO-uV-tGf" firstAttribute="top" secondItem="3Wr-NP-rgk" secondAttribute="top" constant="20" symbolic="YES" id="zrT-qc-1ss"/>
+                                    <constraint firstItem="kBO-uV-tGf" firstAttribute="top" secondItem="3Wr-NP-rgk" secondAttribute="top" constant="8" id="zrT-qc-1ss"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -686,14 +694,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W63-Yi-wa9" customClass="CustomFloatingLabelField" customModule="Sway" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W63-Yi-wa9" customClass="CustomFloatingLabelField" customModule="Sway" customModuleProvider="target">
                                 <rect key="frame" x="30" y="422" width="368" height="36"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" red="0.76862745099999996" green="0.76862745099999996" blue="0.76862745099999996" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                         <color key="value" name="kThemeNavyBlue_50"/>
                                     </userDefinedRuntimeAttribute>
@@ -786,7 +793,7 @@
                                     <constraint firstAttribute="height" constant="56" id="2sG-t0-ihN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="14"/>
-                                <state key="normal" title="Log in">
+                                <state key="normal" title="LOG IN">
                                     <color key="titleColor" name="kThemeNavyBlue"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -2486,7 +2493,7 @@ profile image</string>
             <size key="intrinsicContentSize" width="90" height="18"/>
         </designable>
         <designable name="W63-Yi-wa9">
-            <size key="intrinsicContentSize" width="34.5" height="18"/>
+            <size key="intrinsicContentSize" width="90" height="18"/>
         </designable>
         <designable name="aRn-2I-zF7">
             <size key="intrinsicContentSize" width="57" height="18"/>

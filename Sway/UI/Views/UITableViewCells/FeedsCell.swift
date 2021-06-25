@@ -7,9 +7,14 @@
 
 import UIKit
 import SDWebImage
+import ActiveLabel
 
 class FeedsCell: UITableViewCell {
     @IBOutlet weak var btnComments: CustomTextLocationButton!
+    
+    @IBOutlet weak var lblPostUser: ActiveLabel!
+    
+    @IBOutlet weak var lblPostDescription: UILabel!
     
     @IBOutlet weak var btnLikes: CustomTextLocationButton!
     @IBOutlet weak var imgVideoPlaceholder: UIImageView!
@@ -39,6 +44,12 @@ class FeedsCell: UITableViewCell {
                                        "ic_like"), for: .normal)
         self.btnLikes.setTitle(viewModel.likeCount.description, for: .normal)
         self.btnComments.setTitle(viewModel.commentCount.description, for: .normal)
+        
+        lblPostUser.enabledTypes = [.mention]
+        lblPostUser.mentionColor = UIColor.white
+        lblPostDescription.text = viewModel.caption
+        lblPostUser.text = "@\(viewModel.userName ?? "")"
+        
     }
 
 }

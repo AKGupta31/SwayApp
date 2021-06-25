@@ -23,23 +23,22 @@ class IntroViewController: UIViewController {
         return .lightContent
     }
     
+    var tapGesture:UITapGestureRecognizer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         blackGrdientBottomConstraint.constant =  -UIScreen.main.bounds.height / 2
         self.blackGrdientView.isHidden = true
         self.blackGrdientView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView(_:)))
+        self.view.addGestureRecognizer(tapGesture!)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
-        self.view.isUserInteractionEnabled = true
-        gesture.direction = .up
-        self.view.addGestureRecognizer(gesture)
-    }
+
     
     @objc func tapOnView(_ gesture:UITapGestureRecognizer){
-        self.navigationController?.push(SignupVC.self)
+        self.navigationController?.push(GuestNewsFeed.self)
     }
     
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
@@ -51,6 +50,13 @@ class IntroViewController: UIViewController {
         super.viewWillAppear(true)
         self.blackGrdientView.isUserInteractionEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            if self.tapGesture != nil{
+                self.view.removeGestureRecognizer(self.tapGesture!)
+            }
+            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeUp(_:)))
+            self.view.isUserInteractionEnabled = true
+            gesture.direction = .up
+            self.view.addGestureRecognizer(gesture)
             self.gradientLayer.frame = self.blackGrdientView.bounds
             self.blackGrdientBottomConstraint.constant = 0
             self.blackGrdientView.isHidden = false

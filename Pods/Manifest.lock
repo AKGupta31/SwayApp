@@ -45,6 +45,9 @@ PODS:
     - FirebaseAnalytics (~> 7.10.0)
   - Firebase/CoreOnly (7.10.0):
     - FirebaseCore (= 7.10.0)
+  - Firebase/Crashlytics (7.10.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 7.10.0)
   - FirebaseAnalytics (7.10.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
@@ -68,11 +71,18 @@ PODS:
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
     - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (7.10.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleDataTransport (~> 8.4)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
   - FirebaseInstallations (7.10.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
+  - FlexiblePageControl (1.0.8)
   - GoogleAppMeasurement (7.10.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
@@ -128,6 +138,7 @@ PODS:
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (4.0.1)
   - Toast-Swift (5.0.1)
+  - UPCarouselFlowLayout (1.1.2)
   - ViewControllerDescribable (1.0.2)
 
 DEPENDENCIES:
@@ -143,6 +154,8 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
+  - Firebase/Crashlytics
+  - FlexiblePageControl
   - GoogleSignIn
   - GrowingTextView
   - IQKeyboardManagerSwift
@@ -154,6 +167,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwiftKeychainWrapper
   - Toast-Swift (~> 5.0.1)
+  - UPCarouselFlowLayout
   - ViewControllerDescribable
 
 SPEC REPOS:
@@ -178,7 +192,9 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
     - FirebaseInstallations
+    - FlexiblePageControl
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleSignIn
@@ -197,6 +213,7 @@ SPEC REPOS:
     - SVProgressHUD
     - SwiftKeychainWrapper
     - Toast-Swift
+    - UPCarouselFlowLayout
     - ViewControllerDescribable
 
 SPEC CHECKSUMS:
@@ -220,7 +237,9 @@ SPEC CHECKSUMS:
   FirebaseAuth: 675f2c4eb4426e7c58a78a89965a6530e7863535
   FirebaseCore: ec566d917b2195fc2610aeb148dae99f57a788f9
   FirebaseCoreDiagnostics: 5662a3823ffcc0acbaa9a21ba5ed302fac634705
+  FirebaseCrashlytics: e7669d368a22d202f1d0c7546ffdfdff496e1a8c
   FirebaseInstallations: bf2ec8dbf36ff4c91af6b9a003d15855757680c1
+  FlexiblePageControl: 07f7765054f16b3f0bc3f14dfd95ab5f45817ea4
   GoogleAppMeasurement: 1c863b1161fc3c8cf614a7460d1be6a7c262aab3
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
@@ -239,8 +258,9 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+  UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: 0275267d29ffc196dde40ba56ba38aeda24971df
+PODFILE CHECKSUM: ce3433c9a41dac3227f7fcac85435593c85168e8
 
 COCOAPODS: 1.10.1

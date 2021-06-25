@@ -12,6 +12,7 @@ class PlannerVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         // Do any additional setup after loading the view.
     }
     
@@ -19,7 +20,8 @@ class PlannerVC: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.push(HowManyTimesAWeekVC.self)
+        self.tabBarController?.tabBar.isHidden = false
+//        self.navigationController?.push(ChallengeDescriptionVC.self)
     }
     
     override func viewDidAppear(_ animated: Bool) {

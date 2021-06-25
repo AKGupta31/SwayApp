@@ -52,7 +52,7 @@ class SetupPasswordVC: BaseViewController {
         passwordField.delegate = self
         confirmPasswordField.delegate = self
         updateTitle()
-        passwordLogLabel.text = ""
+        updatePasswordLabel()
         confirmPasswordLogLabel.text = ""
     }
     
@@ -156,13 +156,21 @@ extension SetupPasswordVC:UITextFieldDelegate {
     }
     
     private func updatePasswordLabel(){
-        guard let password = passwordField.text else {return}
+        guard let password = passwordField.text ,password.isEmpty == false else {
+            passwordLogLabel.text = "Must have at least  7 characters and at least 1 number"
+            updateConfirmPasswordLabel()
+            return
+        }
+        updateConfirmPasswordLabel()
         passwordLogLabel.text = Utility.getPasswordStrength(password: password).rawValue
     }
     
     private func updateConfirmPasswordLabel(){
         
-        guard let confirmPassword = confirmPasswordField.text else {return}
+        guard let confirmPassword = confirmPasswordField.text ,confirmPassword.isEmpty == false else {
+            confirmPasswordField.text = ""
+            return
+        }
         guard let password = passwordField.text else {return}
         
         if password.count >= 8 && password == confirmPassword {

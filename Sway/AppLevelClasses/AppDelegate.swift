@@ -48,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Google login
        return GIDSignIn.sharedInstance()?.handle(url) ?? false
     }
+    
+    
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.

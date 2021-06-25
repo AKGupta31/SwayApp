@@ -144,20 +144,13 @@ extension SetProfilePictureVC:UIScrollViewDelegate {
             self?.hideLoader()
             if response.statusCode == 200 {
                 DataManager.shared.setLoggedInUser(user: response.data)
-                self?.view.makeToast("Signup Success", duration: 3.0, position: .center)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self?.view.makeToast("Your account has been created successfully", duration: 1.0, position: .bottom, image: nil, completion: { (isCompleted) in
                     guard var viewControllers = self?.navigationController?.viewControllers else {return}
                     viewControllers.removeAll()
-//                    viewControllers.removeLast()
-//                    viewControllers.removeLast()
-//                    viewControllers.removeLast()
-//                    viewControllers.removeLast()
-//                    let loginVC = LoginViaCredentialsVC.instantiated()
-                    
                     let onboardingStart = OnboardingStartVC.instantiated()
                     viewControllers.append(onboardingStart)
                     self?.navigationController?.setViewControllers(viewControllers, animated: true)
-                }
+                })
             }else {
                 AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
             }

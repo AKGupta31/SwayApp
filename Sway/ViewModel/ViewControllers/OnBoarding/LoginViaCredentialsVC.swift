@@ -96,7 +96,7 @@ class LoginViaCredentialsVC: BaseLoginVC {
         let email = emailField.text?.trimmingCharacters(in: .whitespaces) ?? ""
         let password = passwordField.text ?? ""
         if email.isEmpty && password.isEmpty {
-            return "Please enter valid email and password."
+            return "Please enter email and password."
         }else if email.isEmpty == false && password.isEmpty {
             return "Password is required."
         }else if email.isEmpty && password.isEmpty == false {

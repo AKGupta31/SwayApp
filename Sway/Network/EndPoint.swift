@@ -29,17 +29,21 @@ enum Endpoint {
     case getComments(feedId:String,pageNumber:Int,limit:Int)
     case postComment(feedId:String,comment:String)
 //    case updateFeed(feedId:String,caption:String,feedType:WorkoutType,url:String,thumbnailUrl:String,mediaType:MediaTypes)
+    
+    case getChallenges(page:Int,limit:Int)
+    case getChallengeDetail(challengeId:String)
+    case createChallenge(challengeId:String,startDate:Int,endDate:Int,schedules:[Schedules])
 
     
     
     /// GET, POST or PUT method for each request
     var method:Alamofire.HTTPMethod {
         switch self {
-        case .login,.socialRegister,.socialLogin,.getOtpOnEmail,.signup,.resetPassword,.likeFeed,.postComment:
+        case .login,.socialRegister,.socialLogin,.getOtpOnEmail,.signup,.resetPassword,.likeFeed,.postComment,.createChallenge:
             return .post
         case .updateOnboardingStatus,.deleteFeed:
             return .put
-        case .verifyEmail,.getVideos,.getFeeds,.getPredefinedComments,.getComments:
+        case .verifyEmail,.getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail:
             return .get
         case .postFeed(let feedId,_,_,_,_,_):
             return feedId.isEmpty ? .post : .patch
@@ -59,6 +63,7 @@ enum Endpoint {
     /// URL string for each request
     var path: String {
         let interMediate = "/v1/user/"
+        let interMediateChallenge = "/v1/"
         switch self {
         case .login:
             return Constants.Networking.kBaseUrl + interMediate + "login"
@@ -105,6 +110,12 @@ enum Endpoint {
             return  Constants.Networking.kBaseUrl + interMediate + "comment?postId=\(feedId)&pageNo=\(pageNumber)&limit=\(limit)"
         case .postComment:
             return Constants.Networking.kBaseUrl + interMediate + "comment"
+        case .getChallenges(let page,let limit):
+            return Constants.Networking.kBaseUrl + interMediateChallenge + "challenges?pageNo=\(page)&limit=\(limit)"
+        case .getChallengeDetail(let challengeId):
+            return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge-details/\(challengeId)"
+        case .createChallenge:
+            return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge"
         }
     }
     
@@ -138,7 +149,7 @@ enum Endpoint {
             return ["email":email,"password":password]
         case .updateOnboardingStatus(let key,let value):
             return [key:value]
-        case .getVideos,.getFeeds,.getPredefinedComments,.getComments:
+        case .getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail:
             return [:]
         case .postFeed(_,let caption,let feedType,let url,let thumbnailUrl,let mediaType):
         var mediaDic = [String:Any]()
@@ -156,6 +167,16 @@ enum Endpoint {
             return  ["postId":feedId]
         case .postComment(let feedId,let comment):
             return ["postId":feedId,"comment":comment]
+        case .createChallenge(let challengeId,let startDate,let endDate,let schedules):
+            
+            var scheduleDictArray = [[String:Any]]()
+            schedules.forEach({scheduleDictArray.append($0.toParams())})
+            return [
+                "challengeId":challengeId,
+                "startDate":startDate,
+                "endDate":endDate,
+                "schedules":scheduleDictArray
+            ]
         }
     }
     
@@ -167,7 +188,7 @@ enum Endpoint {
             return HTTPHeaders(headers)
         case .verifyEmail:
             return HTTPHeaders(headers)
-        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment:
+        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment,.getChallenges,.getChallengeDetail,.createChallenge:
             headers["authorization"] = "bearer " + (DataManager.shared.loggedInUser?.user?.accessToken ?? "")
             return HTTPHeaders(headers)
         }

@@ -24,6 +24,9 @@ class ForgotPasswordVC: BaseViewController {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown(_:)))
         swipeDown.direction = .down
         self.view.addGestureRecognizer(swipeDown)
+        
+        btnSend.backgroundColor = UIColor(named: "kThemeYellow")
+        btnSend.setTitleColor(UIColor(named: "kThemeNavyBlue"), for: .normal)
         // Do any additional setup after loading the view.
     }
     
@@ -54,34 +57,26 @@ class ForgotPasswordVC: BaseViewController {
                 self?.hideLoader()
                 AlertView.showAlert(with: "Error", message: response.msg)
             }
-
-//            LoginRegisterEndpoint.forgotPassword(with: self.emailField.text!) {[weak self] (response) in
-//                self?.hideLoader()
-//                if response.statusCode == 200 {
-//                    self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
-//                        vc.email = self!.emailField.text!
-//                        vc.type = .FORGOT_PASSWORD
-//                    })
-//                }else {
-//                    AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
-//                }
-//
-//            } failure: { (response) in
-//                AlertView.showAlert(with: "Error", message: response.msg)
-//            }
-
+        }else {
+            var message = ""
+            if emailField.text?.isEmpty == true {
+                message = "Please enter email."
+            }else{
+                message = "Please enter valid email address"
+            }
+            AlertView.showAlert(with: "Error!", message: message)
         }
     }
     
     @objc func textFieldDidChange(_ textField:UITextField){
         guard let text = textField.text else {return}
         if Utility.isValidEmailAddress(email: text) == true {
-            btnSend.backgroundColor = UIColor(named: "kThemeYellow")
-            btnSend.setTitleColor(UIColor(named: "kThemeNavyBlue"), for: .normal)
+//            btnSend.backgroundColor = UIColor(named: "kThemeYellow")
+//            btnSend.setTitleColor(UIColor(named: "kThemeNavyBlue"), for: .normal)
             isEmailValid = true
         }else {
-            btnSend.setTitleColor(UIColor(named: "k124123132"), for: .normal)
-            btnSend.backgroundColor = UIColor(named: "k245246250")
+//            btnSend.setTitleColor(UIColor(named: "k124123132"), for: .normal)
+//            btnSend.backgroundColor = UIColor(named: "k245246250")
             isEmailValid = false
         }
     }

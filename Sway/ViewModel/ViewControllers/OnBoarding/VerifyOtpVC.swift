@@ -159,7 +159,7 @@ extension VerifyOtpVC: OTPFieldViewDelegate {
                 self?.hideLoader()
                 self?.isAlreadyCallingApi = false
                 if let statusCode = response.statusCode,statusCode == 200 {
-                    self?.view.makeToast("OTP has been resent on your email id", duration: 1.0, position: .bottom)
+                    self?.view.makeToast("OTP has been resend on your email id", duration: 1.0, position: .bottom)
                 }else {
                     AlertView.showAlert(with: "Error", message: response.message)
                 }

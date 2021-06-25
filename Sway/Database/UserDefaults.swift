@@ -8,13 +8,14 @@
 import Foundation
 
 enum OnboardingStatus:Int {
-    case NONE = 500
+//    case NONE = 500
     case INTRO__VIDEO_ONE = 511
     case INTRO__VIDEO_TWO = 512
     case INTRO__VIDEO_THREE = 513
     case PROFILE_AGE = 514
     case PROFILE_GOAL = 515
     case CHALLENGE_SCREEN = 516
+    case HOME_SCREEN = 517
 }
 
 class SwayUserDefaults {
@@ -50,7 +51,7 @@ class SwayUserDefaults {
     var onBoardingScreenStatus:OnboardingStatus {
         get {
             let status = UserDefaults.standard.integer(forKey: Keys.kOnBoardingStatus)
-            return OnboardingStatus(rawValue:status) ?? .NONE
+            return OnboardingStatus(rawValue:status) ?? .INTRO__VIDEO_ONE
         }set {
             UserDefaults.standard.setValue(newValue.rawValue, forKey: Keys.kOnBoardingStatus)
         }

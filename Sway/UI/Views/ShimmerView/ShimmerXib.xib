@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ShimmerXib" customModule="Sway" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FCR-pE-Rg2" customClass="ShimmerView" customModule="Sway" customModuleProvider="target">
+                    <rect key="frame" x="20" y="60" width="378" height="674"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J6S-81-Q6W" customClass="ShimmerView" customModule="Sway" customModuleProvider="target">
+                    <rect key="frame" x="20" y="758" width="220" height="24"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="nwa-S2-Jq4"/>
+                        <constraint firstAttribute="width" constant="220" id="xVI-4X-Xbw"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43X-5t-Lad" customClass="ShimmerView" customModule="Sway" customModuleProvider="target">
+                    <rect key="frame" x="20" y="798" width="250" height="24"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="4to-eP-2E9"/>
+                        <constraint firstAttribute="width" constant="250" id="Lea-XH-zPx"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="43X-5t-Lad" secondAttribute="bottom" constant="40" id="Jn2-aX-Bpp"/>
+                <constraint firstItem="J6S-81-Q6W" firstAttribute="leading" secondItem="43X-5t-Lad" secondAttribute="leading" id="LOJ-dk-xtb"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="FCR-pE-Rg2" secondAttribute="trailing" constant="16" id="ShA-Rp-mvM"/>
+                <constraint firstItem="J6S-81-Q6W" firstAttribute="top" secondItem="FCR-pE-Rg2" secondAttribute="bottom" constant="24" id="Ywb-Fp-wdi"/>
+                <constraint firstItem="43X-5t-Lad" firstAttribute="top" secondItem="J6S-81-Q6W" secondAttribute="bottom" constant="16" id="aRI-4N-e2m"/>
+                <constraint firstItem="FCR-pE-Rg2" firstAttribute="leading" secondItem="J6S-81-Q6W" secondAttribute="leading" id="mlc-sf-hUS"/>
+                <constraint firstItem="FCR-pE-Rg2" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="rij-6i-ngS"/>
+                <constraint firstItem="43X-5t-Lad" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="zGq-Tn-VaB"/>
+            </constraints>
+            <connections>
+                <outlet property="shimmerView1" destination="43X-5t-Lad" id="t25-rv-d11"/>
+                <outlet property="shimmerView2" destination="FCR-pE-Rg2" id="fng-yy-5Rg"/>
+                <outlet property="shimmerView3" destination="J6S-81-Q6W" id="j2p-Ps-nuK"/>
+            </connections>
+            <point key="canvasLocation" x="-191" y="40"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

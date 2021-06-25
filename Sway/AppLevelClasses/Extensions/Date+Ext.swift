@@ -26,6 +26,13 @@ extension Date {
         return formatter.date(from: dateStr) ?? Date()
     }
     
+    func getFormattedDate(format:DateFormat) ->String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = format.rawValue
+        return formatter.string(from: self)
+    }
+    
+    
     var timeAgoSince: String {
         let calendar = Calendar.current
         let now = Date()

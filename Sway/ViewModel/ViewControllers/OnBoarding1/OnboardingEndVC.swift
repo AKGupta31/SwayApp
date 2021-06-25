@@ -28,7 +28,7 @@ class OnboardingEndVC: BaseViewController {
     func updateStatus(){
         LoginRegisterEndpoint.updateOnboardingScreenStatus(key: "isChallengeScreenSeen", value: true) { (response) in
             if response.statusCode == 200 {
-                SwayUserDefaults.shared.onBoardingScreenStatus = .CHALLENGE_SCREEN
+                SwayUserDefaults.shared.onBoardingScreenStatus = .HOME_SCREEN
             }
         } failure: { (status) in
             

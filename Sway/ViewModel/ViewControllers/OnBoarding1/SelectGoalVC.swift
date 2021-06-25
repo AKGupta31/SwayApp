@@ -35,6 +35,10 @@ class SelectGoalVC: BaseViewController {
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle()
@@ -56,6 +60,8 @@ class SelectGoalVC: BaseViewController {
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
         if gesture.direction == .up && selectedCount > 0 {
             self.navigationController?.push(OnboardingEndVC.self)
+        }else if gesture.direction == .down {
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -135,7 +141,7 @@ class SelectGoalVC: BaseViewController {
     func updateStatus(goals:[String]){
         LoginRegisterEndpoint.updateOnboardingScreenStatus(key: "goal", value: goals) { (response) in
             if response.statusCode == 200 {
-                SwayUserDefaults.shared.onBoardingScreenStatus = .PROFILE_GOAL
+                SwayUserDefaults.shared.onBoardingScreenStatus = .CHALLENGE_SCREEN
             }
             
         } failure: { (status) in
@@ -148,13 +154,16 @@ class SelectGoalVC: BaseViewController {
 
 extension SelectGoalVC:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
             print("scroll downward")
+            if contentYoffset <= 0.0 {
+                self.navigationController?.popViewController(animated: true)
+            }
         }else {
             print("scroll upword")
             if selectedCount > 0 {
-                let height = scrollView.frame.size.height
-                let contentYoffset = scrollView.contentOffset.y
                 let distanceFromBottom = scrollView.contentSize.height - contentYoffset
                 if distanceFromBottom <= height {
                     updateStatus(goals: getSelectedGoalTitles())

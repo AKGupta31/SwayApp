@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import FBSDKCoreKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -56,30 +57,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+               return
+           }
+        print(":url ",url)
+        let _ = ApplicationDelegate.shared.application(
+               UIApplication.shared,
+               open: url,
+               sourceApplication: nil,
+               annotation: [UIApplication.OpenURLOptionsKey.annotation])
+    }
 
 }
 
 extension SceneDelegate {
     private func openSplashScreen() {
         var rootVC:UINavigationController!
-    if let user = SwayUserDefaults.shared.loggedInUser {
+        if let user = SwayUserDefaults.shared.loggedInUser {
             DataManager.shared.loggedInUser = user
             DataManager.shared.isLoggedIn = true
-           switch SwayUserDefaults.shared.onBoardingScreenStatus {
-            case .NONE:
+            switch SwayUserDefaults.shared.onBoardingScreenStatus {
+            case .INTRO__VIDEO_ONE:fallthrough
+            case .INTRO__VIDEO_TWO:fallthrough
+            case .INTRO__VIDEO_THREE:
                 rootVC = UINavigationController(rootViewController: OnboardingStartVC.instantiated())
-            case .INTRO__VIDEO_ONE:
-                rootVC = UINavigationController(rootViewController:HowOldVC.instantiated())
             case .PROFILE_AGE:
-                rootVC = UINavigationController(rootViewController:SelectGoalVC.instantiated())
+                rootVC = UINavigationController(rootViewController:HowOldVC.instantiated())
             case .PROFILE_GOAL:
-                rootVC = UINavigationController(rootViewController: OnboardingEndVC.instantiated())
+                rootVC =  UINavigationController(rootViewController:SelectGoalVC.instantiated())
             case .CHALLENGE_SCREEN:
+                rootVC = UINavigationController(rootViewController: OnboardingEndVC.instantiated())
+            case .HOME_SCREEN:
                 rootVC = UINavigationController(rootViewController: SwayTabbarVC.instantiated())
-            default:
-                rootVC = UINavigationController(rootViewController: OnboardingStartVC.instantiated())
             }
-            
         }else {
             rootVC = UINavigationController(rootViewController: IntroViewController.instantiated())
         }

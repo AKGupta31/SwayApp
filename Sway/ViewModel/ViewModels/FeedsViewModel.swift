@@ -34,7 +34,7 @@ class FeedsViewModel {
 
     var isFetchedAgainIfAuthFailed = false
     private func fetchMoreData(isRefreshData:Bool){
-        (delegate as? BaseViewController)?.showLoader()
+//        (delegate as? BaseViewController)?.showLoader()
         guard let userId = DataManager.shared.loggedInUser?.user?._id else {return}
         FeedsEndPoint.getFeeds(page: currentPage, limit: PAGE_SIZE, userId: mySubmissionsOnly ? userId : "") { [weak self](response) in  
             if response.statusCode == 401 && response.message == "Missing authentication" && !self!.isFetchedAgainIfAuthFailed {
@@ -45,7 +45,7 @@ class FeedsViewModel {
             if isRefreshData {
                 self?.feeds.removeAll()
             }
-            (self?.delegate as? BaseViewController)?.hideLoader()
+//            (self?.delegate as? BaseViewController)?.hideLoader()
             if let feeds = response.data?.feeds {
                 let feedsWithMedia = feeds.filter({$0.media != nil})
                 self?.feeds.append(contentsOf: feedsWithMedia)
@@ -59,6 +59,7 @@ class FeedsViewModel {
             }
             self?.delegate?.reloadData()
         } failure: { (status) in
+//            self.delegate?.reloadData()
             self.delegate?.showAlert(with: "Error", message: status.msg)
         }
 

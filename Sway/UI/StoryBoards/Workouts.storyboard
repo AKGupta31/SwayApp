@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rD3-uy-zzn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dGO-Kg-fUC">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Workouts-->
+        <!--Workouts View Controller-->
         <scene sceneID="517-jw-jqI">
             <objects>
-                <viewController id="rD3-uy-zzn" sceneMemberID="viewController">
+                <viewController id="rD3-uy-zzn" customClass="WorkoutsViewController" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vNp-ms-LYo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,12 +31,30 @@
                             <constraint firstItem="JYl-bl-KPW" firstAttribute="centerX" secondItem="vNp-ms-LYo" secondAttribute="centerX" id="t1f-d6-vVd"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Workouts" image="ic_workout_unselcted" selectedImage="ic_workout_selcted" id="7Y4-dk-ayw"/>
+                    <navigationItem key="navigationItem" id="eIp-T5-YAw"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0h-MM-lxx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="29" y="103"/>
+            <point key="canvasLocation" x="939.13043478260875" y="102.45535714285714"/>
+        </scene>
+        <!--Workouts-->
+        <scene sceneID="ogI-Ib-xwY">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="dGO-Kg-fUC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Workouts" image="ic_workout_unselcted" selectedImage="ic_workout_selcted" id="7Y4-dk-ayw"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5RQ-8r-EQ4">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rD3-uy-zzn" kind="relationship" relationship="rootViewController" id="7ES-Qa-tJb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhj-7U-nWh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28.985507246376812" y="102.45535714285714"/>
         </scene>
     </scenes>
     <resources>

@@ -89,7 +89,24 @@ class FacebookLoginManager {
                     }else {
                         LoginRegisterEndpoint.socialRegister(socialId: socialId, email: email, firstName: firstName, lastName: lastName, type: .facebook, image: image) { [weak self](response) in
                             print(response)
-                            self?.responseCallback?(true,response)
+                            if response.statusCode == 200{
+                                self?.responseCallback?(true,response)
+                            }else if response.type == "EMAIL_ALREADY_EXIST" {
+                                LoginRegisterEndpoint.socialLogin(socialId: socialId, type: .facebook) { (response) in
+                                    if response.statusCode == 200 {
+                                        self?.responseCallback?(true,response)
+                                    }else {
+                                        self?.responseCallback?(false,response)
+                                    }
+                                } failure: { (status) in
+                                    let loginResponse = LoginResponse(statusCode: status.code, message: status.msg)
+                                    self?.responseCallback?(false,loginResponse)
+                                }
+
+                            } else {
+                                self?.responseCallback?(false,response)
+                            }
+                            
                         } failure: { (status) in
                             print(status)
                             let response = LoginResponse(statusCode: status.code, message: status.msg)

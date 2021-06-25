@@ -13,9 +13,9 @@ import SDWebImage
 import ActiveLabel
 
 class HomeVC: BaseTabBarViewController {
-    @IBOutlet weak var lblPostUser: ActiveLabel!
+    @IBOutlet weak var btnMyPost: CustomTextLocationButton!
     
-    @IBOutlet weak var lblPostDescription: UILabel!
+    @IBOutlet weak var btnLogout: UIButton!
     
     @IBOutlet weak var imgPlay: UIImageView!
 //    @IBOutlet weak var btnComments: CustomTextLocationButton!
@@ -26,31 +26,38 @@ class HomeVC: BaseTabBarViewController {
     var refreshControl:UIRefreshControl!
     
     var viewModel:FeedsViewModel!
+    
+    var shimmerXib:ShimmerXib?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if viewModel == nil {
             viewModel = FeedsViewModel(delegate: self, mySubmissionsOnly: false)
         }
+        shimmerXib = ShimmerXib.fromNib()
+//        self.view.addSubview(shimmerXib!)
+//        self.shimmerXib?.startAnimating()
         tableViewFeeds.contentInsetAdjustmentBehavior  = .never
         self.imgPlay.isHidden = true
         //adding refresh control for pull to refresh
         refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .clear
+        refreshControl.tintColor = .gray
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
         self.tableViewFeeds.refreshControl = refreshControl
         self.tableViewFeeds.tableFooterView = nil
         DispatchQueue.global(qos: .background).async {
             self.viewModel.getPredefinedComments()
         }
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
-        if player != nil{
-            player.playFromCurrentTime()
-        }
+//        if player != nil{
+//            player.playFromCurrentTime()
+//        }
     }
     
     @IBAction func actionMySubmission(_ sender: UIButton) {
@@ -94,11 +101,14 @@ class HomeVC: BaseTabBarViewController {
     }
     
     @IBAction func actionAdd(_ sender: UIButton) {
-        player.pause()
+        if player != nil {
+            player.pause()
+        }
         showAlert()
     }
     
     @IBAction func actionComments(_ sender: UIButton) {
+        
         /*Testing */
 //        self.navigationController?.push(SubscriptionVC.self)
         if player != nil {
@@ -127,14 +137,14 @@ class HomeVC: BaseTabBarViewController {
         DataManager.shared.setLoggedInUser(user: nil)
         if var vcs = self.tabBarController?.navigationController?.viewControllers {
             vcs.removeAll()
-            vcs.append(LoginVC.instantiated())
+            vcs.append(GuestNewsFeed.instantiated())
             self.tabBarController?.navigationController?.setViewControllers(vcs, animated: true)
         }
     }
     
     
     @objc func refreshData(_ refreshControl:UIRefreshControl){
-        refreshControl.endRefreshing()
+//        refreshControl.endRefreshing()
         viewModel.refreshData()
     }
 }
@@ -147,7 +157,10 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfItems = viewModel.numberOfItems
         if numberOfItems <= 0 {
-            tableView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "No News feed is available, please click on the \u{0002B} option to upload the news feed", to: tableView,offSet: CGPoint(x: 0, y: -150))
+//            tableView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "No News feed is available, please click on the \u{0002B} option to upload the news feed", to: tableView,offSet: CGPoint(x: 0, y: -150))
+            tableView.backgroundView = shimmerXib
+            shimmerXib?.frame = tableView.bounds
+            shimmerXib?.startAnimating()
         }else {
             tableView.backgroundView = nil
         }
@@ -170,6 +183,7 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 //        btnLikes.isEnabled = true
         if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first,let cell = tableViewFeeds.cellForRow(at: indexPath) as? FeedsCell{
+            self.stopActivityIndicator()
             if cell.viewModel.mediaType == .kImage{
                 if player != nil{
                     player.pause()
@@ -183,15 +197,13 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
 //                                           "ic_like"), for: .normal)
 //            self.btnLikes.setTitle(cell.viewModel.likeCount.description, for: .normal)
 //            self.btnComments.setTitle(cell.viewModel.commentCount.description, for: .normal)
-            lblPostUser.enabledTypes = [.mention]
-            lblPostUser.mentionColor = UIColor.white
-            lblPostDescription.text = cell.viewModel.caption
-            lblPostUser.text = "@\(cell.viewModel.userName ?? "")"
+           
         }
     }
 
     func setupPlayer(url:URL?,cell:FeedsCell){
         guard let videoUrl = url else {return}
+       
         if player == nil {
             self.player = Player()
             self.player.playerDelegate = self
@@ -203,12 +215,15 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
         }
         self.player.url = videoUrl
         self.player.volume = 1.0
+        player.playbackResumesWhenEnteringForeground = false
+        player.playbackResumesWhenBecameActive = false
             //videoUrl
         self.player.view.frame = cell.bounds
         self.player.fillMode = .resizeAspectFill
         self.addChild(self.player)
         cell.contentView.insertSubview(self.player.view, at: 1)
-//        cell.addSubview(self.player.view)
+        startActivityIndicator(touchEnabled: true)
+        //        cell.addSubview(self.player.view)
         
 //        cell.bringSubviewToFront(cell.btnComments)
 //        cell.bringSubviewToFront(cell.btnLikes)
@@ -264,6 +279,9 @@ extension HomeVC:FeedsViewModelDelegate {
     
     func showAlert(with title: String?, message: String) {
         hideLoader()
+        if self.refreshControl != nil {
+            self.refreshControl.endRefreshing()
+        }
 //        btnLikes.isEnabled = true
         AlertView.showAlert(with: title, message: message,on: self)
     }
@@ -276,6 +294,14 @@ extension HomeVC:FeedsViewModelDelegate {
     }
     
     func reloadData() {
+//        if viewModel.numberOfItems > 0 {
+//            self.shimmerXib?.removeFromSuperview()
+//            self.shimmerXib = nil
+//        }
+        if self.refreshControl != nil {
+            self.refreshControl.endRefreshing()
+
+        }
         self.tableViewFeeds.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.scrollViewDidEndDecelerating(self.tableViewFeeds)
@@ -287,6 +313,7 @@ extension HomeVC:PlayerDelegate ,PlayerPlaybackDelegate{
     
     func playerReady(_ player: Player) {
 //        self.imgVideoThumb.isHidden = true
+        self.stopActivityIndicator()
     }
     
     func playerPlaybackStateDidChange(_ player: Player) {
@@ -365,7 +392,7 @@ extension HomeVC{
         imagePicker.mediaTypes = [MediaType]
         imagePicker.allowsEditing = true
         imagePicker.videoMaximumDuration = 60
-        self.present(imagePicker, animated: true)
+        self.navigationController?.present(imagePicker, animated: true)
     }
     
     func videoFileSelection()  {
@@ -387,7 +414,7 @@ extension HomeVC{
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
 extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        self.dismiss(animated: true)
+        
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
                 vc.viewModel = AddVideoViewModel(videoUrl: nil,thumbnail:image)
@@ -395,8 +422,8 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             
         }
         else if  let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
-           let thumbnail =  VideoUtility.shared.getImageFromUrl(url: videoURL) ?? UIImage()
-           let asset = AVURLAsset(url: videoURL)
+            let thumbnail =  VideoUtility.shared.getImageFromUrl(url: videoURL) ?? UIImage()
+            let asset = AVURLAsset(url: videoURL)
             if asset.duration.seconds < 10 {
                 showAlert(with: "Error!", message: "Video must be minimum to 10 seconds")
             } else if asset.duration.seconds > 60 {
@@ -405,18 +432,16 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                 self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
                     vc.viewModel = AddVideoViewModel(videoUrl: videoURL,thumbnail:thumbnail)
                 })
+                
             }
-            
-            
-//            let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".MP4")
-         
-
         }
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            picker.dismiss(animated: true, completion: nil)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true)
+        picker.dismiss(animated: true)
     }
 }
 

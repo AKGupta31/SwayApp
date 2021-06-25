@@ -17,9 +17,7 @@ class OnboardingStartVC: BaseViewController {
     @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var imgVideoThumb: UIImageView!
     var player:Player?
-    
     var videoType = 1
-    
     private var videoResponse:VideoResponse!
     
     override func viewDidLoad() {
@@ -28,12 +26,9 @@ class OnboardingStartVC: BaseViewController {
         getApiData()
         self.lblTitle.isHidden = true
         self.lblDescription.isHidden = true
+        self.imgVideoThumb.isHidden = true
         if videoType == 2 {
             self.btnSkip.setImage(UIImage(named: "ic_cross_white_medium"), for: .normal)
-//            self.lblDescription.text = ""
-//            self.lblTitle.text = "How does my age affect my plan?"
-            
-            
             self.btnSkip.setTitle(nil, for: .normal)
         }
         // Do any additional setup after loading the view.
@@ -47,14 +42,17 @@ class OnboardingStartVC: BaseViewController {
             let url = URL(fileURLWithPath: path)
             self.setupPlayer(videoUrl: url)
         }else {
+            showLoader()
             LoginRegisterEndpoint.getVideos(type: videoType) { [weak self](response) in
                 if response.statusCode == 200 {
                     guard let videoUrlStr = response.data?.media?.url,let videoUrl = URL(string: videoUrlStr) else {return}
                     self?.setupPlayer(videoUrl: videoUrl)
                 }else {
+                    self?.hideLoader()
                     AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
                 }
-            } failure: { (status) in
+            } failure: {[weak self] (status) in
+                self?.hideLoader()
                 AlertView.showAlert(with: "Error", message: status.msg)
             }
         }
@@ -78,25 +76,27 @@ class OnboardingStartVC: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.player?.playFromBeginning()
         }
+        player?.playbackResumesWhenBecameActive = false
     }
     
     @IBAction func actionSkip(_ sender: UIButton) {
-        player?.pause()
-        player?.playerDelegate = nil
-        player?.playbackDelegate = nil
         if self.videoType == 2 {
+            player?.pause()
+            player?.playerDelegate = nil
+            player?.playbackDelegate = nil
             self.navigationController?.popViewController(animated: true)
         }else if self.videoType == 1 {
-            updateStatus()
-            self.navigationController?.push(HowOldVC.self)
+            player?.stop()
+//            updateStatus()
+            //            self.navigationController?.push(HowOldVC.self)
         }
-      
+        
     }
     
     func updateStatus(){
         LoginRegisterEndpoint.updateOnboardingScreenStatus(key: "isIntroVideoOneSeen", value: true) { (response) in
             if response.statusCode == 200 {
-                SwayUserDefaults.shared.onBoardingScreenStatus = .INTRO__VIDEO_ONE
+                SwayUserDefaults.shared.onBoardingScreenStatus = .PROFILE_AGE
             }
             
         } failure: { (status) in
@@ -107,15 +107,20 @@ class OnboardingStartVC: BaseViewController {
 
 extension OnboardingStartVC:PlayerDelegate ,PlayerPlaybackDelegate{
     func playerReady(_ player: Player) {
-        self.imgVideoThumb.isHidden = true
+//        self.imgVideoThumb.isHidden = true
+        self.hideLoader()
     }
     
     func playerPlaybackStateDidChange(_ player: Player) {
-        
+       
     }
     
     func playerBufferingStateDidChange(_ player: Player) {
-        
+        if player.bufferingState == .ready {
+            self.hideLoader()
+        }else {
+            self.showLoader()
+        }
     }
     
     func playerBufferTimeDidChange(_ bufferTime: Double) {
@@ -137,11 +142,19 @@ extension OnboardingStartVC:PlayerDelegate ,PlayerPlaybackDelegate{
     func playerPlaybackDidEnd(_ player: Player) {
         if self.videoType == 2 {
             self.player?.playFromBeginning()
-        }else {
+        }else if videoType == 1 {
             player.playerDelegate = nil
             player.playbackDelegate = nil
-            self.navigationController?.push(HowOldVC.self)
+            player.url = nil
+            player.removeFromParent()
             updateStatus()
+            if var vcs = self.navigationController?.viewControllers {
+                vcs.removeLast()
+                vcs.append(HowOldVC.instantiated())
+                self.navigationController?.setViewControllers(vcs, animated: true)
+            }
+//            self.navigationController?.push(HowOldVC.self)
+            
         }
        
     }

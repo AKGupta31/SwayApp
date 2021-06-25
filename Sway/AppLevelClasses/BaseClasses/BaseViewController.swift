@@ -15,6 +15,8 @@ class BaseViewController:UIViewController {
         return .lightContent
     }
     
+    fileprivate var activityIndicatorTag: Int { return 999999 }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action:#selector(emptyViewTapped(_:)))
@@ -43,6 +45,47 @@ class BaseViewController:UIViewController {
         
     }
     
+    func startActivityIndicator(style: UIActivityIndicatorView.Style = .medium, location: CGPoint? = nil, inSelf: Bool = false,touchEnabled:Bool = false,tintColor:UIColor = UIColor.gray) {
+        
+        let loc = location ?? CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+        
+        DispatchQueue.main.async{
+            
+            let activityIndicator = UIActivityIndicatorView(style: style)
+            
+            activityIndicator.tag = self.activityIndicatorTag
+            
+            activityIndicator.center = loc
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.tintColor = tintColor
+            activityIndicator.startAnimating()
+            
+            if inSelf == true {
+                self.view.isUserInteractionEnabled = touchEnabled
+                self.view.addSubview(activityIndicator)
+            } else {
+                self.navigationController?.view.isUserInteractionEnabled = touchEnabled
+                self.navigationController?.view.addSubview(activityIndicator)
+                self.navigationController?.view.backgroundColor = UIColor.white
+            }
+        }
+    }
+    
+    func stopActivityIndicator(inSelf: Bool = false, completion: @escaping () -> Void = {}) {
+        DispatchQueue.main.async { [weak self] in
+            let view: UIView? = inSelf ? self?.view : self?.navigationController?.view
+            
+            if let activityIndicator = view?.subviews.filter(
+                { $0.tag == self?.activityIndicatorTag}).first as? UIActivityIndicatorView {
+                view?.isUserInteractionEnabled = true
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
+            }
+            
+            completion()
+        }
+    }
+    
     @objc func hideLoader(){
         SVProgressHUD.dismiss()
     }
@@ -60,20 +103,20 @@ class BaseLoginVC:BaseViewController{
         guard let profileSetup = response?.data?.profileStep else {
             return
         }
-        let onBoardingStatus = OnboardingStatus(rawValue: profileSetup - 1) ?? .NONE
+        let onBoardingStatus = OnboardingStatus(rawValue: profileSetup) ?? .INTRO__VIDEO_ONE
         SwayUserDefaults.shared.onBoardingScreenStatus = onBoardingStatus
         switch onBoardingStatus {
-        case .NONE:
-            self.navigationController?.push(OnboardingStartVC.self)
         case .INTRO__VIDEO_ONE:fallthrough
         case .INTRO__VIDEO_TWO:fallthrough
         case .INTRO__VIDEO_THREE:
-            self.navigationController?.push(HowOldVC.self)
+            self.navigationController?.push(OnboardingStartVC.self)
         case .PROFILE_AGE:
-            self.navigationController?.push(SelectGoalVC.self)
+            self.navigationController?.push(HowOldVC.self)
         case .PROFILE_GOAL:
-            self.navigationController?.push(OnboardingEndVC.self)
+            self.navigationController?.push(SelectGoalVC.self)
         case .CHALLENGE_SCREEN:
+            self.navigationController?.push(OnboardingEndVC.self)
+        case .HOME_SCREEN:
             self.navigationController?.push(SwayTabbarVC.self)
         }
     }
