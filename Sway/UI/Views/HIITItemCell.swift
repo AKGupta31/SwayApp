@@ -36,6 +36,7 @@ class HIITItemCell: UITableViewCell {
                 lblName.textColor = .white
             case .next:
                 btnNext.isHidden = false
+                lblName.text = (lblName.text ?? "") + " - Next"
                 fallthrough
             case .normal:
                 viewContent.backgroundColor = UIColor(named: "k5953_0.05")

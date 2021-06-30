@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class ChallengeBannerCell: UITableViewCell {
 
+    @IBOutlet weak var backButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var lblChallengeName: UILabel!
     @IBOutlet weak var imgBanner: UIImageView!
     @IBOutlet weak var lblChallengeType: UILabel!

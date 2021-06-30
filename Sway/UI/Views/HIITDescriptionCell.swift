@@ -8,7 +8,9 @@
 import UIKit
 
 class HIITDescriptionCell: UITableViewCell {
-
+    @IBOutlet weak var btnBack: UIButton!
+    
+    @IBOutlet weak var lblSpaceValue: UILabel!
     @IBOutlet weak var lblDuration: UILabel!
     @IBOutlet weak var lblDurationUnit: UILabel!
     @IBOutlet weak var imgTime: UIImageView!
@@ -22,12 +24,6 @@ class HIITDescriptionCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

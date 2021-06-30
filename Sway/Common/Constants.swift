@@ -14,8 +14,8 @@ class Constants {
     
     struct Networking {
 //        static let kBaseUrl = "http://swaystgapi.appskeeper.in/api"
-//        static let kBaseUrl = "http://swayqaapi.appskeeper.in/api"
-        static let kBaseUrl = "http://swaydevapi.appskeeper.in/api"
+        static let kBaseUrl = "http://swayqaapi.appskeeper.in/api"
+//        static let kBaseUrl = "http://swaydevapi.appskeeper.in/api"
     }
     
     struct Notifications {
@@ -29,6 +29,11 @@ class Constants {
         static let s3PoolApiKey = "us-east-1:b1f250f2-66a7-4d07-96e9-01817149a439"
         static let s3BucketName = "appinventiv-development"
         static let s3BaseUrl = "https://appinventiv-development.s3.amazonaws.com/"
+    }
+    
+    struct Messages {
+        static let kError = "Error!"
+        static let kNoInternetConnection = "Internet connection appears to be offline"
     }
     
     

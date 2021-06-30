@@ -44,6 +44,9 @@ class ChallengeSelectionVM:NSObject {
         return ChallengeViewModel(challenge: challenges[index])
     }
 
+    func refreshData(){
+        getChallenges(isRefreshData: true)
+    }
 
 }
 
@@ -69,14 +72,24 @@ extension ChallengeSelectionVM {
             }
             self?.delegate?.reloadData()
         } failure: {[weak self] (status) in
-            self?.delegate?.showAlert(with: "Error!", message: status.msg)
+           
+            if status.code == 100 {
+                (self?.delegate as? BaseViewController)?.hideLoader()
+                AlertView.showNoInternetAlert { [weak self](action) in
+                    (self?.delegate as? BaseViewController)?.showLoader()
+                    self?.getChallenges(isRefreshData: isRefreshData)
+                }
+            }else {
+                self?.delegate?.showAlert(with: "Error!", message: status.msg)
+            }
+            
         }
 
     }
 }
 
 protocol ChallengeViewModelDelegate:BaseVMDelegate {
-    func challengeCreatedSuccessfully(challenge:ChallengeSchedulesModel)
+    func challengeCreatedSuccessfully(challenge:ChallengeSchedulesModel,isSkip:Bool)
 }
 class ChallengeViewModel {
     
@@ -128,38 +141,55 @@ class ChallengeViewModel {
         return nil
     }
     
-    func getDetails(){
+    var weeklyWorkoutCount:Int {
+        return challenge.weeklyWorkoutCount ?? 0
+    }
+    // reloadDataCompletion - If we pass this argument then delegate method will not be called.Only the block will be executed
+    func getDetails(reloadDataCompletion:(()->())? = nil){
         if let id = challenge._id {
             ChallengesEndPoint.getChallengeDetail(for: id) { [weak self](response) in
                 if let details = response.data {
                     self?.challenge = details
                 }
-                self?.delegate?.reloadData()
+                if reloadDataCompletion != nil {
+                    reloadDataCompletion?()
+                }else {
+                    self?.delegate?.reloadData()
+                }
+                
             } failure: { [weak self] (status) in
-                self?.delegate?.showAlert(with: "Error!", message: status.msg)
+                if status.code == 100 {
+                    (self?.delegate as? BaseViewController)?.hideLoader()
+                    AlertView.showNoInternetAlert { (action) in
+                        self?.getDetails(reloadDataCompletion: reloadDataCompletion)
+                    }
+                }else {
+                    self?.delegate?.showAlert(with: "Error!", message: status.msg)
+                }
+                
             }
             
         }
        
     }
     
-    func getWorkoutDetailsVMs() -> [WorkoutDetailsViewModel]{
+    func getWorkoutListVMs() -> [WorkoutListsViewModel]{
         let models = self.challenge.workoutDetails?.filter({$0.workouts != nil})
-        var viewModels = [WorkoutDetailsViewModel]()
+        var viewModels = [WorkoutListsViewModel]()
         models?.forEach({ (details) in
-            viewModels.append(WorkoutDetailsViewModel(details: details))
+            viewModels.append(WorkoutListsViewModel(details: details))
         })
         return viewModels
     }
 
-    func createChallenge(schedules:[Schedules]){
+    func createChallenge(schedules:[Schedules],isSkip:Bool){
         let startDate = Date().millisecondsSinceNow
         let endDate = Calendar.current.date(byAdding: .weekOfYear, value: challenge.workoutDetails!.count, to: Date())?.millisecondsSinceNow ?? startDate
         
         ChallengesEndPoint.createChallenge(for: challenge._id!, startDate: startDate, endDate: endDate, schedules: schedules) { [weak self](response) in
             if response.type == "CHALLENGE_CREATED" && response.statusCode == 201 {
                 let model = ChallengeSchedulesModel(challengeId: self!.challenge._id!, startDate: startDate, endDate: endDate, schedules: schedules)
-                self?.delegate?.challengeCreatedSuccessfully(challenge: model)
+                self?.delegate?.challengeCreatedSuccessfully(challenge: model, isSkip: isSkip)
             }else {
                 self?.delegate?.showAlert(with: "Error!", message: response.message)
             }
@@ -193,7 +223,7 @@ extension Date {
 }
 
 
-class WorkoutDetailsViewModel {
+class WorkoutListsViewModel {
     
     private let workoutDetails:WorkoutDetails
     
@@ -241,6 +271,10 @@ class WorkoutViewModel {
     
     private let workout:Workout
     
+    var id:String?{
+        return workout.workoutId
+    }
+    
     var thumbnailUrl:URL? {
         if let urlStr = workout.imageUrl {
             return URL(string: urlStr)
@@ -265,3 +299,4 @@ class WorkoutViewModel {
         self.workout = workout
     }
 }
+

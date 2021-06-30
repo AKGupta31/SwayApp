@@ -16,7 +16,13 @@ class ChallengesEndPoint {
         Api.requestNew(endpoint: .getChallengeDetail(challengeId: challengeId) , type: ChallengeDetailResponse.self, successHandler: success, failureHandler: failure)
     }
     
+    
     static func createChallenge(for challengeId:String,startDate:Int,endDate:Int,schedules:[Schedules],success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {
         Api.requestNew(endpoint: .createChallenge(challengeId: challengeId, startDate: startDate, endDate: endDate, schedules: schedules) , type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
+    }
+    
+    
+    static func getWorkoutDetails(for workoutId:String,success: @escaping SuccessCompletionBlock<WorkoutDetailsResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .getWorkoutDetail(workoutId: workoutId), type: WorkoutDetailsResponse.self, successHandler: success, failureHandler: failure)
     }
 }

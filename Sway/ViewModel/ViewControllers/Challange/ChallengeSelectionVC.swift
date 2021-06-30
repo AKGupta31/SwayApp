@@ -8,9 +8,8 @@
 import UIKit
 import ViewControllerDescribable
 import UPCarouselFlowLayout
-import FlexiblePageControl
 
-class ChallengeSelectionVC: UIViewController {
+class ChallengeSelectionVC: BaseViewController {
     @IBOutlet weak var cvChallenges: UICollectionView!
     @IBOutlet weak var stackViewTab: UIStackView!
     @IBOutlet weak var pagingLayout: UPCarouselFlowLayout!
@@ -19,7 +18,7 @@ class ChallengeSelectionVC: UIViewController {
     @IBOutlet weak var pageControlView: UIView!
     var viewModel:ChallengeSelectionVM!
     
-    var pageControl:FlexiblePageControl!
+    var pageControl:AdvancedPageControlView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -31,33 +30,61 @@ class ChallengeSelectionVC: UIViewController {
         cvChallenges.delegate = self
         cvChallenges.reloadData()
 
-        if viewModel == nil {
-            viewModel = ChallengeSelectionVM(with:self)
-        }
+        
         // Do any additional setup after loading the view.
     }
     
-    func setupPageControl(){
-        if pageControl == nil {
-            pageControl = FlexiblePageControl()
-            pageControlView.addSubview(pageControl)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.tabBarController?.tabBar.isHidden = false
+        if viewModel == nil {
+            showLoader()
+            viewModel = ChallengeSelectionVM(with:self)
+        }else if viewModel == nil || viewModel.numberOfItems <= 0 {
+            showLoader()
+            viewModel.refreshData()
         }
-        pageControl.numberOfPages = viewModel.numberOfItems
-        pageControl.center = CGPoint(x: pageControlView.frame.width / 2, y: pageControlView.frame.height / 2)
+    }
+    
+    func setupPageControl(){
+        //EXTENDED DOT PAGE CONTROL
+        if pageControl != nil {
+            pageControl.removeFromSuperview()
+        }
+        pageControl = AdvancedPageControlView(frame: pageControlView.bounds)
+        pageControl.drawer = ExtendedDotDrawer(numberOfPages: viewModel.numberOfItems,
+                                               height: 6,
+                                               width: 6, space: 8,
+                                               indicatorColor: UIColor(named: "kThemeNavyBlue")!,
+                                               dotsColor: UIColor(named: "PageControl")!,
+                                               borderWidth: 0.0
+                                               )
         
-        // color
-        pageControl.pageIndicatorTintColor = UIColor(named: "PageControl")!
-        pageControl.currentPageIndicatorTintColor = UIColor(named: "kThemeNavyBlue")!
-
-        // size
-        let config = FlexiblePageControl.Config(
-            displayCount: 7,
-            dotSize: 10,
-            dotSpace: 4,
-            smallDotSizeRatio: 0.7,
-            mediumDotSizeRatio: 0.9
-        )
-        pageControl.setConfig(config)
+        pageControlView.addSubview(pageControl)
+        
+        //FLEXIBLE PAGE CONTROL
+        /*
+         
+         if pageControl == nil {
+         pageControl = FlexiblePageControl()
+         pageControlView.addSubview(pageControl)
+         }
+         pageControl.numberOfPages = viewModel.numberOfItems
+         pageControl.center = CGPoint(x: pageControlView.frame.width / 2, y: pageControlView.frame.height / 2)
+         
+         // color
+         pageControl.pageIndicatorTintColor = UIColor(named: "PageControl")!
+         pageControl.currentPageIndicatorTintColor = UIColor(named: "kThemeNavyBlue")!
+         
+         // size
+         let config = FlexiblePageControl.Config(
+         displayCount: 7,
+         dotSize: 10,
+         dotSpace: 4,
+         smallDotSizeRatio: 0.7,
+         mediumDotSizeRatio: 0.9
+         )
+         pageControl.setConfig(config) */
     }
     
     
@@ -100,7 +127,9 @@ extension ChallengeSelectionVC:UICollectionViewDataSource, UICollectionViewDeleg
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.cvChallenges && pageControl != nil{
-            pageControl.setProgress(contentOffsetX: scrollView.contentOffset.x, pageWidth: scrollView.bounds.width*0.72)
+            if let centerIndex = (scrollView as? UICollectionView)?.centerIndexPath {
+                pageControl.setPage(centerIndex.row)
+            }
         }
      
     }
@@ -109,12 +138,14 @@ extension ChallengeSelectionVC:UICollectionViewDataSource, UICollectionViewDeleg
 
 extension ChallengeSelectionVC :ChallengeSelectionVMDelegate{
     func reloadData() {
+        hideLoader()
         cvChallenges.reloadData()
         setupPageControl()
     }
     
     func showAlert(with title: String?, message: String) {
-        
+        hideLoader()
+        AlertView.showAlert(with: title, message: message)
     }
     
 }

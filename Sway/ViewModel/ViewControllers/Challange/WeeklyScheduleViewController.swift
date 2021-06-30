@@ -10,7 +10,8 @@ import UIKit
 import ViewControllerDescribable
 class WeeklyScheduleViewController: BaseViewController,KDDragAndDropCollectionViewDataSource {
     @IBOutlet weak var verticalLinesView: UIView!
-    
+    @IBOutlet weak var btnNext: CustomButton!
+    @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var collectionViewDragItemsHeight: NSLayoutConstraint!
     @IBOutlet weak var shadowView: UIView!
@@ -18,6 +19,7 @@ class WeeklyScheduleViewController: BaseViewController,KDDragAndDropCollectionVi
     @IBOutlet weak var hoursView: UIView!
     @IBOutlet weak var collectionViewDragItems: KDDragAndDropCollectionView!
     
+    @IBOutlet weak var stackViewCVs: UIStackView!
     @IBOutlet var collectionsViews:[KDDragAndDropCollectionView]!
     private var dragAndDropManager : KDDragAndDropManager?
     var data : [[WorkoutModel]] = [[WorkoutModel]]()
@@ -33,17 +35,26 @@ class WeeklyScheduleViewController: BaseViewController,KDDragAndDropCollectionVi
         var cvs = [KDDragAndDropCollectionView]()
         cvs.append(collectionViewDragItems)
         collectionsViews.forEach({cvs.append($0)})
+        collectionsViews?.forEach { (cv) in
+            cv.isScrollEnabled = false
+        }
         self.dragAndDropManager = KDDragAndDropManager(
             canvas: self.view,
             collectionViews: cvs
         )
-        self.bottomView.addShadow(shadowColor: UIColor(named: "kThemeNavyBlue")!.cgColor, shadowOffset: CGSize(width: 0, height: -2), shadowOpacity: 0.25, shadowRadius: 5)
+        self.bottomView.addShadow(shadowColor: UIColor(named: "kThemeNavyBlue")!.cgColor, shadowOffset: CGSize(width: 0, height: -5), shadowOpacity: 0.1, shadowRadius: 2)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.setupVerticalLines()
             self.setupHourLabels()
             self.setupDaysLabels()
             self.shadowView.addShadow(shadowColor: UIColor(named: "kThemeNavyBlue")!.cgColor, shadowOffset: CGSize(width: 0, height: 3), shadowOpacity: 0.1, shadowRadius: 8.0)
+            self.collectionsViews.forEach({$0.reloadData()})
         }
+        
+        lblDescription.text = "Drag and drop your \(challengeVM.weeklyWorkoutCount) workouts to the times you will work out. You can change this any time"
+        btnNext.isUserInteractionEnabled = false
+        btnNext.backgroundColor = UIColor(named: "kThemeYellow")?.withAlphaComponent(0.6)
+        
     }
 
     
@@ -53,11 +64,10 @@ class WeeklyScheduleViewController: BaseViewController,KDDragAndDropCollectionVi
     
     @IBAction func actionNext(_ sender: UIButton) {
         var schedules = [Schedules]()
-        if collectionViewDragItems.numberOfItems(inSection: 0) <= 0 {
+        if collectionViewDragItems.numberOfItems(inSection: 0) <= challengeVM.weeklyWorkoutCount {
             for (collectionIndex,collectionView) in self.data.enumerated() {
                 for (timeIndex,workoutModel) in collectionView.enumerated() {
                     if workoutModel.isSelected {
-                        
                         var scheduleDic :[String:Any] = ["workoutId":workoutModel.workoutId ?? ""]
                         scheduleDic["startTime"] = (timeIndex + 5)
                         scheduleDic["endTime"] = (timeIndex + 5 + 1)
@@ -70,12 +80,13 @@ class WeeklyScheduleViewController: BaseViewController,KDDragAndDropCollectionVi
                 }
             }
             showLoader()
-            challengeVM.createChallenge(schedules: schedules)
+            challengeVM.createChallenge(schedules: schedules, isSkip: false)
         }
     }
     
     @IBAction func actionSkip(_ sender: UIButton) {
-        
+        showLoader()
+        challengeVM.createChallenge(schedules: [Schedules](), isSkip: true)
     }
     
     
@@ -89,12 +100,13 @@ extension WeeklyScheduleViewController:ChallengeViewModelDelegate {
         AlertView.showAlert(with: title, message: message)
     }
     
-    func challengeCreatedSuccessfully(challenge: ChallengeSchedulesModel) {
+    func challengeCreatedSuccessfully(challenge: ChallengeSchedulesModel,isSkip:Bool) {
         hideLoader()
         self.navigationController?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
             vc.schedulesModel = challenge
             vc.challengeTitle = self.challengeVM.title ?? ""
             vc.numberOfWeeks = self.challengeVM.weeksCount ?? 0
+            vc.screenType = isSkip ? .challengeAccepted : .syncWithCalendar
         })
     }
 }
@@ -102,7 +114,7 @@ extension WeeklyScheduleViewController:ChallengeViewModelDelegate {
 extension WeeklyScheduleViewController {
     
     private func setupData(){
-        if let workoutDetailsVM = challengeVM.getWorkoutDetailsVMs().first {
+        if let workoutDetailsVM = challengeVM.getWorkoutListVMs().first {
             self.data.append(workoutDetailsVM.getWorkoutModels())
         }
 //        self.data.append(items1)
@@ -118,14 +130,14 @@ extension WeeklyScheduleViewController {
     
    private func setupVerticalLines(){
         var x :CGFloat = 0
-        let spacing:CGFloat = 56
+    let spacing:CGFloat = stackViewCVs.frame.width / 7
         repeat {
             let layer = CALayer()
             layer.frame = CGRect(x: x, y: 0, width: 1, height: verticalLinesView.frame.height)
             layer.backgroundColor = UIColor.lightGray.cgColor
             x +=  spacing
             verticalLinesView.layer.insertSublayer(layer, at: 0)
-        }while (x + spacing <= verticalLinesView.frame.width)
+        }while (floor(x + spacing) <= verticalLinesView.frame.width)
     }
     
     
@@ -173,7 +185,7 @@ extension WeeklyScheduleViewController:UICollectionViewDataSource, UICollectionV
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
             }
-            collectionView.backgroundColor = UIColor.yellow
+//            collectionView.backgroundColor = UIColor.yellow
         }
         return data[collectionView.tag].count
     }
@@ -182,7 +194,7 @@ extension WeeklyScheduleViewController:UICollectionViewDataSource, UICollectionV
         if collectionView == collectionViewDragItems {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DragItemCell", for: indexPath) as! DragItemCell
             cell.lblTitle.text = "Workout"
-            cell.backgroundColor = UIColor.random()
+//            cell.backgroundColor = UIColor.random()
 //            cell.lblTitle.text = data[collectionView.tag][indexPath.item].title
             cell.viewContent.backgroundColor = data[collectionView.tag][indexPath.item].color
             if let kdCollectionView = collectionView as? KDDragAndDropCollectionView {
@@ -207,7 +219,7 @@ extension WeeklyScheduleViewController:UICollectionViewDataSource, UICollectionV
         if collectionView == collectionViewDragItems {
             return CGSize(width: 88, height: 36)
         }
-        let width :CGFloat = 56
+        let width :CGFloat = stackViewCVs.frame.width / 7
         return CGSize(width: width, height: 32)
     }
     
@@ -249,6 +261,8 @@ extension WeeklyScheduleViewController {
         let fromDataItem: WorkoutModel = data[collectionView.tag][from.item]
         data[collectionView.tag].remove(at: from.item)
         data[collectionView.tag].insert(fromDataItem, at: to.item)
+        btnNext.isUserInteractionEnabled = true
+        btnNext.backgroundColor = UIColor(named: "kThemeYellow")
         
     }
     
@@ -269,6 +283,9 @@ extension WeeklyScheduleViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellIsDroppableAtIndexPath indexPath: IndexPath) -> Bool {
+        if collectionView == collectionViewDragItems {
+            return false
+        }
 //        let isAlreadyExistsAnotherElement = data[collectionView.tag].first(where: {$0.isSelected})?.isSelected
 //        print(" is exists ",isAlreadyExistsAnotherElement)
 //        let model = data[collectionView.tag][indexPath.row]

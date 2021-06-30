@@ -77,12 +77,14 @@ struct Media : Codable {
     let url : String?
     let type : Int?
     let thumbnailImage : String?
+    let videoFor : Int?
 
     enum CodingKeys: String, CodingKey {
 
         case url = "url"
         case type = "type"
         case thumbnailImage = "thumbnailImage"
+        case videoFor = "videoFor"
     }
 
     init(from decoder: Decoder) throws {
@@ -90,6 +92,7 @@ struct Media : Codable {
         url = try values.decodeIfPresent(String.self, forKey: .url)
         type = try values.decodeIfPresent(Int.self, forKey: .type)
         thumbnailImage = try values.decodeIfPresent(String.self, forKey: .thumbnailImage)
+        videoFor = try values.decodeIfPresent(Int.self, forKey: .videoFor)
     }
 
 }

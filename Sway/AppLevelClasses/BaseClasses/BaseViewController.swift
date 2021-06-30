@@ -17,10 +17,19 @@ class BaseViewController:UIViewController {
     
     fileprivate var activityIndicatorTag: Int { return 999999 }
     
+    var addTapGestureToView:Bool = true {
+        didSet {
+            if addTapGestureToView {
+                let tap = UITapGestureRecognizer(target: self, action:#selector(emptyViewTapped(_:)))
+                self.view.addGestureRecognizer(tap)
+            }
+           
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tap = UITapGestureRecognizer(target: self, action:#selector(emptyViewTapped(_:)))
-        self.view.addGestureRecognizer(tap)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -42,6 +42,8 @@
 		8434706326247A6A00566FB2 /* ResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434706226247A6A00566FB2 /* ResponseStatus.swift */; };
 		8434706626247B8500566FB2 /* CustomRefreshRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434706526247B8500566FB2 /* CustomRefreshRetrier.swift */; };
 		8434706926247C5400566FB2 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434706826247C5400566FB2 /* String+Ext.swift */; };
+		8435865E2689A25A0026B389 /* WorkoutDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8435865D2689A25A0026B389 /* WorkoutDetailsResponse.swift */; };
+		843586612689A4800026B389 /* WorkoutDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843586602689A4800026B389 /* WorkoutDetailsViewModel.swift */; };
 		843B993A2628026900DA1681 /* Register1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B99392628026900DA1681 /* Register1VC.swift */; };
 		843B993D26281C9500DA1681 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B993C26281C9500DA1681 /* IntroViewController.swift */; };
 		843B9940262820CD00DA1681 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 843B993F262820CC00DA1681 /* CircularStd-Medium.otf */; };
@@ -143,6 +145,11 @@
 		84E9CB78263BF52E00FFEE9A /* VerifyOtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */; };
 		84E9CC0F263C11D400FFEE9A /* OTPFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CC0D263C11D400FFEE9A /* OTPFieldView.swift */; };
 		84E9CC10263C11D400FFEE9A /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */; };
+		84F2066A268C9EAC00C98B52 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F20659268C9EAB00C98B52 /* ColorUtils.swift */; };
+		84F2066B268C9EAC00C98B52 /* AdvancedPageControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F2065A268C9EAB00C98B52 /* AdvancedPageControlView.swift */; };
+		84F20678268C9EAC00C98B52 /* ExtendedDotDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F20668268C9EAB00C98B52 /* ExtendedDotDrawer.swift */; };
+		84F206AB268C9F3900C98B52 /* DrawerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F206AA268C9F3800C98B52 /* DrawerProtocol.swift */; };
+		84F206AE268C9F5900C98B52 /* InfiniteScrollingDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F206AD268C9F5900C98B52 /* InfiniteScrollingDrawer.swift */; };
 		84F3364926679E860091B990 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3364826679E860091B990 /* Helper.swift */; };
 		84F3364C2667A6B50091B990 /* Anonymous.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F3364B2667A6B50091B990 /* Anonymous.storyboard */; };
 		84F3364F2667A6E40091B990 /* SubscriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3364E2667A6E40091B990 /* SubscriptionVC.swift */; };
@@ -213,6 +220,8 @@
 		8434706226247A6A00566FB2 /* ResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseStatus.swift; sourceTree = "<group>"; };
 		8434706526247B8500566FB2 /* CustomRefreshRetrier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRefreshRetrier.swift; sourceTree = "<group>"; };
 		8434706826247C5400566FB2 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		8435865D2689A25A0026B389 /* WorkoutDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailsResponse.swift; sourceTree = "<group>"; };
+		843586602689A4800026B389 /* WorkoutDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailsViewModel.swift; sourceTree = "<group>"; };
 		843B99392628026900DA1681 /* Register1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register1VC.swift; sourceTree = "<group>"; };
 		843B993C26281C9500DA1681 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		843B993F262820CC00DA1681 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
@@ -315,6 +324,11 @@
 		84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOtpVC.swift; sourceTree = "<group>"; };
 		84E9CC0D263C11D400FFEE9A /* OTPFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
 		84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
+		84F20659268C9EAB00C98B52 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
+		84F2065A268C9EAB00C98B52 /* AdvancedPageControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedPageControlView.swift; sourceTree = "<group>"; };
+		84F20668268C9EAB00C98B52 /* ExtendedDotDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedDotDrawer.swift; sourceTree = "<group>"; };
+		84F206AA268C9F3800C98B52 /* DrawerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerProtocol.swift; sourceTree = "<group>"; };
+		84F206AD268C9F5900C98B52 /* InfiniteScrollingDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollingDrawer.swift; sourceTree = "<group>"; };
 		84F3364826679E860091B990 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		84F3364B2667A6B50091B990 /* Anonymous.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Anonymous.storyboard; sourceTree = "<group>"; };
 		84F3364E2667A6E40091B990 /* SubscriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionVC.swift; sourceTree = "<group>"; };
@@ -686,6 +700,7 @@
 		84595B8E262D57D5009605F5 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				84F20657268C9EAB00C98B52 /* AdvancedPageControl */,
 				84D6C55D2679D50100A50381 /* KDDragDropCollectionViews */,
 				842364E72642FD5E001DA7E6 /* AWSUploadController.swift */,
 				84E9CC0C263C11AB00FFEE9A /* OtpFieldView */,
@@ -747,6 +762,7 @@
 			children = (
 				84D8AFF22685B70B00A03169 /* ChallengeSchedulesModel.swift */,
 				84B675EE2683634700AD14FB /* GetChallengesResponse.swift */,
+				8435865D2689A25A0026B389 /* WorkoutDetailsResponse.swift */,
 			);
 			path = Challenges;
 			sourceTree = "<group>";
@@ -755,6 +771,7 @@
 			isa = PBXGroup;
 			children = (
 				84B675F4268364F700AD14FB /* GetChallengesVM.swift */,
+				843586602689A4800026B389 /* WorkoutDetailsViewModel.swift */,
 			);
 			path = Challenges;
 			sourceTree = "<group>";
@@ -817,6 +834,34 @@
 				84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */,
 			);
 			path = OtpFieldView;
+			sourceTree = "<group>";
+		};
+		84F20657268C9EAB00C98B52 /* AdvancedPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				84F20658268C9EAB00C98B52 /* Classes */,
+			);
+			path = AdvancedPageControl;
+			sourceTree = "<group>";
+		};
+		84F20658268C9EAB00C98B52 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				84F20659268C9EAB00C98B52 /* ColorUtils.swift */,
+				84F2065A268C9EAB00C98B52 /* AdvancedPageControlView.swift */,
+				84F2065B268C9EAB00C98B52 /* Drawers */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		84F2065B268C9EAB00C98B52 /* Drawers */ = {
+			isa = PBXGroup;
+			children = (
+				84F206AD268C9F5900C98B52 /* InfiniteScrollingDrawer.swift */,
+				84F206AA268C9F3800C98B52 /* DrawerProtocol.swift */,
+				84F20668268C9EAB00C98B52 /* ExtendedDotDrawer.swift */,
+			);
+			path = Drawers;
 			sourceTree = "<group>";
 		};
 		84F336CA26694CDF0091B990 /* Challange */ = {
@@ -1071,6 +1116,7 @@
 				84E20C6B2625DDED002DBAF5 /* CustomView.swift in Sources */,
 				84347034262470D500566FB2 /* ViewController.swift in Sources */,
 				84F59A66266F555D00E6A0B3 /* ChallengeDescriptionVC.swift in Sources */,
+				84F206AE268C9F5900C98B52 /* InfiniteScrollingDrawer.swift in Sources */,
 				842365F826441649001DA7E6 /* UserDefaults.swift in Sources */,
 				84C6D23C2625FC1600DD2CBC /* LoginVC.swift in Sources */,
 				84F336E4266953110091B990 /* UIView+Ext.swift in Sources */,
@@ -1110,11 +1156,13 @@
 				84347032262470D500566FB2 /* SceneDelegate.swift in Sources */,
 				8453011926388CF200FD31C7 /* LoginResponse.swift in Sources */,
 				8460EA752656964C00DB577A /* FeedsViewModel.swift in Sources */,
+				8435865E2689A25A0026B389 /* WorkoutDetailsResponse.swift in Sources */,
 				8460EA83265789AF00DB577A /* FeedsEndPoint.swift in Sources */,
 				8434704F262474B900566FB2 /* Constants.swift in Sources */,
 				84595B83262D5713009605F5 /* AppleLoginManager.swift in Sources */,
 				84F336E72669D7990091B990 /* CarouselCell.swift in Sources */,
 				84F336E1266952BE0091B990 /* ViewConstants.swift in Sources */,
+				843586612689A4800026B389 /* WorkoutDetailsViewModel.swift in Sources */,
 				847D64ED264BB7F5006E8F95 /* GoalOptionView.swift in Sources */,
 				842365F52643FF80001DA7E6 /* HomeVC.swift in Sources */,
 				848DCFC02626DC8600B0E934 /* CustomFloatingLabelField.swift in Sources */,
@@ -1130,6 +1178,7 @@
 				8460EA792656D83C00DB577A /* MySubmissionsVC.swift in Sources */,
 				844D4DD826417999006DF6F2 /* EmptyDataResponse.swift in Sources */,
 				8434705D2624782400566FB2 /* API.swift in Sources */,
+				84F206AB268C9F3900C98B52 /* DrawerProtocol.swift in Sources */,
 				84E20C682625DAF3002DBAF5 /* RoundCornerView.swift in Sources */,
 				84B675EF2683634700AD14FB /* GetChallengesResponse.swift in Sources */,
 				84B675EB26835B2700AD14FB /* ChallengesEndPoint.swift in Sources */,
@@ -1184,6 +1233,9 @@
 				8434705A2624780100566FB2 /* LoginRegisterEndPoint.swift in Sources */,
 				84154D1D266A5695001D6DA2 /* SyncWithCalenderVC.swift in Sources */,
 				84FB9830268347B600827DDE /* ChallengeBannerCell.swift in Sources */,
+				84F2066A268C9EAC00C98B52 /* ColorUtils.swift in Sources */,
+				84F20678268C9EAC00C98B52 /* ExtendedDotDrawer.swift in Sources */,
+				84F2066B268C9EAC00C98B52 /* AdvancedPageControlView.swift in Sources */,
 				84D6C56A2679D8CD00A50381 /* CalenderItemCell.swift in Sources */,
 				84E9CB78263BF52E00FFEE9A /* VerifyOtpVC.swift in Sources */,
 				84D6C5672679D85900A50381 /* DragItemCell.swift in Sources */,

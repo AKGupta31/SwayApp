@@ -7,15 +7,20 @@
 
 import UIKit
 
+protocol WeekwiseChallengesCellDelegate:class {
+    func viewDetails(viewModel:WorkoutViewModel)
+}
+
+
 class WeekwiseChallengesCell: UICollectionViewCell {
     
     
     @IBOutlet weak var lblWeekTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    
-    var workoutDetailsVM:WorkoutDetailsViewModel! {
+    weak var delegate:WeekwiseChallengesCellDelegate?
+    var workoutListVMs:WorkoutListsViewModel! {
         didSet {
-            lblWeekTitle.text = workoutDetailsVM.weekTitle
+            lblWeekTitle.text = workoutListVMs.weekTitle
         }
     }
     
@@ -30,15 +35,21 @@ class WeekwiseChallengesCell: UICollectionViewCell {
 
 extension WeekwiseChallengesCell:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return workoutDetailsVM == nil ? 0 : workoutDetailsVM.numberOfItems
+        return workoutListVMs == nil ? 0 : workoutListVMs.numberOfItems
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WorkoutVideoItemCell", for: indexPath) as! WorkoutVideoItemCell
-        if let workoutVM = workoutDetailsVM.getWorkoutVM(at: indexPath.row){
+        if let workoutVM = workoutListVMs.getWorkoutVM(at: indexPath.row){
             cell.setupData(workoutVM:workoutVM )
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let workoutVM = workoutListVMs.getWorkoutVM(at: indexPath.row){
+            delegate?.viewDetails(viewModel: workoutVM)
+        }
     }
     
     

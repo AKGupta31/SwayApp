@@ -33,6 +33,8 @@ enum Endpoint {
     case getChallenges(page:Int,limit:Int)
     case getChallengeDetail(challengeId:String)
     case createChallenge(challengeId:String,startDate:Int,endDate:Int,schedules:[Schedules])
+    
+    case getWorkoutDetail(workoutId:String)
 
     
     
@@ -43,7 +45,7 @@ enum Endpoint {
             return .post
         case .updateOnboardingStatus,.deleteFeed:
             return .put
-        case .verifyEmail,.getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail:
+        case .verifyEmail,.getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail,.getWorkoutDetail:
             return .get
         case .postFeed(let feedId,_,_,_,_,_):
             return feedId.isEmpty ? .post : .patch
@@ -116,6 +118,8 @@ enum Endpoint {
             return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge-details/\(challengeId)"
         case .createChallenge:
             return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge"
+        case .getWorkoutDetail(let workoutId):
+            return Constants.Networking.kBaseUrl + interMediate + "workout/\(workoutId)"
         }
     }
     
@@ -149,7 +153,7 @@ enum Endpoint {
             return ["email":email,"password":password]
         case .updateOnboardingStatus(let key,let value):
             return [key:value]
-        case .getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail:
+        case .getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail,.getWorkoutDetail:
             return [:]
         case .postFeed(_,let caption,let feedType,let url,let thumbnailUrl,let mediaType):
         var mediaDic = [String:Any]()
@@ -168,7 +172,6 @@ enum Endpoint {
         case .postComment(let feedId,let comment):
             return ["postId":feedId,"comment":comment]
         case .createChallenge(let challengeId,let startDate,let endDate,let schedules):
-            
             var scheduleDictArray = [[String:Any]]()
             schedules.forEach({scheduleDictArray.append($0.toParams())})
             return [
@@ -188,7 +191,7 @@ enum Endpoint {
             return HTTPHeaders(headers)
         case .verifyEmail:
             return HTTPHeaders(headers)
-        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment,.getChallenges,.getChallengeDetail,.createChallenge:
+        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment,.getChallenges,.getChallengeDetail,.createChallenge,.getWorkoutDetail:
             headers["authorization"] = "bearer " + (DataManager.shared.loggedInUser?.user?.accessToken ?? "")
             return HTTPHeaders(headers)
         }

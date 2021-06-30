@@ -8,23 +8,18 @@
 import UIKit
 import SDWebImage
 
+
 class WorkoutVideoItemCell: UITableViewCell {
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblVideoName: UILabel!
     @IBOutlet weak var imgVideoThumb: CustomImageView!
-    
-    
-    
+
+    @IBOutlet weak var viewContent: CustomView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     func setupData(workoutVM:WorkoutViewModel){
         imgVideoThumb.sd_imageIndicator = SDWebImageActivityIndicator.gray

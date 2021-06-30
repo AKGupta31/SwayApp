@@ -11,6 +11,17 @@ enum WorkoutType:Int {
     case DANCE_WORKOUT = 1
     case HIIT_WORKOUT = 2
     case OTHER_CONTENT = 3
+    
+    var displayString:String {
+        switch self {
+        case .HIIT_WORKOUT:
+            return "HIIT"
+        case .DANCE_WORKOUT:
+            return "DANCE"
+        case .OTHER_CONTENT:
+            return "DANCE + HIIT"
+        }
+    }
 }
 
 protocol AddVideoViewModelDelegate:BaseVMDelegate {
@@ -105,7 +116,7 @@ class AddVideoViewModel:NSObject {
             uploadThumbnail()
             
         }else {
-            delegate?.showAlert(with: "Error", message: "No internet connection")
+            delegate?.showAlert(with: "Error", message: "Internet connection appears to be offline")
         }
     }
     
@@ -161,7 +172,7 @@ class AddVideoViewModel:NSObject {
                 
             }
         }else {
-            delegate?.showAlert(with: "Error", message: "No internet connection")
+            delegate?.showAlert(with: "Error", message: "Internet connection appears to be offline")
         }
         
     }

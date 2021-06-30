@@ -12,7 +12,9 @@ import Player
 
 class ChallengeInfoHypeVideoVC: BaseViewController {
     
+    @IBOutlet weak var imgPlay: UIImageView!
     @IBOutlet weak var lblChallengeType: UILabel!
+    @IBOutlet weak var lblIntensity: UILabel!
     @IBOutlet weak var progressViewInnerCircle: CustomView!
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var playerView: UIView!
@@ -29,8 +31,10 @@ class ChallengeInfoHypeVideoVC: BaseViewController {
         // Do any additional setup after loading the view.
         edgesForExtendedLayout = [.bottom]
         extendedLayoutIncludesOpaqueBars = true
-        self.setupPlayer(url: viewModel.videoUrl, on: playerView)
+        imgPlay.isHidden = true
         setupLabel()
+        self.setupPlayer(url: viewModel.videoUrl, on: playerView)
+        self.view.backgroundColor = .black
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +44,16 @@ class ChallengeInfoHypeVideoVC: BaseViewController {
     }
     
     @IBAction func actionCross(_ sender: UIButton) {
-        player.stop()
-        stopActivityIndicator()
-        player.playerDelegate = nil
-        self.navigationController?.popViewController(animated: true)
+        if player != nil {
+            player.stop()
+            player.playerDelegate = nil
+        }
+       
+        stopActivityIndicator(inSelf: false) {[weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        
     }
     
     func setupLabel(){
@@ -52,8 +62,10 @@ class ChallengeInfoHypeVideoVC: BaseViewController {
     
     @IBAction func actionViewDetails(_ sender: UIButton) {
         stopActivityIndicator()
-        player.stop()
-        player.playerDelegate = nil
+        if player != nil {
+            player.stop()
+            player.playerDelegate = nil
+        }
         self.navigationController?.push(ChallengeDescriptionVC.self, animated: true, configuration: { (vc) in
             vc.viewModel = self.viewModel
         })
@@ -130,28 +142,55 @@ extension ChallengeInfoHypeVideoVC {
 //MARK: -Player Methods
 extension ChallengeInfoHypeVideoVC {
     func setupPlayer(url:URL?,on parent:UIView){
-        guard let videoUrl = url else {return}
-       
-        if player == nil {
-            self.player = Player()
-            self.player.playerDelegate = self
-            self.player.playbackDelegate = self
-        } else {
-            player.pause()
-            player.removeFromParent()
-            player.view.removeFromSuperview()
-        }
-        self.player.url = videoUrl
-        self.player.volume = 1.0
-        player.playbackResumesWhenEnteringForeground = false
-        player.playbackResumesWhenBecameActive = false
+        if Api.isConnectedToNetwork() {
+            guard let videoUrl = url else {return}
+            if player == nil {
+                self.player = Player()
+                self.player.playerDelegate = self
+                self.player.playbackDelegate = self
+            } else {
+                player.pause()
+                player.removeFromParent()
+                player.view.removeFromSuperview()
+            }
+            self.player.url = videoUrl
+            self.player.volume = 1.0
+            player.playbackResumesWhenEnteringForeground = false
+            player.playbackResumesWhenBecameActive = false
             //videoUrl
-        self.player.view.frame = parent.bounds
-        self.player.fillMode = .resizeAspectFill
-        self.addChild(self.player)
-        parent.insertSubview(self.player.view, at: 0)
-        startActivityIndicator(touchEnabled: true,tintColor:UIColor.white)
-        self.player.didMove(toParent: self)
+            self.player.view.frame = parent.bounds
+            self.player.fillMode = .resizeAspectFill
+            let tapOnPlayer = UITapGestureRecognizer(target: self, action: #selector(tapOnPlayerView(_:)))
+            self.player.view.addGestureRecognizer(tapOnPlayer)
+            self.addChild(self.player)
+            parent.insertSubview(self.player.view, at: 0)
+            startActivityIndicator(touchEnabled: true,tintColor:UIColor.white)
+            self.player.didMove(toParent: self)
+        }else {
+            AlertView.showNoInternetAlert(on: self) { [weak self](retryAction) in
+                self?.setupPlayer(url: url, on: parent)
+            }
+        }
+        
+    }
+    
+    @objc func tapOnPlayerView(_ gesture:UITapGestureRecognizer){
+        if player != nil {
+            if player.playbackState == .playing {
+                player.pause()
+                self.imgPlay.image = UIImage(named: "ic_pause")
+            }else {
+                self.imgPlay.image = UIImage(named: "ic_play")
+                player.playFromCurrentTime()
+            }
+            self.imgPlay.isHidden = false
+            UIView.animate(withDuration: 0.35) {
+                self.imgPlay.alpha = 1.0
+            } completion: { (isSuccess) in
+                self.imgPlay.alpha = 0.0
+                self.imgPlay.isHidden = true
+            }
+        }
     }
 }
 

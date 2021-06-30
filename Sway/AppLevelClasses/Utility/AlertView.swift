@@ -21,4 +21,17 @@ class AlertView {
         alert.addAction(action1)
         presentingVC?.present(alert, animated: true, completion: nil)
     }
+    
+    static func showNoInternetAlert(on viewController:UIViewController? = nil,actionRetry:((UIAlertAction) -> Void)? = nil){
+        var presentingVC = viewController
+        if presentingVC == nil {
+            presentingVC = UIApplication.topViewController
+        }
+        let alert = UIAlertController(title:Constants.Messages.kError, message: Constants.Messages.kNoInternetConnection, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        let retry = UIAlertAction(title: "Retry", style: .default, handler: actionRetry)
+        alert.addAction(ok)
+        alert.addAction(retry)
+        presentingVC?.present(alert, animated: true, completion: nil)
+    }
 }

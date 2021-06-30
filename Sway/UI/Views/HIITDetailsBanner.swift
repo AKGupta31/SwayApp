@@ -9,15 +9,16 @@ import UIKit
 
 class HIITDetailsBanner: UITableViewCell {
 
+    @IBOutlet weak var backButtonTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var btnBack: UIButton!
+    @IBOutlet weak var imgBanner: UIImageView!
+    
+    @IBOutlet weak var lblIntensity: UILabel!
+    @IBOutlet weak var lblType: UILabel!
+    @IBOutlet weak var lblTitle: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

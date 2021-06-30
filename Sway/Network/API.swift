@@ -81,12 +81,12 @@ struct Api {
                         failureHandler(.init(msg: errorMessage))
                         return
                         
-                    case .success(let value):
+                    case .success:
                         handleSuccessNew(type: type, response: response, successHandler: successHandler, failureHandler: failureHandler)
                     }
                 }
         }else {
-            failureHandler(.init(code: 100, msg: "No internet connection"))
+            failureHandler(.init(code: 100, msg: Constants.Messages.kNoInternetConnection))
         }
     }
     /// Handles status code errors, convert errors, validation errors, expired token error

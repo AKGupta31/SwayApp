@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HZo-DT-eeB">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -246,18 +246,18 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0N-b4-Ifg" userLabel="MainContainer">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="591.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLU-50-8dz" userLabel="Skip">
-                                                <rect key="frame" x="344" y="8" width="70" height="36"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGP-HU-5Pp" userLabel="Skip">
+                                                <rect key="frame" x="354" y="4" width="56" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="70" id="lFP-Md-CCN"/>
-                                                    <constraint firstAttribute="height" constant="36" id="wzv-JQ-LQ6"/>
+                                                    <constraint firstAttribute="width" constant="56" id="NmC-gC-gGK"/>
+                                                    <constraint firstAttribute="height" constant="44" id="q16-OQ-HH2"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                                <state key="normal">
+                                                <state key="normal" title="Skip">
                                                     <color key="titleColor" name="k124123132"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="actionSkip:" destination="AoX-lg-VSg" eventType="touchUpInside" id="XRP-zr-oEt"/>
+                                                    <action selector="actionSkip:" destination="AoX-lg-VSg" eventType="touchUpInside" id="GQK-Jo-sbj"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gFr-4V-1sV" userLabel="Back">
@@ -271,9 +271,6 @@
                                                     <action selector="actionBack:" destination="AoX-lg-VSg" eventType="touchUpInside" id="q1O-Cy-LmF"/>
                                                 </connections>
                                             </button>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_calender_sync" translatesAutoresizingMaskIntoConstraints="NO" id="hIi-9I-DcX">
-                                                <rect key="frame" x="108.5" y="44" width="197" height="308"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync with  your Calendar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uLL-qp-Vhj">
                                                 <rect key="frame" x="16" y="360" width="374" height="112"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="40"/>
@@ -286,14 +283,18 @@
                                                 <color key="textColor" name="kThemeNavyBlue"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_calender_sync" translatesAutoresizingMaskIntoConstraints="NO" id="hIi-9I-DcX">
+                                                <rect key="frame" x="108.5" y="44" width="197" height="308"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="gFr-4V-1sV" firstAttribute="centerY" secondItem="aLU-50-8dz" secondAttribute="centerY" id="CJ5-yH-nb6"/>
+                                            <constraint firstAttribute="trailing" secondItem="MGP-HU-5Pp" secondAttribute="trailing" constant="4" id="BBq-4g-nfd"/>
                                             <constraint firstAttribute="bottom" secondItem="gaq-Tl-ZuC" secondAttribute="bottom" priority="251" constant="72" id="COq-Ts-9nk"/>
                                             <constraint firstItem="uLL-qp-Vhj" firstAttribute="centerX" secondItem="N0N-b4-Ifg" secondAttribute="centerX" constant="-4" id="DSq-qw-aM8"/>
                                             <constraint firstItem="hIi-9I-DcX" firstAttribute="top" secondItem="gFr-4V-1sV" secondAttribute="bottom" id="OFl-5P-CTF"/>
                                             <constraint firstItem="gaq-Tl-ZuC" firstAttribute="top" secondItem="uLL-qp-Vhj" secondAttribute="bottom" constant="8" symbolic="YES" id="RYK-dy-hHT"/>
+                                            <constraint firstItem="MGP-HU-5Pp" firstAttribute="centerY" secondItem="gFr-4V-1sV" secondAttribute="centerY" id="Ud1-8n-Zlk"/>
                                             <constraint firstItem="gFr-4V-1sV" firstAttribute="top" secondItem="N0N-b4-Ifg" secondAttribute="top" constant="8" id="Vc4-OG-Hy0"/>
                                             <constraint firstItem="hIi-9I-DcX" firstAttribute="centerX" secondItem="N0N-b4-Ifg" secondAttribute="centerX" id="ffq-6s-0ti"/>
                                             <constraint firstItem="gaq-Tl-ZuC" firstAttribute="leading" secondItem="uLL-qp-Vhj" secondAttribute="leading" constant="36" id="lBy-UI-5vu"/>
@@ -302,7 +303,6 @@
                                             <constraint firstItem="gaq-Tl-ZuC" firstAttribute="centerX" secondItem="uLL-qp-Vhj" secondAttribute="centerX" id="s3i-nw-Hey"/>
                                             <constraint firstItem="gFr-4V-1sV" firstAttribute="leading" secondItem="N0N-b4-Ifg" secondAttribute="leading" constant="8" id="wTb-xx-RaI"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gaq-Tl-ZuC" secondAttribute="bottom" constant="16" id="x7R-Re-XTY"/>
-                                            <constraint firstAttribute="trailing" secondItem="aLU-50-8dz" secondAttribute="trailing" id="z8R-fM-Tkv"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -355,6 +355,7 @@
                     </view>
                     <connections>
                         <outlet property="btnICalendar" destination="H3K-qo-hw9" id="fTj-uf-YBu"/>
+                        <outlet property="btnSkip" destination="MGP-HU-5Pp" id="zEi-Bs-DkV"/>
                         <outlet property="lblDescription" destination="gaq-Tl-ZuC" id="7hm-ou-BKA"/>
                         <outlet property="lblTitle" destination="uLL-qp-Vhj" id="whp-Sk-eQa"/>
                     </connections>
@@ -413,7 +414,7 @@
                                                 <color key="textColor" name="kThemeNavyBlue"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YN6-lw-0ZC">
+                                            <button opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YN6-lw-0ZC">
                                                 <rect key="frame" x="0.0" y="0.0" width="207" height="72"/>
                                                 <connections>
                                                     <action selector="actionTab:" destination="Rx6-1A-nDJ" eventType="touchUpInside" id="cPo-U6-y1n"/>
@@ -440,7 +441,7 @@
                                 </constraints>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xMg-N9-Tvg">
-                                <rect key="frame" x="0.0" y="136" width="414" height="656"/>
+                                <rect key="frame" x="0.0" y="136" width="414" height="607"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3P6-rl-eLX" customClass="UPCarouselFlowLayout" customModule="UPCarouselFlowLayout">
                                     <size key="itemSize" width="375" height="667"/>
@@ -458,7 +459,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChallengeSelectionCell" id="jw3-dD-hmj" customClass="ChallengeSelectionCell" customModule="Sway" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-5.5" width="375" height="667"/>
+                                        <rect key="frame" x="0.0" y="-30" width="375" height="667"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="40b-kg-H8Z">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -549,7 +550,7 @@ Summer Body</string>
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-fA-5g1">
-                                <rect key="frame" x="107" y="800" width="200" height="40"/>
+                                <rect key="frame" x="107" y="751" width="200" height="40"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="W0o-gz-rKO"/>
@@ -571,6 +572,7 @@ Summer Body</string>
                             <constraint firstItem="pVa-6e-dPF" firstAttribute="trailing" secondItem="xMg-N9-Tvg" secondAttribute="trailing" id="lc2-BO-K5F"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="BJa-Fm-VOV"/>
                     <connections>
                         <outlet property="cvChallenges" destination="xMg-N9-Tvg" id="UGA-FH-sFy"/>
                         <outlet property="pageControlView" destination="ncm-fA-5g1" id="g8s-u4-Pen"/>
@@ -581,7 +583,7 @@ Summer Body</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KcQ-Qh-YC6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1929" y="39"/>
+            <point key="canvasLocation" x="2839.130434782609" y="38.839285714285715"/>
         </scene>
         <!--Workout StartCDVC-->
         <scene sceneID="6dd-1B-3HY">
@@ -781,7 +783,7 @@ Summer Body</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pag-nj-qcz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2825" y="43"/>
+            <point key="canvasLocation" x="3734.7826086956525" y="42.857142857142854"/>
         </scene>
         <!--Challenge DescriptionVC-->
         <scene sceneID="DOF-lC-zoh">
@@ -830,14 +832,14 @@ Summer Body</string>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <prototypes>
                                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WorkoutVideoItemCell" id="A9F-5b-hKx" customClass="WorkoutVideoItemCell" customModule="Sway" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="28" width="300" height="141"/>
+                                                                                <rect key="frame" x="0.0" y="28" width="300" height="121"/>
                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A9F-5b-hKx" id="tBB-jR-0am">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="141"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="121"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FEc-SL-cHm" userLabel="ViewContent" customClass="CustomView" customModule="Sway" customModuleProvider="target">
-                                                                                            <rect key="frame" x="16" y="10" width="268" height="121"/>
+                                                                                            <rect key="frame" x="16" y="0.0" width="268" height="121"/>
                                                                                             <subviews>
                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_pile_squats" translatesAutoresizingMaskIntoConstraints="NO" id="VSb-lr-1hw" customClass="CustomImageView" customModule="Sway" customModuleProvider="target">
                                                                                                     <rect key="frame" x="0.0" y="10" width="101" height="101"/>
@@ -884,7 +886,7 @@ Summer Body</string>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="trailing" secondItem="FEc-SL-cHm" secondAttribute="trailing" constant="16" id="5Al-gl-fQi"/>
                                                                                         <constraint firstItem="FEc-SL-cHm" firstAttribute="centerY" secondItem="tBB-jR-0am" secondAttribute="centerY" id="e2e-j2-Q8K"/>
-                                                                                        <constraint firstItem="FEc-SL-cHm" firstAttribute="top" secondItem="tBB-jR-0am" secondAttribute="top" constant="10" id="gcF-9R-2XF"/>
+                                                                                        <constraint firstItem="FEc-SL-cHm" firstAttribute="top" secondItem="tBB-jR-0am" secondAttribute="top" id="gcF-9R-2XF"/>
                                                                                         <constraint firstItem="FEc-SL-cHm" firstAttribute="leading" secondItem="tBB-jR-0am" secondAttribute="leading" constant="16" id="x2f-rB-IXW"/>
                                                                                     </constraints>
                                                                                 </tableViewCellContentView>
@@ -892,6 +894,7 @@ Summer Body</string>
                                                                                     <outlet property="imgVideoThumb" destination="VSb-lr-1hw" id="jne-wl-iOP"/>
                                                                                     <outlet property="lblTime" destination="X5W-LN-SZW" id="ER8-G0-O0r"/>
                                                                                     <outlet property="lblVideoName" destination="VDO-nL-0wI" id="OYN-vI-hTS"/>
+                                                                                    <outlet property="viewContent" destination="FEc-SL-cHm" id="IsU-1m-F84"/>
                                                                                 </connections>
                                                                             </tableViewCell>
                                                                         </prototypes>
@@ -936,24 +939,25 @@ Summer Body</string>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWD-bv-mau">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="520"/>
                                                     <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChallengeSelection" translatesAutoresizingMaskIntoConstraints="NO" id="Y4o-UL-Ydo">
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="520"/>
+                                                        </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78R-M8-ybY" userLabel="Back">
                                                             <rect key="frame" x="16" y="16" width="36" height="36"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="78R-M8-ybY" secondAttribute="height" multiplier="1:1" id="YDl-CV-Zlc"/>
                                                                 <constraint firstAttribute="width" constant="36" id="ZrA-g0-gFc"/>
                                                             </constraints>
-                                                            <state key="normal" image="ic_back"/>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" image="ic_back_white"/>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQz-cy-PX6" userLabel="Cross">
-                                                            <rect key="frame" x="362" y="16" width="36" height="22"/>
+                                                            <rect key="frame" x="362" y="23" width="36" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="36" id="OHs-yT-HZ4"/>
                                                             </constraints>
                                                             <state key="normal" image="ic_cross_white_medium"/>
                                                         </button>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChallengeSelection" translatesAutoresizingMaskIntoConstraints="NO" id="Y4o-UL-Ydo">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="520"/>
-                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance \u{2588}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWp-uj-aj5">
                                                             <rect key="frame" x="22" y="488.5" width="370" height="15.5"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
@@ -994,8 +998,8 @@ Summer Body</string>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
+                                                        <constraint firstItem="MQz-cy-PX6" firstAttribute="centerY" secondItem="78R-M8-ybY" secondAttribute="centerY" id="12b-fK-FDP"/>
                                                         <constraint firstAttribute="trailing" secondItem="MQz-cy-PX6" secondAttribute="trailing" constant="16" id="3R8-Ve-Dmi"/>
-                                                        <constraint firstItem="MQz-cy-PX6" firstAttribute="top" secondItem="XWD-bv-mau" secondAttribute="top" constant="16" id="5aP-jZ-yQd"/>
                                                         <constraint firstAttribute="trailing" secondItem="PWp-uj-aj5" secondAttribute="trailing" constant="22" id="6TD-VO-HtA"/>
                                                         <constraint firstItem="3Ff-rn-m3J" firstAttribute="leading" secondItem="PWp-uj-aj5" secondAttribute="leading" id="9Kr-MH-2Bq"/>
                                                         <constraint firstAttribute="trailing" secondItem="Y4o-UL-Ydo" secondAttribute="trailing" id="BzU-4d-H8z"/>
@@ -1021,6 +1025,7 @@ Summer Body</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="backButtonTopConstraint" destination="lYI-CX-6P5" id="5SV-MW-ZXp"/>
                                             <outlet property="btnBack" destination="78R-M8-ybY" id="Gty-Vh-EiQ"/>
                                             <outlet property="btnCross" destination="MQz-cy-PX6" id="r6x-lk-Bu7"/>
                                             <outlet property="imgBanner" destination="Y4o-UL-Ydo" id="Oaw-cQ-PcR"/>
@@ -1226,7 +1231,7 @@ Summer Body</string>
         <scene sceneID="XQm-m0-mqF">
             <objects>
                 <viewController storyboardIdentifier="WeeklyScheduleViewController" id="wZ9-vc-8xi" customClass="WeeklyScheduleViewController" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iEI-PA-RsI">
+                    <view key="view" tag="999" contentMode="scaleToFill" id="iEI-PA-RsI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1261,14 +1266,14 @@ Summer Body</string>
                                 <color key="textColor" name="kThemeNavyBlue"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Schedule your workouts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H54-96-bpt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Schedule your workouts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H54-96-bpt">
                                 <rect key="frame" x="16" y="112" width="382" height="35"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="25"/>
                                 <color key="textColor" name="kThemeNavyBlue"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WZz-9X-6GI" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="189.5" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="205.5" width="414" height="60"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Whr-K7-r3i"/>
@@ -1288,7 +1293,7 @@ Summer Body</string>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54u-SD-0b5">
-                                                    <rect key="frame" x="5" y="0.0" width="118" height="128"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="118" height="128"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HIIT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmd-zj-Xcd">
                                                             <rect key="frame" x="6" y="54" width="104" height="20.5"/>
@@ -1306,9 +1311,9 @@ Summer Body</string>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="54u-SD-0b5" secondAttribute="trailing" constant="5" id="I1e-5H-au5"/>
+                                                <constraint firstAttribute="trailing" secondItem="54u-SD-0b5" secondAttribute="trailing" constant="10" id="I1e-5H-au5"/>
                                                 <constraint firstAttribute="bottom" secondItem="54u-SD-0b5" secondAttribute="bottom" id="YuH-hd-y9a"/>
-                                                <constraint firstItem="54u-SD-0b5" firstAttribute="leading" secondItem="ALb-Tm-DQL" secondAttribute="leading" constant="5" id="oED-4d-CRj"/>
+                                                <constraint firstItem="54u-SD-0b5" firstAttribute="leading" secondItem="ALb-Tm-DQL" secondAttribute="leading" id="oED-4d-CRj"/>
                                                 <constraint firstItem="54u-SD-0b5" firstAttribute="top" secondItem="ALb-Tm-DQL" secondAttribute="top" id="xxr-ld-umo"/>
                                             </constraints>
                                         </collectionViewCellContentView>
@@ -1323,21 +1328,18 @@ Summer Body</string>
                                     <outlet property="delegate" destination="wZ9-vc-8xi" id="eek-v0-6Jy"/>
                                 </connections>
                             </collectionView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ha-r6-1fW">
-                                <rect key="frame" x="0.0" y="249.5" width="414" height="515.5"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ha-r6-1fW">
+                                <rect key="frame" x="0.0" y="265.5" width="414" height="499.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLh-Oh-sWd" userLabel="MainContainer">
-                                        <rect key="frame" x="0.0" y="0.0" width="456" height="648"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="648"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ep5-Z5-Ie0">
-                                                <rect key="frame" x="64" y="72" width="392" height="576"/>
+                                                <rect key="frame" x="64" y="72" width="350" height="576"/>
                                                 <subviews>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FuE-a7-21X" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="56" height="576"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="576"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="56" id="GIj-zq-uMl"/>
-                                                        </constraints>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8T8-S0-XOo">
                                                             <size key="itemSize" width="56" height="51.5"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -1346,7 +1348,7 @@ Summer Body</string>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalenderItemCell" id="Fih-hO-Mpv" customClass="CalenderItemCell" customModule="Sway" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="56" height="51.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qBW-2Q-cnJ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
@@ -1376,7 +1378,7 @@ Summer Body</string>
                                                         </connections>
                                                     </collectionView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="d4l-Cr-c1S" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                                        <rect key="frame" x="56" y="0.0" width="56" height="576"/>
+                                                        <rect key="frame" x="50" y="0.0" width="50" height="576"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rRK-S4-4w2">
                                                             <size key="itemSize" width="56" height="51.5"/>
@@ -1386,7 +1388,7 @@ Summer Body</string>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalenderItemCell" id="NZ9-fd-QCt" customClass="CalenderItemCell" customModule="Sway" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="56" height="51.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9XG-25-kMf">
                                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
@@ -1426,7 +1428,7 @@ Summer Body</string>
                                                         </connections>
                                                     </collectionView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MgW-i2-RvB" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                                        <rect key="frame" x="112" y="0.0" width="56" height="576"/>
+                                                        <rect key="frame" x="100" y="0.0" width="50" height="576"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ECO-Rf-gbZ">
                                                             <size key="itemSize" width="56" height="51.5"/>
@@ -1436,7 +1438,7 @@ Summer Body</string>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalenderItemCell" id="IP7-ec-K41" customClass="CalenderItemCell" customModule="Sway" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="56" height="51.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tJJ-Eq-fzB">
                                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
@@ -1476,7 +1478,7 @@ Summer Body</string>
                                                         </connections>
                                                     </collectionView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="4" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XYg-2u-uN4" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                                        <rect key="frame" x="168" y="0.0" width="56" height="576"/>
+                                                        <rect key="frame" x="150" y="0.0" width="50" height="576"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kjb-KR-0Gq">
                                                             <size key="itemSize" width="56" height="51.5"/>
@@ -1486,7 +1488,7 @@ Summer Body</string>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalenderItemCell" id="ViO-pK-3OO" customClass="CalenderItemCell" customModule="Sway" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="56" height="51.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0eW-Sl-6HD">
                                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
@@ -1526,7 +1528,7 @@ Summer Body</string>
                                                         </connections>
                                                     </collectionView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1gV-5O-IvK" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                                        <rect key="frame" x="224" y="0.0" width="56" height="576"/>
+                                                        <rect key="frame" x="200" y="0.0" width="50" height="576"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Erm-6s-3Ld">
                                                             <size key="itemSize" width="56" height="51.5"/>
@@ -1536,7 +1538,7 @@ Summer Body</string>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalenderItemCell" id="V2U-jF-4SC" customClass="CalenderItemCell" customModule="Sway" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="56" height="51.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Cnn-B7-qAM">
                                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
@@ -1576,7 +1578,7 @@ Summer Body</string>
                                                         </connections>
                                                     </collectionView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="6" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="L6S-ax-DKx" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                                        <rect key="frame" x="280" y="0.0" width="56" height="576"/>
+                                                        <rect key="frame" x="250" y="0.0" width="50" height="576"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hBG-Bn-Tvs">
                                                             <size key="itemSize" width="56" height="51.5"/>
@@ -1586,7 +1588,7 @@ Summer Body</string>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalenderItemCell" id="mcL-F8-c3t" customClass="CalenderItemCell" customModule="Sway" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="56" height="51.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="g3N-KY-pEh">
                                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
@@ -1625,8 +1627,8 @@ Summer Body</string>
                                                             <outlet property="delegate" destination="wZ9-vc-8xi" id="TmL-xl-wmn"/>
                                                         </connections>
                                                     </collectionView>
-                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="7" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LlS-Z8-aKx" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
-                                                        <rect key="frame" x="336" y="0.0" width="56" height="576"/>
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="7" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LlS-Z8-aKx" customClass="KDDragAndDropCollectionView" customModule="Sway" customModuleProvider="target">
+                                                        <rect key="frame" x="300" y="0.0" width="50" height="576"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="T7u-KS-4Y1">
                                                             <size key="itemSize" width="56" height="51.5"/>
@@ -1636,7 +1638,7 @@ Summer Body</string>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalenderItemCell" id="yBk-kO-vyU" customClass="CalenderItemCell" customModule="Sway" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="56" height="51.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Gdf-7N-Ruw">
                                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="51.5"/>
@@ -1678,79 +1680,61 @@ Summer Body</string>
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WF6-E2-YJn" userLabel="ShadowView">
-                                                <rect key="frame" x="0.0" y="0.0" width="456" height="60"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sk5-qb-TuO" userLabel="Days">
-                                                <rect key="frame" x="64" y="0.0" width="392" height="60"/>
+                                                <rect key="frame" x="64" y="0.0" width="350" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="cwv-oV-gxV">
-                                                        <rect key="frame" x="0.0" y="0.0" width="392" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="350" height="60"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Han-cm-BXd">
-                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="60"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="50" height="60"/>
                                                                 <color key="backgroundColor" red="0.76862745099999996" green="0.76862745099999996" blue="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="UmZ-Dd-R2y"/>
-                                                                </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="D94-yV-z0y">
-                                                                <rect key="frame" x="56" y="0.0" width="56" height="60"/>
+                                                                <rect key="frame" x="50" y="0.0" width="50" height="60"/>
                                                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="0AH-BL-MVv"/>
+                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="0AH-BL-MVv"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TjP-AL-mew">
-                                                                <rect key="frame" x="112" y="0.0" width="56" height="60"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="Hm3-GV-zln"/>
-                                                                </constraints>
+                                                                <rect key="frame" x="100" y="0.0" width="50" height="60"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="iVU-Ox-6oT">
-                                                                <rect key="frame" x="168" y="0.0" width="56" height="60"/>
+                                                                <rect key="frame" x="150" y="0.0" width="50" height="60"/>
                                                                 <color key="backgroundColor" systemColor="systemTealColor"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="J5P-yt-rcd"/>
-                                                                </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2HC-5e-hxT">
-                                                                <rect key="frame" x="224" y="0.0" width="56" height="60"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="9Hz-ah-Auc"/>
-                                                                </constraints>
+                                                                <rect key="frame" x="200" y="0.0" width="50" height="60"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SAT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QPR-kX-Ew4">
-                                                                <rect key="frame" x="280" y="0.0" width="56" height="60"/>
+                                                                <rect key="frame" x="250" y="0.0" width="50" height="60"/>
                                                                 <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="bfI-is-fy0"/>
-                                                                </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="gcA-xg-3Mo">
-                                                                <rect key="frame" x="336" y="0.0" width="56" height="60"/>
+                                                                <rect key="frame" x="300" y="0.0" width="50" height="60"/>
                                                                 <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="C53-Hm-ZnV"/>
-                                                                </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -1775,8 +1759,8 @@ Summer Body</string>
                                                     <constraint firstAttribute="height" constant="576" id="eRI-Zm-td8"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2wo-Jz-ZJG" userLabel="VerticalLinesView">
-                                                <rect key="frame" x="64" y="60" width="392" height="588"/>
+                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2wo-Jz-ZJG" userLabel="VerticalLinesView">
+                                                <rect key="frame" x="64" y="60" width="350" height="588"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -1805,6 +1789,7 @@ Summer Body</string>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="OLh-Oh-sWd" firstAttribute="leading" secondItem="8ha-r6-1fW" secondAttribute="leading" id="BYX-wp-zdT"/>
+                                    <constraint firstItem="OLh-Oh-sWd" firstAttribute="width" secondItem="8ha-r6-1fW" secondAttribute="width" id="Fya-Zl-9hQ"/>
                                     <constraint firstItem="OLh-Oh-sWd" firstAttribute="top" secondItem="8ha-r6-1fW" secondAttribute="top" id="N8g-NM-cb6"/>
                                     <constraint firstAttribute="trailing" secondItem="OLh-Oh-sWd" secondAttribute="trailing" id="ZcG-te-dJ5"/>
                                     <constraint firstAttribute="bottom" secondItem="OLh-Oh-sWd" secondAttribute="bottom" id="xCE-SV-vZF"/>
@@ -1845,48 +1830,51 @@ Summer Body</string>
                         <viewLayoutGuide key="safeArea" id="EcV-uR-EHo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="8ha-r6-1fW" firstAttribute="leading" secondItem="iEI-PA-RsI" secondAttribute="leading" id="5aG-Mu-Tad"/>
-                            <constraint firstItem="EcV-uR-EHo" firstAttribute="trailing" secondItem="8ha-r6-1fW" secondAttribute="trailing" id="AoC-mO-X67"/>
+                            <constraint firstItem="EcV-uR-EHo" firstAttribute="leading" secondItem="WZz-9X-6GI" secondAttribute="leading" id="5So-Yp-QI9"/>
+                            <constraint firstItem="EeN-Xv-oqG" firstAttribute="top" secondItem="8ha-r6-1fW" secondAttribute="bottom" id="9y2-SL-OnS"/>
                             <constraint firstItem="2Gk-MY-dU7" firstAttribute="top" secondItem="EcV-uR-EHo" secondAttribute="top" constant="8" id="Cge-LC-pgn"/>
                             <constraint firstItem="xPc-Tu-61a" firstAttribute="leading" secondItem="H54-96-bpt" secondAttribute="leading" id="GgI-6t-4KE"/>
                             <constraint firstItem="2Gk-MY-dU7" firstAttribute="leading" secondItem="EcV-uR-EHo" secondAttribute="leading" constant="8" id="Her-EP-C3D"/>
                             <constraint firstItem="H54-96-bpt" firstAttribute="centerX" secondItem="EcV-uR-EHo" secondAttribute="centerX" id="NEJ-2f-SFl"/>
-                            <constraint firstItem="EcV-uR-EHo" firstAttribute="trailing" secondItem="WZz-9X-6GI" secondAttribute="trailing" id="SDU-3C-osG"/>
+                            <constraint firstItem="8ha-r6-1fW" firstAttribute="leading" secondItem="EcV-uR-EHo" secondAttribute="leading" id="SY8-2w-QNf"/>
+                            <constraint firstItem="WZz-9X-6GI" firstAttribute="trailing" secondItem="EcV-uR-EHo" secondAttribute="trailing" id="TRT-PX-pLy"/>
+                            <constraint firstItem="EcV-uR-EHo" firstAttribute="trailing" secondItem="8ha-r6-1fW" secondAttribute="trailing" id="WjQ-Ui-Gk0"/>
                             <constraint firstItem="xPc-Tu-61a" firstAttribute="trailing" secondItem="H54-96-bpt" secondAttribute="trailing" id="eaB-La-cEu"/>
-                            <constraint firstItem="WZz-9X-6GI" firstAttribute="leading" secondItem="EcV-uR-EHo" secondAttribute="leading" id="fGi-k2-bpk"/>
                             <constraint firstItem="xPc-Tu-61a" firstAttribute="top" secondItem="H54-96-bpt" secondAttribute="bottom" constant="7" id="h8L-aF-WLi"/>
                             <constraint firstItem="H54-96-bpt" firstAttribute="leading" secondItem="EcV-uR-EHo" secondAttribute="leading" constant="16" id="jUx-Pp-spi"/>
                             <constraint firstItem="EcV-uR-EHo" firstAttribute="bottom" secondItem="EeN-Xv-oqG" secondAttribute="bottom" id="k9Q-wH-WmH"/>
                             <constraint firstItem="EeN-Xv-oqG" firstAttribute="leading" secondItem="EcV-uR-EHo" secondAttribute="leading" id="nHr-jP-31H"/>
-                            <constraint firstItem="EeN-Xv-oqG" firstAttribute="top" secondItem="8ha-r6-1fW" secondAttribute="bottom" id="oHw-o4-A7H"/>
-                            <constraint firstItem="8ha-r6-1fW" firstAttribute="top" secondItem="WZz-9X-6GI" secondAttribute="bottom" id="pZ8-A6-WeE"/>
                             <constraint firstItem="EcV-uR-EHo" firstAttribute="trailing" secondItem="EeN-Xv-oqG" secondAttribute="trailing" id="q83-1F-Kuy"/>
                             <constraint firstItem="H54-96-bpt" firstAttribute="top" secondItem="2Gk-MY-dU7" secondAttribute="bottom" constant="24" id="qxK-4G-xiK"/>
-                            <constraint firstItem="WZz-9X-6GI" firstAttribute="top" secondItem="xPc-Tu-61a" secondAttribute="bottom" id="t1K-Zr-siF"/>
                             <constraint firstItem="2Gk-MY-dU7" firstAttribute="centerY" secondItem="Alr-Y3-Tcx" secondAttribute="centerY" id="tYS-JO-1ZV"/>
+                            <constraint firstItem="WZz-9X-6GI" firstAttribute="top" secondItem="xPc-Tu-61a" secondAttribute="bottom" constant="16" id="u1R-z2-CWe"/>
                             <constraint firstItem="EcV-uR-EHo" firstAttribute="trailing" secondItem="Alr-Y3-Tcx" secondAttribute="trailing" id="xsq-ML-xGV"/>
+                            <constraint firstItem="8ha-r6-1fW" firstAttribute="top" secondItem="WZz-9X-6GI" secondAttribute="bottom" id="zp3-GA-faq"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="EeN-Xv-oqG" id="kqC-jC-TZt"/>
+                        <outlet property="btnNext" destination="6Ec-7b-vaf" id="Cb1-6a-rZN"/>
                         <outlet property="collectionViewDragItems" destination="WZz-9X-6GI" id="zTE-gy-c5K"/>
                         <outlet property="collectionViewDragItemsHeight" destination="Whr-K7-r3i" id="Znp-fI-WLW"/>
                         <outlet property="daysStackView" destination="cwv-oV-gxV" id="l3Y-M9-lqS"/>
                         <outlet property="hoursView" destination="Tcx-ko-vyJ" id="W5k-Pq-Zzy"/>
+                        <outlet property="lblDescription" destination="xPc-Tu-61a" id="wO1-yz-rMq"/>
                         <outlet property="shadowView" destination="WF6-E2-YJn" id="08A-BK-AN8"/>
+                        <outlet property="stackViewCVs" destination="ep5-Z5-Ie0" id="cEm-ui-jl8"/>
                         <outlet property="verticalLinesView" destination="2wo-Jz-ZJG" id="xEd-sX-KGS"/>
-                        <outletCollection property="collectionsViews" destination="FuE-a7-21X" collectionClass="NSMutableArray" id="GjU-CG-0RA"/>
-                        <outletCollection property="collectionsViews" destination="d4l-Cr-c1S" collectionClass="NSMutableArray" id="OMh-Eu-cqN"/>
                         <outletCollection property="collectionsViews" destination="MgW-i2-RvB" collectionClass="NSMutableArray" id="62H-ed-7la"/>
                         <outletCollection property="collectionsViews" destination="XYg-2u-uN4" collectionClass="NSMutableArray" id="Cfn-Pc-hzA"/>
+                        <outletCollection property="collectionsViews" destination="d4l-Cr-c1S" collectionClass="NSMutableArray" id="OMh-Eu-cqN"/>
+                        <outletCollection property="collectionsViews" destination="FuE-a7-21X" collectionClass="NSMutableArray" id="GjU-CG-0RA"/>
+                        <outletCollection property="collectionsViews" destination="LlS-Z8-aKx" collectionClass="NSMutableArray" id="ZiJ-tQ-meI"/>
                         <outletCollection property="collectionsViews" destination="1gV-5O-IvK" collectionClass="NSMutableArray" id="kUd-Gd-Ufs"/>
                         <outletCollection property="collectionsViews" destination="L6S-ax-DKx" collectionClass="NSMutableArray" id="4Gt-BZ-c4O"/>
-                        <outletCollection property="collectionsViews" destination="LlS-Z8-aKx" collectionClass="NSMutableArray" id="ZiJ-tQ-meI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qn4-ot-Yxd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4263.768115942029" y="-13.392857142857142"/>
+            <point key="canvasLocation" x="5173.913043478261" y="-13.392857142857142"/>
         </scene>
         <!--Challenge InfoVC-->
         <scene sceneID="tR3-M8-AuK">
@@ -2025,7 +2013,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nGS-uI-xoa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3574" y="43"/>
+            <point key="canvasLocation" x="4484.057971014493" y="42.857142857142854"/>
         </scene>
         <!--DetailsVC-->
         <scene sceneID="dG2-sm-Pbs">
@@ -2053,15 +2041,32 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="375"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sarah’s HIIT Shake it Workout" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mq-Wd-7JG">
-                                                            <rect key="frame" x="26" y="261" width="238" height="78.5"/>
+                                                            <rect key="frame" x="24" y="256" width="250" height="78.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="250" id="p2K-kq-A4B"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="28"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance \u{2588}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H36-HC-50f">
-                                                            <rect key="frame" x="26" y="339.5" width="86" height="15.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance \u{2588}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQC-QM-dhw" userLabel="LblType">
+                                                            <rect key="frame" x="24" y="339.5" width="86" height="15.5"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
-                                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucN-i1-25y">
+                                                            <rect key="frame" x="114" y="345.5" width="4" height="4"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="4" id="ST4-sQ-rXM"/>
+                                                                <constraint firstAttribute="width" secondItem="ucN-i1-25y" secondAttribute="height" multiplier="1:1" id="eEP-w3-WGc"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance \u{2588}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H36-HC-50f" userLabel="LblIntensity">
+                                                            <rect key="frame" x="122" y="339.5" width="86" height="15.5"/>
+                                                            <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QD5-Oo-SSP" userLabel="Back">
@@ -2076,16 +2081,20 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstItem="H36-HC-50f" firstAttribute="leading" secondItem="Ieo-s7-bJA" secondAttribute="leading" constant="26" id="4d6-W9-6nx"/>
+                                                        <constraint firstItem="oQC-QM-dhw" firstAttribute="top" secondItem="5mq-Wd-7JG" secondAttribute="bottom" constant="5" id="1Jr-13-ZbL"/>
                                                         <constraint firstAttribute="trailing" secondItem="1P6-lS-fVd" secondAttribute="trailing" id="7Lu-oO-zHS"/>
+                                                        <constraint firstItem="ucN-i1-25y" firstAttribute="leading" secondItem="oQC-QM-dhw" secondAttribute="trailing" constant="4" id="BTf-mE-WWc"/>
+                                                        <constraint firstItem="5mq-Wd-7JG" firstAttribute="leading" secondItem="oQC-QM-dhw" secondAttribute="leading" id="Cv1-08-GCw"/>
+                                                        <constraint firstItem="oQC-QM-dhw" firstAttribute="leading" secondItem="Ieo-s7-bJA" secondAttribute="leading" constant="24" id="MD0-VS-byk"/>
+                                                        <constraint firstAttribute="bottom" secondItem="oQC-QM-dhw" secondAttribute="bottom" constant="20" id="Ndb-8w-cle"/>
                                                         <constraint firstItem="QD5-Oo-SSP" firstAttribute="top" secondItem="Ieo-s7-bJA" secondAttribute="top" constant="12" id="QUB-Gc-RXr"/>
+                                                        <constraint firstItem="H36-HC-50f" firstAttribute="centerY" secondItem="ucN-i1-25y" secondAttribute="centerY" id="S2H-yO-Dbl"/>
                                                         <constraint firstItem="1P6-lS-fVd" firstAttribute="top" secondItem="Ieo-s7-bJA" secondAttribute="top" id="am7-Cs-gxs"/>
-                                                        <constraint firstItem="5mq-Wd-7JG" firstAttribute="leading" secondItem="H36-HC-50f" secondAttribute="leading" id="dZP-M3-eUs"/>
-                                                        <constraint firstAttribute="bottom" secondItem="H36-HC-50f" secondAttribute="bottom" constant="20" id="pXt-MQ-Ntd"/>
                                                         <constraint firstItem="1P6-lS-fVd" firstAttribute="leading" secondItem="Ieo-s7-bJA" secondAttribute="leading" id="t1Z-BC-Boz"/>
                                                         <constraint firstItem="QD5-Oo-SSP" firstAttribute="leading" secondItem="Ieo-s7-bJA" secondAttribute="leading" constant="12" id="t7L-Cn-qt2"/>
                                                         <constraint firstAttribute="bottom" secondItem="1P6-lS-fVd" secondAttribute="bottom" id="tcX-Mu-WSc"/>
-                                                        <constraint firstItem="H36-HC-50f" firstAttribute="top" secondItem="5mq-Wd-7JG" secondAttribute="bottom" id="x1y-l7-7Ei"/>
+                                                        <constraint firstItem="ucN-i1-25y" firstAttribute="centerY" secondItem="oQC-QM-dhw" secondAttribute="centerY" id="xsT-Sx-VtV"/>
+                                                        <constraint firstItem="H36-HC-50f" firstAttribute="leading" secondItem="ucN-i1-25y" secondAttribute="trailing" constant="4" id="zVl-7E-KRY"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -2096,6 +2105,14 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                 <constraint firstItem="Ieo-s7-bJA" firstAttribute="leading" secondItem="2b8-7E-FgE" secondAttribute="leading" id="rAL-dp-HZz"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="backButtonTopConstraint" destination="QUB-Gc-RXr" id="rMG-fb-QhC"/>
+                                            <outlet property="btnBack" destination="QD5-Oo-SSP" id="Z6Z-dl-jHJ"/>
+                                            <outlet property="imgBanner" destination="1P6-lS-fVd" id="2rC-f0-JaN"/>
+                                            <outlet property="lblIntensity" destination="H36-HC-50f" id="FhN-ze-5jc"/>
+                                            <outlet property="lblTitle" destination="5mq-Wd-7JG" id="knH-yS-RDB"/>
+                                            <outlet property="lblType" destination="oQC-QM-dhw" id="Pv3-y2-Z3y"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HIITDescriptionCell" id="p15-Ig-gOQ" customClass="HIITDescriptionCell" customModule="Sway" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="403" width="414" height="289.5"/>
@@ -2107,14 +2124,14 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-TI-KJK">
                                                     <rect key="frame" x="16" y="19" width="382" height="181"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8G-Oe-OOo" customClass="CustomView" customModule="Sway" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8G-Oe-OOo" userLabel="Equipment" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="116.5" height="181"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_required" translatesAutoresizingMaskIntoConstraints="NO" id="N4u-Wv-YdF">
                                                                     <rect key="frame" x="35" y="25" width="47" height="33"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkG-vY-vL5" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="76" width="84.5" height="32"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CkG-vY-vL5" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="4" y="76" width="108.5" height="32"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="25"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
@@ -2135,7 +2152,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                                 <constraint firstItem="N4u-Wv-YdF" firstAttribute="centerX" secondItem="W8G-Oe-OOo" secondAttribute="centerX" id="H5N-d1-1IS"/>
                                                                 <constraint firstItem="ZMV-vs-zk5" firstAttribute="top" secondItem="CkG-vY-vL5" secondAttribute="bottom" constant="5" id="JXJ-Xd-QIK"/>
                                                                 <constraint firstItem="ZMV-vs-zk5" firstAttribute="centerX" secondItem="W8G-Oe-OOo" secondAttribute="centerX" id="MBJ-mb-Qwn"/>
-                                                                <constraint firstItem="CkG-vY-vL5" firstAttribute="leading" secondItem="W8G-Oe-OOo" secondAttribute="leading" constant="16" id="eir-jx-M3I"/>
+                                                                <constraint firstItem="CkG-vY-vL5" firstAttribute="leading" secondItem="W8G-Oe-OOo" secondAttribute="leading" constant="4" id="eir-jx-M3I"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -2143,14 +2160,14 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Owr-dF-dfJ" customClass="CustomView" customModule="Sway" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Owr-dF-dfJ" userLabel="Space" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                                             <rect key="frame" x="132.5" y="0.0" width="117" height="181"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_space" translatesAutoresizingMaskIntoConstraints="NO" id="VNg-aB-sw5">
                                                                     <rect key="frame" x="39" y="25" width="39" height="39"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2x2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Lb-wu-OIr" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="82" width="85" height="32"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2x2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5Lb-wu-OIr" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="4" y="82" width="109" height="32"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="25"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
@@ -2164,7 +2181,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                             </subviews>
                                                             <color key="backgroundColor" name="k5953_0.05"/>
                                                             <constraints>
-                                                                <constraint firstItem="5Lb-wu-OIr" firstAttribute="leading" secondItem="Owr-dF-dfJ" secondAttribute="leading" constant="16" id="AeP-Yx-9OD"/>
+                                                                <constraint firstItem="5Lb-wu-OIr" firstAttribute="leading" secondItem="Owr-dF-dfJ" secondAttribute="leading" constant="4" id="AeP-Yx-9OD"/>
                                                                 <constraint firstItem="gSV-kh-D7m" firstAttribute="centerX" secondItem="Owr-dF-dfJ" secondAttribute="centerX" id="Kd3-0r-hRk"/>
                                                                 <constraint firstItem="VNg-aB-sw5" firstAttribute="top" secondItem="Owr-dF-dfJ" secondAttribute="top" constant="25" id="Npd-Bl-UUD"/>
                                                                 <constraint firstItem="gSV-kh-D7m" firstAttribute="top" secondItem="5Lb-wu-OIr" secondAttribute="bottom" constant="5" id="QpO-JL-UQf"/>
@@ -2179,14 +2196,14 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CG5-7T-u3T" customClass="CustomView" customModule="Sway" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CG5-7T-u3T" userLabel="Circuits" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                                             <rect key="frame" x="265.5" y="0.0" width="116.5" height="181"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_circuits" translatesAutoresizingMaskIntoConstraints="NO" id="hlZ-tY-Gpm">
                                                                     <rect key="frame" x="40" y="25" width="36" height="42"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mMK-Y3-0aG" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="85" width="84.5" height="32"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mMK-Y3-0aG" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="4" y="85" width="108.5" height="32"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="25"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
@@ -2205,7 +2222,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                                 <constraint firstItem="mMK-Y3-0aG" firstAttribute="top" secondItem="hlZ-tY-Gpm" secondAttribute="bottom" constant="18" id="MbN-FY-Djo"/>
                                                                 <constraint firstItem="hlZ-tY-Gpm" firstAttribute="centerX" secondItem="CG5-7T-u3T" secondAttribute="centerX" id="PnA-uj-6rU"/>
                                                                 <constraint firstItem="hlZ-tY-Gpm" firstAttribute="top" secondItem="CG5-7T-u3T" secondAttribute="top" constant="25" id="fn2-Ll-KK4"/>
-                                                                <constraint firstItem="mMK-Y3-0aG" firstAttribute="leading" secondItem="CG5-7T-u3T" secondAttribute="leading" constant="16" id="rZK-Qm-I2R"/>
+                                                                <constraint firstItem="mMK-Y3-0aG" firstAttribute="leading" secondItem="CG5-7T-u3T" secondAttribute="leading" constant="4" id="rZK-Qm-I2R"/>
                                                                 <constraint firstItem="coa-Rj-rT9" firstAttribute="top" secondItem="mMK-Y3-0aG" secondAttribute="bottom" constant="5" id="ry7-Or-ypA"/>
                                                                 <constraint firstItem="coa-Rj-rT9" firstAttribute="leading" secondItem="CG5-7T-u3T" secondAttribute="leading" constant="16" id="ypE-JV-VF1"/>
                                                             </constraints>
@@ -2238,6 +2255,14 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                 <constraint firstItem="Owz-5m-PuG" firstAttribute="top" secondItem="kK1-TI-KJK" secondAttribute="bottom" constant="20" id="z27-jE-GN1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lblDescription" destination="Owz-5m-PuG" id="Og1-vN-KBA"/>
+                                            <outlet property="lblDuration" destination="coa-Rj-rT9" id="tWN-zs-XGC"/>
+                                            <outlet property="lblDurationUnit" destination="mMK-Y3-0aG" id="Q6n-cW-V2c"/>
+                                            <outlet property="lblEquipment" destination="ZMV-vs-zk5" id="lrD-ya-W1a"/>
+                                            <outlet property="lblEquipmentYesNo" destination="CkG-vY-vL5" id="d0l-o2-9V4"/>
+                                            <outlet property="lblSpaceValue" destination="5Lb-wu-OIr" id="pJ0-0t-ODp"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HIITItemCell" id="cdS-Pi-JDo" customClass="HIITItemCell" customModule="Sway" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="692.5" width="414" height="88"/>
@@ -2284,8 +2309,8 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhQ-zq-b9h">
-                                                            <rect key="frame" x="72" y="41" width="42.5" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhQ-zq-b9h">
+                                                            <rect key="frame" x="72" y="41" width="41" height="20.5"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="16"/>
                                                             <color key="textColor" name="k124123132"/>
                                                             <nil key="highlightedColor"/>
@@ -2391,42 +2416,50 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HIITDescriptionCell" id="5ze-qx-lDY" customClass="HIITDescriptionCell" customModule="Sway" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="351.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="375.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5ze-qx-lDY" id="cBb-7e-UOA">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="351.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="375.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S75-ae-wtM">
+                                                    <rect key="frame" x="0.0" y="4" width="46" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="Z1f-6H-hXc"/>
+                                                        <constraint firstAttribute="width" constant="46" id="v1l-Ku-Eh4"/>
+                                                    </constraints>
+                                                    <state key="normal" image="ic_back"/>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warm Up" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="utJ-8J-fgK">
-                                                    <rect key="frame" x="16" y="6" width="382" height="73"/>
+                                                    <rect key="frame" x="16" y="30" width="382" height="73"/>
                                                     <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="52"/>
                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6k-p5-Kft">
-                                                    <rect key="frame" x="16" y="85" width="382" height="53.5"/>
+                                                    <rect key="frame" x="16" y="109" width="382" height="53.5"/>
                                                     <string key="text">Short desrciption. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</string>
                                                     <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="beu-op-KcA">
-                                                    <rect key="frame" x="16" y="154.5" width="382" height="181"/>
+                                                    <rect key="frame" x="16" y="178.5" width="382" height="181"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xt6-ol-ZIc" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="114" height="181"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_required" translatesAutoresizingMaskIntoConstraints="NO" id="zoF-Xs-KPQ">
-                                                                    <rect key="frame" x="33.5" y="32" width="47" height="33"/>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_equipment" translatesAutoresizingMaskIntoConstraints="NO" id="zoF-Xs-KPQ">
+                                                                    <rect key="frame" x="38" y="32" width="38" height="38"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhZ-4Q-U04" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="83" width="82" height="32"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lhZ-4Q-U04" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="4" y="88" width="106" height="32"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="25"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Required" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-wa-U7F" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="120" width="82" height="18"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Equipment" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-wa-U7F" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="16" y="125" width="82" height="18"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
@@ -2441,7 +2474,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                                 <constraint firstItem="zoF-Xs-KPQ" firstAttribute="centerX" secondItem="xt6-ol-ZIc" secondAttribute="centerX" id="VP1-Ox-CS3"/>
                                                                 <constraint firstItem="zoF-Xs-KPQ" firstAttribute="top" secondItem="xt6-ol-ZIc" secondAttribute="top" constant="32" id="s13-qt-MBx"/>
                                                                 <constraint firstItem="MLe-wa-U7F" firstAttribute="leading" secondItem="xt6-ol-ZIc" secondAttribute="leading" constant="16" id="w8l-xC-bjg"/>
-                                                                <constraint firstItem="lhZ-4Q-U04" firstAttribute="leading" secondItem="xt6-ol-ZIc" secondAttribute="leading" constant="16" id="yvk-mG-ml4"/>
+                                                                <constraint firstItem="lhZ-4Q-U04" firstAttribute="leading" secondItem="xt6-ol-ZIc" secondAttribute="leading" constant="4" id="yvk-mG-ml4"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -2452,17 +2485,17 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PcZ-Q8-dHz" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                                             <rect key="frame" x="134" y="0.0" width="114" height="181"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_space" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-J0-NS9">
-                                                                    <rect key="frame" x="37.5" y="32" width="39" height="39"/>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_high" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-J0-NS9">
+                                                                    <rect key="frame" x="38.5" y="32" width="37" height="41"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2x2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8v-Yk-7G9" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="89" width="82" height="32"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2x2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="y8v-Yk-7G9" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="4" y="91" width="106" height="32"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="25"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Space" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOO-44-7fo" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="126" width="82" height="18"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intensity" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOO-44-7fo" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="16" y="128" width="82" height="18"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
@@ -2472,7 +2505,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                             <constraints>
                                                                 <constraint firstItem="y8v-Yk-7G9" firstAttribute="centerX" secondItem="fF4-J0-NS9" secondAttribute="centerX" id="3Kk-HV-4LG"/>
                                                                 <constraint firstItem="yOO-44-7fo" firstAttribute="leading" secondItem="PcZ-Q8-dHz" secondAttribute="leading" constant="16" id="3Um-Ac-jiL"/>
-                                                                <constraint firstItem="y8v-Yk-7G9" firstAttribute="leading" secondItem="PcZ-Q8-dHz" secondAttribute="leading" constant="16" id="G5D-QD-hYC"/>
+                                                                <constraint firstItem="y8v-Yk-7G9" firstAttribute="leading" secondItem="PcZ-Q8-dHz" secondAttribute="leading" constant="4" id="G5D-QD-hYC"/>
                                                                 <constraint firstItem="y8v-Yk-7G9" firstAttribute="top" secondItem="fF4-J0-NS9" secondAttribute="bottom" constant="18" id="e73-fQ-N6d"/>
                                                                 <constraint firstItem="fF4-J0-NS9" firstAttribute="top" secondItem="PcZ-Q8-dHz" secondAttribute="top" constant="32" id="k18-4B-tDb"/>
                                                                 <constraint firstItem="yOO-44-7fo" firstAttribute="top" secondItem="y8v-Yk-7G9" secondAttribute="bottom" constant="5" id="ufD-NH-MV4"/>
@@ -2491,13 +2524,13 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_circuits" translatesAutoresizingMaskIntoConstraints="NO" id="akY-Gv-edX">
                                                                     <rect key="frame" x="39" y="32" width="36" height="42"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRC-qS-YvW" userLabel="Lose  Weight">
-                                                                    <rect key="frame" x="16" y="92" width="82" height="32"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="XRC-qS-YvW" userLabel="Lose  Weight">
+                                                                    <rect key="frame" x="4" y="92" width="106" height="32"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="25"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Circuits" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2CA-Ct-hpT" userLabel="Lose  Weight">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minutes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2CA-Ct-hpT" userLabel="Lose  Weight">
                                                                     <rect key="frame" x="16" y="129" width="82" height="18"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                                                     <color key="textColor" name="kThemeNavyBlue"/>
@@ -2512,7 +2545,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                                 <constraint firstItem="2CA-Ct-hpT" firstAttribute="leading" secondItem="bX4-g5-zRY" secondAttribute="leading" constant="16" id="YGg-1p-wwp"/>
                                                                 <constraint firstItem="akY-Gv-edX" firstAttribute="centerX" secondItem="bX4-g5-zRY" secondAttribute="centerX" id="ZK6-Uf-E9m"/>
                                                                 <constraint firstItem="XRC-qS-YvW" firstAttribute="centerX" secondItem="akY-Gv-edX" secondAttribute="centerX" id="efS-Uo-eqc"/>
-                                                                <constraint firstItem="XRC-qS-YvW" firstAttribute="leading" secondItem="bX4-g5-zRY" secondAttribute="leading" constant="16" id="txU-tx-ANZ"/>
+                                                                <constraint firstItem="XRC-qS-YvW" firstAttribute="leading" secondItem="bX4-g5-zRY" secondAttribute="leading" constant="4" id="txU-tx-ANZ"/>
                                                                 <constraint firstItem="2CA-Ct-hpT" firstAttribute="top" secondItem="XRC-qS-YvW" secondAttribute="bottom" constant="5" id="uw6-OV-elm"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
@@ -2522,6 +2555,9 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="beu-op-KcA" secondAttribute="height" multiplier="382:181" id="SoJ-S3-d0W"/>
+                                                    </constraints>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
@@ -2529,15 +2565,18 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                 <constraint firstItem="beu-op-KcA" firstAttribute="top" secondItem="p6k-p5-Kft" secondAttribute="bottom" constant="16" id="0rJ-A9-89T"/>
                                                 <constraint firstAttribute="trailing" secondItem="beu-op-KcA" secondAttribute="trailing" constant="16" id="5ln-vH-Lct"/>
                                                 <constraint firstItem="beu-op-KcA" firstAttribute="leading" secondItem="cBb-7e-UOA" secondAttribute="leading" constant="16" id="5vH-Zc-vrK"/>
-                                                <constraint firstItem="utJ-8J-fgK" firstAttribute="top" secondItem="cBb-7e-UOA" secondAttribute="top" constant="6" id="7qm-78-nb5"/>
                                                 <constraint firstItem="p6k-p5-Kft" firstAttribute="top" secondItem="utJ-8J-fgK" secondAttribute="bottom" constant="6" id="9jE-R8-xae"/>
+                                                <constraint firstItem="S75-ae-wtM" firstAttribute="top" secondItem="cBb-7e-UOA" secondAttribute="top" constant="4" id="ASN-U0-CJk"/>
                                                 <constraint firstItem="utJ-8J-fgK" firstAttribute="centerX" secondItem="beu-op-KcA" secondAttribute="centerX" id="CO5-oa-9EF"/>
                                                 <constraint firstItem="p6k-p5-Kft" firstAttribute="centerX" secondItem="utJ-8J-fgK" secondAttribute="centerX" id="gph-x5-tRq"/>
                                                 <constraint firstAttribute="bottom" secondItem="beu-op-KcA" secondAttribute="bottom" constant="16" id="lhI-BH-alp"/>
+                                                <constraint firstItem="S75-ae-wtM" firstAttribute="leading" secondItem="cBb-7e-UOA" secondAttribute="leading" id="oLc-w8-yMw"/>
                                                 <constraint firstItem="utJ-8J-fgK" firstAttribute="leading" secondItem="cBb-7e-UOA" secondAttribute="leading" constant="16" id="xs8-w5-7AL"/>
+                                                <constraint firstItem="utJ-8J-fgK" firstAttribute="top" secondItem="S75-ae-wtM" secondAttribute="bottom" constant="-4" id="ypr-EJ-sDD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="btnBack" destination="S75-ae-wtM" id="yDP-gl-9Ef"/>
                                             <outlet property="imgEquipments" destination="zoF-Xs-KPQ" id="Cvp-Xh-dbv"/>
                                             <outlet property="imgIntensity" destination="fF4-J0-NS9" id="Uoo-mz-d2b"/>
                                             <outlet property="imgTime" destination="akY-Gv-edX" id="WWQ-fa-GMf"/>
@@ -2551,7 +2590,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HIITVideoItemCell" id="wfz-zn-SUl" customClass="HIITVideoItemCell" customModule="Sway" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="379.5" width="414" height="121"/>
+                                        <rect key="frame" x="0.0" y="403.5" width="414" height="121"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wfz-zn-SUl" id="NZd-Zt-oQG">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="121"/>
@@ -2578,8 +2617,8 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjc-bB-g3z">
-                                                            <rect key="frame" x="121" y="52.5" width="42.5" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Reps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjc-bB-g3z">
+                                                            <rect key="frame" x="121" y="52.5" width="49" height="20.5"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="16"/>
                                                             <color key="textColor" name="k124123132"/>
                                                             <nil key="highlightedColor"/>
@@ -2647,6 +2686,9 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                         <real key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionStartWarmup:" destination="ACP-Bz-3dI" eventType="touchUpInside" id="IzB-qD-JAA"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="m0H-nG-7UM"/>
@@ -2813,7 +2855,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="legswings" translatesAutoresizingMaskIntoConstraints="NO" id="SgQ-1V-Jle">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="legswings" translatesAutoresizingMaskIntoConstraints="NO" id="SgQ-1V-Jle">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhm-Q8-UAt" userLabel="PlayerView">
@@ -2868,16 +2910,33 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                     <constraint firstItem="wPp-Km-gn3" firstAttribute="centerX" secondItem="hhm-Q8-UAt" secondAttribute="centerX" id="mr4-Km-Eu6"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_play" translatesAutoresizingMaskIntoConstraints="NO" id="Ah6-zD-azr">
+                                <rect key="frame" x="177" y="418" width="60" height="60"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sumo Squats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6x7-IQ-jPM">
                                 <rect key="frame" x="20" y="54" width="163.5" height="34"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance \u{2588}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijM-db-gFx">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance \u{2588}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcF-4R-dPL" userLabel="LblType">
                                 <rect key="frame" x="20" y="92" width="86" height="15.5"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ool-TQ-7Ox">
+                                <rect key="frame" x="110" y="98" width="4" height="4"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ool-TQ-7Ox" secondAttribute="height" multiplier="1:1" id="JSC-zg-NJz"/>
+                                    <constraint firstAttribute="width" constant="4" id="PBO-VG-ORU"/>
+                                </constraints>
+                            </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance \u{2588}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5m-9Z-Xhd" userLabel="LblIntensity">
+                                <rect key="frame" x="118" y="92" width="86" height="15.5"/>
+                                <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uf-od-BRk">
@@ -2895,26 +2954,35 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                         <viewLayoutGuide key="safeArea" id="rhb-Ln-dzY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ijM-db-gFx" firstAttribute="top" secondItem="6x7-IQ-jPM" secondAttribute="bottom" constant="4" id="0qd-gD-u80"/>
+                            <constraint firstItem="Ool-TQ-7Ox" firstAttribute="leading" secondItem="bcF-4R-dPL" secondAttribute="trailing" constant="4" id="1yc-Cy-P7c"/>
+                            <constraint firstItem="bcF-4R-dPL" firstAttribute="leading" secondItem="6x7-IQ-jPM" secondAttribute="leading" id="6Ka-Ue-RMl"/>
                             <constraint firstAttribute="bottom" secondItem="SgQ-1V-Jle" secondAttribute="bottom" id="Da1-Yh-nOu"/>
                             <constraint firstItem="SgQ-1V-Jle" firstAttribute="leading" secondItem="rhb-Ln-dzY" secondAttribute="leading" id="Dvl-he-7p3"/>
                             <constraint firstItem="SgQ-1V-Jle" firstAttribute="top" secondItem="6hs-da-ygz" secondAttribute="top" id="F9g-x9-tBI"/>
                             <constraint firstItem="hhm-Q8-UAt" firstAttribute="top" secondItem="6hs-da-ygz" secondAttribute="top" id="G6b-Hz-asU"/>
                             <constraint firstItem="rhb-Ln-dzY" firstAttribute="trailing" secondItem="6uf-od-BRk" secondAttribute="trailing" constant="12" id="HB6-8X-PfA"/>
-                            <constraint firstItem="ijM-db-gFx" firstAttribute="leading" secondItem="6x7-IQ-jPM" secondAttribute="leading" id="HL9-b5-wG3"/>
+                            <constraint firstItem="Ool-TQ-7Ox" firstAttribute="width" secondItem="Ool-TQ-7Ox" secondAttribute="height" multiplier="1:1" id="In9-eJ-0Av"/>
                             <constraint firstItem="rhb-Ln-dzY" firstAttribute="trailing" secondItem="SgQ-1V-Jle" secondAttribute="trailing" id="Kut-gz-4ay"/>
                             <constraint firstItem="6uf-od-BRk" firstAttribute="top" secondItem="rhb-Ln-dzY" secondAttribute="top" constant="12" id="Ool-sh-OVK"/>
                             <constraint firstItem="rhb-Ln-dzY" firstAttribute="trailing" secondItem="hhm-Q8-UAt" secondAttribute="trailing" id="PBS-gX-9m1"/>
                             <constraint firstAttribute="bottom" secondItem="hhm-Q8-UAt" secondAttribute="bottom" id="PvG-TK-xr8"/>
                             <constraint firstItem="6x7-IQ-jPM" firstAttribute="leading" secondItem="rhb-Ln-dzY" secondAttribute="leading" constant="20" id="SXd-qb-M7E"/>
+                            <constraint firstItem="U5m-9Z-Xhd" firstAttribute="centerY" secondItem="Ool-TQ-7Ox" secondAttribute="centerY" id="WRf-Pg-8AY"/>
                             <constraint firstItem="hhm-Q8-UAt" firstAttribute="leading" secondItem="rhb-Ln-dzY" secondAttribute="leading" id="cFy-fH-QS6"/>
+                            <constraint firstItem="Ool-TQ-7Ox" firstAttribute="centerY" secondItem="bcF-4R-dPL" secondAttribute="centerY" id="fFO-m0-gTb"/>
                             <constraint firstItem="6x7-IQ-jPM" firstAttribute="top" secondItem="rhb-Ln-dzY" secondAttribute="top" constant="10" id="gYl-ZM-58g"/>
+                            <constraint firstItem="Ah6-zD-azr" firstAttribute="centerY" secondItem="6hs-da-ygz" secondAttribute="centerY" id="j3j-Yf-Mlw"/>
+                            <constraint firstItem="Ah6-zD-azr" firstAttribute="centerX" secondItem="6hs-da-ygz" secondAttribute="centerX" id="jlR-Ja-ktR"/>
+                            <constraint firstItem="U5m-9Z-Xhd" firstAttribute="leading" secondItem="Ool-TQ-7Ox" secondAttribute="trailing" constant="4" id="vo2-fJ-sPk"/>
+                            <constraint firstItem="bcF-4R-dPL" firstAttribute="top" secondItem="6x7-IQ-jPM" secondAttribute="bottom" constant="4" id="z0S-Cd-6xy"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btnCross" destination="6uf-od-BRk" id="6rZ-0i-vB6"/>
                         <outlet property="imgBackground" destination="SgQ-1V-Jle" id="DBq-FZ-tcO"/>
-                        <outlet property="lblChallengeType" destination="ijM-db-gFx" id="Vdl-ZZ-Eok"/>
+                        <outlet property="imgPlay" destination="Ah6-zD-azr" id="54c-Qx-Q5i"/>
+                        <outlet property="lblChallengeType" destination="bcF-4R-dPL" id="I9g-5T-xF0"/>
+                        <outlet property="lblIntensity" destination="U5m-9Z-Xhd" id="k1L-sh-gA6"/>
                         <outlet property="lblTitle" destination="6x7-IQ-jPM" id="Ezs-7e-hZt"/>
                         <outlet property="playerView" destination="hhm-Q8-UAt" id="oex-Kp-n2m"/>
                         <outlet property="progressView" destination="wPp-Km-gn3" id="zmj-rr-4H2"/>
@@ -2924,6 +2992,25 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sdn-03-FMi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1517" y="762"/>
+        </scene>
+        <!--Workouts-->
+        <scene sceneID="jJ6-f1-KTQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="HZo-DT-eeB" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Workouts" image="ic_workout_unselcted" selectedImage="ic_workout_selcted" id="eJP-v3-qH7"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0aq-Or-ZiV">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Rx6-1A-nDJ" kind="relationship" relationship="rootViewController" id="NAE-EA-94v"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GaY-jM-3xh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1928.985507246377" y="38.839285714285715"/>
         </scene>
     </scenes>
     <resources>
@@ -2938,15 +3025,20 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
         <image name="ic_circuits" width="36" height="42"/>
         <image name="ic_cross_214" width="16.5" height="16.5"/>
         <image name="ic_cross_white_medium" width="16.5" height="16.5"/>
+        <image name="ic_equipment" width="38" height="38"/>
+        <image name="ic_high" width="37" height="41"/>
         <image name="ic_hiit_detailBanner" width="375" height="375"/>
         <image name="ic_info" width="23" height="23"/>
         <image name="ic_next" width="9" height="16.5"/>
         <image name="ic_participants" width="47.5" height="42"/>
         <image name="ic_pile_squats" width="151.5" height="151.5"/>
+        <image name="ic_play" width="60" height="60"/>
         <image name="ic_required" width="47" height="33"/>
         <image name="ic_space" width="39" height="39"/>
         <image name="ic_view_details" width="99" height="99"/>
         <image name="ic_weeks" width="42" height="37"/>
+        <image name="ic_workout_selcted" width="22" height="22"/>
+        <image name="ic_workout_unselcted" width="22" height="22"/>
         <image name="legswings" width="375" height="812"/>
         <image name="tick" width="18" height="13"/>
         <namedColor name="White">
