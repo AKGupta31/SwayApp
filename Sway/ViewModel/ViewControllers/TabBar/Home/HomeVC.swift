@@ -321,6 +321,11 @@ extension HomeVC:PlayerDelegate ,PlayerPlaybackDelegate{
     }
     
     func playerBufferingStateDidChange(_ player: Player) {
+        if player.bufferingState == .delayed  || player.bufferingState == .unknown{
+            self.startActivityIndicator()
+        }else {
+            self.stopActivityIndicator()
+        }
         print("buffering state ",player.bufferingState)
     }
     

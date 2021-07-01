@@ -44,14 +44,49 @@ class AddVideoViewModel:NSObject {
     var isEditMode = false
     var feedId:String = ""
     var isAlreadyUploading = false
+    var originalVideoUrl:URL?
 
     
     init(videoUrl:URL?,thumbnail:UIImage){
-        self.videoUrl = videoUrl
+        self.originalVideoUrl = videoUrl
         self.thumbnail = thumbnail
         super.init()
-        mediaType = videoUrl == nil ? .kImage : .kVideo
-        uploadFileToAws()
+        mediaType = originalVideoUrl == nil ? .kImage : .kVideo
+        compressIfVideoThenUpload()
+//        uploadFileToAws()
+    }
+    
+    func compressIfVideoThenUpload(){
+        if let vUrl = self.originalVideoUrl {
+            let lastPath  = vUrl.lastPathComponent
+            
+            let newDirectory = DirectoryUtility.getPath(folder: FolderNames.kCompressedVideos.rawValue)
+            let destinationUrl = newDirectory.appendingPathComponent(lastPath)
+            let compression =   LightCompressor.init().compressVideo(source: vUrl, destination: destinationUrl, quality: VideoQuality.medium, progressQueue: .global(qos: .background)) { (progress) in
+                print("compression progress",progress)
+            } completion: { [weak self](result) in
+                switch result{
+                case .onSuccess(let url):
+                    self?.videoUrl = url
+                    self?.uploadFileToAws()
+                case .onFailure(let error):
+                    self?.videoUrl = self?.originalVideoUrl
+                    if error.code == 151 {
+                        self?.delegate?.showAlert(with: Constants.Messages.kError, message: error.title)
+                    }else {
+                        self?.delegate?.showAlert(with: Constants.Messages.kError, message: "There is some error in the video.Please try another one.")
+                    }
+                    
+                case .onCancelled:
+                    self?.delegate?.showAlert(with: Constants.Messages.kError, message: "Video upload cancelled by you")
+                default:
+                    break
+                }
+            }
+
+        }else {
+            uploadFileToAws()
+        }
     }
     
     //for editing the media
@@ -59,10 +94,12 @@ class AddVideoViewModel:NSObject {
         self.isAlreadyUploading = false
         self.uploadedMediaUrl = nil
         self.uploadedThumbnailUrl = nil
-        self.videoUrl = videoUrl
+        self.originalVideoUrl = videoUrl
+//        self.videoUrl = videoUrl
         self.thumbnail = thumbnail
         mediaType = videoUrl == nil ? .kImage : .kVideo
-        uploadFileToAws()
+        compressIfVideoThenUpload()
+//        uploadFileToAws()
     }
     
     init(feedViewModel:FeedViewModel,thumbnail:UIImage) {

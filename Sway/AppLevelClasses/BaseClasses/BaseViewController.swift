@@ -27,9 +27,21 @@ class BaseViewController:UIViewController {
         }
     }
     
+//    var showTabBar:Bool = false{
+//        didSet {
+//            if showTabBar == false {
+//
+//            }else {
+//                edgesForExtendedLayout = []
+//                extendedLayoutIncludesOpaqueBars = false
+//            }
+//        }
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        edgesForExtendedLayout = [.bottom]
+        extendedLayoutIncludesOpaqueBars = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
