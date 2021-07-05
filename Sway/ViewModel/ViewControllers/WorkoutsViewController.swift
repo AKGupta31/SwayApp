@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WorkoutsViewController: UIViewController {
+class WorkoutsViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +17,7 @@ class WorkoutsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.push(ChallengeSelectionVC.self)
+        self.getNavController()?.push(ChallengeSelectionVC.self)
     }
 
 }

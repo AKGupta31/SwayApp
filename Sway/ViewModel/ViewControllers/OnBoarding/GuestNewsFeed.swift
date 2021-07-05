@@ -30,7 +30,7 @@ class GuestNewsFeed: BaseViewController {
     
     
     @IBAction func actionSignup(_ sender: UIButton) {
-        self.navigationController?.push(SignupVC.self)
+        self.getNavController()?.push(SignupVC.self)
         
     }
     
@@ -40,7 +40,7 @@ class GuestNewsFeed: BaseViewController {
         let range = nsString.range(of: "Log in")
         
         if gesture.didTapAttributedTextInLabel(label: lblSignIn, inRange: range) {
-            self.navigationController?.push(LoginVC.self)
+            self.getNavController()?.push(LoginVC.self)
         }
     }
     

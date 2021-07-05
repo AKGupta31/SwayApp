@@ -26,7 +26,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print("error",error.localizedDescription)
         }
         
-        openSplashScreen()
+        let launchVC = LaunchViewController.instantiated()
+        launchVC.completion = { Void in
+            self.openSplashScreen()
+        }
+        self.window?.rootViewController = launchVC
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -74,7 +78,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     private func openSplashScreen() {
-        var rootVC:UINavigationController!
+        var rootVC:BaseNavigationController!
         if let user = SwayUserDefaults.shared.loggedInUser {
             DataManager.shared.loggedInUser = user
             DataManager.shared.isLoggedIn = true
@@ -82,18 +86,18 @@ extension SceneDelegate {
             case .INTRO__VIDEO_ONE:fallthrough
             case .INTRO__VIDEO_TWO:fallthrough
             case .INTRO__VIDEO_THREE:
-                rootVC = UINavigationController(rootViewController: OnboardingStartVC.instantiated())
+                rootVC = BaseNavigationController(rootViewController: OnboardingStartVC.instantiated())
             case .PROFILE_AGE:
-                rootVC = UINavigationController(rootViewController:HowOldVC.instantiated())
+                rootVC = BaseNavigationController(rootViewController:HowOldVC.instantiated())
             case .PROFILE_GOAL:
-                rootVC =  UINavigationController(rootViewController:SelectGoalVC.instantiated())
+                rootVC =  BaseNavigationController(rootViewController:SelectGoalVC.instantiated())
             case .CHALLENGE_SCREEN:
-                rootVC = UINavigationController(rootViewController: OnboardingEndVC.instantiated())
+                rootVC = BaseNavigationController(rootViewController: OnboardingEndVC.instantiated())
             case .HOME_SCREEN:
-                rootVC = UINavigationController(rootViewController: SwayTabbarVC.instantiated())
+                rootVC = BaseNavigationController(rootViewController: SwayTabbarVC.instantiated())
             }
         }else {
-            rootVC = UINavigationController(rootViewController: IntroViewController.instantiated())
+            rootVC = BaseNavigationController(rootViewController: IntroViewController.instantiated())
         }
         rootVC.setNavigationBarHidden(true, animated: false)
         self.window?.rootViewController = rootVC
@@ -102,7 +106,7 @@ extension SceneDelegate {
     
     func logoutUser(){
         DataManager.shared.setLoggedInUser(user: nil)
-        let rootVC = UINavigationController(rootViewController: LoginVC.instantiated())
+        let rootVC = BaseNavigationController(rootViewController: LoginVC.instantiated())
         rootVC.setNavigationBarHidden(true, animated: false)
         self.window?.rootViewController = rootVC
     }

@@ -7,6 +7,8 @@
 
 import UIKit
 import SDWebImage
+import AVFoundation
+
 enum WorkoutType:Int {
     case DANCE_WORKOUT = 1
     case HIIT_WORKOUT = 2
@@ -39,6 +41,7 @@ class AddVideoViewModel:NSObject {
     private var uploadedMediaUrl:String? = nil
     private var uploadedThumbnailUrl:String? = nil
     var caption:String? = nil
+    var otherContentDescription:String? = nil
     weak var delegate:AddVideoViewModelDelegate?
     var isSubmitClicked = false
     var isEditMode = false
@@ -62,13 +65,20 @@ class AddVideoViewModel:NSObject {
             
             let newDirectory = DirectoryUtility.getPath(folder: FolderNames.kCompressedVideos.rawValue)
             let destinationUrl = newDirectory.appendingPathComponent(lastPath)
-            let compression =   LightCompressor.init().compressVideo(source: vUrl, destination: destinationUrl, quality: VideoQuality.medium, progressQueue: .global(qos: .background)) { (progress) in
+          
+//            let originalSize = NSData(contentsOf: originalVideoUrl!)
+//            let sizeinMB = ByteCountFormatter.string(fromByteCount: Int64((originalSize?.length)!), countStyle: .file)
+//            print("size in mb original ",sizeinMB)
+
+
+            let compression =   LightCompressor.init().compressVideo(source: vUrl, destination: destinationUrl, quality: VideoQuality.high, progressQueue: .main) { (progress) in
                 print("compression progress",progress)
             } completion: { [weak self](result) in
                 switch result{
                 case .onSuccess(let url):
                     self?.videoUrl = url
                     self?.uploadFileToAws()
+                    
                 case .onFailure(let error):
                     self?.videoUrl = self?.originalVideoUrl
                     if error.code == 151 {
@@ -76,7 +86,7 @@ class AddVideoViewModel:NSObject {
                     }else {
                         self?.delegate?.showAlert(with: Constants.Messages.kError, message: "There is some error in the video.Please try another one.")
                     }
-                    
+                    self?.uploadFileToAws()
                 case .onCancelled:
                     self?.delegate?.showAlert(with: Constants.Messages.kError, message: "Video upload cancelled by you")
                 default:
@@ -84,9 +94,11 @@ class AddVideoViewModel:NSObject {
                 }
             }
 
+
         }else {
             uploadFileToAws()
         }
+        
     }
     
     //for editing the media
@@ -195,7 +207,7 @@ class AddVideoViewModel:NSObject {
                     delegate?.showAlert(with: "Oops", message: message)
                     return
                 }
-                FeedsEndPoint.postFeed(feedId:self.feedId, caption: caption!, feedType: workoutType, url: uploadedMediaUrl!, thumbnailUrl: uploadedThumbnailUrl!, mediaType: mediaType) { [weak self](response) in
+                FeedsEndPoint.postFeed(feedId:self.feedId, caption: caption!, feedType: workoutType, url: uploadedMediaUrl!, thumbnailUrl: uploadedThumbnailUrl!, mediaType: mediaType, otherContentDescription: otherContentDescription) { [weak self](response) in
                     print("response ",response)
                     
                     if response.statusCode == 200 {
@@ -217,6 +229,8 @@ class AddVideoViewModel:NSObject {
     func areFieldsValid() -> (Bool,String) {
         if caption == nil || caption?.isEmpty == true{
             return (false,"Please enter caption for the video")
+        }else if self.workoutType == .OTHER_CONTENT && (otherContentDescription == nil || otherContentDescription?.isEmpty == true) {
+            return (false,"Please enter description for the video content")
         }
         return (true,"")
     }
@@ -225,7 +239,11 @@ class AddVideoViewModel:NSObject {
 
 extension AddVideoViewModel:UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
-        caption = textView.text
+        if textView.tag == 1 {
+            caption = textView.text
+        }else if textView.tag == 2 {
+            otherContentDescription = textView.text
+        }
         delegate?.reloadData()
     }
     

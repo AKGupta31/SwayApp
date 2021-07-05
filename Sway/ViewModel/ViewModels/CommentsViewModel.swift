@@ -96,6 +96,7 @@ class CommentsViewModel:NSObject {
     
     func loadMoreData(){
         if canFetchMoreComments {
+            (self.delegate as? BaseViewController)?.showLoader()
             currentPage += 1
             getComments(isRefreshData: false)
         }

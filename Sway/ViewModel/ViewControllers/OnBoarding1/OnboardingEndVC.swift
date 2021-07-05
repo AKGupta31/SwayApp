@@ -18,7 +18,7 @@ class OnboardingEndVC: BaseViewController {
 
     @IBAction func actionViewMyChallange(_ sender: UIButton) {
         updateStatus()
-        self.navigationController?.push(SwayTabbarVC.self)
+        self.getNavController()?.push(SwayTabbarVC.self)
     }
     
     @IBAction func actionCross(_ sender: UIButton) {

@@ -8,10 +8,11 @@
 import UIKit
 import ViewControllerDescribable
 
-class IntroViewController: UIViewController {
+class IntroViewController: BaseViewController {
     @IBOutlet weak var blackGrdientBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var blackGrdientView: UIView!
     
+    @IBOutlet weak var imgSwipeUp: UIImageView!
     lazy var gradientLayer:CAGradientLayer = {
         let gl = CAGradientLayer()
         let color = UIColor(red: 44/255, green: 43/255, blue: 39/255, alpha: 1.0)
@@ -38,12 +39,12 @@ class IntroViewController: UIViewController {
 
     
     @objc func tapOnView(_ gesture:UITapGestureRecognizer){
-        self.navigationController?.push(GuestNewsFeed.self)
+        self.getNavController()?.push(GuestNewsFeed.self)
     }
     
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
         if gesture.direction == .up {
-            self.navigationController?.push(GuestNewsFeed.self)
+            self.getNavController()?.push(GuestNewsFeed.self,pushTransition: .vertical)
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +64,7 @@ class IntroViewController: UIViewController {
             UIView.animate(withDuration: 1.0) {
                 self.view.layoutIfNeeded()
             } completion: { (isSuccess) in
-                
+                self.imgSwipeUp.startSwipeUpAnimating()
             }
 
         }

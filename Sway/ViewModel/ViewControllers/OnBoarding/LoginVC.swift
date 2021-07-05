@@ -27,7 +27,7 @@ class LoginVC: BaseLoginVC {
     }
     
     @IBAction func actionLoginWithEmail(_ sender: UIButton) {
-        self.navigationController?.push(LoginViaCredentialsVC.self)
+        self.getNavController()?.push(LoginViaCredentialsVC.self)
     }
     
     @IBAction func actionLoginWithApple(_ sender: UIButton) {
@@ -91,7 +91,7 @@ class LoginVC: BaseLoginVC {
             if let vcs = self.navigationController?.viewControllers,vcs.count >= 2, let  _ = vcs[vcs.count - 2] as? SignupVC{
                 self.navigationController?.popViewController(animated: true)
             }else{
-                self.navigationController?.push(SignupVC.self)
+                self.getNavController()?.push(SignupVC.self)
             }
            
         }

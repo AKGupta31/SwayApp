@@ -67,21 +67,21 @@ class HowOldVC: BaseViewController {
     }
     
     @IBAction func actionQuestionMark(_ sender: UIButton) {
-        self.navigationController?.push(OnboardingStartVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(OnboardingStartVC.self, animated: true, configuration: { (vc) in
             vc.videoType = 2
         })
     }
     
     @IBAction func actionSkip(_ sender: UIButton) {
         updateStatus(age: 0)
-        self.navigationController?.push(SelectGoalVC.self)
+        self.getNavController()?.push(SelectGoalVC.self)
     }
     
     
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
         if gesture.direction == .up {
             updateStatus(age: 0)
-            self.navigationController?.push(SelectGoalVC.self)
+            self.getNavController()?.push(SelectGoalVC.self,pushTransition: .vertical)
         }
     }
     
@@ -184,7 +184,7 @@ extension HowOldVC:UIScrollViewDelegate {
                 if distanceFromBottom <= height {
                     let selectedRow = ageCollectionView.centerIndexPath?.item ?? 6
                     updateStatus(age: items[selectedRow])
-                    self.navigationController?.push(SelectGoalVC.self)
+                    self.getNavController()?.push(SelectGoalVC.self,pushTransition: .vertical)
                 }else {
                     print("don't call api")
                 }

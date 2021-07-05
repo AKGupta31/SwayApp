@@ -230,7 +230,7 @@ extension SetupPasswordVC:UIScrollViewDelegate{
                         AlertView.showAlert(with: "Error!", message: error)
                         return
                     }
-                    self.navigationController?.push(SetProfilePictureVC.self, animated: true, configuration: { (vc) in
+                    self.getNavController()?.push(SetProfilePictureVC.self, animated: true,pushTransition: .vertical ,configuration: { (vc) in
                         vc.firstName = self.firstName!
                         vc.password = self.passwordField.text!
                         vc.lastName = self.sirName!
@@ -249,9 +249,9 @@ extension SetupPasswordVC:UIScrollViewDelegate{
             LoginRegisterEndpoint.resetPassword(with: email!, password: passwordField.text!) {[weak self] (response) in
                 self?.hideLoader()
                 if response.statusCode == 200{
-                    self?.navigationController?.push(PasswordChangeSuccessVC.self)
+                    self?.getNavController()?.push(PasswordChangeSuccessVC.self)
                 }else {
-                    AlertView.showAlert(with: "Error", message: response.message ?? "Unknown error")
+                    AlertView.showAlert(with: "Error", message: response.message)
                 }
             } failure: { (status) in
                 AlertView.showAlert(with: "Error", message: status.msg)

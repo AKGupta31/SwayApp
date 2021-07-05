@@ -35,7 +35,7 @@ class HowManyTimesAWeekVC: BaseViewController {
     }
     
     @IBAction func actionNext(_ sender: UIButton) {
-        self.navigationController?.push(PasswordChangeSuccessVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(PasswordChangeSuccessVC.self, animated: true, configuration: { (vc) in
             vc.type = .welcomeToSway
         })
     }

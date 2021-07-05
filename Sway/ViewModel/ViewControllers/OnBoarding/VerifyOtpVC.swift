@@ -101,7 +101,7 @@ class VerifyOtpVC: BaseLoginVC {
                 self?.view.makeToast("Otp verified successfully", duration: 1.0, position: .bottom) { (isSuccess) in
                     //                    if isSuccess {
                     if self?.type == .SIGNUP {
-                        self?.navigationController?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
+                        self?.getNavController()?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
                             vc.email = self?.email
                             vc.firstName = self?.firstName
                             vc.sirName = self?.sirName
@@ -111,7 +111,7 @@ class VerifyOtpVC: BaseLoginVC {
                     }else if self?.type == .LOGIN {
                         self?.navigationController?.popViewController(animated: true)
                     }else if self?.type == .FORGOT_PASSWORD {
-                        self?.navigationController?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
+                        self?.getNavController()?.push(SetupPasswordVC.self, animated: true, configuration: { (vc) in
                             vc.type = .resetPassword
                             vc.email = self?.email
                         })

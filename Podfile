@@ -33,6 +33,7 @@ pod 'FAPaginationLayout'
 pod 'Firebase/Crashlytics'
 pod 'CircularCarousel'
 pod 'UPCarouselFlowLayout'
+pod 'GSPlayer'
 #pod "FlexiblePageControl"
 #pod 'AdvancedPageControl'
 

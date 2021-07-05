@@ -66,7 +66,7 @@ class ChallengeInfoHypeVideoVC: BaseViewController {
             player.stop()
             player.playerDelegate = nil
         }
-        self.navigationController?.push(ChallengeDescriptionVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(ChallengeDescriptionVC.self, animated: true, configuration: { (vc) in
             vc.viewModel = self.viewModel
         })
     }

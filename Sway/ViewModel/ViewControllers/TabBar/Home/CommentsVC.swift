@@ -9,7 +9,7 @@ import UIKit
 import ViewControllerDescribable
 import GrowingTextView
 
-class CommentsVC: UIViewController {
+class CommentsVC: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var txtViewComments: GrowingTextView!
@@ -19,6 +19,8 @@ class CommentsVC: UIViewController {
     var feedId:String!
     var viewModel:CommentsViewModel!
     var refreshControl:UIRefreshControl!
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         predefinedCommentsCV.dataSource = self
@@ -32,7 +34,7 @@ class CommentsVC: UIViewController {
         refreshControl.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
-      
+        showLoader()
         // Do any additional setup after loading the view.
     }
     
@@ -49,9 +51,9 @@ class CommentsVC: UIViewController {
     }
     
     @IBAction func actionPost(_ sender: UIButton) {
-        if let text = txtViewComments.text,text.count > 0 {
-            viewModel.postComment(comment: text)
-        }
+//        if let text = txtViewComments.text,text.count > 0 {
+//            viewModel.postComment(comment: text)
+//        }
     }
 }
 
@@ -72,6 +74,7 @@ extension CommentsVC: UITextViewDelegate {
 
 extension CommentsVC:CommentsViewModelDelegate {
     func reloadData() {
+        hideLoader()
         refreshControl.endRefreshing()
         lblCommentsCount.text = viewModel.totalCommentsTitle
         tableView.reloadData()
@@ -81,6 +84,7 @@ extension CommentsVC:CommentsViewModelDelegate {
     }
     
     func commentPostedSuccessfully() {
+        hideLoader()
         txtViewComments.text = nil
         lblCommentsCount.text = viewModel.totalCommentsTitle
         tableView.reloadData()
@@ -127,12 +131,14 @@ extension CommentsVC:UICollectionViewDataSource, UICollectionViewDelegate , UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let previousText = txtViewComments.text ?? ""
+//        let previousText = txtViewComments.text ?? ""
         let selectedComment = viewModel.getPredefinedComment(at: indexPath).name ?? ""
-        let newTotalComment = previousText + " " + selectedComment
-        if newTotalComment.count <= 200 {
-            txtViewComments.text = newTotalComment
-        }
+//        let newTotalComment = previousText + " " + selectedComment
+//        if newTotalComment.count <= 200 {
+//            txtViewComments.text = newTotalComment
+//        }
+        showLoader()
+        viewModel.postComment(comment: selectedComment)
         
 //        viewModel.postComment(comment: viewModel.getPredefinedComment(at: indexPath).name ?? "")
     }

@@ -191,7 +191,7 @@ extension SetProfilePictureVC {
 extension SetProfilePictureVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            let cropVC = CropViewController(croppingStyle: .circular, image: image)
+            let cropVC = CropViewController(croppingStyle: .default, image: image)
             cropVC.delegate = self
             self.navigationController?.pushViewController(cropVC, animated: true)
             

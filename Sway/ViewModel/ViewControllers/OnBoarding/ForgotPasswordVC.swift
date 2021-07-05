@@ -46,7 +46,7 @@ class ForgotPasswordVC: BaseViewController {
             LoginRegisterEndpoint.getOtp(on: self.emailField!.text!, type: .FORGOT_PASSWORD) {[weak self] (response) in
                 self?.hideLoader()
                 if response.statusCode == 200 {
-                    self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
+                    self?.getNavController()?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
                         vc.email = self!.emailField.text!
                         vc.type = .FORGOT_PASSWORD
                     })

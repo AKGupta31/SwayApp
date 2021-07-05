@@ -23,17 +23,15 @@ class MySubmissionsVC: BaseTabBarViewController {
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
         self.collectionViewSubmissions.addSubview(refreshControl)
         if viewModel == nil {
+            showLoader()
             viewModel = FeedsViewModel(delegate: self, mySubmissionsOnly: true)
         }
     }
     
-    
-
-
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
+        self.collectionViewSubmissions.reloadData()
     }
     
     @objc func refreshData(_ refreshControl:UIRefreshControl){
@@ -45,6 +43,7 @@ class MySubmissionsVC: BaseTabBarViewController {
 
 extension MySubmissionsVC: FeedsViewModelDelegate {
     func reloadData() {
+        hideLoader()
         self.collectionViewSubmissions.reloadData()
     }
     
@@ -54,6 +53,7 @@ extension MySubmissionsVC: FeedsViewModelDelegate {
     }
     
     func reloadRow(at indexPath: IndexPath) {
+        hideLoader()
         self.collectionViewSubmissions.reloadItems(at: [indexPath])
     }
     
@@ -98,9 +98,13 @@ extension MySubmissionsVC:UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? MySubmissionCell {
-            cell.isEditMode = true
-        }
+        self.getNavController()?.push(ViewMyPostVC.self, animated: true, configuration: { (vc) in
+            self.viewModel.selectedFeedIndex = indexPath.row
+            vc.viewModel = self.viewModel
+        })
+//        if let cell = collectionView.cellForItem(at: indexPath) as? MySubmissionCell {
+//            cell.isEditMode = true
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -118,8 +122,12 @@ extension MySubmissionsVC:UICollectionViewDataSource, UICollectionViewDelegate, 
 
 extension MySubmissionsVC{
     @objc func actionDelete(_ sender:UIButton){
-        let feedId = viewModel.getFeedViewModel(at: sender.tag).feedId
-        viewModel.deleteFeed(with: feedId)
+        AlertView.showAlert(with: Constants.Messages.kAlert, message: Constants.Messages.kAreYouSureToDeleteThePost, on: self, button1Title: "No", button2Title: "Yes") { (action) in
+        } actionBtn2: {[weak self] (action) in
+            if let feedId = self?.viewModel.getFeedViewModel(at: sender.tag).feedId {
+                self?.viewModel.deleteFeed(with: feedId)
+            }
+        }
     }
     
     @objc func actionDownload(_ sender:UIButton){
@@ -129,7 +137,7 @@ extension MySubmissionsVC{
     @objc func actionEditPost(_ sender:UIButton){
         guard let cell = collectionViewSubmissions.cellForItem(at: IndexPath(row: sender.tag, section: 0)) as? MySubmissionCell else {return}
         let addVideoVM = AddVideoViewModel(feedViewModel: viewModel.getFeedViewModel(at: sender.tag), thumbnail: cell.imgThumbnail.image ?? UIImage())
-        self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
             vc.viewModel = addVideoVM
         })
     }

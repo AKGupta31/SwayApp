@@ -78,7 +78,7 @@ class FacebookLoginManager {
                             }
                         }
                         (viewController as? BaseViewController)?.hideLoader()
-                        nav?.push(Register1VC.self, animated: true, configuration: { (vc) in
+                        (viewController as? BaseViewController)?.getNavController()?.push(Register1VC.self, animated: true, configuration: { (vc) in
                             vc.type = .SOCIAL_SIGNUP
                             vc.email = email
                             vc.firstName = firstName

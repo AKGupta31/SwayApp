@@ -102,7 +102,7 @@ extension WeeklyScheduleViewController:ChallengeViewModelDelegate {
     
     func challengeCreatedSuccessfully(challenge: ChallengeSchedulesModel,isSkip:Bool) {
         hideLoader()
-        self.navigationController?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
             vc.schedulesModel = challenge
             vc.challengeTitle = self.challengeVM.title ?? ""
             vc.numberOfWeeks = self.challengeVM.weeksCount ?? 0

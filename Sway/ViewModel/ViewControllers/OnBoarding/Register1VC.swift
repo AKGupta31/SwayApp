@@ -151,7 +151,7 @@ extension Register1VC:UIScrollViewDelegate {
             self?.isAlreadyCallingApi = false
             if let statusCode = response.statusCode,statusCode == 200 {
                 self?.view.makeToast("Verification code sent successfully",duration:0.5, position: .bottom, title: nil, image: nil, completion: { (onCompletion) in
-                    self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
+                    self?.getNavController()?.push(VerifyOtpVC.self, animated: true,pushTransition: .vertical, configuration: { (vc) in
                         vc.email = self?.emailField.text ?? ""
                         vc.type = self?.type ?? .SIGNUP
                         vc.firstName = self?.firstNameField.text ?? ""

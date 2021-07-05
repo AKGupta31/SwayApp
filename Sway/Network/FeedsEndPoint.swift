@@ -12,8 +12,8 @@ class FeedsEndPoint {
         Api.requestNew(endpoint: .getFeeds(page: page, limit: limit,userId:userId) , type: FeedsResponse.self, successHandler: success, failureHandler: failure)
     }
     
-    static func postFeed(feedId:String,caption:String,feedType:WorkoutType,url:String,thumbnailUrl:String,mediaType:MediaTypes,success: @escaping SuccessCompletionBlock<FeedsResponse>, failure: @escaping ErrorFailureCompletionBlock) {
-        Api.requestNew(endpoint: .postFeed(feedId: feedId, caption: caption, feedType: feedType, url: url, thumbnailUrl: thumbnailUrl, mediaType: mediaType) , type: FeedsResponse.self, successHandler: success, failureHandler: failure)
+    static func postFeed(feedId:String,caption:String,feedType:WorkoutType,url:String,thumbnailUrl:String,mediaType:MediaTypes,otherContentDescription:String?,success: @escaping SuccessCompletionBlock<FeedsResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .postFeed(feedId: feedId, caption: caption, feedType: feedType, url: url, thumbnailUrl: thumbnailUrl, mediaType: mediaType, otherContentDescription: otherContentDescription) , type: FeedsResponse.self, successHandler: success, failureHandler: failure)
     }
     
     static func deleteFeed(feedId:String,success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {

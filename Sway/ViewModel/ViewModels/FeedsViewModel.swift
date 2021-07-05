@@ -22,9 +22,12 @@ class FeedsViewModel {
     let PAGE_SIZE = 10
     var canFetchMoreData = true
     let mySubmissionsOnly:Bool
+    let isMySubmissionDetail = false
     var feeds = [FeedModel]()
     
     weak var delegate:FeedsViewModelDelegate? = nil
+    
+    var selectedFeedIndex:Int = 0
     
     init(delegate:FeedsViewModelDelegate?,mySubmissionsOnly:Bool) {
         self.delegate = delegate

@@ -13,9 +13,9 @@ class Constants {
     
     
     struct Networking {
-        static let kBaseUrl = "http://swaystgapi.appskeeper.in/api"
+//        static let kBaseUrl = "http://swaystgapi.appskeeper.in/api"
 //        static let kBaseUrl = "http://swayqaapi.appskeeper.in/api"
-//        static let kBaseUrl = "http://swaydevapi.appskeeper.in/api"
+        static let kBaseUrl = "http://swaydevapi.appskeeper.in/api"
     }
     
     struct Notifications {
@@ -33,7 +33,10 @@ class Constants {
     
     struct Messages {
         static let kError = "Error!"
+        static let kAlert = "Alert"
         static let kNoInternetConnection = "Internet connection appears to be offline"
+        static let kSelectVideo = "Video(1 min max)"
+        static let kAreYouSureToDeleteThePost = "Are you sure you want to delete the post"
     }
     
     

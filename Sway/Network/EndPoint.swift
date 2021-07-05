@@ -22,7 +22,7 @@ enum Endpoint {
     case getVideos(videoFor:Int)
     
     case getFeeds(page:Int,limit:Int,userId:String)
-    case postFeed(feedId:String,caption:String,feedType:WorkoutType,url:String,thumbnailUrl:String,mediaType:MediaTypes)
+    case postFeed(feedId:String,caption:String,feedType:WorkoutType,url:String,thumbnailUrl:String,mediaType:MediaTypes,otherContentDescription:String?)
     case deleteFeed(feedId:String)
     case likeFeed(feedId:String)
     case getPredefinedComments
@@ -47,7 +47,7 @@ enum Endpoint {
             return .put
         case .verifyEmail,.getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail,.getWorkoutDetail:
             return .get
-        case .postFeed(let feedId,_,_,_,_,_):
+        case .postFeed(let feedId,_,_,_,_,_,_):
             return feedId.isEmpty ? .post : .patch
         }
     }
@@ -97,7 +97,7 @@ enum Endpoint {
         case .getFeeds(let page,let limit,let userId):
             let queryToAppend = userId.isEmpty ? "" : "&userId=\(userId)"
            return Constants.Networking.kBaseUrl + interMediate +  "feed?pageNo=\(page)&limit=\(limit)" + queryToAppend
-        case .postFeed(let feedId,_,_,_,_,_):
+        case .postFeed(let feedId,_,_,_,_,_,_):
             if feedId.isEmpty {
                 return  Constants.Networking.kBaseUrl + interMediate +  "feed"
             }
@@ -155,7 +155,7 @@ enum Endpoint {
             return [key:value]
         case .getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail,.getWorkoutDetail:
             return [:]
-        case .postFeed(_,let caption,let feedType,let url,let thumbnailUrl,let mediaType):
+        case .postFeed(_,let caption,let feedType,let url,let thumbnailUrl,let mediaType,let otherContentDescription):
         var mediaDic = [String:Any]()
         mediaDic["url"] = url
         mediaDic["thumbnailImage"] = thumbnailUrl
@@ -164,6 +164,9 @@ enum Endpoint {
         mainDict["caption"] = caption
             mainDict["feedType"] = feedType.rawValue.description
         mainDict["media"] = mediaDic as Any
+            if let description = otherContentDescription, feedType == WorkoutType.OTHER_CONTENT {
+                mainDict["description"] = description
+            }
         return mainDict
         case .deleteFeed(let feedId):
             return ["feedId":feedId,"status":"DELETED"]

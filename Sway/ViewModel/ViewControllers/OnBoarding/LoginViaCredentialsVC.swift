@@ -43,7 +43,7 @@ class LoginViaCredentialsVC: BaseLoginVC {
         let range = nsString.range(of: "Sign up")
         
         if gesture.didTapAttributedTextInLabel(label: signupLabel, inRange: range) {
-            self.navigationController?.push(Register1VC.self)
+            self.getNavController()?.push(Register1VC.self)
         }
     }
     
@@ -66,7 +66,7 @@ class LoginViaCredentialsVC: BaseLoginVC {
             }else{
                 //failures cases
                 if response.type == LoginResponseTypes.emailNotVerified.rawValue {
-                    self?.navigationController?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
+                    self?.getNavController()?.push(VerifyOtpVC.self, animated: true, configuration: { (vc) in
                         vc.email = email
                         vc.type = .LOGIN
                     })
@@ -89,7 +89,7 @@ class LoginViaCredentialsVC: BaseLoginVC {
     }
     
     @IBAction func actionForgotPassword(_ sender: UIButton) {
-        self.navigationController?.push(ForgotPasswordVC.self)
+        self.getNavController()?.push(ForgotPasswordVC.self)
     }
     
     func isValidFields() -> String?{

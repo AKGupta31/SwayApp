@@ -103,7 +103,7 @@ extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             if let contentVM = viewModel.getContentVM(at: indexPath.row) {
-                self.navigationController?.push(HIITDetailsPendingStartVC.self, animated: true, configuration: { (vc) in
+                self.getNavController()?.push(HIITDetailsPendingStartVC.self, animated: true, configuration: { (vc) in
                     vc.viewModel = contentVM
                 })
             }

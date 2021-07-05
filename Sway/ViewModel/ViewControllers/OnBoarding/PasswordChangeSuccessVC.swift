@@ -61,7 +61,7 @@ class PasswordChangeSuccessVC: BaseViewController {
         if self.type == .postSubmitted {
             self.navigationController?.popToRootViewController(animated: true)
         }else if type == .welcomeToSway {
-            self.navigationController?.push(SyncWithCalenderVC.self, animated: true, configuration: nil)
+            self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: nil)
         } else{
             guard var viewControllers = self.navigationController?.viewControllers else {return}
             viewControllers.removeLast()

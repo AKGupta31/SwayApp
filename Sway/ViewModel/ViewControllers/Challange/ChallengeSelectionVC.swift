@@ -119,7 +119,7 @@ extension ChallengeSelectionVC:UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.push(ChallengeInfoHypeVideoVC.self, animated: true) { (vc) in
+        self.getNavController()?.push(ChallengeInfoHypeVideoVC.self, animated: true) { (vc) in
             vc.viewModel = self.viewModel.getChallengeVM(at: indexPath.row)
         }
     }

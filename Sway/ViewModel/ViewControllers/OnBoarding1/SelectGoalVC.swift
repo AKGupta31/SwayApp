@@ -59,7 +59,7 @@ class SelectGoalVC: BaseViewController {
 
     @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
         if gesture.direction == .up && selectedCount > 0 {
-            self.navigationController?.push(OnboardingEndVC.self)
+            self.getNavController()?.push(OnboardingEndVC.self,pushTransition: .vertical)
         }else if gesture.direction == .down {
             self.navigationController?.popViewController(animated: true)
         }
@@ -67,7 +67,7 @@ class SelectGoalVC: BaseViewController {
     
     @IBAction func actionSkip(_ sender: UIButton) {
         updateStatus(goals: [])
-        self.navigationController?.push(OnboardingEndVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(OnboardingEndVC.self, animated: true, configuration: { (vc) in
             
         })
     }
@@ -167,7 +167,7 @@ extension SelectGoalVC:UIScrollViewDelegate {
                 let distanceFromBottom = scrollView.contentSize.height - contentYoffset
                 if distanceFromBottom <= height {
                     updateStatus(goals: getSelectedGoalTitles())
-                    self.navigationController?.push(OnboardingEndVC.self)
+                    getNavController()?.push(OnboardingEndVC.self,pushTransition: .vertical)
                 }else {
                     print("don't call api")
                 }

@@ -41,7 +41,7 @@ class SyncWithCalenderVC: BaseViewController {
         
     }
     @IBAction func actionSkip(_ sender: UIButton) {
-        self.navigationController?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
             vc.screenType = .challengeAccepted
             vc.numberOfWeeks = self.numberOfWeeks
             vc.challengeTitle = self.challengeTitle
@@ -103,7 +103,7 @@ class SyncWithCalenderVC: BaseViewController {
                             }
                             
                         }
-                        self.navigationController?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
+                        self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
                             vc.screenType = .challengeAccepted
                             vc.numberOfWeeks = self.numberOfWeeks
                             vc.challengeTitle = self.challengeTitle

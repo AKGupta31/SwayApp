@@ -15,6 +15,16 @@ class BaseViewController:UIViewController {
         return .lightContent
     }
     
+    func getNavController() -> BaseNavigationController?{
+        return self.navigationController as? BaseNavigationController
+    }
+    
+    var transitionType:PushTransition = .horizontal
+    
+//    override var navigationController: BaseNavigationController?{
+//        return
+//    }
+    
     fileprivate var activityIndicatorTag: Int { return 999999 }
     
     var addTapGestureToView:Bool = true {
@@ -130,15 +140,15 @@ class BaseLoginVC:BaseViewController{
         case .INTRO__VIDEO_ONE:fallthrough
         case .INTRO__VIDEO_TWO:fallthrough
         case .INTRO__VIDEO_THREE:
-            self.navigationController?.push(OnboardingStartVC.self)
+            self.getNavController()?.push(OnboardingStartVC.self)
         case .PROFILE_AGE:
-            self.navigationController?.push(HowOldVC.self)
+            self.getNavController()?.push(HowOldVC.self)
         case .PROFILE_GOAL:
-            self.navigationController?.push(SelectGoalVC.self)
+            self.getNavController()?.push(SelectGoalVC.self)
         case .CHALLENGE_SCREEN:
-            self.navigationController?.push(OnboardingEndVC.self)
+            self.getNavController()?.push(OnboardingEndVC.self)
         case .HOME_SCREEN:
-            self.navigationController?.push(SwayTabbarVC.self)
+            self.getNavController()?.push(SwayTabbarVC.self)
         }
     }
 }

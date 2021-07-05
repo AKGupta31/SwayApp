@@ -45,3 +45,22 @@ class ShimmerView: UIView {
     }
 
 }
+
+extension UIView {
+    func addUpAnimation() -> CABasicAnimation {
+       
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.fromValue = [self.frame.midX,self.frame.midY]
+        animation.toValue = [self.frame.midX,self.frame.midY + 36]
+        animation.repeatCount = .infinity
+        animation.duration = 0.7
+        animation.fillMode = .both
+        animation.autoreverses = true
+        return animation
+    }
+    
+    func startSwipeUpAnimating() {
+        let upAnimation = addUpAnimation()
+        self.layer.add(upAnimation, forKey: upAnimation.keyPath)
+    }
+}

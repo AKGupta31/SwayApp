@@ -85,7 +85,7 @@ class SignupVC: BaseLoginVC {
     @IBAction func actionEmail(_ sender: UIButton) {
 //        self.view.makeToast("This feature has not been implemented yet", duration: 3.0, position: .center)
 //        self.navigationController?.push(VerifyOtpVC.self)
-        self.navigationController?.push(Register1VC.self)
+        self.getNavController()?.push(Register1VC.self)
     }
     
     
@@ -99,7 +99,7 @@ class SignupVC: BaseLoginVC {
             if let vcs = self.navigationController?.viewControllers, let  _ = vcs[vcs.count - 2] as? LoginVC{
                 self.navigationController?.popViewController(animated: true)
             }else{
-                self.navigationController?.push(LoginVC.self)
+                self.getNavController()?.push(LoginVC.self)
             }
         }
     }

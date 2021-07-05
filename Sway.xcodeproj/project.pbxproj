@@ -31,7 +31,7 @@
 		84342403263176040025700B /* FacebookLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84342402263176040025700B /* FacebookLoginManager.swift */; };
 		84347030262470D500566FB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434702F262470D500566FB2 /* AppDelegate.swift */; };
 		84347032262470D500566FB2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84347031262470D500566FB2 /* SceneDelegate.swift */; };
-		84347034262470D500566FB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84347033262470D500566FB2 /* ViewController.swift */; };
+		84347034262470D500566FB2 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84347033262470D500566FB2 /* LaunchViewController.swift */; };
 		84347037262470D500566FB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84347035262470D500566FB2 /* Main.storyboard */; };
 		84347039262470D900566FB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84347038262470D900566FB2 /* Assets.xcassets */; };
 		8434703C262470D900566FB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8434703A262470D900566FB2 /* LaunchScreen.storyboard */; };
@@ -47,6 +47,7 @@
 		843B993A2628026900DA1681 /* Register1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B99392628026900DA1681 /* Register1VC.swift */; };
 		843B993D26281C9500DA1681 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B993C26281C9500DA1681 /* IntroViewController.swift */; };
 		843B9940262820CD00DA1681 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 843B993F262820CC00DA1681 /* CircularStd-Medium.otf */; };
+		843D28B9268F699800D076F9 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843D28B8268F699800D076F9 /* BaseNavigationController.swift */; };
 		843F52F02652382C00B3288C /* VideoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F52EF2652382C00B3288C /* VideoResponse.swift */; };
 		843F52F62652679B00B3288C /* FeedsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F52F52652679B00B3288C /* FeedsCell.swift */; };
 		843F53202653AA1A00B3288C /* AddVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F531F2653AA1A00B3288C /* AddVideoVC.swift */; };
@@ -131,6 +132,7 @@
 		84D6C5642679D7A900A50381 /* WorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6C5632679D7A900A50381 /* WorkoutModel.swift */; };
 		84D6C5672679D85900A50381 /* DragItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6C5662679D85800A50381 /* DragItemCell.swift */; };
 		84D6C56A2679D8CD00A50381 /* CalenderItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6C5692679D8CD00A50381 /* CalenderItemCell.swift */; };
+		84D8A241268EE1BD003E8575 /* ViewMyPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D8A240268EE1BC003E8575 /* ViewMyPostVC.swift */; };
 		84D8AFF32685B70B00A03169 /* ChallengeSchedulesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D8AFF22685B70B00A03169 /* ChallengeSchedulesModel.swift */; };
 		84E20C4F2625D4C0002DBAF5 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E20C4E2625D4C0002DBAF5 /* Colors.xcassets */; };
 		84E20C562625D5D0002DBAF5 /* UIStoryboard+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E20C552625D5D0002DBAF5 /* UIStoryboard+Ext.swift */; };
@@ -210,7 +212,7 @@
 		8434702C262470D500566FB2 /* Sway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434702F262470D500566FB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84347031262470D500566FB2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		84347033262470D500566FB2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		84347033262470D500566FB2 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		84347036262470D500566FB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84347038262470D900566FB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8434703B262470D900566FB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 		843B99392628026900DA1681 /* Register1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register1VC.swift; sourceTree = "<group>"; };
 		843B993C26281C9500DA1681 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		843B993F262820CC00DA1681 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
+		843D28B8268F699800D076F9 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		843F52EF2652382C00B3288C /* VideoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoResponse.swift; sourceTree = "<group>"; };
 		843F52F52652679B00B3288C /* FeedsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsCell.swift; sourceTree = "<group>"; };
 		843F531F2653AA1A00B3288C /* AddVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVideoVC.swift; sourceTree = "<group>"; };
@@ -312,6 +315,7 @@
 		84D6C5632679D7A900A50381 /* WorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutModel.swift; sourceTree = "<group>"; };
 		84D6C5662679D85800A50381 /* DragItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragItemCell.swift; sourceTree = "<group>"; };
 		84D6C5692679D8CD00A50381 /* CalenderItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderItemCell.swift; sourceTree = "<group>"; };
+		84D8A240268EE1BC003E8575 /* ViewMyPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMyPostVC.swift; sourceTree = "<group>"; };
 		84D8AFF22685B70B00A03169 /* ChallengeSchedulesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeSchedulesModel.swift; sourceTree = "<group>"; };
 		84E20C4E2625D4C0002DBAF5 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		84E20C552625D5D0002DBAF5 /* UIStoryboard+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Ext.swift"; sourceTree = "<group>"; };
@@ -555,12 +559,13 @@
 				84063849264D18EA008CFC46 /* TabBar */,
 				84971165264A413A00BB09DE /* OnBoarding1 */,
 				84E20C582625D634002DBAF5 /* OnBoarding */,
-				84347033262470D500566FB2 /* ViewController.swift */,
+				84347033262470D500566FB2 /* LaunchViewController.swift */,
 				84F3364E2667A6E40091B990 /* SubscriptionVC.swift */,
 				84FA938A267B762000DFF918 /* WorkoutsViewController.swift */,
 				84D50A102680D1D600C50383 /* HIITDetailsPendingStartVC.swift */,
 				84D50A172680D57700C50383 /* HIITVideoItemCell.swift */,
 				84D50A1B2681A06400C50383 /* WorkoutEndAlertVC.swift */,
+				843D28B8268F699800D076F9 /* BaseNavigationController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -623,6 +628,7 @@
 		843F52F2265266D800B3288C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				84D8A23F268EE16D003E8575 /* MyPosts */,
 				842365F42643FF80001DA7E6 /* HomeVC.swift */,
 				843F531F2653AA1A00B3288C /* AddVideoVC.swift */,
 				8460EA782656D83C00DB577A /* MySubmissionsVC.swift */,
@@ -789,6 +795,14 @@
 				84D6C55F2679D75100A50381 /* KDDragAndDropManager.swift */,
 			);
 			path = KDDragDropCollectionViews;
+			sourceTree = "<group>";
+		};
+		84D8A23F268EE16D003E8575 /* MyPosts */ = {
+			isa = PBXGroup;
+			children = (
+				84D8A240268EE1BC003E8575 /* ViewMyPostVC.swift */,
+			);
+			path = MyPosts;
 			sourceTree = "<group>";
 		};
 		84E20C582625D634002DBAF5 /* OnBoarding */ = {
@@ -1114,13 +1128,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D8A241268EE1BD003E8575 /* ViewMyPostVC.swift in Sources */,
 				84E9CC0F263C11D400FFEE9A /* OTPFieldView.swift in Sources */,
 				84595BBA262DB125009605F5 /* Utility.swift in Sources */,
 				843F53202653AA1A00B3288C /* AddVideoVC.swift in Sources */,
 				84E20C5A2625D644002DBAF5 /* SignupVC.swift in Sources */,
 				8460EA802657881000DB577A /* FeedsResponse.swift in Sources */,
 				84E20C6B2625DDED002DBAF5 /* CustomView.swift in Sources */,
-				84347034262470D500566FB2 /* ViewController.swift in Sources */,
+				84347034262470D500566FB2 /* LaunchViewController.swift in Sources */,
 				84F59A66266F555D00E6A0B3 /* ChallengeDescriptionVC.swift in Sources */,
 				84F206AE268C9F5900C98B52 /* InfiniteScrollingDrawer.swift in Sources */,
 				842365F826441649001DA7E6 /* UserDefaults.swift in Sources */,
@@ -1161,6 +1176,7 @@
 				84FB982A2683375F00827DDE /* WeekwiseChallengesCell.swift in Sources */,
 				8414794E2653FAA1007614BC /* VideoUtility.swift in Sources */,
 				84347032262470D500566FB2 /* SceneDelegate.swift in Sources */,
+				843D28B9268F699800D076F9 /* BaseNavigationController.swift in Sources */,
 				8453011926388CF200FD31C7 /* LoginResponse.swift in Sources */,
 				8460EA752656964C00DB577A /* FeedsViewModel.swift in Sources */,
 				8435865E2689A25A0026B389 /* WorkoutDetailsResponse.swift in Sources */,

@@ -10,7 +10,10 @@ import AVKit
 import ViewControllerDescribable
 import GrowingTextView
 class AddVideoVC: BaseViewController {
-
+    @IBOutlet weak var otherContentDescription: GrowingTextView!
+    
+    @IBOutlet weak var otherContentInputView: CustomView!
+    @IBOutlet weak var lblDescriptionOtherVideo: UILabel!
     @IBOutlet weak var btnEdit: UIButton!
     
     @IBOutlet weak var lblRemainingTextCount: UILabel!
@@ -37,6 +40,7 @@ class AddVideoVC: BaseViewController {
         mediaThumbView.clipsToBounds = true
         
         viewDidLoadTasks()
+        
 //        if viewModel.mediaType == .kImage{
 //            let tapOnMediaView = UITapGestureRecognizer(target: self, action: #selector(tapOnMediaView(_:)))
 //            self.mediaView.addGestureRecognizer(tapOnMediaView)
@@ -73,7 +77,8 @@ class AddVideoVC: BaseViewController {
         btnDanceWorkout.isSelected = true
         textViewCaptions.delegate = viewModel
         textViewCaptions.text = viewModel.caption
-        
+        lblRemainingTextCount.text = (50 - (viewModel.caption?.count ?? 0)).description + "/" +
+        "50"
         btnDanceWorkout.isSelected = false
         btnHiitWorkout.isSelected = false
         btnOtherContentWorkout.isSelected = false
@@ -86,6 +91,9 @@ class AddVideoVC: BaseViewController {
             btnOtherContentWorkout.isSelected = true
         }
         btnSubmit.isEnabled = viewModel.caption?.isEmpty == false
+        self.lblDescriptionOtherVideo.isHidden = !btnOtherContentWorkout.isSelected
+        self.otherContentInputView.isHidden = !btnOtherContentWorkout.isSelected
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,6 +112,8 @@ class AddVideoVC: BaseViewController {
         sender.isSelected = true//!sender.isSelected
         viewModel.workoutType = WorkoutType(rawValue: sender.tag) ?? .DANCE_WORKOUT
         reloadData()
+        self.lblDescriptionOtherVideo.isHidden = !btnOtherContentWorkout.isSelected
+        self.otherContentInputView.isHidden = !btnOtherContentWorkout.isSelected
     }
     
     
@@ -125,17 +135,19 @@ class AddVideoVC: BaseViewController {
 extension AddVideoVC:AddVideoViewModelDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        var remainingCount = textView.text.count
-        if remainingCount > 120{
-            remainingCount = 120
+        if textView.tag == 1 {
+            var remainingCount = textView.text.count
+            if remainingCount > 50{
+                remainingCount = 50
+            }
+            lblRemainingTextCount.text = remainingCount.description + "/" +
+            "50"
         }
-        lblRemainingTextCount.text = remainingCount.description + "/" +
-        "120"
     }
     
     func videoPostedSuccessfully() {
         hideLoader()
-        self.navigationController?.push(PasswordChangeSuccessVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(PasswordChangeSuccessVC.self, animated: true, configuration: { (vc) in
             vc.type = .postSubmitted
         })
     }
@@ -191,6 +203,7 @@ extension AddVideoVC : UIImagePickerControllerDelegate, UINavigationControllerDe
     func viewDidLoadTasks(){
         viewModel.delegate = self
         textViewCaptions.delegate = viewModel
+        otherContentDescription.delegate = viewModel
         mediaThumbView.image = viewModel.thumbnail
         if viewModel.mediaType == .kImage{
             let tapOnMediaView = UITapGestureRecognizer(target: self, action: #selector(tapOnMediaView(_:)))
@@ -202,7 +215,7 @@ extension AddVideoVC : UIImagePickerControllerDelegate, UINavigationControllerDe
     
     @objc func showAlert() {
         let actionAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        actionAlert.addAction(UIAlertAction(title: "Video", style: .default, handler: { (action) in
+        actionAlert.addAction(UIAlertAction(title: Constants.Messages.kSelectVideo, style: .default, handler: { (action) in
             self.videoFileSelection()
         }))
         actionAlert.addAction(UIAlertAction(title: "Image", style: .default, handler: { (action) in

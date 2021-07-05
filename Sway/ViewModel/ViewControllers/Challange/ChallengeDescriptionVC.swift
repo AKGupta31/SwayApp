@@ -33,7 +33,7 @@ class ChallengeDescriptionVC: BaseViewController {
     @IBAction func actionJoin(_ sender: UIButton) {
         if Api.isConnectedToNetwork() {
             if let workoutDetailsVM = viewModel.getWorkoutListVMs().first ,workoutDetailsVM.getWorkoutModels().count > 0{
-                self.navigationController?.push(WeeklyScheduleViewController.self, animated: true, configuration: { (vc) in
+                self.getNavController()?.push(WeeklyScheduleViewController.self, animated: true, configuration: { (vc) in
                     vc.challengeVM = self.viewModel
                 })
             }else {
@@ -119,7 +119,7 @@ extension ChallengeDescriptionVC:UITableViewDataSource, UITableViewDelegate {
 extension ChallengeDescriptionVC:WeekwiseChallengesCellDelegate {
     func viewDetails(viewModel: WorkoutViewModel) {
         if let workoutId = viewModel.id {
-            self.navigationController?.push(HIITDetailsVC.self, animated: true, configuration: { (vc) in
+            self.getNavController()?.push(HIITDetailsVC.self, animated: true, configuration: { (vc) in
                 vc.viewModel = WorkoutDetailsViewModel(workoutId: workoutId)
             })
         }else {

@@ -61,7 +61,7 @@ class HomeVC: BaseTabBarViewController {
     }
     
     @IBAction func actionMySubmission(_ sender: UIButton) {
-        self.navigationController?.push(MySubmissionsVC.self)
+        self.getNavController()?.push(MySubmissionsVC.self)
     }
     
     
@@ -364,7 +364,7 @@ extension HomeVC:PlayerDelegate ,PlayerPlaybackDelegate{
 extension HomeVC{
     @objc func showAlert() {
         let actionAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        actionAlert.addAction(UIAlertAction(title: "Video", style: .default, handler: { (action) in
+        actionAlert.addAction(UIAlertAction(title: Constants.Messages.kSelectVideo, style: .default, handler: { (action) in
             self.videoFileSelection()
         }))
         actionAlert.addAction(UIAlertAction(title: "Image", style: .default, handler: { (action) in
@@ -421,7 +421,7 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
+            self.getNavController()?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
                 vc.viewModel = AddVideoViewModel(videoUrl: nil,thumbnail:image)
             })
             
@@ -434,7 +434,7 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             } else if asset.duration.seconds > 60 {
                 showAlert(with: "Error!", message: "Video must be maximum to 60 seconds")
             }else {
-                self.navigationController?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
+                self.getNavController()?.push(AddVideoVC.self, animated: true, configuration: { (vc) in
                     vc.viewModel = AddVideoViewModel(videoUrl: videoURL,thumbnail:thumbnail)
                 })
                 
