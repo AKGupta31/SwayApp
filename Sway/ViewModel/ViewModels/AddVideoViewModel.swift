@@ -122,6 +122,7 @@ class AddVideoViewModel:NSObject {
         self.thumbnail = thumbnail
         super.init()
         self.caption = feedViewModel.caption
+        self.otherContentDescription = feedViewModel.otherContentDescription
         self.workoutType = feedViewModel.workoutType
         isEditMode  = true
         self.feedId = feedViewModel.feedId

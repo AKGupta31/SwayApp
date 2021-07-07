@@ -59,7 +59,20 @@ class PasswordChangeSuccessVC: BaseViewController {
     }
     @IBAction func actionNext(_ sender: UIButton) {
         if self.type == .postSubmitted {
-            self.navigationController?.popToRootViewController(animated: true)
+            if var vcs = self.navigationController?.viewControllers {
+                if vcs.count - 3 >= 0 ,let _ = vcs[vcs.count - 3] as? ViewMyPostVC {
+                    vcs.removeLast()
+                    vcs.removeLast()
+                    vcs.removeLast()
+                    self.navigationController?.setViewControllers(vcs, animated: true)
+                }else if vcs.count - 3 >= 0,let _ = vcs[vcs.count - 3] as? MySubmissionsVC{
+                    vcs.removeLast()
+                    vcs.removeLast()
+                    self.navigationController?.setViewControllers(vcs, animated: true)
+                } else {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+            }
         }else if type == .welcomeToSway {
             self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: nil)
         } else{

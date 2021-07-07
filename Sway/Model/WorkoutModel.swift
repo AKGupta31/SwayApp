@@ -14,6 +14,7 @@ final class WorkoutModel: NSObject, NSItemProviderWriting, NSItemProviderReading
     var color:UIColor = .clear
     var rowTag = 0
     var workoutId:String?
+    var dummyDisplayName = ""
     
     init(title:String) {
         self.title = title

@@ -77,6 +77,7 @@ struct FeedModel : Codable {
     let media : FeedMedia?
     var isLike : Bool = false
     var user:UserModel?
+    var feedTypeDescription:String?
 
     enum CodingKeys: String, CodingKey {
 
@@ -92,6 +93,7 @@ struct FeedModel : Codable {
         case media = "media"
         case isLike = "isLike"
         case user = "userData"
+        case feedTypeDescription = "description"
     }
 
     init(from decoder: Decoder) throws {
@@ -108,6 +110,7 @@ struct FeedModel : Codable {
         media = try values.decodeIfPresent(FeedMedia.self, forKey: .media)
         isLike = try values.decodeIfPresent(Bool.self, forKey: .isLike) ?? false
         user = try values.decodeIfPresent(UserModel.self, forKey: .user)
+        feedTypeDescription = try values.decodeIfPresent(String.self, forKey: .feedTypeDescription)
     }
 
 }

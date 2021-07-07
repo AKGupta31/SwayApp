@@ -76,7 +76,13 @@ class LoginVC: BaseLoginVC {
     }
     
     @IBAction func actionCross(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        if (self.navigationController?.viewControllers.count ?? 1) > 1 {
+            self.navigationController?.popViewController(animated: true)
+            
+        }else {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
+        
     }
     @IBAction func actionBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)

@@ -73,6 +73,11 @@ class ViewMyPostVC: BaseViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        self.playerView.pause(reason: .hidden)
+    }
+    
     func setupData(viewModel:FeedViewModel){
         self.btnLike.setImage(UIImage(named: viewModel.isLiked ? "ic_liked" :
                                        "ic_like"), for: .normal)
@@ -203,6 +208,10 @@ extension ViewMyPostVC:FeedsViewModelDelegate {
     
     func reloadData() {
         self.setupData(viewModel: viewModel.getFeedViewModel(at:viewModel.selectedFeedIndex))
+    }
+    
+    func deleteSuccessful() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 extension ViewMyPostVC:ViewControllerDescribable {

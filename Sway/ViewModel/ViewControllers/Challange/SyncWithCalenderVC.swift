@@ -24,8 +24,9 @@ class SyncWithCalenderVC: BaseViewController {
     var eventStore:EKEventStore!
     
     var screenType:SyncWithCalendarScreenType = .syncWithCalendar
-    var numberOfWeeks = 0 // necessary for screen type challengeAccepted
-    var challengeTitle:String = ""
+//    var numberOfWeeks = 0 // necessary for screen type challengeAccepted
+//    var challengeTitle:String = ""
+    var challengeVM:ChallengeViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = [.bottom]
@@ -40,11 +41,17 @@ class SyncWithCalenderVC: BaseViewController {
         // Do any additional setup after loading the view.
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print(#function)
+    }
     @IBAction func actionSkip(_ sender: UIButton) {
         self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
             vc.screenType = .challengeAccepted
-            vc.numberOfWeeks = self.numberOfWeeks
-            vc.challengeTitle = self.challengeTitle
+            vc.challengeVM = self.challengeVM
+//            vc.numberOfWeeks = self.numberOfWeeks
+//            vc.challengeTitle = self.challengeTitle
         })
     }
     
@@ -71,7 +78,9 @@ class SyncWithCalenderVC: BaseViewController {
             ])
             attributedString.addAttribute(.foregroundColor, value: UIColor(red: 94.0 / 255.0, green: 0.0, blue: 1.0, alpha: 1.0), range: NSRange(location: 10, length: 9))
             lblTitle.attributedText = attributedString
-            lblDescription.text = "You accepted \(numberOfWeeks) Weeks \(challengeTitle). We’re excited to kickstart your fitness journey with you!"
+            let weeks = self.challengeVM.weeksCount ?? 0
+            let title = self.challengeVM.title ?? ""
+            lblDescription.text = "You accepted \(weeks) Week \(title). We’re excited to kickstart your fitness journey with you!"
             btnICalendar.setTitle("VIEW MY PLANNER", for: .normal)
         }
     }
@@ -79,43 +88,48 @@ class SyncWithCalenderVC: BaseViewController {
     @IBAction func actionSaveCalenderEvent(_ sender: UIButton) {
         if screenType == .syncWithCalendar {
             isICalenderAuthorized(isAuthorized: { (isAuthorized) in
-                if isAuthorized {
-                    if let model = self.schedulesModel ,let schedules = model.schedules {
-                        let end = EKRecurrenceEnd(end:Date(milliseconds: model.endDate!))
-                        let rule = EKRecurrenceRule(recurrenceWith: .weekly, interval: 1, end: end)
-                        
-                        for schedule in schedules {
-                            if let dayOfTheWeek = schedule.dayOfTheWeek,let weekday = Weekday(rawValue: dayOfTheWeek) {
-                                let startDate = Date.today().next(weekday)
-                                let startDateWithTime = Calendar.current.date(bySettingHour: schedule.startTime!, minute: 0, second: 0, of:startDate)
-                                
-                                let endDateWithTime = Calendar.current.date(byAdding: .hour, value: 1, to: startDateWithTime ?? startDate) ?? startDate.addingTimeInterval(60 * 60)
-                                print("start date ",endDateWithTime.getFormattedDate(format: .yyyyMMddHHmmss))
-                                
-                                print("end date ",endDateWithTime.getFormattedDate(format: .yyyyMMddHHmmss))
-                                if let date = startDateWithTime {
-                                    self.insertEvent(title: "Workout", startDate: date, endDate: endDateWithTime, recurenceRule: rule)
+                DispatchQueue.main.async {
+                    if isAuthorized {
+                        if let model = self.schedulesModel ,let schedules = model.schedules {
+                            let end = EKRecurrenceEnd(end:Date(milliseconds: model.endDate!))
+                            let rule = EKRecurrenceRule(recurrenceWith: .weekly, interval: 1, end: end)
+                            
+                            for schedule in schedules {
+                                if let dayOfTheWeek = schedule.dayOfTheWeek,let weekday = Weekday(rawValue: dayOfTheWeek) {
+                                    let startDate = Date.today().next(weekday)
+                                    let startDateWithTime = Calendar.current.date(bySettingHour: schedule.startTime!, minute: 0, second: 0, of:startDate)
+                                    
+                                    let endDateWithTime = Calendar.current.date(byAdding: .hour, value: 1, to: startDateWithTime ?? startDate) ?? startDate.addingTimeInterval(60 * 60)
+                                    if let date = startDateWithTime {
+//                                        let title = challengeVM.title ?? "" + "\n"
+                                        self.insertEvent(title: "Workout", startDate: date, endDate: endDateWithTime, recurenceRule: rule)
+                                    }
+                                    
+                                    
+                                }else {
+                                    continue
                                 }
                                 
-                                
-                            }else {
-                                continue
                             }
-                            
+                            self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
+                                vc.screenType = .challengeAccepted
+                                vc.challengeVM = self.challengeVM
+//                                vc.numberOfWeeks = self.numberOfWeeks
+//                                vc.challengeTitle = self.challengeTitle
+                            })
                         }
-                        self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
-                            vc.screenType = .challengeAccepted
-                            vc.numberOfWeeks = self.numberOfWeeks
-                            vc.challengeTitle = self.challengeTitle
-                        })
+                    }else {
+                        AlertView.showAlert(with: "Error!", message: "Please authorize app for calender events from settings")
                     }
-                }else {
-                    AlertView.showAlert(with: "Error!", message: "Please authorize app for calender events from settings")
+                    
                 }
-            })
+        })
         }else {
-            self.navigationController?.popToRootViewController(animated: true)
             self.tabBarController?.selectedIndex = 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.navigationController?.popToRootViewController(animated: false)
+            }
+           
         }
         
         

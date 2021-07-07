@@ -59,6 +59,9 @@ extension MySubmissionsVC: FeedsViewModelDelegate {
     
     func likeApi(isSuccess: Bool,indexPath:IndexPath) {}
     
+    func deleteSuccessful() {
+        self.collectionViewSubmissions.reloadData()
+    }
     
 }
 extension MySubmissionsVC:UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

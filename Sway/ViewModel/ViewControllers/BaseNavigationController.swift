@@ -17,7 +17,7 @@ class BaseNavigationController: UINavigationController {
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        
+        setNavigationBarHidden(true, animated: false)
     }
     
     required init?(coder aDecoder: NSCoder) {

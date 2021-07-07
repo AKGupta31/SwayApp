@@ -96,7 +96,7 @@ class SignupVC: BaseLoginVC {
         let range = nsString.range(of: "Log in")
         
         if gesture.didTapAttributedTextInLabel(label: lblLogin, inRange: range) {
-            if let vcs = self.navigationController?.viewControllers, let  _ = vcs[vcs.count - 2] as? LoginVC{
+            if let vcs = self.navigationController?.viewControllers,vcs.count >= 2, let  _ = vcs[vcs.count - 2] as? LoginVC{
                 self.navigationController?.popViewController(animated: true)
             }else{
                 self.getNavController()?.push(LoginVC.self)
@@ -105,7 +105,13 @@ class SignupVC: BaseLoginVC {
     }
     
     @IBAction func actionBack(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        if (self.navigationController?.viewControllers.count ?? 1) > 1 {
+            self.navigationController?.popViewController(animated: true)
+            
+        }else {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
+//        self.navigationController?.popViewController(animated: true)
     }
     
 }

@@ -115,7 +115,6 @@ public class Schedules {
     - returns: Schedules Instance.
 */
     required public init?(dictionary: NSDictionary) {
-
         workoutId = dictionary["workoutId"] as? String
         startTime = dictionary["startTime"] as? Int
         endTime = dictionary["endTime"] as? Int

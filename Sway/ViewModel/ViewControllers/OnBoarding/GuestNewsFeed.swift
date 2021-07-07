@@ -23,15 +23,13 @@ class GuestNewsFeed: BaseViewController {
         self.lblSignIn.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-    }
-    
-    
+   
     @IBAction func actionSignup(_ sender: UIButton) {
-        self.getNavController()?.push(SignupVC.self)
+        let baseNav = BaseNavigationController(rootViewController: SignupVC.instantiated())
         
+        baseNav.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(baseNav, animated: true, completion: nil)
+//        self.getNavController()?.push(SignupVC.self,pushTransition: .vertical)
     }
     
     @objc private func tappedOnLabel(gesture: UITapGestureRecognizer) {
@@ -40,7 +38,10 @@ class GuestNewsFeed: BaseViewController {
         let range = nsString.range(of: "Log in")
         
         if gesture.didTapAttributedTextInLabel(label: lblSignIn, inRange: range) {
-            self.getNavController()?.push(LoginVC.self)
+            let baseNav = BaseNavigationController(rootViewController: LoginVC.instantiated())
+            baseNav.modalPresentationStyle = .fullScreen
+            self.navigationController?.present(baseNav, animated: true, completion: nil)
+//            self.getNavController()?.push(baseNav,pushTransition: .vertical)
         }
     }
     

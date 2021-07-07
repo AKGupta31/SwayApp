@@ -15,6 +15,7 @@ protocol BaseVMDelegate:class{
 protocol FeedsViewModelDelegate: BaseVMDelegate{
     func reloadRow(at indexPath:IndexPath)
     func likeApi(isSuccess:Bool,indexPath:IndexPath)
+    func deleteSuccessful()
 }
 
 class FeedsViewModel {
@@ -108,7 +109,7 @@ class FeedsViewModel {
             (self?.delegate as? BaseViewController)?.hideLoader()
             if response.statusCode == 200 {
                 self?.feeds.removeAll(where: {$0._id == id})
-                self?.delegate?.reloadData()
+                self?.delegate?.deleteSuccessful()
             }else{
                 self?.delegate?.showAlert(with: "Error", message: response.message)
             }
@@ -201,6 +202,10 @@ class FeedViewModel{
     
     var caption:String? {
         return model.caption
+    }
+    
+    var otherContentDescription:String? {
+        return model.feedTypeDescription
     }
     
     var feedId:String{

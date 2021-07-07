@@ -51,7 +51,7 @@ class WorkoutDetailsViewModel {
     }
     
     var bannerImageUrl:URL? {
-        if let imageUrl = workout.imageUrl {
+        if let imageModel = workout.imageUrl,let imageUrl = imageModel.url {
             return URL(string: imageUrl)
         }
         return nil
@@ -154,7 +154,7 @@ class WorkoutContentsVM {
         guard let movement = content.movement?[indexPath.row] else {
             return
         }
-        if let urlStr = movement.media?.imageUrl{
+        if let urlStr = movement.media?.thumbnailImage{
             cell.imgVideoThumb.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVideoThumb.sd_setImage(with: URL(string: urlStr), completed: nil)
         }

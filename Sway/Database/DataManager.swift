@@ -23,5 +23,6 @@ class DataManager {
         SwayUserDefaults.shared.loggedInUser = user
         loggedInUser = user
         isLoggedIn = user != nil
+        SwayUserDefaults.shared.onBoardingScreenStatus = .INTRO__VIDEO_ONE
     }
 }

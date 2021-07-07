@@ -77,6 +77,8 @@ class AddVideoVC: BaseViewController {
         btnDanceWorkout.isSelected = true
         textViewCaptions.delegate = viewModel
         textViewCaptions.text = viewModel.caption
+        otherContentDescription.text = viewModel.otherContentDescription
+        otherContentDescription.delegate = viewModel
         lblRemainingTextCount.text = (50 - (viewModel.caption?.count ?? 0)).description + "/" +
         "50"
         btnDanceWorkout.isSelected = false
@@ -93,6 +95,7 @@ class AddVideoVC: BaseViewController {
         btnSubmit.isEnabled = viewModel.caption?.isEmpty == false
         self.lblDescriptionOtherVideo.isHidden = !btnOtherContentWorkout.isSelected
         self.otherContentInputView.isHidden = !btnOtherContentWorkout.isSelected
+        
         
     }
     

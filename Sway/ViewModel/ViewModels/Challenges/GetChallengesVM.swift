@@ -250,11 +250,12 @@ class WorkoutListsViewModel {
     func getWorkoutModels() -> [WorkoutModel]{
 //        let strings = ["HIIT","DANCE","HIIT","DANCE"]
         var workouts = [WorkoutModel]()
-        for item in workoutDetails.workouts! {
+        for (index,item) in workoutDetails.workouts!.enumerated() {
             let model = WorkoutModel(title: item.name ?? "")
             model.color = UIColor(named:"kThemeBlue")!
             model.isSelected = true
             model.workoutId = item.workoutId
+            model.dummyDisplayName = "Workout \(index+1)"
             workouts.append(model)
         }
         return workouts

@@ -11,17 +11,18 @@ import Player
 import AVFoundation
 import SDWebImage
 import ActiveLabel
+import GSPlayer
 
 class HomeVC: BaseTabBarViewController {
     @IBOutlet weak var btnMyPost: CustomTextLocationButton!
     
     @IBOutlet weak var btnLogout: UIButton!
     
-    @IBOutlet weak var imgPlay: UIImageView!
+//    @IBOutlet weak var imgPlay: UIImageView!
 //    @IBOutlet weak var btnComments: CustomTextLocationButton!
 //    @IBOutlet weak var btnLikes: CustomTextLocationButton!
     @IBOutlet weak var tableViewFeeds: UITableView!
-    var player:Player!
+//    var player:Player!
     
     var refreshControl:UIRefreshControl!
     
@@ -38,7 +39,7 @@ class HomeVC: BaseTabBarViewController {
 //        self.view.addSubview(shimmerXib!)
 //        self.shimmerXib?.startAnimating()
         tableViewFeeds.contentInsetAdjustmentBehavior  = .never
-        self.imgPlay.isHidden = true
+//        self.imgPlay.isHidden = true
         //adding refresh control for pull to refresh
         refreshControl = UIRefreshControl()
         refreshControl.tintColor = .gray
@@ -49,8 +50,24 @@ class HomeVC: BaseTabBarViewController {
             self.viewModel.getPredefinedComments()
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive(_:)), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
         // Do any additional setup after loading the view.
     }
+    
+    @objc func willResignActive(_ notification:Notification) {
+        if let cell = tableViewFeeds.visibleCells.first as? FeedsCell {
+            cell.pause(reason: .userInteraction)
+        }
+    }
+    
+    @objc func didBecomeActive(_ notification:Notification) {
+        checkPlay()
+    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -67,8 +84,8 @@ class HomeVC: BaseTabBarViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        if player != nil {
-            player.pause()
+        if let cell = tableViewFeeds.visibleCells.first as? FeedsCell{
+            cell.pause(reason: .userInteraction)
         }
     }
     
@@ -101,8 +118,8 @@ class HomeVC: BaseTabBarViewController {
     }
     
     @IBAction func actionAdd(_ sender: UIButton) {
-        if player != nil {
-            player.pause()
+        if let cell = tableViewFeeds.visibleCells.first as? FeedsCell{
+            cell.pause(reason: .userInteraction)
         }
         showAlert()
     }
@@ -111,10 +128,10 @@ class HomeVC: BaseTabBarViewController {
         
         /*Testing */
 //        self.navigationController?.push(SubscriptionVC.self)
-        if player != nil {
-            player.pause()
+      
+        if let cell = tableViewFeeds.visibleCells.first as? FeedsCell{
+            cell.pause(reason: .userInteraction)
         }
-        
          let indexPath = IndexPath(row: sender.tag, section: 0)
          self.tabBarController?.present(CommentsVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
          vc.modalPresentationStyle = .overCurrentContext
@@ -130,9 +147,17 @@ class HomeVC: BaseTabBarViewController {
     }
     
     @IBAction func actionSignou(_ sender: UIButton) {
+        /* To be checked
+        
         if player != nil && player.playbackState == .playing {
             player.pause()
             player.playbackDelegate = nil
+        }
+ 
+ */
+        
+        if let cell = tableViewFeeds.visibleCells.first as? FeedsCell{
+            cell.pause(reason: .userInteraction)
         }
         DataManager.shared.setLoggedInUser(user: nil)
         if var vcs = self.tabBarController?.navigationController?.viewControllers {
@@ -169,7 +194,7 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsCell", for: indexPath) as! FeedsCell
-        cell.setupData(viewModel: viewModel.getFeedViewModel(at: indexPath.row))
+        cell.setupData(viewModel: viewModel.getFeedViewModel(at: indexPath.row), indexPath: indexPath)
         if indexPath.row == viewModel.numberOfItems - 1 {
             viewModel.loadMoreData()
         }
@@ -177,81 +202,108 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
         cell.btnComments.tag = indexPath.row
         cell.btnLikes.addTarget(self, action: #selector(actionLike(_:)), for: .touchUpInside)
         cell.btnComments.addTarget(self, action: #selector(actionComments(_:)), for: .touchUpInside)
+        cell.playerStateDidChanged = {[weak self] (state) in
+            switch state {
+            case .loading:
+                self?.startActivityIndicator(touchEnabled:true)
+            case .playing:
+                self?.stopActivityIndicator()
+                cell.imgVideoPlaceholder.isHidden = true
+            case .paused:
+                self?.stopActivityIndicator()
+            default:
+                break
+            }
+        }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? FeedsCell {
+            cell.pause(reason: .hidden)
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate { check() }
+    }
+    
+    
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        check()
 //        btnLikes.isEnabled = true
-        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first,let cell = tableViewFeeds.cellForRow(at: indexPath) as? FeedsCell{
-            self.stopActivityIndicator()
-            if cell.viewModel.mediaType == .kImage{
-                if player != nil{
-                    player.pause()
-                    player.removeFromParent()
-                    player.view.removeFromSuperview()
-                }
-            }else {
-                self.setupPlayer(url: cell.viewModel.mediaUrl, cell: cell)
-            }
+//        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first,let cell = tableViewFeeds.cellForRow(at: indexPath) as? FeedsCell{
+//            self.stopActivityIndicator()
+//            if cell.viewModel.mediaType == .kImage{
+//                if player != nil{
+//                    player.pause()
+//                    player.removeFromParent()
+//                    player.view.removeFromSuperview()
+//                }
+//            }else {
+//                self.setupPlayer(url: cell.viewModel.mediaUrl, cell: cell)
+//            }
 //            self.btnLikes.setImage(UIImage(named: cell.viewModel.isLiked ? "ic_liked" :
 //                                           "ic_like"), for: .normal)
 //            self.btnLikes.setTitle(cell.viewModel.likeCount.description, for: .normal)
 //            self.btnComments.setTitle(cell.viewModel.commentCount.description, for: .normal)
            
-        }
+//        }
     }
 
-    func setupPlayer(url:URL?,cell:FeedsCell){
-        guard let videoUrl = url else {return}
-       
-        if player == nil {
-            self.player = Player()
-            self.player.playerDelegate = self
-            self.player.playbackDelegate = self
-        } else {
-            player.pause()
-            player.removeFromParent()
-            player.view.removeFromSuperview()
-        }
-        self.player.url = videoUrl
-        self.player.volume = 1.0
-        player.playbackResumesWhenEnteringForeground = false
-        player.playbackResumesWhenBecameActive = false
-            //videoUrl
-        self.player.view.frame = cell.bounds
-        self.player.fillMode = .resizeAspectFill
-        self.addChild(self.player)
-        cell.contentView.insertSubview(self.player.view, at: 1)
-        startActivityIndicator(touchEnabled: true)
-        //        cell.addSubview(self.player.view)
-        
-//        cell.bringSubviewToFront(cell.btnComments)
-//        cell.bringSubviewToFront(cell.btnLikes)
-        let tapOnPlayer = UITapGestureRecognizer(target: self, action: #selector(tapOnPlayerView(_:)))
-        self.player.view.addGestureRecognizer(tapOnPlayer)
-        self.player.didMove(toParent: self)
-        self.player.playFromBeginning()
-    }
-    
-    @objc func tapOnPlayerView(_ gesture:UITapGestureRecognizer){
-        if player != nil {
-            if player.playbackState == .playing {
-                player.pause()
-                self.imgPlay.image = UIImage(named: "ic_pause")
-            }else {
-                self.imgPlay.image = UIImage(named: "ic_play")
-                player.playFromCurrentTime()
-            }
-            self.imgPlay.isHidden = false
-            UIView.animate(withDuration: 0.35) {
-                self.imgPlay.alpha = 1.0
-            } completion: { (isSuccess) in
-                self.imgPlay.alpha = 0.0
-                self.imgPlay.isHidden = true
-            }
-        }
-    }
-    
+//    func setupPlayer(url:URL?,cell:FeedsCell){
+//        guard let videoUrl = url else {return}
+//
+//        if player == nil {
+//            self.player = Player()
+//            self.player.playerDelegate = self
+//            self.player.playbackDelegate = self
+//        } else {
+//            player.pause()
+//            player.removeFromParent()
+//            player.view.removeFromSuperview()
+//        }
+//        self.player.url = videoUrl
+//        self.player.volume = 1.0
+//        player.playbackResumesWhenEnteringForeground = false
+//        player.playbackResumesWhenBecameActive = false
+//            //videoUrl
+//        self.player.view.frame = cell.bounds
+//        self.player.fillMode = .resizeAspectFill
+//        self.addChild(self.player)
+//        cell.contentView.insertSubview(self.player.view, at: 1)
+//        startActivityIndicator(touchEnabled: true)
+//        //        cell.addSubview(self.player.view)
+//
+////        cell.bringSubviewToFront(cell.btnComments)
+////        cell.bringSubviewToFront(cell.btnLikes)
+//        let tapOnPlayer = UITapGestureRecognizer(target: self, action: #selector(tapOnPlayerView(_:)))
+//        self.player.view.addGestureRecognizer(tapOnPlayer)
+//        self.player.didMove(toParent: self)
+//        self.player.playFromBeginning()
+//    }
+   
+
+//    @objc func tapOnPlayerView(_ gesture:UITapGestureRecognizer){
+////        if player != nil {
+//            if player.playbackState == .playing {
+//                player.pause()
+//                self.imgPlay.image = UIImage(named: "ic_pause")
+//            }else {
+//                self.imgPlay.image = UIImage(named: "ic_play")
+//                player.playFromCurrentTime()
+//            }
+//            self.imgPlay.isHidden = false
+//            UIView.animate(withDuration: 0.35) {
+//                self.imgPlay.alpha = 1.0
+//            } completion: { (isSuccess) in
+//                self.imgPlay.alpha = 0.0
+//                self.imgPlay.isHidden = true
+//            }
+////        }
+//    }
+
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -293,6 +345,8 @@ extension HomeVC:FeedsViewModelDelegate {
         }
     }
     
+    func deleteSuccessful() {}
+    
     func reloadData() {
 //        if viewModel.numberOfItems > 0 {
 //            self.shimmerXib?.removeFromSuperview()
@@ -300,7 +354,6 @@ extension HomeVC:FeedsViewModelDelegate {
 //        }
         if self.refreshControl != nil {
             self.refreshControl.endRefreshing()
-
         }
         self.tableViewFeeds.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -309,56 +362,56 @@ extension HomeVC:FeedsViewModelDelegate {
     }
 }
 
-extension HomeVC:PlayerDelegate ,PlayerPlaybackDelegate{
-    
-    func playerReady(_ player: Player) {
-//        self.imgVideoThumb.isHidden = true
-        self.stopActivityIndicator()
-    }
-    
-    func playerPlaybackStateDidChange(_ player: Player) {
-        print("play back state",player.playbackState)
-    }
-    
-    func playerBufferingStateDidChange(_ player: Player) {
-        if player.bufferingState == .delayed  || player.bufferingState == .unknown{
-            self.startActivityIndicator()
-        }else {
-            self.stopActivityIndicator()
-        }
-        print("buffering state ",player.bufferingState)
-    }
-    
-    func playerBufferTimeDidChange(_ bufferTime: Double) {
-        
-    }
-    
-    func player(_ player: Player, didFailWithError error: Error?) {
-        
-    }
-    
-    func playerCurrentTimeDidChange(_ player: Player) {
-        
-    }
-    
-    func playerPlaybackWillStartFromBeginning(_ player: Player) {
-        
-    }
-    
-    func playerPlaybackDidEnd(_ player: Player) {
-        
-    }
-    
-    func playerPlaybackWillLoop(_ player: Player) {
-        
-    }
-    
-    func playerPlaybackDidLoop(_ player: Player) {
-        
-    }
-    
-    
-}
+//extension HomeVC:PlayerDelegate ,PlayerPlaybackDelegate{
+//
+//    func playerReady(_ player: Player) {
+////        self.imgVideoThumb.isHidden = true
+//        self.stopActivityIndicator()
+//    }
+//
+//    func playerPlaybackStateDidChange(_ player: Player) {
+//        print("play back state",player.playbackState)
+//    }
+//
+//    func playerBufferingStateDidChange(_ player: Player) {
+//        if player.bufferingState == .delayed  || player.bufferingState == .unknown{
+//            self.startActivityIndicator(touchEnabled:true)
+//        }else {
+//            self.stopActivityIndicator()
+//        }
+//        print("buffering state ",player.bufferingState)
+//    }
+//
+//    func playerBufferTimeDidChange(_ bufferTime: Double) {
+//
+//    }
+//
+//    func player(_ player: Player, didFailWithError error: Error?) {
+//
+//    }
+//
+//    func playerCurrentTimeDidChange(_ player: Player) {
+//
+//    }
+//
+//    func playerPlaybackWillStartFromBeginning(_ player: Player) {
+//
+//    }
+//
+//    func playerPlaybackDidEnd(_ player: Player) {
+//
+//    }
+//
+//    func playerPlaybackWillLoop(_ player: Player) {
+//
+//    }
+//
+//    func playerPlaybackDidLoop(_ player: Player) {
+//
+//    }
+//
+//
+//}
 
 
 extension HomeVC{
@@ -449,6 +502,59 @@ extension HomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         picker.dismiss(animated: true)
     }
 }
+
+
+extension HomeVC {
+    func check() {
+        checkPreload()
+        checkPlay()
+    }
+    
+    func checkPreload() {
+        guard let lastRow = tableViewFeeds.indexPathsForVisibleRows?.last?.row else { return }
+        let feedVMs = viewModel.feeds.map { (feedmodel) -> FeedViewModel in
+            return FeedViewModel(model: feedmodel)
+        }
+        let videoFeedVMs = feedVMs.filter({$0.mediaType == .kVideo})
+        let urls = videoFeedVMs.map { (feedVM) -> URL? in
+            feedVM.mediaUrl
+        }
+        
+        var filterdUrlsWithNotNil = [URL]()
+        urls.forEach { (optionalUrl) in
+            if let url = optionalUrl {
+                filterdUrlsWithNotNil.append(url)
+            }
+        }
+        
+        
+        let finalUrls = filterdUrlsWithNotNil
+            .suffix(from: min(lastRow + 1, filterdUrlsWithNotNil.count))
+            .prefix(2)
+        
+        VideoPreloadManager.shared.set(waiting: Array(finalUrls))
+    }
+
+    func checkPlay() {
+        guard let tableView = tableViewFeeds else {return}
+        let visibleCells = tableView.visibleCells.compactMap { $0 as? FeedsCell }
+        
+        guard visibleCells.count > 0 else { return }
+        
+        let visibleFrame = CGRect(x: 0, y: tableView.contentOffset.y, width: tableView.bounds.width, height: tableView.bounds.height)
+
+        let visibleCell = visibleCells
+            .filter { visibleFrame.intersection($0.frame).height >= $0.frame.height / 2 }
+            .first
+        if visibleCell?.viewModel.mediaType == .kVideo {
+            visibleCell?.pause(reason: .hidden)
+            startActivityIndicator(touchEnabled:true)
+            visibleCell?.play()
+        }
+       
+    }
+}
+
 
 
 extension HomeVC:ViewControllerDescribable {

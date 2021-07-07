@@ -104,9 +104,10 @@ extension WeeklyScheduleViewController:ChallengeViewModelDelegate {
         hideLoader()
         self.getNavController()?.push(SyncWithCalenderVC.self, animated: true, configuration: { (vc) in
             vc.schedulesModel = challenge
-            vc.challengeTitle = self.challengeVM.title ?? ""
-            vc.numberOfWeeks = self.challengeVM.weeksCount ?? 0
+//            vc.challengeTitle = self.challengeVM.title ?? ""
+//            vc.numberOfWeeks = self.challengeVM.weeksCount ?? 0
             vc.screenType = isSkip ? .challengeAccepted : .syncWithCalendar
+            vc.challengeVM = self.challengeVM
         })
     }
 }
@@ -193,10 +194,12 @@ extension WeeklyScheduleViewController:UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collectionViewDragItems {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DragItemCell", for: indexPath) as! DragItemCell
-            cell.lblTitle.text = "Workout"
+            let model = data[collectionView.tag][indexPath.item]
+            cell.lblTitle.isHidden = true
+//            cell.lblTitle.text = model.dummyDisplayName // "Workout" + indexPath.row.description
 //            cell.backgroundColor = UIColor.random()
 //            cell.lblTitle.text = data[collectionView.tag][indexPath.item].title
-            cell.viewContent.backgroundColor = data[collectionView.tag][indexPath.item].color
+            cell.viewContent.backgroundColor = model.color
             if let kdCollectionView = collectionView as? KDDragAndDropCollectionView {
                 
                 if let draggingPathOfCellBeingDragged = kdCollectionView.draggingPathOfCellBeingDragged {
@@ -209,15 +212,20 @@ extension WeeklyScheduleViewController:UICollectionViewDataSource, UICollectionV
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalenderItemCell", for: indexPath) as! CalenderItemCell
         let model = data[collectionView.tag][indexPath.item]
-        cell.lblTitle.text = "Workout"
+        cell.lblTitle.isHidden = true
+//        cell.lblTitle.text = model.dummyDisplayName//"Workout"
 //        cell.lblTitle.text = model.title
             cell.backgroundColor = model.color
+        cell.imageView.isHidden = model.isSelected == false
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collectionViewDragItems {
-            return CGSize(width: 88, height: 36)
+            if let image = UIImage(named: "ic_workout_small") {
+                return CGSize(width: image.size.width + 26, height: 36)
+            }
+            return CGSize(width: 52, height: 36)
         }
         let width :CGFloat = stackViewCVs.frame.width / 7
         return CGSize(width: width, height: 32)
@@ -283,9 +291,9 @@ extension WeeklyScheduleViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellIsDroppableAtIndexPath indexPath: IndexPath) -> Bool {
-        if collectionView == collectionViewDragItems {
-            return false
-        }
+//        if collectionView == collectionViewDragItems {
+//            return false
+//        }
 //        let isAlreadyExistsAnotherElement = data[collectionView.tag].first(where: {$0.isSelected})?.isSelected
 //        print(" is exists ",isAlreadyExistsAnotherElement)
 //        let model = data[collectionView.tag][indexPath.row]

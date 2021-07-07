@@ -35,6 +35,7 @@ class ChallengeInfoHypeVideoVC: BaseViewController {
         setupLabel()
         self.setupPlayer(url: viewModel.videoUrl, on: playerView)
         self.view.backgroundColor = .black
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,12 +62,22 @@ class ChallengeInfoHypeVideoVC: BaseViewController {
     }
     
     @IBAction func actionViewDetails(_ sender: UIButton) {
+      viewDetails()
+    }
+    
+    @objc func swipeUp(_ gesture:UISwipeGestureRecognizer){
+        if gesture.direction == .up {
+            viewDetails()
+        }
+    }
+    
+    private func viewDetails(){
         stopActivityIndicator()
         if player != nil {
             player.stop()
             player.playerDelegate = nil
         }
-        self.getNavController()?.push(ChallengeDescriptionVC.self, animated: true, configuration: { (vc) in
+        self.getNavController()?.push(ChallengeDescriptionVC.self,animated: true, pushTransition: .vertical, configuration: { (vc) in
             vc.viewModel = self.viewModel
         })
     }
@@ -166,6 +177,9 @@ extension ChallengeInfoHypeVideoVC {
             parent.insertSubview(self.player.view, at: 0)
             startActivityIndicator(touchEnabled: true,tintColor:UIColor.white)
             self.player.didMove(toParent: self)
+            let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
+            swipeUp.direction = .up
+            self.player.view.addGestureRecognizer(swipeUp)
         }else {
             AlertView.showNoInternetAlert(on: self) { [weak self](retryAction) in
                 self?.setupPlayer(url: url, on: parent)

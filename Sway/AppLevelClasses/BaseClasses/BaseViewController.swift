@@ -134,21 +134,44 @@ class BaseLoginVC:BaseViewController{
         guard let profileSetup = response?.data?.profileStep else {
             return
         }
+        
+        //*************GET NAVIGATION CONTROLLER *******//
+        var isFound = false
+        var myNavigationController:BaseNavigationController?
+        if self.navigationController?.isModal ?? false{
+            if let presentingNav =  self.navigationController?.presentingViewController?.navigationController as? BaseNavigationController {
+                myNavigationController = presentingNav
+                isFound = true
+            }else if let presentingNav = self.navigationController?.presentingViewController as? BaseNavigationController {
+                isFound = true
+                myNavigationController = presentingNav
+            }
+        }else {
+            myNavigationController = self.getNavController()
+        }
+        
+        
+        //****************END OF GET NAVIGATION CONTROLLER **********//
+        
+        
         let onBoardingStatus = OnboardingStatus(rawValue: profileSetup) ?? .INTRO__VIDEO_ONE
         SwayUserDefaults.shared.onBoardingScreenStatus = onBoardingStatus
         switch onBoardingStatus {
         case .INTRO__VIDEO_ONE:fallthrough
         case .INTRO__VIDEO_TWO:fallthrough
         case .INTRO__VIDEO_THREE:
-            self.getNavController()?.push(OnboardingStartVC.self)
+            myNavigationController?.push(OnboardingStartVC.self)
         case .PROFILE_AGE:
-            self.getNavController()?.push(HowOldVC.self)
+            myNavigationController?.push(HowOldVC.self)
         case .PROFILE_GOAL:
-            self.getNavController()?.push(SelectGoalVC.self)
+            myNavigationController?.push(SelectGoalVC.self)
         case .CHALLENGE_SCREEN:
-            self.getNavController()?.push(OnboardingEndVC.self)
+            myNavigationController?.push(OnboardingEndVC.self)
         case .HOME_SCREEN:
-            self.getNavController()?.push(SwayTabbarVC.self)
+            myNavigationController?.push(SwayTabbarVC.self)
+        }
+        if isFound {
+            self.navigationController?.dismiss(animated: true, completion: nil)
         }
     }
 }
