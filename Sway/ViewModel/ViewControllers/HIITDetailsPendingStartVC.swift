@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import KDCircularProgress
 import ViewControllerDescribable
 
 class HIITDetailsPendingStartVC: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var viewModel:WorkoutContentsVM!
+    var startWorkoutVCDelegate:StartWorkoutVCDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,7 +26,16 @@ class HIITDetailsPendingStartVC: BaseViewController {
     
 
     @IBAction func actionStartWarmup(_ sender: UIButton) {
-        self.navigationController?.popToRootViewController(animated: true)
+       /*
+        self.getNavController()?.push(WorkoutStartCDVC.self, animated: true, pushTransition: .horizontal, configuration: { (vc) in
+            
+        })
+ */
+        
+        self.getNavController()?.push(StartWorkoutVC.self, animated: true, pushTransition: .horizontal, configuration: { [weak self](vc) in
+            vc.viewModel = self?.viewModel
+            vc.delegate = self?.startWorkoutVCDelegate
+        })
     }
 }
 
@@ -54,8 +65,18 @@ extension HIITDetailsPendingStartVC:UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            self.getNavController()?.present(WorkoutInfoVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
+                vc.modalPresentationStyle = .fullScreen
+            }, completion: nil)
+            
+        }
     }
     
     @objc func actionBack(_ sender:UIButton){

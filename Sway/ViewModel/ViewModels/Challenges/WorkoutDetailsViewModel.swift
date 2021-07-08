@@ -61,6 +61,8 @@ class WorkoutDetailsViewModel {
         return workout.name
     }
     
+    var lastSeenItemIndex:Int = -1
+    
     var workoutType:WorkoutType {
         if let type = workout.workOutType ,let workoutIntVal = Int(type){
             let workout = WorkoutType(rawValue: workoutIntVal) ?? .OTHER_CONTENT
@@ -87,13 +89,39 @@ class WorkoutDetailsViewModel {
         if let content = workout.contents?[indexPath.row]{
             cell.lblName.text = content.name
         }
-        cell.lblNumber.text = (indexPath.row + 1).description 
+        cell.lblNumber.text = (indexPath.row + 1).description
+       
+        if lastSeenItemIndex >= 0 {
+            if indexPath.row <= lastSeenItemIndex {
+                cell.cellType = .completed
+            }else if indexPath.row == lastSeenItemIndex + 1 {
+                cell.cellType = .next
+            }else {
+                cell.cellType = .normal
+            }
+        } else {
+            if indexPath.row == 0 {
+                cell.cellType = .next
+            }else {
+                cell.cellType = .normal
+            }
+            
+        }
     }
     
     func getContentVM(at index:Int) -> WorkoutContentsVM? {
         guard let content = workout.contents?[index] else {return nil}
-        return WorkoutContentsVM(content: content)
+        return WorkoutContentsVM(content: content, workoutId: self.workoutId)
     }
+    
+    func markWorkoutAsViewed(workoutId: String, circuitId: String) {
+        guard let contents = workout.contents else {return}
+        guard let indexOfContent = contents.firstIndex(where: {$0.id == circuitId}) else {return}
+        workout.contents?[indexOfContent].isSeen = true
+        lastSeenItemIndex = indexOfContent
+        self.delegate?.reloadData()
+    }
+    
     
 
 }
@@ -103,6 +131,9 @@ extension WorkoutDetailsViewModel{
         ChallengesEndPoint.getWorkoutDetails(for: self.workoutId) { [weak self](response) in
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode <= 300,let workoutData = response.data {
                 self?.workout = workoutData
+                if let lastSeenIndex = self?.workout.contents?.lastIndex(where: {$0.isSeen}) {
+                    self?.lastSeenItemIndex = lastSeenIndex
+                }
                 self?.delegate?.reloadData()
             }else {
                 self?.delegate?.showAlert(with: "Error!", message: response.message ?? "Unknown error")
@@ -114,24 +145,37 @@ extension WorkoutDetailsViewModel{
     }
 }
 
+protocol WorkoutContentsVMDelegate:BaseVMDelegate {
+    func workoutMarkedAsViewed(contentId:String,workoutId:String)
+}
 
 class WorkoutContentsVM {
     
-    let content:Content
-    
+    private let content:Content
+    private let workoutId:String
+    var controller:ViewController = .HIITDetailsPendingStartVC
+    weak var delegate:WorkoutContentsVMDelegate?
     var numberOfSections:Int {
-        return 2
+        if controller == .HIITDetailsPendingStartVC {
+            return 2
+        }
+        return 1
     }
     
     func numberOfItems(in section:Int) -> Int {
-        section == 0 ? 1 : (content.movement?.count ?? 0)
+        if controller == .HIITDetailsPendingStartVC {
+            return section == 0 ? 1 : (content.movement?.count ?? 0)
+        }
+        return content.movement?.count ?? 0
     }
+    
     var numberOfMovements:Int {
         return content.movement?.count ?? 0
     }
     
-    init(content:Content) {
+    init(content:Content,workoutId:String) {
         self.content = content
+        self.workoutId = workoutId
     }
     
 
@@ -154,7 +198,7 @@ class WorkoutContentsVM {
         guard let movement = content.movement?[indexPath.row] else {
             return
         }
-        if let urlStr = movement.media?.thumbnailImage{
+        if let urlStr = movement.media?.imageUrl{
             cell.imgVideoThumb.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVideoThumb.sd_setImage(with: URL(string: urlStr), completed: nil)
         }
@@ -162,4 +206,65 @@ class WorkoutContentsVM {
         cell.lblRepetetion.text = (movement.repetationDuration?.count ?? 0).description + " Reps"
         
     }
+    
+    func getMovementVM(at index:Int) -> MovementViewModel{
+        return MovementViewModel(movement: content.movement![index])
+    }
+    
+    func getVideoUrlsInMovements() -> [URL]{
+        var urls = [URL]()
+        if let movements = self.content.movement {
+            for movement in movements {
+                if let url = URL(string: "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4") {
+                    urls.append(url)
+                }
+//                if let urlStr = movement.media?.mainVideoUrl,let url = URL(string: urlStr) {
+//                    
+//                    urls.append(url)
+//                }
+            }
+        }
+        return urls
+    }
+    
+    func markAsCompleted(){
+        if let circuitId = content.id {
+            ChallengesEndPoint.markWorkoutAsSeen(for: self.workoutId, circuitId: circuitId) { [weak self](response) in
+                if response.statusCode == 200 {
+                    self?.delegate?.workoutMarkedAsViewed(contentId: circuitId, workoutId: self!.workoutId)
+                }else {
+                    self?.delegate?.showAlert(with: Constants.Messages.kError, message: response.message ?? Constants.Messages.kUnknownError)
+                }
+            } failure: { [weak self](status) in
+                self?.delegate?.showAlert(with: Constants.Messages.kError, message: status.msg)
+            }
+            
+        }
+        //        ChallengesEndPoint.markWorkoutAsSeen(workoutId: workoutId, circuitId: content.)
+        //        ChallengesEndPoint.markWorkoutAsSeen(workoutId: <#T##String#>, circuitId: <#T##String#>)
+    }
+}
+
+class MovementViewModel {
+    let movement:Movement
+    
+    init(movement:Movement) {
+        self.movement = movement
+    }
+    
+    var videoThumb:URL? {
+        if let urlStr = movement.media?.imageUrl {
+            return URL(string: urlStr)
+        }
+        return nil
+    }
+    
+    var mainVideoUrl:URL? {
+        if let urlStr = movement.media?.mainVideoUrl {
+            return URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
+//            return URL(string: urlStr)
+        }
+        return nil
+    }
+
 }

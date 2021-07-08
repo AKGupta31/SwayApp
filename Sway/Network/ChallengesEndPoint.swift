@@ -25,4 +25,10 @@ class ChallengesEndPoint {
     static func getWorkoutDetails(for workoutId:String,success: @escaping SuccessCompletionBlock<WorkoutDetailsResponse>, failure: @escaping ErrorFailureCompletionBlock) {
         Api.requestNew(endpoint: .getWorkoutDetail(workoutId: workoutId), type: WorkoutDetailsResponse.self, successHandler: success, failureHandler: failure)
     }
+    
+    
+    
+    static func markWorkoutAsSeen(for workoutId:String,circuitId:String,success: @escaping SuccessCompletionBlock<WorkoutHistoryResponse>, failure: @escaping ErrorFailureCompletionBlock){
+        Api.requestNew(endpoint: .markCircuitAsSeen(workoutId: workoutId, circuitId: circuitId), type: WorkoutHistoryResponse.self, successHandler: success, failureHandler: failure)
+    }
 }

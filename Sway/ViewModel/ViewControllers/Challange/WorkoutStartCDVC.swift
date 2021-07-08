@@ -107,7 +107,7 @@ class WorkoutStartCDVC: BaseViewController {
     }
     
     @IBAction func actionInfo(_ sender: UIButton) {
-        self.navigationController?.present(ChallengeInfoVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
+        self.navigationController?.present(WorkoutInfoVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
             vc.modalPresentationStyle = .overFullScreen
         }, completion: nil)
     }

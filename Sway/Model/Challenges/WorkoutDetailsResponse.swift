@@ -228,7 +228,7 @@ struct WorkoutResponseData : Codable {
     let intensityLevel : String?
     let workOutType : String?
     let description : String?
-    let contents : [Content]?
+    var contents : [Content]?
     let imageUrl : ImageUrl?
     let equipmentRequired : Bool
     let spaceRecommendation : String?
@@ -283,12 +283,13 @@ struct ImageUrl : Codable {
 
 
 struct Content : Codable {
+    let id:String?
     let name : String?
     let description : String?
     let movement : [Movement]?
     let totalCount : Int?
     let toalHistoryCount : Int?
-    let isSeen : Bool?
+    var isSeen : Bool = false
     let equipmentRequired:Bool
     let intensityLevel : String?
 
@@ -302,6 +303,7 @@ struct Content : Codable {
         case isSeen = "isSeen"
         case equipmentRequired = "equipmentRequired"
         case intensityLevel = "intensityLevel"
+        case id = "_id"
     }
 
     init(from decoder: Decoder) throws {
@@ -311,9 +313,10 @@ struct Content : Codable {
         movement = try values.decodeIfPresent([Movement].self, forKey: .movement)
         totalCount = try values.decodeIfPresent(Int.self, forKey: .totalCount)
         toalHistoryCount = try values.decodeIfPresent(Int.self, forKey: .toalHistoryCount)
-        isSeen = try values.decodeIfPresent(Bool.self, forKey: .isSeen)
+        isSeen = try values.decodeIfPresent(Bool.self, forKey: .isSeen) ?? false
         equipmentRequired = try values.decodeIfPresent(Bool.self, forKey: .equipmentRequired) ?? false
         intensityLevel = try values.decodeIfPresent(String.self, forKey: .intensityLevel)
+        id = try values.decodeIfPresent(String.self, forKey: .id)
     }
 
 }
@@ -323,7 +326,7 @@ struct Movement : Codable {
     let exerciseFor : [String]?
     let name : String?
     let repetationDuration : RepetationDuration?
-    let media : Media?
+    let media : WorkoutMedia?
 
     enum CodingKeys: String, CodingKey {
 
@@ -338,7 +341,7 @@ struct Movement : Codable {
         exerciseFor = try values.decodeIfPresent([String].self, forKey: .exerciseFor)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         repetationDuration = try values.decodeIfPresent(RepetationDuration.self, forKey: .repetationDuration)
-        media = try values.decodeIfPresent(Media.self, forKey: .media)
+        media = try values.decodeIfPresent(WorkoutMedia.self, forKey: .media)
     }
 
 }

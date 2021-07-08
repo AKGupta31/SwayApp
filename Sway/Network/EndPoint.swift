@@ -35,6 +35,7 @@ enum Endpoint {
     case createChallenge(challengeId:String,startDate:Int,endDate:Int,schedules:[Schedules])
     
     case getWorkoutDetail(workoutId:String)
+    case markCircuitAsSeen(workoutId:String,circuitId:String)
 
     
     
@@ -49,6 +50,8 @@ enum Endpoint {
             return .get
         case .postFeed(let feedId,_,_,_,_,_,_):
             return feedId.isEmpty ? .post : .patch
+        case .markCircuitAsSeen:
+            return .post
         }
     }
     
@@ -120,6 +123,8 @@ enum Endpoint {
             return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge"
         case .getWorkoutDetail(let workoutId):
             return Constants.Networking.kBaseUrl + interMediate + "workout/\(workoutId)"
+        case .markCircuitAsSeen:
+            return Constants.Networking.kBaseUrl + interMediate + "workout-history"
         }
     }
     
@@ -183,6 +188,8 @@ enum Endpoint {
                 "endDate":endDate,
                 "schedules":scheduleDictArray
             ]
+        case .markCircuitAsSeen(let workoutId,let circuitId):
+            return ["workOutId":workoutId,"circuitId":circuitId]
         }
     }
     
@@ -194,7 +201,7 @@ enum Endpoint {
             return HTTPHeaders(headers)
         case .verifyEmail:
             return HTTPHeaders(headers)
-        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment,.getChallenges,.getChallengeDetail,.createChallenge,.getWorkoutDetail:
+        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment,.getChallenges,.getChallengeDetail,.createChallenge,.getWorkoutDetail,.markCircuitAsSeen:
             headers["authorization"] = "bearer " + (DataManager.shared.loggedInUser?.user?.accessToken ?? "")
             return HTTPHeaders(headers)
         }

@@ -73,11 +73,11 @@ extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "HIITItemCell", for: indexPath) as! HIITItemCell
             viewModel.setupCell(cell: cell, indexPath: indexPath)
-            if indexPath.row == 0 {
-                cell.cellType = .next
-            }else {
-                cell.cellType = .normal
-            }
+//            if indexPath.row == 0 {
+//                cell.cellType = .next
+//            }else {
+//                cell.cellType = .normal
+//            }
 //            if indexPath.row == 0 {
 //                cell.cellType = .completed
 //            }else if indexPath.row == 1 {
@@ -105,6 +105,7 @@ extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
             if let contentVM = viewModel.getContentVM(at: indexPath.row) {
                 self.getNavController()?.push(HIITDetailsPendingStartVC.self, animated: true, configuration: { (vc) in
                     vc.viewModel = contentVM
+                    vc.startWorkoutVCDelegate = self
                 })
             }
         }
@@ -114,6 +115,12 @@ extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
         self.navigationController?.popViewController(animated: true)
     }
     
+}
+
+extension HIITDetailsVC:StartWorkoutVCDelegate {
+    func markWorkoutAsViewed(workoutId: String, circuitId: String) {
+        viewModel.markWorkoutAsViewed(workoutId: workoutId, circuitId: circuitId)
+    }
 }
 
 extension HIITDetailsVC:ViewControllerDescribable {

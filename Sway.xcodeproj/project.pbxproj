@@ -16,6 +16,7 @@
 		8414794B2653F7C2007614BC /* AddVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414794A2653F7C2007614BC /* AddVideoViewModel.swift */; };
 		8414794E2653FAA1007614BC /* VideoUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414794D2653FAA1007614BC /* VideoUtility.swift */; };
 		84154D1D266A5695001D6DA2 /* SyncWithCalenderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84154D1C266A5695001D6DA2 /* SyncWithCalenderVC.swift */; };
+		841B00A72697305E005821DB /* WorkoutHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841B00A62697305E005821DB /* WorkoutHistoryResponse.swift */; };
 		842364E82642FD5E001DA7E6 /* AWSUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842364E72642FD5E001DA7E6 /* AWSUploadController.swift */; };
 		842365F22643CD33001DA7E6 /* VerifyOtpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842365F12643CD33001DA7E6 /* VerifyOtpResponse.swift */; };
 		842365F52643FF80001DA7E6 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842365F42643FF80001DA7E6 /* HomeVC.swift */; };
@@ -97,6 +98,8 @@
 		8460EA83265789AF00DB577A /* FeedsEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8460EA82265789AF00DB577A /* FeedsEndPoint.swift */; };
 		8460EA872657E23E00DB577A /* HomeVCOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8460EA862657E23D00DB577A /* HomeVCOld.swift */; };
 		84649A242660AF1300583971 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84649A232660AF1300583971 /* Date+Ext.swift */; };
+		846822952695840A00777CA3 /* StartWorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846822942695840A00777CA3 /* StartWorkoutVC.swift */; };
+		8468229926959E2600777CA3 /* StartWorkoutVideoWithTimerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8468229826959E2600777CA3 /* StartWorkoutVideoWithTimerCell.swift */; };
 		8469BB672660E15D005BCE0C /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469BB662660E15D005BCE0C /* UIViewController+Ext.swift */; };
 		847D64ED264BB7F5006E8F95 /* GoalOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D64EC264BB7F5006E8F95 /* GoalOptionView.swift */; };
 		847D64F0264BBE7E006E8F95 /* SelectGoalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D64EF264BBE7E006E8F95 /* SelectGoalVC.swift */; };
@@ -175,7 +178,7 @@
 		84FA938F267D01C100DFF918 /* ChallengeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA938E267D01C100DFF918 /* ChallengeSelectionCell.swift */; };
 		84FA94A6267FCF3200DFF918 /* WorkoutStartCDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA94A5267FCF3200DFF918 /* WorkoutStartCDVC.swift */; };
 		84FB7A3326806D48006D9E57 /* CircularStd-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84FB7A3226806D48006D9E57 /* CircularStd-Black.otf */; };
-		84FB7A372680866E006D9E57 /* ChallengeInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB7A362680866E006D9E57 /* ChallengeInfoVC.swift */; };
+		84FB7A372680866E006D9E57 /* WorkoutInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB7A362680866E006D9E57 /* WorkoutInfoVC.swift */; };
 		84FB7A3A268090BA006D9E57 /* HIITDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB7A39268090BA006D9E57 /* HIITDetailsVC.swift */; };
 		84FB7A3D26809E75006D9E57 /* HIITDetailsBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB7A3C26809E75006D9E57 /* HIITDetailsBanner.swift */; };
 		84FB7A4026809E90006D9E57 /* HIITDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB7A3F26809E90006D9E57 /* HIITDescriptionCell.swift */; };
@@ -196,6 +199,7 @@
 		8414794A2653F7C2007614BC /* AddVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVideoViewModel.swift; sourceTree = "<group>"; };
 		8414794D2653FAA1007614BC /* VideoUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoUtility.swift; sourceTree = "<group>"; };
 		84154D1C266A5695001D6DA2 /* SyncWithCalenderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncWithCalenderVC.swift; sourceTree = "<group>"; };
+		841B00A62697305E005821DB /* WorkoutHistoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryResponse.swift; sourceTree = "<group>"; };
 		842364E72642FD5E001DA7E6 /* AWSUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSUploadController.swift; sourceTree = "<group>"; };
 		842365F12643CD33001DA7E6 /* VerifyOtpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOtpResponse.swift; sourceTree = "<group>"; };
 		842365F42643FF80001DA7E6 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 		8460EA82265789AF00DB577A /* FeedsEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsEndPoint.swift; sourceTree = "<group>"; };
 		8460EA862657E23D00DB577A /* HomeVCOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCOld.swift; sourceTree = "<group>"; };
 		84649A232660AF1300583971 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		846822942695840A00777CA3 /* StartWorkoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutVC.swift; sourceTree = "<group>"; };
+		8468229826959E2600777CA3 /* StartWorkoutVideoWithTimerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutVideoWithTimerCell.swift; sourceTree = "<group>"; };
 		8469BB662660E15D005BCE0C /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		847D64EC264BB7F5006E8F95 /* GoalOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOptionView.swift; sourceTree = "<group>"; };
 		847D64EF264BBE7E006E8F95 /* SelectGoalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGoalVC.swift; sourceTree = "<group>"; };
@@ -358,7 +364,7 @@
 		84FA938E267D01C100DFF918 /* ChallengeSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeSelectionCell.swift; sourceTree = "<group>"; };
 		84FA94A5267FCF3200DFF918 /* WorkoutStartCDVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStartCDVC.swift; sourceTree = "<group>"; };
 		84FB7A3226806D48006D9E57 /* CircularStd-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Black.otf"; sourceTree = "<group>"; };
-		84FB7A362680866E006D9E57 /* ChallengeInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInfoVC.swift; sourceTree = "<group>"; };
+		84FB7A362680866E006D9E57 /* WorkoutInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInfoVC.swift; sourceTree = "<group>"; };
 		84FB7A39268090BA006D9E57 /* HIITDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIITDetailsVC.swift; sourceTree = "<group>"; };
 		84FB7A3C26809E75006D9E57 /* HIITDetailsBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIITDetailsBanner.swift; sourceTree = "<group>"; };
 		84FB7A3F26809E90006D9E57 /* HIITDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIITDescriptionCell.swift; sourceTree = "<group>"; };
@@ -523,6 +529,7 @@
 		843470482624744400566FB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8468229726959DF600777CA3 /* Workouts */,
 				84FB98232683350700827DDE /* ChallengeDescription */,
 				84FA93BD267D080000DFF918 /* ButtonCarousel */,
 				84A5FB8C26723E4E00014C48 /* ShimmerView */,
@@ -748,6 +755,14 @@
 			path = Feeds;
 			sourceTree = "<group>";
 		};
+		8468229726959DF600777CA3 /* Workouts */ = {
+			isa = PBXGroup;
+			children = (
+				8468229826959E2600777CA3 /* StartWorkoutVideoWithTimerCell.swift */,
+			);
+			path = Workouts;
+			sourceTree = "<group>";
+		};
 		84971165264A413A00BB09DE /* OnBoarding1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -775,6 +790,7 @@
 				84D8AFF22685B70B00A03169 /* ChallengeSchedulesModel.swift */,
 				84B675EE2683634700AD14FB /* GetChallengesResponse.swift */,
 				8435865D2689A25A0026B389 /* WorkoutDetailsResponse.swift */,
+				841B00A62697305E005821DB /* WorkoutHistoryResponse.swift */,
 			);
 			path = Challenges;
 			sourceTree = "<group>";
@@ -894,8 +910,9 @@
 				84D6C55A2679D4D000A50381 /* WeeklyScheduleViewController.swift */,
 				84FA9384267B726E00DFF918 /* ChallengeSelectionVC.swift */,
 				84FA94A5267FCF3200DFF918 /* WorkoutStartCDVC.swift */,
-				84FB7A362680866E006D9E57 /* ChallengeInfoVC.swift */,
+				84FB7A362680866E006D9E57 /* WorkoutInfoVC.swift */,
 				84FB7A39268090BA006D9E57 /* HIITDetailsVC.swift */,
+				846822942695840A00777CA3 /* StartWorkoutVC.swift */,
 			);
 			path = Challange;
 			sourceTree = "<group>";
@@ -1146,6 +1163,7 @@
 				842AE408265E7BE2002E9BC7 /* CommentsVC.swift in Sources */,
 				84B675F9268398B300AD14FB /* CustomPageControl.swift in Sources */,
 				8460EA872657E23E00DB577A /* HomeVCOld.swift in Sources */,
+				8468229926959E2600777CA3 /* StartWorkoutVideoWithTimerCell.swift in Sources */,
 				843F52F62652679B00B3288C /* FeedsCell.swift in Sources */,
 				84347030262470D500566FB2 /* AppDelegate.swift in Sources */,
 				8434706326247A6A00566FB2 /* ResponseStatus.swift in Sources */,
@@ -1196,6 +1214,7 @@
 				84595BBD262DB2DB009605F5 /* UIApplication+Ext.swift in Sources */,
 				84C6D23F2625FD6000DD2CBC /* UITapGesture+Ext.swift in Sources */,
 				84F3364F2667A6E40091B990 /* SubscriptionVC.swift in Sources */,
+				846822952695840A00777CA3 /* StartWorkoutVC.swift in Sources */,
 				84F336D92669510E0091B990 /* ButtonsCarouselView.swift in Sources */,
 				84595BA9262DA3D0009605F5 /* UserManager.swift in Sources */,
 				8460EA792656D83C00DB577A /* MySubmissionsVC.swift in Sources */,
@@ -1230,6 +1249,7 @@
 				84D8AFF32685B70B00A03169 /* ChallengeSchedulesModel.swift in Sources */,
 				84F336DE266952410091B990 /* RoundedButtonView.swift in Sources */,
 				84F3367B2668A7050091B990 /* ImageUtility.swift in Sources */,
+				841B00A72697305E005821DB /* WorkoutHistoryResponse.swift in Sources */,
 				847D64F0264BBE7E006E8F95 /* SelectGoalVC.swift in Sources */,
 				8469BB672660E15D005BCE0C /* UIViewController+Ext.swift in Sources */,
 				8453F7B326272D2700EC9B83 /* CustomButton.swift in Sources */,
@@ -1240,7 +1260,7 @@
 				842AE405265E7370002E9BC7 /* ViewImageVC.swift in Sources */,
 				842AE494265FE0F1002E9BC7 /* CommentCell.swift in Sources */,
 				84595B9A262D5B67009605F5 /* AppleLoginManagersDelegate.swift in Sources */,
-				84FB7A372680866E006D9E57 /* ChallengeInfoVC.swift in Sources */,
+				84FB7A372680866E006D9E57 /* WorkoutInfoVC.swift in Sources */,
 				84FB9833268347D700827DDE /* ChallengeDescriptionCell.swift in Sources */,
 				843B993A2628026900DA1681 /* Register1VC.swift in Sources */,
 				84FA9385267B726E00DFF918 /* ChallengeSelectionVC.swift in Sources */,
