@@ -8,7 +8,7 @@
 import Foundation
 
 class PlannerEndPoint {
-    static func getSchedule(startDate:Int,dayOfWeek:Int,success: @escaping SuccessCompletionBlock<PlannerSchedulesDayWiseResponse>, failure: @escaping ErrorFailureCompletionBlock) {
-        Api.requestNew(endpoint: .getPlannerWorkouts(startDateInMilis: startDate, dayOfWeek: dayOfWeek) , type: PlannerSchedulesDayWiseResponse.self, successHandler: success, failureHandler: failure)
+    static func getSchedule(startDate:Int,endDate:Int,dayOfWeek:Int,success: @escaping SuccessCompletionBlock<PlannerSchedulesDayWiseResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .getPlannerWorkouts(startDateInMilis: startDate,endDateInMilis:endDate, dayOfWeek: dayOfWeek) , type: PlannerSchedulesDayWiseResponse.self, successHandler: success, failureHandler: failure)
     }
 }

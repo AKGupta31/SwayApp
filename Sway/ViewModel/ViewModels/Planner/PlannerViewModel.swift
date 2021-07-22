@@ -32,8 +32,11 @@ class DateViewModel {
         return dateModel.date.getFormattedDate(format: .mmmddYYYY)
     }
     
-    var dayInMilis:Int {
-        return dateModel.date.millisecondsSince1970
+    var startDateEndDateInMilis:(Int,Int) {
+        let startOfDay = Calendar.current.startOfDay(for: dateModel.date)
+        let components = DateComponents(hour: 23, minute: 59, second: 59)
+        let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)!
+        return (startOfDay.millisecondsSince1970,endOfDay.millisecondsSince1970)
     }
 }
 
@@ -111,7 +114,8 @@ extension PlannerViewModel {
     func getDayWiseSchedulesForSelectedDate(){
         DispatchQueue.global(qos: .background).async {
             let dateVM = self.getDateViewModel(at: IndexPath(row: self.selectedDateIndex, section: 0))
-            PlannerEndPoint.getSchedule(startDate: dateVM.dayInMilis, dayOfWeek: dateVM.dayOfWeek.dayOfTheWeekIntWRTAndroid) { [weak self](response) in
+            let (startDate,endDate) = dateVM.startDateEndDateInMilis
+            PlannerEndPoint.getSchedule(startDate: startDate, endDate: endDate, dayOfWeek: dateVM.dayOfWeek.dayOfTheWeekIntWRTAndroid) { [weak self](response) in
                 if let schedules = response.data?.schedules {
                     self?.dayWiseSchedules = schedules
                 }

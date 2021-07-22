@@ -294,9 +294,6 @@ extension ScheduleLibraryWorkoutVC:UICollectionViewDataSource, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DragItemCell", for: indexPath) as! DragItemCell
             let model = data[collectionView.tag][indexPath.item]
             cell.lblTitle.isHidden = true
-            //            cell.lblTitle.text = model.dummyDisplayName // "Workout" + indexPath.row.description
-            //            cell.backgroundColor = UIColor.random()
-            //            cell.lblTitle.text = data[collectionView.tag][indexPath.item].title
             cell.viewContent.backgroundColor = model.color
             if let kdCollectionView = collectionView as? KDDragAndDropCollectionView {
                 
@@ -311,10 +308,12 @@ extension ScheduleLibraryWorkoutVC:UICollectionViewDataSource, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalenderItemCell", for: indexPath) as! CalenderItemCell
         let model = data[collectionView.tag][indexPath.item]
         cell.lblTitle.isHidden = true
-        //        cell.lblTitle.text = model.dummyDisplayName//"Workout"
-        //        cell.lblTitle.text = model.title
-        cell.backgroundColor = model.color
-        //cell.imageView.isHidden = model.isSelected == false
+        if model.color == UIColor.clear {
+            cell.backgroundColor = UIColor.random().withAlphaComponent(0.25)
+        }else {
+            cell.backgroundColor = model.color
+        }
+        
         return cell
     }
     
@@ -412,15 +411,6 @@ extension ScheduleLibraryWorkoutVC {
         if data[collectionView.tag][indexPath.row].isPreviouslyScheduled {
             return false
         }
-//        if collectionView == collectionViewDragItems {
-//            return false
-//        }
-//        let isAlreadyExistsAnotherElement = data[collectionView.tag].first(where: {$0.isSelected})?.isSelected
-//        print(" is exists ",isAlreadyExistsAnotherElement)
-//        let model = data[collectionView.tag][indexPath.row]
-//        if model.rowTag != collectionView.tag{
-//            return false
-//        }
         print("collection view tag",collectionView.tag)
         return true
     }

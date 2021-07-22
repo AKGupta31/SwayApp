@@ -41,7 +41,7 @@ enum Endpoint {
     case getFilters
     case getWorkoutSchedules //Schedules for current week
     case addWorkoutSchedule(workout:WorkoutModel,isUpdate:Bool)
-    case getPlannerWorkouts(startDateInMilis:Int,dayOfWeek:Int)
+    case getPlannerWorkouts(startDateInMilis:Int,endDateInMilis:Int,dayOfWeek:Int)
     
     /// GET, POST or PUT method for each request
     var method:Alamofire.HTTPMethod {
@@ -239,8 +239,8 @@ enum Endpoint {
             return keyValue
         case .addWorkoutSchedule(let model,let isUpdate):
             return model.toParams(isUpdate: isUpdate)
-        case .getPlannerWorkouts(let startDateInMilis,let dayOfWeek):
-            return  ["startDate":startDateInMilis,"dayOfTheWeek":dayOfWeek]
+        case .getPlannerWorkouts(let startDateInMilis,let endDate,_):
+            return  ["startDate":startDateInMilis,"endDate":endDate]
         }
     }
     
