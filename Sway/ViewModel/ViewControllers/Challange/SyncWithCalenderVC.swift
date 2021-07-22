@@ -17,6 +17,7 @@ enum SyncWithCalendarScreenType:Int {
 class SyncWithCalenderVC: BaseViewController {
     @IBOutlet weak var btnSkip: UIButton!
     
+    @IBOutlet weak var imgTitleImage: UIImageView!
     @IBOutlet weak var btnICalendar: CustomButton!
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
@@ -82,6 +83,7 @@ class SyncWithCalenderVC: BaseViewController {
             let title = self.challengeVM.title ?? ""
             lblDescription.text = "You accepted \(weeks) Week \(title). We’re excited to kickstart your fitness journey with you!"
             btnICalendar.setTitle("VIEW MY PLANNER", for: .normal)
+            imgTitleImage.image = UIImage(named: "ic_challanges accepted")
         }
     }
     
@@ -189,64 +191,11 @@ extension SyncWithCalenderVC:ViewControllerDescribable {
 }
 
 
-extension Date {
-    
-    static func today() -> Date {
-        return Date()
-    }
-    
-    func next(_ weekday: Weekday, considerToday: Bool = false) -> Date {
-        return get(.next,
-                   weekday,
-                   considerToday: considerToday)
-    }
-    
-    func previous(_ weekday: Weekday, considerToday: Bool = false) -> Date {
-        return get(.previous,
-                   weekday,
-                   considerToday: considerToday)
-    }
-    
-    func get(_ direction: SearchDirection,
-             _ weekDay: Weekday,
-             considerToday consider: Bool = false) -> Date {
-        
-        let dayName = weekDay.name
-        
-        let weekdaysName = getWeekDaysInEnglish().map { $0.lowercased() }
-        
-        assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
-        
-        let searchWeekdayIndex = weekdaysName.firstIndex(of: dayName)! + 1
-        
-        let calendar = Calendar(identifier: .gregorian)
-        
-        if consider && calendar.component(.weekday, from: self) == searchWeekdayIndex {
-            return self
-        }
-        
-        var nextDateComponent = calendar.dateComponents([.hour, .minute, .second], from: self)
-        nextDateComponent.weekday = searchWeekdayIndex
-        
-        let date = calendar.nextDate(after: self,
-                                     matching: nextDateComponent,
-                                     matchingPolicy: .nextTime,
-                                     direction: direction.calendarSearchDirection)
-        
-        return date!
-    }
-    
-}
+
 
 // MARK: Helper methods
 
-enum Weekday: Int {
-    case monday = 1, tuesday = 2, wednesday = 3, thursday = 4, friday = 5, saturday = 6, sunday = 7
-    
-    var name:String {
-        return String(describing: self)
-    }
-}
+
 extension Date {
     func getWeekDaysInEnglish() -> [String] {
         var calendar = Calendar(identifier: .gregorian)

@@ -134,7 +134,7 @@ class AWSUploadController {
         
         let expression = AWSS3TransferUtilityUploadExpression()
         let transferUtility = AWSS3TransferUtility.default()
-        let pathExt = url.pathExtension
+        let pathExt = url.pathExtension.lowercased()
         let name = "\(Int(Date().timeIntervalSince1970))." + pathExt
         let progressBlock: AWSS3TransferUtilityProgressBlock = {(task, progres) in
             DispatchQueue.main.async(execute: {

@@ -20,6 +20,6 @@ class ChallengeSelectionCell: UICollectionViewCell {
         lblTitle.text = viewModel.title
         imgChallengeBanner.sd_imageIndicator = SDWebImageActivityIndicator.gray
         imgChallengeBanner.sd_setImage(with: viewModel.bannerUrl, completed: nil)
-        lblWorkoutType.text = ""
+//        lblWorkoutType.text = ""
     }
 }

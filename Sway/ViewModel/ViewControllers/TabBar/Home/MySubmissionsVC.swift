@@ -19,7 +19,7 @@ class MySubmissionsVC: BaseTabBarViewController {
         collectionViewSubmissions.dataSource = self
         collectionViewSubmissions.delegate = self
         refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .clear
+        refreshControl.tintColor = .gray
         refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
         self.collectionViewSubmissions.addSubview(refreshControl)
         if viewModel == nil {
@@ -35,7 +35,7 @@ class MySubmissionsVC: BaseTabBarViewController {
     }
     
     @objc func refreshData(_ refreshControl:UIRefreshControl){
-        refreshControl.endRefreshing()
+//        refreshControl.endRefreshing()
         viewModel.refreshData()
     }
     
@@ -43,6 +43,7 @@ class MySubmissionsVC: BaseTabBarViewController {
 
 extension MySubmissionsVC: FeedsViewModelDelegate {
     func reloadData() {
+        refreshControl.endRefreshing()
         hideLoader()
         self.collectionViewSubmissions.reloadData()
     }
@@ -53,6 +54,7 @@ extension MySubmissionsVC: FeedsViewModelDelegate {
     }
     
     func reloadRow(at indexPath: IndexPath) {
+        refreshControl.endRefreshing()
         hideLoader()
         self.collectionViewSubmissions.reloadItems(at: [indexPath])
     }

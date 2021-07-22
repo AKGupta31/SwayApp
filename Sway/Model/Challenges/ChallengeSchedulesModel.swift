@@ -78,11 +78,15 @@ public class ChallengeSchedulesModel {
 
 }
 
+
 public class Schedules {
     public var workoutId : String?
     public var startTime : Int?
     public var endTime : Int?
     public var dayOfTheWeek:Int?
+    
+    
+    
     
 /**
     Returns an array of models based on given dictionary.
@@ -136,14 +140,12 @@ public class Schedules {
         return dictionary
     }
     
-    public func toParams() -> [String:Any] {
-
+    public func toParamsForChallengeSchedule() -> [String:Any] {
         var dictionary = [String:Any]()
         dictionary["workoutId"] = self.workoutId
         dictionary["startTime"] = (self.startTime ?? 0) * 60
         dictionary["endTime"] = (self.endTime ?? 0) * 60
-
+        dictionary["dayOfTheWeek"] = (self.dayOfTheWeek ?? 1)
         return dictionary
     }
-
 }

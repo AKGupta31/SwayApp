@@ -135,6 +135,7 @@ PODS:
     - SDWebImage/Core (= 5.11.0)
   - SDWebImage/Core (5.11.0)
   - SkyFloatingLabelTextField (3.8.0)
+  - SnapKit (5.0.1)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (4.0.1)
   - Toast-Swift (5.0.1)
@@ -164,6 +165,7 @@ DEPENDENCIES:
   - Player (~> 0.13.2)
   - SDWebImage (~> 5.0)
   - SkyFloatingLabelTextField (~> 3.0)
+  - SnapKit (~> 5.0.0)
   - SVProgressHUD
   - SwiftKeychainWrapper
   - Toast-Swift (~> 5.0.1)
@@ -210,6 +212,7 @@ SPEC REPOS:
     - PromisesObjC
     - SDWebImage
     - SkyFloatingLabelTextField
+    - SnapKit
     - SVProgressHUD
     - SwiftKeychainWrapper
     - Toast-Swift
@@ -255,12 +258,13 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: c6659a769aa2ba107cb179bd0d272f41ff6b0106
+PODFILE CHECKSUM: 1ac09a82db05023dcbde1b95ed31e37ee280c3af
 
 COCOAPODS: 1.10.1

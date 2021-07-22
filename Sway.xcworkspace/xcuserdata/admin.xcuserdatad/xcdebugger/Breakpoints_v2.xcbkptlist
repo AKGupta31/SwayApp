@@ -7,33 +7,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EFAEE52B-5EBB-4CA3-9093-906486309E6C"
+            uuid = "26D030C3-38E4-41CE-AD79-0F76B4F94417"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sway/UI/Views/Workouts/StartWorkoutVideoWithTimerCell.swift"
+            filePath = "Sway/Network/ChallengesEndPoint.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "StartWorkoutVideoWithTimerCell"
-            landmarkType = "3">
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "markWorkoutAsSeen(for:circuitId:challengeId:success:failure:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1FB16C35-8146-40C8-924C-BE69AA345574"
+            uuid = "8036E297-300F-4413-ADC9-D4D9A2C2753C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sway/UI/Views/Workouts/StartWorkoutVideoWithTimerCell.swift"
+            filePath = "Sway/ViewModel/ViewControllers/HIITDetailsPendingStartVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "StartWorkoutVideoWithTimerCell"
-            landmarkType = "3">
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

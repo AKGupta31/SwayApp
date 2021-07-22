@@ -11,6 +11,7 @@ import KDCircularProgress
 import GSPlayer
 import AVFoundation
 
+
 protocol StartWorkoutVCDelegate:class {
     func markWorkoutAsViewed(workoutId:String,circuitId:String)
 }
@@ -33,9 +34,23 @@ class StartWorkoutVC: BaseViewController {
     var timer:Timer!
     var i = 10
     var progressCount:Double = 0
-    var playerView:VideoPlayerView!
+    var timeObserverToken: Any?
+//    var playerView:VideoPlayerView!
+//    var player:AVPlayer!
+    var playerLayer:AVPlayerLayer!
+    
     var videoProgress:KDCircularProgress!
     weak var delegate:StartWorkoutVCDelegate?
+
+    var playerItemContext = 0
+    
+    lazy var imgPlay:UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "ic_pause"))
+        imageView.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
+        self.view.addSubview(imageView)
+        return imageView
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +61,23 @@ class StartWorkoutVC: BaseViewController {
         tableViewWorkouts.contentInsetAdjustmentBehavior  = .never
         tableViewWorkouts.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         checkPreload()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnPlayer(_:)))
+        self.view.addGestureRecognizer(tap)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.btnCross.isEnabled = false
+            self.setupProgressView()
+            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.actionTimer(_:)), userInfo: nil, repeats: true)
+            self.showNextVideoName(currentCellIndex: 0)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidEndPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(videoStalled(_:)),
+                                                      name: NSNotification.Name.AVPlayerItemPlaybackStalled, object: nil)
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func videoStalled(_ notification:Notification){
+        print("video stalled")
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,20 +90,37 @@ class StartWorkoutVC: BaseViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        btnCross.isEnabled = false
-        setupProgressView()
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(actionTimer(_:)), userInfo: nil, repeats: true)
-    }
+
 
     @IBAction func actionCross(_ sender: UIButton) {
-        pause(reason: .hidden)
-        if playerView != nil && playerView.superview != nil{
-            playerView.removeFromSuperview()
-            playerView = nil
+        if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell,let vm = cell.viewModel{
+            let wasPlayingBefore = vm.player.timeControlStatus == .playing
+            pause(reason: .userInteraction)
+            self.getNavController()?.present(WorkoutEndAlertVC.self, navigationEnabled: false, animated: false, configuration: { (vc) in
+                vc.modalPresentationStyle = .overCurrentContext
+                vc.videoThumbnail = cell.imgVideoThumb.image
+                vc.wasPlayingBeforeComingToTheScreen = wasPlayingBefore
+                vc.actionQuit = {[weak self](wasPlayingBefore,workoutEndVC) in
+                    self?.navigationController?.popViewController(animated: true)
+                    self?.removeObservers()
+                    workoutEndVC.dismiss(animated: true, completion: nil)
+                }
+                vc.actionResume = {(wasPlayingBefore,workoutEndVC) in
+                    if wasPlayingBefore {
+                        vm.player.play()
+                    }
+                    workoutEndVC.dismiss(animated: true, completion: nil)
+                }
+            }, completion: nil)
         }
-        self.navigationController?.popViewController(animated: true)
+//        pause(reason: .hidden)
+        
+       
+//        if playerView != nil && playerView.superview != nil{
+//            playerView.removeFromSuperview()
+//            playerView = nil
+//        }
+//        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func actionTimer(_ timer:Timer){
@@ -94,6 +142,32 @@ class StartWorkoutVC: BaseViewController {
         progress.animate(toAngle: 36 * progressCount, duration: 1, completion: nil)
     }
     
+    @objc func tapOnPlayer(_ gesture:UITapGestureRecognizer){
+        if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell,let vm = cell.viewModel {
+            if vm.player.timeControlStatus == .playing {
+                    pause(reason: .userInteraction)
+                    self.imgPlay.image = UIImage(named: "ic_pause")
+                }else {
+                    self.imgPlay.image = UIImage(named: "ic_play")
+                    vm.player.play()
+                }
+                self.imgPlay.isHidden = false
+                UIView.animate(withDuration: 0.35) {
+                    self.imgPlay.alpha = 1.0
+                } completion: { (isSuccess) in
+                    self.imgPlay.alpha = 0.0
+                    self.imgPlay.isHidden = true
+                }
+        }
+        
+       
+    }
+    
+    
+    func removeObservers(){
+        removePeriodicTimeObserver()
+        NotificationCenter.default.removeObserver(self)
+    }
 
 }
 
@@ -104,6 +178,8 @@ extension StartWorkoutVC:WorkoutContentsVMDelegate {
     func workoutMarkedAsViewed(contentId: String, workoutId: String) {
         hideLoader()
         self.delegate?.markWorkoutAsViewed(workoutId: workoutId, circuitId: contentId)
+        pause(reason: .userInteraction)
+        removeObservers()
         if var vcs = self.navigationController?.viewControllers {
             vcs.removeLast()
             vcs.removeLast()
@@ -121,6 +197,9 @@ extension StartWorkoutVC:WorkoutContentsVMDelegate {
 
 extension StartWorkoutVC {
     fileprivate func setupProgressView(){
+        if progress != nil ,progress.superview != nil {
+            progress.removeFromSuperview()
+        }
         progress = KDCircularProgress(frame:countDownTimerProgressView.bounds)
         progress.startAngle = -90
         progress.progressThickness = 0.2
@@ -145,7 +224,8 @@ extension StartWorkoutVC {
     
     func checkPreload() {
 //        guard let lastRow = tableViewWorkouts.indexPathsForVisibleRows?.last?.row else { return }
-        VideoPreloadManager.shared.set(waiting: viewModel.getVideoUrlsInMovements())
+//        VideoPreloadManager.shared.preloadByteCount = 1024 * 1024 * 4
+//        VideoPreloadManager.shared.set(waiting: viewModel.getVideoUrlsInMovements())
     }
     
 }
@@ -166,6 +246,9 @@ extension StartWorkoutVC:UITableViewDataSource,UITableViewDelegate {
         cell.progressViewBottomConstraint.constant = 76 + self.view.safeAreaInsets.bottom
         cell.lblTitleTopConstraint.constant = self.btnCrossTopConstraint.constant
         cell.setupData(viewModel: viewModel.getMovementVM(at: indexPath.row), indexPath: indexPath)
+        cell.btnInfo.tag = indexPath.row
+        cell.btnInfo.addTarget(self, action: #selector(actionInfo(_:)), for: .touchUpInside)
+        cell.backgroundColor = .black
 //        cell.videoDidEnd = {[weak self](indexPath) in
 //            if tableView.numberOfRows(inSection: 0) > indexPath.row + 1 {
 //                tableView.scrollToRow(at: IndexPath(row: indexPath.row + 1, section: indexPath.section), at: .top, animated: true)
@@ -182,56 +265,101 @@ extension StartWorkoutVC:UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height
     }
+
+
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        play()
+//    }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell{
-//            play()
-//        }
-        play()
-    }
+//    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+//        play()
+//    }
     
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        play()
-//        if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell{
-//            play()
-//        }
+    @objc func actionInfo(_ sender:UIButton){
+//        pause(reason: .userInteraction)
+        if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell,let infoVM = cell.viewModel {
+//            let infoVm = viewModel.getMovementVM(at: sender.tag)
+            let wasPlaying = infoVM.player.timeControlStatus == .playing
+            infoVM.player.pause()
+            self.getNavController()?.present(WorkoutInfoVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
+                vc.infoVM = infoVM
+                vc.modalPresentationStyle = .fullScreen
+                vc.wasPlayingVideoWhenComingToThisScreen = wasPlaying
+                vc.actionClose = {(wasPlayingBefore) in
+                    if wasPlayingBefore {
+                        infoVM.player.play()
+                    }
+                }
+            }, completion: {Void in
+                
+            })
+        }
+        
+        
     }
 }
 
 extension StartWorkoutVC {
     func play() {
-        guard let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell else {return}
-        guard let indexPath = tableViewWorkouts.indexPath(for: cell) else {return}
-        if let videoUrl = cell.viewModel.mainVideoUrl {
-            if playerView != nil ,playerView.superview != nil{
-                playerView.removeFromSuperview()
-                playerView = nil
+        guard let cell = self.tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell else {return}
+        guard let indexPath = self.tableViewWorkouts.indexPath(for: cell) else {return}
+        cell.imgVideoThumb.isHidden = true
+        if let viewModel = cell.viewModel{
+            if playerLayer != nil {
+                playerLayer.removeFromSuperlayer()
+                playerLayer = nil
+            }
+            if viewModel.playerItem.status != .readyToPlay {
+                startActivityIndicator()
+            }
+            addPeriodicTimeObserver(cell: cell)
+            viewModel.playerItem.addObserver(self,
+                                              forKeyPath: #keyPath(AVPlayerItem.status),
+                                              options: [.old, .new],
+                                              context: &playerItemContext)
+            playerLayer = AVPlayerLayer(player: viewModel.player)
+            playerLayer.frame = cell.bounds
+            viewModel.player.volume = 1.0
+            cell.contentView.layer.insertSublayer(playerLayer, above: cell.imgVideoThumb.layer)
+            viewModel.player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero)
+            self.setupCellProgressView(for: cell)
+            cell.lblProgressCounter.text = cell.viewModel.duration.description
+            viewModel.player.play()
+            showNextVideoName(currentCellIndex: indexPath.row)
+        }
+        
+        /*{
+            if self.playerView != nil ,self.playerView.superview != nil{
+                self.playerView.removeFromSuperview()
+                self.playerView = nil
             }
             /*Setup Player View*/
-            playerView = VideoPlayerView()
-            playerView.contentMode = .scaleAspectFill
-            playerView.frame = cell.bounds
-            cell.contentView.insertSubview(playerView, at: 0)
+            self.playerView = VideoPlayerView()
+            self.playerView.contentMode = .scaleAspectFill
+            self.playerView.frame = cell.bounds
+            cell.contentView.insertSubview(self.playerView, at: 0)
             /* End of setup player view */
             cell.progressView.isHidden = false
             cell.imgVideoThumb.isHidden = true
             
-//            print("play at indexPath ,",indexPath.row)
-//            print("play with url ,",videoUrl)
-            playerView.play(for: videoUrl)
-            playerView.isHidden = false
-            playerView.contentMode = .scaleAspectFill
-            playerView.stateDidChanged = {[weak self](state) in
+            //            print("play at indexPath ,",indexPath.row)
+            //            print("play with url ,",videoUrl)
+            self.playerView.play(for: videoUrl)
+            self.playerView.isHidden = false
+            self.playerView.contentMode = .scaleAspectFill
+            self.playerView.stateDidChanged = {[weak self](state) in
                 switch state {
                 case .playing:
                     cell.lblProgressCounter.text = Int(self!.playerView.totalDuration).description
                     self?.setupCellProgressView(for: cell)
                     break
+                case .error(let error1):
+                    print("error ",error1.localizedDescription)
                 default:
                     break
                 }
             }
-            playerView.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 30), queue: .main) { (time) in
+            self.playerView.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 30), queue: .main) { (time) in
                 if self.videoProgress != nil && self.playerView != nil {
                     var newProgress = time.seconds / self.playerView.totalDuration
                     print("new progress ",newProgress)
@@ -241,7 +369,7 @@ extension StartWorkoutVC {
                     self.videoProgress.progress = newProgress
                 }
             }
-            playerView.playToEndTime = {[weak self] in
+            self.playerView.playToEndTime = {[weak self] in
                 self?.pause(reason: .hidden)
                 if self?.tableViewWorkouts.numberOfRows(inSection: 0) ?? 0 > indexPath.row + 1 {
                     self?.tableViewWorkouts.scrollToRow(at: IndexPath(row: indexPath.row + 1, section: indexPath.section), at: .top, animated: true)
@@ -253,11 +381,28 @@ extension StartWorkoutVC {
                     
                 }
             }
+        } */
+    }
+    
+    func showNextVideoName(currentCellIndex:Int){
+        if self.tableViewWorkouts.numberOfRows(inSection: 0) > currentCellIndex + 1 {
+            let vm = viewModel.getMovementVM(at: currentCellIndex + 1)
+            lblNextVideoName.text = vm.videoName
+        }else {
+            lblNextVideoName.text = ""
         }
     }
     
+    
     func pause(reason:VideoPlayerView.PausedReason) {
-        playerView.pause(reason:reason)
+//        if playerView != nil {
+//            playerView.pause(reason:reason)
+//        }
+        
+        if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell,let viewModel = cell.viewModel {
+            viewModel.player.pause()
+        }
+        
     }
     
     func setupCellProgressView(for cell:StartWorkoutVideoWithTimerCell){
@@ -277,8 +422,98 @@ extension StartWorkoutVC {
         videoProgress.set(colors: UIColor(named: "kThemeBlue")!)
         videoProgress.trackColor = UIColor(named: "k124123132")!
         videoProgress.progress = 0
+        cell.progressView.isHidden = false
         cell.progressView.insertSubview(videoProgress, at: 0)
         cell.progressViewInnerCircle.backgroundColor = UIColor(named: "kThemeYellow")
     }
 
+}
+
+extension StartWorkoutVC {
+    @objc func playerDidEndPlaying(_ notification:Notification){
+        guard let cell = self.tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell else {return}
+        guard let indexPath = self.tableViewWorkouts.indexPath(for: cell) else {return}
+        cell.viewModel.player.pause()
+        cell.viewModel.player.volume = 0
+        removePeriodicTimeObserver()
+        if self.tableViewWorkouts.numberOfRows(inSection: 0) > indexPath.row + 1 {
+            self.tableViewWorkouts.scrollToRow(at: IndexPath(row: indexPath.row + 1, section: indexPath.section), at: .top, animated: false)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.play()
+            }
+        }else {
+            DispatchQueue.main.async {
+                self.showLoader()
+                self.viewModel.markAsCompleted()
+            }
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        
+        // Only handle observations for the playerItemContext
+        guard context == &playerItemContext else {
+            super.observeValue(forKeyPath: keyPath,
+                               of: object,
+                               change: change,
+                               context: context)
+            return
+        }
+        
+        if keyPath == #keyPath(AVPlayerItem.status) {
+            let status: AVPlayerItem.Status
+            if let statusNumber = change?[.newKey] as? NSNumber {
+                status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+            } else {
+                status = .unknown
+            }
+            
+            // Switch over status value
+            switch status {
+            case .readyToPlay:
+                stopActivityIndicator()
+                if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell {
+                    cell.lblProgressCounter.text =  Int(cell.viewModel.playerItem.duration.seconds).description
+                    
+                }
+            // Player item is ready to play.
+            case .failed:
+                // Player item failed. See error.
+                showAlert(with: "Error!", message: "Failed to play the video")
+            case .unknown:
+                // Player item is not yet ready.
+                startActivityIndicator()
+            default:
+                break
+            }
+        }
+    }
+    
+    //MARK:- AV Player Delegates
+    func addPeriodicTimeObserver(cell:StartWorkoutVideoWithTimerCell) {
+        if let viewModel = cell.viewModel{
+            viewModel.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 60), queue: .main) { (time) in
+                if self.videoProgress != nil{
+                    var newProgress = time.seconds / viewModel.playerItem.totalDuration
+                    print("new progress ",newProgress)
+                    if newProgress.isNaN || newProgress > 1{
+                        newProgress = 1.0
+                    }
+                    self.videoProgress.progress = newProgress
+                }
+            }
+        }
+    }
+    
+    func removePeriodicTimeObserver() {
+        if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell,let viewModel = cell.viewModel{
+            if let timeObserverToken = timeObserverToken {
+                viewModel.player.removeTimeObserver(timeObserverToken)
+                self.timeObserverToken = nil
+            }
+        }
+    }
 }

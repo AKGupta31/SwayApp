@@ -12,9 +12,15 @@ final class WorkoutModel: NSObject, NSItemProviderWriting, NSItemProviderReading
     var isSelected = false
     var id = 0
     var color:UIColor = .clear
-    var rowTag = 0
     var workoutId:String?
-    var dummyDisplayName = ""
+    var isPreviouslyScheduled = false
+    
+    var startDate:Date!
+    var endDate:Date!
+    var dayOfTheWeek = 1
+    var startTime:Int = 5
+    var endTime:Int = 6
+
     
     init(title:String) {
         self.title = title
@@ -27,6 +33,29 @@ final class WorkoutModel: NSObject, NSItemProviderWriting, NSItemProviderReading
         self.id    = id
         self.color = color
     }
+    
+    func toParams(isUpdate:Bool) -> [String:Any]{
+//        let dayOfTheWeekWrtAndroid = self.dayOfTheWeek
+        let day = Weekday(rawValue: self.dayOfTheWeek) ?? .monday
+        let startOfTheDay = Calendar.current.startOfDay(for: Date())
+        let components = DateComponents(hour: 23, minute: 59, second: 59)
+        let endOfDay = Calendar.current.date(byAdding: components, to: startOfTheDay)!
+        var params :[String:Any] = [
+            "startDate": startOfTheDay.millisecondsSince1970,
+            "endDate": endOfDay.millisecondsSince1970,
+            "startTime": self.startTime * 60, // in minutes
+            "endTime": self.endTime * 60,  //in minutes
+            "dayOfTheWeek": day.dayOfTheWeekIntWRTAndroid
+            ]
+        if isUpdate {
+            params["scheduleId"] = self.workoutId ?? "" // in case of edit we have already updated workout id with schedule id
+        }else {
+            params["workoutId"] = self.workoutId ?? ""
+        }
+        return params
+    }
+
+    
     
     static var writableTypeIdentifiersForItemProvider: [String] {
         //We know that we want to represent our object as a data type, so we'll specify that

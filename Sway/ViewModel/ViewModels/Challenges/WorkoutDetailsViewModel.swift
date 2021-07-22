@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import AVFoundation
 
 protocol WorkoutDetailsViewModelDelegate:BaseVMDelegate {
     
@@ -31,6 +32,7 @@ class WorkoutDetailsViewModel {
     
     var workout:WorkoutResponseData!
     var workoutId:String = ""
+    var challengeId:String = ""
     
     weak var delegate:WorkoutDetailsViewModelDelegate?
     
@@ -45,8 +47,9 @@ class WorkoutDetailsViewModel {
         return section == 0 ? 2 : (workout.contents?.count ?? 0)
     }
     
-    init(workoutId:String){
+    init(workoutId:String,challengeId:String){
         self.workoutId = workoutId
+        self.challengeId = challengeId
         getDetails()
     }
     
@@ -79,15 +82,17 @@ class WorkoutDetailsViewModel {
     }
     
     func setupCell(cell:HIITDescriptionCell){
-        cell.lblEquipmentYesNo.text = workout.equipmentRequired == true ? "YES" : "NO"
-        cell.lblSpaceValue.text = workout.spaceRecommendation
-        cell.lblDurationUnit.text = (workout.contents?.count ?? 0).description
+        cell.lblEquipmentYesNo.text = workout.equipmentRequired == true ? "Yes" : "No"
+        cell.lblSpaceValue.text = workout.spaceRecommendation?.capitalized
+        cell.lblDurationUnit.text = (workout.contents?.count ?? 0).description // circuit count duration unit is just to resuse it
         cell.lblDescription.text = workout.description
     }
     
     func setupCell(cell:HIITItemCell,indexPath:IndexPath){
         if let content = workout.contents?[indexPath.row]{
             cell.lblName.text = content.name
+            cell.lblDuration.text = Utility.convertSecondsToFormattedMinutesType2(seconds: content.duration ?? 0)
+//            cell.lblDuration.text = content.movement
         }
         cell.lblNumber.text = (indexPath.row + 1).description
        
@@ -105,13 +110,13 @@ class WorkoutDetailsViewModel {
             }else {
                 cell.cellType = .normal
             }
-            
         }
+        
     }
     
     func getContentVM(at index:Int) -> WorkoutContentsVM? {
         guard let content = workout.contents?[index] else {return nil}
-        return WorkoutContentsVM(content: content, workoutId: self.workoutId)
+        return WorkoutContentsVM(content: content, workoutId: self.workoutId, challengeId: challengeId)
     }
     
     func markWorkoutAsViewed(workoutId: String, circuitId: String) {
@@ -128,7 +133,7 @@ class WorkoutDetailsViewModel {
 
 extension WorkoutDetailsViewModel{
     func getDetails(){
-        ChallengesEndPoint.getWorkoutDetails(for: self.workoutId) { [weak self](response) in
+        ChallengesEndPoint.getWorkoutDetails(for: self.workoutId,challengeId: self.challengeId) { [weak self](response) in
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode <= 300,let workoutData = response.data {
                 self?.workout = workoutData
                 if let lastSeenIndex = self?.workout.contents?.lastIndex(where: {$0.isSeen}) {
@@ -153,6 +158,7 @@ class WorkoutContentsVM {
     
     private let content:Content
     private let workoutId:String
+    private let challengeId:String
     var controller:ViewController = .HIITDetailsPendingStartVC
     weak var delegate:WorkoutContentsVMDelegate?
     var numberOfSections:Int {
@@ -173,9 +179,10 @@ class WorkoutContentsVM {
         return content.movement?.count ?? 0
     }
     
-    init(content:Content,workoutId:String) {
+    init(content:Content,workoutId:String,challengeId:String) {
         self.content = content
         self.workoutId = workoutId
+        self.challengeId = challengeId
     }
     
 
@@ -203,8 +210,19 @@ class WorkoutContentsVM {
             cell.imgVideoThumb.sd_setImage(with: URL(string: urlStr), completed: nil)
         }
         cell.lblName.text = movement.name
-        cell.lblRepetetion.text = (movement.repetationDuration?.count ?? 0).description + " Reps"
         
+        /******************SHOW DURATION OR REPETETION*********/
+        if let repduration = movement.repetationDuration {
+            if repduration.type == 2,let duration = repduration.duration {
+                cell.lblRepetetion.text = Utility.convertSecondsToFormattedMinutes(seconds: duration)
+            }else  {
+                if let count = repduration.count {
+                    cell.lblRepetetion.text = count.description + " Reps"
+                }
+            }
+        }
+
+        /******************END***************/
     }
     
     func getMovementVM(at index:Int) -> MovementViewModel{
@@ -215,13 +233,13 @@ class WorkoutContentsVM {
         var urls = [URL]()
         if let movements = self.content.movement {
             for movement in movements {
-                if let url = URL(string: "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4") {
-                    urls.append(url)
-                }
-//                if let urlStr = movement.media?.mainVideoUrl,let url = URL(string: urlStr) {
-//                    
+//                if let url = URL(string: "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4") {
 //                    urls.append(url)
 //                }
+                if let urlStr = movement.media?.mainVideoUrl,let url = URL(string: urlStr) {
+                    
+                    urls.append(url)
+                }
             }
         }
         return urls
@@ -229,7 +247,7 @@ class WorkoutContentsVM {
     
     func markAsCompleted(){
         if let circuitId = content.id {
-            ChallengesEndPoint.markWorkoutAsSeen(for: self.workoutId, circuitId: circuitId) { [weak self](response) in
+            ChallengesEndPoint.markWorkoutAsSeen(for: self.workoutId, circuitId: circuitId,challengeId:self.challengeId) { [weak self](response) in
                 if response.statusCode == 200 {
                     self?.delegate?.workoutMarkedAsViewed(contentId: circuitId, workoutId: self!.workoutId)
                 }else {
@@ -245,11 +263,42 @@ class WorkoutContentsVM {
     }
 }
 
+enum MovementCategories:Int {
+    case UPPER_BODY = 1
+    case LOWER_BODY = 2
+    case CORE = 3
+    
+    var displayName:String {
+        switch self {
+        case .UPPER_BODY:
+            return  "Upper Body"
+        case .LOWER_BODY:
+            return  "Lower Body"
+        case .CORE:
+            return  "Core"
+        }
+    }
+}
+
 class MovementViewModel {
     let movement:Movement
     
+    var playerItem:AVPlayerItem!
+    var player:AVPlayer!
+    var duration :Int = 0
     init(movement:Movement) {
         self.movement = movement
+        if let urlStr = movement.media?.mainVideoUrl,let url = URL(string: urlStr){
+            playerItem = AVPlayerItem(url: url)
+            player = AVPlayer(playerItem: playerItem)
+            player.volume = 0.0
+            if playerItem.duration.seconds.isNaN {
+                duration = 0
+            }else {
+                self.duration = Int(playerItem.duration.seconds)
+            }
+//            player.play()
+        }
     }
     
     var videoThumb:URL? {
@@ -261,10 +310,26 @@ class MovementViewModel {
     
     var mainVideoUrl:URL? {
         if let urlStr = movement.media?.mainVideoUrl {
-            return URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
-//            return URL(string: urlStr)
+//            return URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
+            return URL(string: urlStr)
         }
         return nil
     }
-
+    
+    var videoName:String? {
+        return movement.name
+    }
+    
+    var repetetions:String? {
+        return ((movement.repetationDuration?.count ?? 0).description) + " Reps"
+    }
+    
+    var description:String? {
+        return movement.description
+    }
+    
+    var category:MovementCategories {
+        let categoryVal = movement.movementCategory ?? 1
+        return MovementCategories(rawValue: categoryVal) ??  .UPPER_BODY
+    }
 }

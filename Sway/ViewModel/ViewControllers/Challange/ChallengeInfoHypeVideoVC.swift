@@ -145,6 +145,10 @@ extension ChallengeInfoHypeVideoVC {
         progress.trackColor = UIColor(red: 245/255, green: 246/255, blue: 250/255, alpha: 0.3)
         progress.progress = 0
         progressView.insertSubview(progress, at: 0)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp(_:)))
+        swipeUp.direction = .up
+        self.progressView.addGestureRecognizer(swipeUp)
     }
     
     

@@ -18,15 +18,17 @@ class WorkoutEndAlertVC: BaseViewController {
     @IBOutlet weak var lblEndYourWorkout: UILabel!
     @IBOutlet weak var lblAreYouSure: UILabel!
     
-    
-    var actionResume:((WorkoutEndAlertVC,UIButton?)->())?
-    var actionQuit:((WorkoutEndAlertVC,UIButton?)->())?
+    var wasPlayingBeforeComingToTheScreen = true
+    var actionResume:((_ wasPlayingBefore:Bool,WorkoutEndAlertVC)->())?
+    var actionQuit:((_ wasPlayingBefore:Bool,WorkoutEndAlertVC)->())?
     
     var progress:KDCircularProgress!
     var timer:Timer!
+    var videoThumbnail:UIImage?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLabels()
+        imgBackground.image = videoThumbnail
     }
     
     
@@ -43,8 +45,8 @@ class WorkoutEndAlertVC: BaseViewController {
         progressCount += 1
         if i <= 0{
             timer.invalidate()
-            self.dismiss(animated: true, completion: nil)
-            self.actionQuit?(self,nil)
+//            self.dismiss(animated: true, completion: nil)
+            self.actionQuit?(wasPlayingBeforeComingToTheScreen,self)
         }
         lblProgress.text = i.description
         progress.animate(toAngle: 36 * progressCount, duration: 1, completion: nil)
@@ -62,13 +64,17 @@ class WorkoutEndAlertVC: BaseViewController {
     
 
     @IBAction func actionResume(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-        self.actionResume?(self,sender)
+//        self.dismiss(animated: true, completion: nil)
+        timer.invalidate()
+        timer = nil
+        self.actionResume?(wasPlayingBeforeComingToTheScreen,self)
     }
     
     @IBAction func actionQuit(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-        self.actionQuit?(self,sender)
+//        self.dismiss(animated: true, completion: nil)
+        timer.invalidate()
+        timer = nil
+        self.actionQuit?(wasPlayingBeforeComingToTheScreen,self)
     }
     
     fileprivate func setupProgressView(){

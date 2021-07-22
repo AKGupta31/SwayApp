@@ -50,12 +50,11 @@ class HomeVC: BaseTabBarViewController {
             self.viewModel.getPredefinedComments()
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive(_:)), name: UIApplication.willResignActiveNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         // Do any additional setup after loading the view.
     }
+    
     
     @objc func willResignActive(_ notification:Notification) {
         if let cell = tableViewFeeds.visibleCells.first as? FeedsCell {
@@ -72,9 +71,17 @@ class HomeVC: BaseTabBarViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive(_:)), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
 //        if player != nil{
 //            player.playFromCurrentTime()
 //        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        NotificationCenter.default.removeObserver(self)
     }
     
     @IBAction func actionMySubmission(_ sender: UIButton) {
@@ -232,6 +239,7 @@ extension HomeVC:UITableViewDataSource, UITableViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         check()
+        
 //        btnLikes.isEnabled = true
 //        if let indexPath = tableViewFeeds.indexPathsForVisibleRows?.first,let cell = tableViewFeeds.cellForRow(at: indexPath) as? FeedsCell{
 //            self.stopActivityIndicator()
@@ -546,6 +554,7 @@ extension HomeVC {
         let visibleCell = visibleCells
             .filter { visibleFrame.intersection($0.frame).height >= $0.frame.height / 2 }
             .first
+        print("media ",visibleCell?.viewModel.mediaType.rawValue)
         if visibleCell?.viewModel.mediaType == .kVideo {
             visibleCell?.pause(reason: .hidden)
             startActivityIndicator(touchEnabled:true)

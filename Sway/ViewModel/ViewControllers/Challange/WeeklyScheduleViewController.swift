@@ -135,7 +135,7 @@ extension WeeklyScheduleViewController {
         repeat {
             let layer = CALayer()
             layer.frame = CGRect(x: x, y: 0, width: 1, height: verticalLinesView.frame.height)
-            layer.backgroundColor = UIColor.lightGray.cgColor
+            layer.backgroundColor = UIColor(named: "kThemeNavyBlue_10")?.cgColor
             x +=  spacing
             verticalLinesView.layer.insertSublayer(layer, at: 0)
         }while (floor(x + spacing) <= verticalLinesView.frame.width)
@@ -196,13 +196,10 @@ extension WeeklyScheduleViewController:UICollectionViewDataSource, UICollectionV
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DragItemCell", for: indexPath) as! DragItemCell
             let model = data[collectionView.tag][indexPath.item]
             cell.lblTitle.isHidden = true
-//            cell.lblTitle.text = model.dummyDisplayName // "Workout" + indexPath.row.description
-//            cell.backgroundColor = UIColor.random()
-//            cell.lblTitle.text = data[collectionView.tag][indexPath.item].title
             cell.viewContent.backgroundColor = model.color
             if let kdCollectionView = collectionView as? KDDragAndDropCollectionView {
-                
-                if let draggingPathOfCellBeingDragged = kdCollectionView.draggingPathOfCellBeingDragged {
+                if let
+                    draggingPathOfCellBeingDragged = kdCollectionView.draggingPathOfCellBeingDragged {
                     if draggingPathOfCellBeingDragged.item == indexPath.item {
                         cell.isHidden = true
                     }
@@ -213,9 +210,7 @@ extension WeeklyScheduleViewController:UICollectionViewDataSource, UICollectionV
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalenderItemCell", for: indexPath) as! CalenderItemCell
         let model = data[collectionView.tag][indexPath.item]
         cell.lblTitle.isHidden = true
-//        cell.lblTitle.text = model.dummyDisplayName//"Workout"
-//        cell.lblTitle.text = model.title
-            cell.backgroundColor = model.color
+        cell.backgroundColor = model.color
         cell.imageView.isHidden = model.isSelected == false
         return cell
     }

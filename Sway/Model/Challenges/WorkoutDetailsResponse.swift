@@ -292,6 +292,7 @@ struct Content : Codable {
     var isSeen : Bool = false
     let equipmentRequired:Bool
     let intensityLevel : String?
+    let duration:Int?
 
     enum CodingKeys: String, CodingKey {
 
@@ -304,6 +305,7 @@ struct Content : Codable {
         case equipmentRequired = "equipmentRequired"
         case intensityLevel = "intensityLevel"
         case id = "_id"
+        case duration = "duration"
     }
 
     init(from decoder: Decoder) throws {
@@ -317,6 +319,7 @@ struct Content : Codable {
         equipmentRequired = try values.decodeIfPresent(Bool.self, forKey: .equipmentRequired) ?? false
         intensityLevel = try values.decodeIfPresent(String.self, forKey: .intensityLevel)
         id = try values.decodeIfPresent(String.self, forKey: .id)
+        duration = try values.decodeIfPresent(Int.self, forKey: .duration)
     }
 
 }
@@ -327,6 +330,8 @@ struct Movement : Codable {
     let name : String?
     let repetationDuration : RepetationDuration?
     let media : WorkoutMedia?
+    let description:String?
+    let movementCategory:Int?
 
     enum CodingKeys: String, CodingKey {
 
@@ -334,6 +339,8 @@ struct Movement : Codable {
         case name = "name"
         case repetationDuration = "repetationDuration"
         case media = "media"
+        case description = "description"
+        case movementCategory = "movementCategory"
     }
 
     init(from decoder: Decoder) throws {
@@ -342,6 +349,8 @@ struct Movement : Codable {
         name = try values.decodeIfPresent(String.self, forKey: .name)
         repetationDuration = try values.decodeIfPresent(RepetationDuration.self, forKey: .repetationDuration)
         media = try values.decodeIfPresent(WorkoutMedia.self, forKey: .media)
+        description = try values.decodeIfPresent(String.self, forKey: .description)
+        movementCategory = try values.decodeIfPresent(Int.self, forKey: .movementCategory)
     }
 
 }
@@ -349,17 +358,20 @@ struct Movement : Codable {
 struct RepetationDuration : Codable {
     let count : Int?
     let type : Int?
+    let duration:Int?
 
     enum CodingKeys: String, CodingKey {
 
         case count = "count"
         case type = "type"
+        case duration = "duration"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         count = try values.decodeIfPresent(Int.self, forKey: .count)
         type = try values.decodeIfPresent(Int.self, forKey: .type)
+        duration = try values.decodeIfPresent(Int.self, forKey: .duration)
     }
 
 }

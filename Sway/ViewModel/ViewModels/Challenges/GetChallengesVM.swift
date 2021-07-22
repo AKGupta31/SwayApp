@@ -177,14 +177,14 @@ class ChallengeViewModel {
         let models = self.challenge.workoutDetails?.filter({$0.workouts != nil})
         var viewModels = [WorkoutListsViewModel]()
         models?.forEach({ (details) in
-            viewModels.append(WorkoutListsViewModel(details: details))
+            viewModels.append(WorkoutListsViewModel(details: details,challengeId: self.challenge._id ?? ""))
         })
         return viewModels
     }
 
     func createChallenge(schedules:[Schedules],isSkip:Bool){
-        let startDate = Date().millisecondsSinceNow
-        let endDate = Calendar.current.date(byAdding: .weekOfYear, value: challenge.workoutDetails!.count, to: Date())?.millisecondsSinceNow ?? startDate
+        let startDate = Date().millisecondsSince1970
+        let endDate = Calendar.current.date(byAdding: .weekOfYear, value: challenge.workoutDetails!.count, to: Date())?.millisecondsSince1970 ?? startDate
         
         ChallengesEndPoint.createChallenge(for: challenge._id!, startDate: startDate, endDate: endDate, schedules: schedules) { [weak self](response) in
             if response.type == "CHALLENGE_CREATED" && response.statusCode == 201 {
@@ -213,12 +213,12 @@ class ChallengeViewModel {
 
 
 extension Date {
-    var millisecondsSinceNow:Int {
-        return Int((self.timeIntervalSinceNow * 1000.0).rounded())
+    var millisecondsSince1970:Int {
+        return Int((self.timeIntervalSince1970 * 1000.0).rounded())
     }
 
     init(milliseconds:Int) {
-        self = Date(timeIntervalSinceNow: TimeInterval(milliseconds) / 1000)
+        self = Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
     }
 }
 
@@ -226,6 +226,7 @@ extension Date {
 class WorkoutListsViewModel {
     
     private let workoutDetails:WorkoutDetails
+    private var challengeId:String = ""
     
     var numberOfItems: Int {
         return workoutDetails.workouts?.count ?? 0
@@ -235,13 +236,14 @@ class WorkoutListsViewModel {
         return "Week " + (workoutDetails.week?.description ?? "0")
     }
     
-    init(details:WorkoutDetails) {
+    init(details:WorkoutDetails,challengeId:String) {
         self.workoutDetails = details
+        self.challengeId = challengeId
     }
     
     func getWorkoutVM(at index:Int) -> WorkoutViewModel?{
         if let workouts = workoutDetails.workouts{
-            return WorkoutViewModel(workout: workouts[index])
+            return WorkoutViewModel(workout: workouts[index], challengeId: challengeId)
         }
         return nil
     }
@@ -255,14 +257,9 @@ class WorkoutListsViewModel {
             model.color = UIColor(named:"kThemeBlue")!
             model.isSelected = true
             model.workoutId = item.workoutId
-            model.dummyDisplayName = "Workout \(index+1)"
             workouts.append(model)
         }
         return workouts
-    }
-    
-    func createChallenge(schedules:[[String:Any]]){
-//        ChallengesEndPoint.createChallenge(for: <#T##String#>, startDate: <#T##Int#>, endDate: <#T##Int#>, schedules: <#T##[[String : Any]]#>, success: <#T##SuccessCompletionBlock<EmptyDataResponse>##SuccessCompletionBlock<EmptyDataResponse>##(EmptyDataResponse) -> Void#>, failure: <#T##ErrorFailureCompletionBlock##ErrorFailureCompletionBlock##(ResponseStatus) -> Void#>)
     }
     
 }
@@ -271,6 +268,7 @@ class WorkoutListsViewModel {
 class WorkoutViewModel {
     
     private let workout:Workout
+    var challengeId:String = ""
     
     var id:String?{
         return workout.workoutId
@@ -288,16 +286,18 @@ class WorkoutViewModel {
     }
     
     var durationInMinutes:String {
-        let durationInSeconds = workout.duration ?? 0
-        let minutesOfDuration =  Int(floor(Double(durationInSeconds / 60)))
-        let pendingSeconds =  durationInSeconds % 60
-        
-        return String(format: "%02d", minutesOfDuration) + ":" + String(format: "%02d", pendingSeconds)
+        return Utility.convertSecondsToFormattedMinutes(seconds: workout.duration ?? 0)
+//        let durationInSeconds = workout.duration ?? 0
+//        let minutesOfDuration =  Int(floor(Double(durationInSeconds / 60)))
+//        let pendingSeconds =  durationInSeconds % 60
+//
+//        return String(format: "%02d", minutesOfDuration) + ":" + String(format: "%02d", pendingSeconds)
     }
 
     
-    init(workout:Workout) {
+    init(workout:Workout,challengeId:String) {
         self.workout = workout
+        self.challengeId = challengeId
     }
 }
 

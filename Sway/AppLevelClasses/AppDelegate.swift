@@ -10,6 +10,7 @@ import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
 import IQKeyboardManagerSwift
+import GSPlayer
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -26,6 +27,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         IQKeyboardManager.shared.enable = true
         AWSUploadController.setupAmazonS3(withPoolID: Constants.S3BucketCredentials.s3PoolApiKey)
+       
+        do {
+            let cachedSize = VideoCacheManager.calculateCachedSize()
+            print("total cached sizse",cachedSize)
+            if (cachedSize / (1024 * 1024)) > 1000 {
+                try VideoCacheManager.cleanAllCache()
+            }
+        }catch {
+            print("error")
+        }
+        
+        
         return true
     }
     // MARK: UISceneSession Lifecycle

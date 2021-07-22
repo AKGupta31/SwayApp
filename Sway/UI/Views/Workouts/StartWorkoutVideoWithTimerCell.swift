@@ -48,6 +48,9 @@ class StartWorkoutVideoWithTimerCell: UITableViewCell {
         self.viewModel = viewModel
         self.indexPath = indexPath
         self.imgVideoThumb.sd_setImage(with: viewModel.videoThumb, completed: nil)
+        lblTitle.text = viewModel.videoName
+        lblReps.text = viewModel.repetetions
+        
     }
     
 //    func play() {

@@ -65,13 +65,14 @@ class AddVideoViewModel:NSObject {
             
             let newDirectory = DirectoryUtility.getPath(folder: FolderNames.kCompressedVideos.rawValue)
             let destinationUrl = newDirectory.appendingPathComponent(lastPath)
-          
+//            self.videoUrl = vUrl
+//            self.uploadFileToAws()
 //            let originalSize = NSData(contentsOf: originalVideoUrl!)
 //            let sizeinMB = ByteCountFormatter.string(fromByteCount: Int64((originalSize?.length)!), countStyle: .file)
 //            print("size in mb original ",sizeinMB)
 
 
-            let compression =   LightCompressor.init().compressVideo(source: vUrl, destination: destinationUrl, quality: VideoQuality.high, progressQueue: .main) { (progress) in
+            _ =   LightCompressor.init().compressVideo(source: vUrl, destination: destinationUrl, quality: VideoQuality.high, progressQueue: .main) { (progress) in
                 print("compression progress",progress)
             } completion: { [weak self](result) in
                 switch result{
@@ -259,7 +260,7 @@ extension AddVideoViewModel:UITextViewDelegate {
                return true
             }
         }
-        if textView.text.count <= 120 {
+        if (textView.tag == 1 && textView.text.count <= 50) || (textView.tag == 2 && textView.text.count <= 100) {
             return true
         }
         return false

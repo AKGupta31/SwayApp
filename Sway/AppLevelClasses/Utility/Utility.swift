@@ -70,5 +70,23 @@ class Utility {
         }
         return .invalid
     }
+    
+    static func convertSecondsToFormattedMinutes(seconds:Int) -> String {
+        let durationInSeconds = seconds
+        let minutesOfDuration =  Int(floor(Double(durationInSeconds / 60)))
+        let pendingSeconds =  durationInSeconds % 60
+        
+        return String(format: "%02d", minutesOfDuration) + ":" + String(format: "%02d", pendingSeconds)
+    }
+    
+    static func convertSecondsToFormattedMinutesType2(seconds:Int) -> String {
+        let minutes = Int(floor(Double(seconds / 60)))
+        let remainingSeconds = seconds % 60
+        if remainingSeconds > 0 {
+            return (minutes.description) + "-" + (minutes + 1).description + " min"
+        }else {
+            return minutes.description + " min"
+        }
+    }
 
 }

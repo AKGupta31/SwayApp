@@ -10,7 +10,8 @@ import ViewControllerDescribable
 import SDWebImage
 
 class HIITDetailsVC: BaseViewController {
-
+    @IBOutlet weak var btnContinue: CustomButton!
+    
     
     var viewModel:WorkoutDetailsViewModel!
     @IBOutlet weak var tableView: UITableView!
@@ -27,6 +28,15 @@ class HIITDetailsVC: BaseViewController {
         viewModel.delegate = self
         viewModel.getDetails()
     }
+    
+    @IBAction func actionContinue(_ sender: UIButton) {
+        print("action continue")
+        self.getNavController()?.push(RateChallengeVC.self, animated: true, configuration: { (vc) in
+            vc.workoutId = self.viewModel.workoutId
+        })
+    }
+    
+    
     
 }
 
@@ -46,11 +56,15 @@ extension HIITDetailsVC :WorkoutDetailsViewModelDelegate {
 
 extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
+        
         return viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.getNumberOfRows(in: section)
+        let numberOfRows = viewModel.getNumberOfRows(in: 1)
+        btnContinue.isEnabled = viewModel.lastSeenItemIndex >= numberOfRows - 1
+        btnContinue.backgroundColor = UIColor(named: "kThemeYellow")?.withAlphaComponent(btnContinue.isEnabled ? 1.0 : 0.6)
+        return viewModel.getNumberOfRows(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -101,7 +115,7 @@ extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 1 && indexPath.row == viewModel.lastSeenItemIndex + 1 {
             if let contentVM = viewModel.getContentVM(at: indexPath.row) {
                 self.getNavController()?.push(HIITDetailsPendingStartVC.self, animated: true, configuration: { (vc) in
                     vc.viewModel = contentVM

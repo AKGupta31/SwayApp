@@ -38,6 +38,7 @@ class Constants {
         static let kNoInternetConnection = "Internet connection appears to be offline"
         static let kSelectVideo = "Video(1 min max)"
         static let kAreYouSureToDeleteThePost = "Are you sure you want to delete the post"
+        static let kCantScheduleAtThisTime = "You can't schedule event at this time. Please propose new time"
     }
     
     

@@ -14,5 +14,6 @@ extension UIStoryboard {
        case home = "Feed"
        case anonymous = "Anonymous"
        case challenge = "Challenge"
+       case planner = "Planner"
    }
 }

@@ -27,6 +27,7 @@ class SwayUserDefaults {
     struct Keys{
         static let kLoggedInUser = "LoggedInUser"
         static let kOnBoardingStatus = "OnBoardingStatus"
+        static let kPlannerSearchStrings = "PlannerSearchStrings"
     }
     
     var loggedInUser:LoginResponseData? {
@@ -54,6 +55,16 @@ class SwayUserDefaults {
             return OnboardingStatus(rawValue:status) ?? .INTRO__VIDEO_ONE
         }set {
             UserDefaults.standard.setValue(newValue.rawValue, forKey: Keys.kOnBoardingStatus)
+        }
+    }
+    
+    var searchList:[String] {
+        get {
+            let searchStrs = UserDefaults.standard.array(forKey: Keys.kPlannerSearchStrings) as? [String]
+            return searchStrs ?? [String]()
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: Keys.kPlannerSearchStrings)
         }
     }
 

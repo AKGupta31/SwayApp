@@ -43,7 +43,7 @@ class HowOldVC: BaseViewController {
         
         ageCollectionView.delegate = self
         ageCollectionView.dataSource = self
-        
+//        ageCollectionView.isPagingEnabled = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             self.ageCollectionView.scrollToItem(at: IndexPath(row: 3, section: 0), at: .centeredVertically, animated: false)
         }
@@ -115,62 +115,6 @@ class HowOldVC: BaseViewController {
 
 }
 
-
-//extension HowOldVC:UIPickerViewDelegate,UIPickerViewDataSource {
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return items.count
-//    }
-//
-//
-//
-////    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-////        labelPlus1.text = (row + 1).description
-////        labelPlus2.text = (row + 2).description
-////        labelMinus1.text = (row - 1).description
-////        labelMinus2.text = (row - 2).description
-////    }
-//
-//    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-//        return 50
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//
-//        pickerView.subviews.first?.subviews.last?.backgroundColor = UIColor.white
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 50))
-//        let label = UILabel(frame: view.bounds)
-//        let string = items[row].description
-//        let attributedString = NSMutableAttributedString(string: string)
-//        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "Poppins-Bold", size:28)!, range: _NSRange(location: 0, length: string.count))
-//        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(named: "kThemeNavyBlue")!, range: _NSRange(location: 0, length: string.count))
-//        label.attributedText = attributedString
-//        label.textAlignment = .center
-//        view.backgroundColor = UIColor.white
-//        view.addSubview(label)
-//
-////        labelPlus1.text = (row + 1).description
-////        labelPlus2.text = (row + 2).description
-////        labelMinus1.text = (row - 1).description
-////        labelMinus2.text = (row - 2).description
-//        return view
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-////        labelPlus1.text = (row + 1).description
-////        labelPlus2.text = (row + 2).description
-////        labelMinus1.text = (row - 1).description
-////        labelMinus2.text = (row - 2).description
-//        return ""
-//    }
-//
-//
-//
-//}
-
 extension HowOldVC:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView != ageCollectionView {
@@ -231,6 +175,7 @@ extension HowOldVC:UICollectionViewDataSource,UICollectionViewDelegate , UIColle
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         let totalItems = items.count
         guard let centerIndex = ageCollectionView.centerIndexPath else {return}
         typealias ScaleAndCellIndex = (Int,CGFloat)
@@ -239,6 +184,7 @@ extension HowOldVC:UICollectionViewDataSource,UICollectionViewDelegate , UIColle
         for scaleModel in models {
             self.updateCell(at: scaleModel.0, to: centerIndex, with: scaleModel.1, totalItems: totalItems)
         }
+
         
 //        if let middleCell = ageCollectionView.getCell(at: 0, to: centerIndex, totalItems: totalItems) as? CarouselCellWithLabelOnly {
 //            middleCell.scalePercent = 1.0

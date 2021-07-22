@@ -74,6 +74,7 @@ extension HIITDetailsPendingStartVC:UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 1 {
             self.getNavController()?.present(WorkoutInfoVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
                 vc.modalPresentationStyle = .fullScreen
+                vc.infoVM = self.viewModel.getMovementVM(at: indexPath.row)
             }, completion: nil)
             
         }
