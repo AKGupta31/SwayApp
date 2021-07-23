@@ -58,6 +58,8 @@ struct PlannerDaywiseModel : Codable {
     let workoutName : String?
     let intensityLevel : String?
     let workOutType : String?
+    let imageModel:ImageUrl?
+    var isCompleted:Bool = false
 
     enum CodingKeys: String, CodingKey {
 
@@ -75,6 +77,8 @@ struct PlannerDaywiseModel : Codable {
         case workoutName = "workoutName"
         case intensityLevel = "intensityLevel"
         case workOutType = "workOutType"
+        case imageModel = "imageUrl"
+        case isCompleted = "isCompleted"
     }
 
     init(from decoder: Decoder) throws {
@@ -93,6 +97,9 @@ struct PlannerDaywiseModel : Codable {
         workoutName = try values.decodeIfPresent(String.self, forKey: .workoutName)
         intensityLevel = try values.decodeIfPresent(String.self, forKey: .intensityLevel)
         workOutType = try values.decodeIfPresent(String.self, forKey: .workOutType)
+        imageModel = try values.decodeIfPresent(ImageUrl.self, forKey: .imageModel)
+        isCompleted = try values.decodeIfPresent(Bool.self, forKey: .isCompleted) ?? false
+        
     }
 
 }

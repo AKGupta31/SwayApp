@@ -18,6 +18,10 @@ class PlannerWorkoutsVC: BaseViewController {
         super.viewDidLoad()
         showLoader()
         self.libraryVM = LibraryListingViewModel(delegate: self)
+        self.tabBarController?.tabBar.isHidden = false
+        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
+        self.tableViewWorkouts.contentInset = adjustForTabbarInsets
+        self.tableViewWorkouts.scrollIndicatorInsets = adjustForTabbarInsets
         // Do any additional setup after loading the view.
     }
     
@@ -25,8 +29,10 @@ class PlannerWorkoutsVC: BaseViewController {
     
     @IBAction func actionSearch(_ sender: UIButton) {
         self.getNavController()?.push(SearchPlannerVC.self, animated: true, pushTransition: .horizontal, configuration: { (vc) in
+            vc.searchString = self.libraryVM.searchStr
             vc.searchAction = {[weak self](searchString) in
                 self?.libraryVM.searchStr = searchString
+                self?.showLoader()
                 self?.libraryVM.refreshData()
             }
         })
@@ -40,7 +46,7 @@ class PlannerWorkoutsVC: BaseViewController {
 extension PlannerWorkoutsVC:LibraryListingVMDelegate {
     func reloadLibrary() {
         if libraryVM.isFiltersOrSearchApplied {
-            lblResult.text = "Results"
+            lblResult.text = "Results (\(libraryVM.numberOfItems))"
         }else {
             lblResult.text = "Recommended"
         }
@@ -103,6 +109,11 @@ extension PlannerWorkoutsVC:UICollectionViewDataSource, UICollectionViewDelegate
 
 extension PlannerWorkoutsVC:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if libraryVM.numberOfItems <= 0 {
+            tableView.backgroundView = Helper.shared.addNoDataLabel(strMessage: "No record found", to: tableView,offSet: CGPoint(x: 0, y: -75))
+        }else{
+            tableView.backgroundView = nil
+        }
         return libraryVM.numberOfItems
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,9 +131,16 @@ extension PlannerWorkoutsVC:UITableViewDataSource, UITableViewDelegate {
         return UITableView.automaticDimension
     }
     
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let workoutvm = libraryVM.libraryItemViewModel(at: indexPath.row)
+//        self.getNavController()?.push(WorkoutInfoVC.self, animated: true, pushTransition: .vertical, configuration: { (vc) in
+//
+//        })
+//    }
+    
     @objc func addClicked(_ sender:UIButton){
         if let cell = tableViewWorkouts.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as? ChallengeLibraryItemCell {
-            self.getNavController()?.push(PlannerScheduleVC.self, animated: true, configuration: { (vc) in
+            self.getNavController()?.push(ScheduleLibraryWorkoutVC.self, animated: true, configuration: { (vc) in
                 vc.itemToAddEdit = self.libraryVM.libraryItemViewModel(at: sender.tag)
                 vc.isEditMode = cell.isAdded
                 vc.refreshData = { [weak self] in
@@ -130,6 +148,17 @@ extension PlannerWorkoutsVC:UITableViewDataSource, UITableViewDelegate {
                 }
             })
         }
+
+        
+//        if let cell = tableViewWorkouts.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as? ChallengeLibraryItemCell {
+//            self.getNavController()?.push(PlannerScheduleVC.self, animated: true, configuration: { (vc) in
+//                vc.itemToAddEdit = self.libraryVM.libraryItemViewModel(at: sender.tag)
+//                vc.isEditMode = cell.isAdded
+//                vc.refreshData = { [weak self] in
+//                    self?.libraryVM.refreshData()
+//                }
+//            })
+//        }
     }
     
 }

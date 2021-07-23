@@ -35,7 +35,7 @@ extension Date {
     
     
     var timeAgoSince: String {
-        let calendar = Calendar.current
+        let calendar = Calendar.sway
         let now = Date()
         let unitFlags: NSCalendar.Unit = [.second, .minute, .hour, .day, .weekOfYear, .month, .year]
         let components = (calendar as NSCalendar).components(unitFlags, from: self, to: now, options: [])
@@ -97,25 +97,41 @@ extension Date {
     
     
     static func getAllDaysOfTheCurrentWeek() -> [Date] {
-        var dates: [Date] = []
-        guard let dateInterval = Calendar.current.dateInterval(of: .weekOfYear,
-                                                               for: Date()) else {
-            return dates
+        let calendar = Calendar.sway
+//        calendar.firstWeekday = 2 // Start on Monday (or 1 for Sunday)
+        let today = calendar.startOfDay(for: Date())
+        var week = [Date]()
+        if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) {
+            for i in 0...6 {
+                if let day = calendar.date(byAdding: .day, value: i, to: weekInterval.start) {
+                    week += [day]
+                }
+            }
         }
+        return week
         
-        Calendar.current.enumerateDates(startingAfter: dateInterval.start,
-                                        matching: DateComponents(hour:0),
-                                        matchingPolicy: .nextTime) { date, _, stop in
-            guard let date = date else {
-                return
-            }
-            if date <= dateInterval.end {
-                dates.append(date)
-            } else {
-                stop = true
-            }
-        }
-        return dates
+//        var dates: [Date] = []
+//        var calendar = Calendar(identifier: .gregorian)
+//        calendar.firstWeekday = 2
+//        calendar.timeZone = TimeZone.current
+//        guard let dateInterval = calendar.dateInterval(of: .weekOfYear,
+//                                                               for: Date()) else {
+//            return dates
+//        }
+//
+//        calendar.enumerateDates(startingAfter: dateInterval.start,
+//                                        matching: DateComponents(hour:0),
+//                                        matchingPolicy: .nextTime) { date, _, stop in
+//            guard let date = date else {
+//                return
+//            }
+//            if date <= dateInterval.end {
+//                dates.append(date)
+//            } else {
+//                stop = true
+//            }
+//        }
+//        return dates
     }
 }
 
@@ -258,11 +274,11 @@ enum Weekday: Int {
 
 
 extension Date {
-    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.sway) -> DateComponents {
         return calendar.dateComponents(Set(components), from: self)
     }
     
-    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.sway) -> Int {
         return calendar.component(component, from: self)
     }
 }
@@ -271,7 +287,7 @@ extension Date {
 extension Date {
     public func setTime(hour: Int, min: Int, sec: Int, timeZoneAbbrev: String = "UTC") -> Date? {
         let x: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
-        let cal = Calendar.current
+        let cal = Calendar.sway
         var components = cal.dateComponents(x, from: self)
         
         //        components.timeZone = TimeZone(abbreviation: timeZoneAbbrev)
@@ -290,7 +306,7 @@ extension Date {
         
         while date <= toDate {
             dates.append(date)
-            guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: date) else { break }
+            guard let newDate = Calendar.sway.date(byAdding: .day, value: 1, to: date) else { break }
             date = newDate
         }
         return dates

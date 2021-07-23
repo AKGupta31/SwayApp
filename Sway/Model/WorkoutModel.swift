@@ -37,9 +37,9 @@ final class WorkoutModel: NSObject, NSItemProviderWriting, NSItemProviderReading
     func toParams(isUpdate:Bool) -> [String:Any]{
 //        let dayOfTheWeekWrtAndroid = self.dayOfTheWeek
         let day = Weekday(rawValue: self.dayOfTheWeek) ?? .monday
-        let startOfTheDay = Calendar.current.startOfDay(for: Date())
+        let startOfTheDay = Calendar.sway.startOfDay(for: startDate)
         let components = DateComponents(hour: 23, minute: 59, second: 59)
-        let endOfDay = Calendar.current.date(byAdding: components, to: startOfTheDay)!
+        let endOfDay = Calendar.sway.date(byAdding: components, to: startOfTheDay)!
         var params :[String:Any] = [
             "startDate": startOfTheDay.millisecondsSince1970,
             "endDate": endOfDay.millisecondsSince1970,

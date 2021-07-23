@@ -89,6 +89,7 @@ class BaseViewController:UIViewController {
             activityIndicator.center = loc
             activityIndicator.hidesWhenStopped = true
             activityIndicator.tintColor = tintColor
+            activityIndicator.color = tintColor
             activityIndicator.startAnimating()
             
             if inSelf == true {

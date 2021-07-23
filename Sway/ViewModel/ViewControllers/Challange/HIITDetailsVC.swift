@@ -33,6 +33,7 @@ class HIITDetailsVC: BaseViewController {
         print("action continue")
         self.getNavController()?.push(RateChallengeVC.self, animated: true, configuration: { (vc) in
             vc.workoutId = self.viewModel.workoutId
+            vc.challengeId = self.viewModel.challengeId
         })
     }
     

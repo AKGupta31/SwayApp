@@ -22,7 +22,7 @@ class Helper {
         noDataLabel.textColor = UIColor(named: "kThemeNavyBlue_50")
         noDataLabel.textAlignment = .center
         noDataLabel.numberOfLines = 0
-        noDataLabel.font = UIFont(name: "CircularStd-Book", size: 14)
+        noDataLabel.font = UIFont(name: "CircularStd-Book", size: 16)
         bgView.addSubview(noDataLabel)
         return bgView
     }

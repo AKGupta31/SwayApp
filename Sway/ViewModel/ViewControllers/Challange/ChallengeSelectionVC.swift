@@ -8,6 +8,7 @@
 import UIKit
 import ViewControllerDescribable
 import UPCarouselFlowLayout
+import GSPlayer
 
 class ChallengeSelectionVC: BaseViewController {
     
@@ -230,9 +231,6 @@ extension ChallengeSelectionVC:UITableViewDataSource, UITableViewDelegate {
                     self?.libraryVM.refreshData()
                 }
             })
-//            if cell.isAdded == false {
-//                cell.isAdded = true
-//            }
         }
     }
     
@@ -248,6 +246,12 @@ extension ChallengeSelectionVC :ChallengeSelectionVMDelegate,LibraryListingVMDel
         cvChallenges.reloadData()
         setupPageControl()
     }
+    
+    func preloadIntroUrls(){
+        VideoPreloadManager.shared.preloadByteCount = 1024 * 1024 * 40
+        VideoPreloadManager.shared.set(waiting: viewModel.getAllChallengeIntroUrls())
+    }
+    
     
     func showAlert(with title: String?, message: String) {
         hideLoader()

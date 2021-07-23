@@ -11,6 +11,7 @@ import ViewControllerDescribable
 import Toast_Swift
 
 class ScheduleLibraryWorkoutVC: BaseViewController,KDDragAndDropCollectionViewDataSource {
+   
     
     @IBOutlet weak var btnAdd: CustomButton!
     @IBOutlet weak var verticalLinesView: UIView!
@@ -97,10 +98,10 @@ class ScheduleLibraryWorkoutVC: BaseViewController,KDDragAndDropCollectionViewDa
             return
         }
         
-        let workoutScheduleDate = Calendar.current.component(.day, from: model.startDate)
-        let currentDate = Calendar.current.component(.day, from: Date())
+        let workoutScheduleDate = Calendar.sway.component(.day, from: model.startDate)
+        let currentDate = Calendar.sway.component(.day, from: Date())
         if workoutScheduleDate <= currentDate{
-            let currentHour = Calendar.current.component(.hour, from: Date())
+            let currentHour = Calendar.sway.component(.hour, from: Date())
             if model.startTime <= currentHour {
                 AlertView.showAlert(with: Constants.Messages.kError, message: Constants.Messages.kCantScheduleAtThisTime)
                 return
@@ -129,8 +130,7 @@ class ScheduleLibraryWorkoutVC: BaseViewController,KDDragAndDropCollectionViewDa
     
     @IBAction func actionBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
-    }
-    
+    }  
 }
 
 //MARK: Private Methods
@@ -308,12 +308,12 @@ extension ScheduleLibraryWorkoutVC:UICollectionViewDataSource, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalenderItemCell", for: indexPath) as! CalenderItemCell
         let model = data[collectionView.tag][indexPath.item]
         cell.lblTitle.isHidden = true
-        if model.color == UIColor.clear {
-            cell.backgroundColor = UIColor.random().withAlphaComponent(0.25)
-        }else {
-            cell.backgroundColor = model.color
-        }
-        
+//        if model.color == UIColor.clear {
+//            cell.backgroundColor = UIColor.random().withAlphaComponent(0.25)
+//        }else {
+//            cell.backgroundColor = model.color
+//        }
+        cell.backgroundColor = model.color
         return cell
     }
     

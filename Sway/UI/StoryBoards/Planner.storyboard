@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IG4-Bx-sNH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AIH-7q-D4f">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -142,7 +142,7 @@
                                 <rect key="frame" x="0.0" y="232" width="414" height="581"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlannerItemCell" id="gEl-wn-nG0" customClass="PlannerItemCell" customModule="Sway" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PlannerItemCell" id="gEl-wn-nG0" customClass="PlannerItemCell" customModule="Sway" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="402"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gEl-wn-nG0" id="LN6-jU-uFM">
@@ -156,9 +156,10 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="382" height="382"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qsH-7p-2gg" userLabel="Cross">
-                                                            <rect key="frame" x="285.5" y="23" width="80.5" height="17"/>
+                                                            <rect key="frame" x="288" y="23" width="78" height="14"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="12"/>
-                                                            <state key="normal" title="Reschedule" image="ic_cross_white_medium"/>
+                                                            <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="-4" maxY="0.0"/>
+                                                            <state key="normal" title="Reschedule" image="ic_reschedule"/>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMl-H0-5gW" userLabel="Title">
                                                             <rect key="frame" x="22" y="276.5" width="338" height="65.5"/>
@@ -269,7 +270,7 @@ Trap Blast</string>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UDH-7D-eca" userLabel="EmptyView" customClass="GradientView" customModule="Sway" customModuleProvider="target">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UDH-7D-eca" userLabel="EmptyView" customClass="GradientView" customModule="Sway" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="10" width="382" height="181.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looks like your Planner is empty" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojY-cx-Rdy">
@@ -346,12 +347,12 @@ Trap Blast</string>
                             <constraint firstItem="OcK-sP-kaF" firstAttribute="top" secondItem="HdQ-2g-Dop" secondAttribute="bottom" constant="32" id="L7a-cT-omq"/>
                             <constraint firstItem="HdQ-2g-Dop" firstAttribute="leading" secondItem="zIz-7A-utQ" secondAttribute="leading" id="V2u-Yn-8TY"/>
                             <constraint firstItem="aJ8-vj-YqZ" firstAttribute="leading" secondItem="zIz-7A-utQ" secondAttribute="leading" id="ZtM-Vz-tIX"/>
-                            <constraint firstItem="zIz-7A-utQ" firstAttribute="bottom" secondItem="aJ8-vj-YqZ" secondAttribute="bottom" id="cTi-xr-kJT"/>
                             <constraint firstItem="zIz-7A-utQ" firstAttribute="trailing" secondItem="HdQ-2g-Dop" secondAttribute="trailing" id="dR4-7s-z57"/>
+                            <constraint firstItem="zIz-7A-utQ" firstAttribute="bottom" secondItem="aJ8-vj-YqZ" secondAttribute="bottom" id="qHh-hb-qWt"/>
                             <constraint firstItem="HdQ-2g-Dop" firstAttribute="top" secondItem="U7W-Io-mEz" secondAttribute="bottom" id="vim-9f-b2e"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Planner" image="ic_planner_unselected" selectedImage="ic_planner_selected" id="J8Y-iI-Rn4"/>
+                    <navigationItem key="navigationItem" title="Planner" id="BTP-Ld-ts9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="datesCollectionView" destination="HdQ-2g-Dop" id="GPH-Ky-OGe"/>
@@ -361,7 +362,7 @@ Trap Blast</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GjL-2z-KiQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="29" y="103"/>
+            <point key="canvasLocation" x="939.13043478260875" y="102.45535714285714"/>
         </scene>
         <!--Search PlannerVC-->
         <scene sceneID="tKN-JX-9RO">
@@ -572,7 +573,7 @@ Trap Blast</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DJV-hD-jcd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="816" y="102"/>
+            <point key="canvasLocation" x="1726.0869565217392" y="101.78571428571428"/>
         </scene>
         <!--Planner ScheduleVC-->
         <scene sceneID="QiB-d3-OAi">
@@ -1092,7 +1093,7 @@ Trap Blast</string>
                                             <constraint firstAttribute="height" constant="56" id="MRl-qj-Hhg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="14"/>
-                                        <state key="normal" title="ADD">
+                                        <state key="normal" title="NEXT">
                                             <color key="titleColor" name="kThemeNavyBlue"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -1113,6 +1114,109 @@ Trap Blast</string>
                                     <constraint firstItem="FoG-uW-kSP" firstAttribute="centerX" secondItem="d3p-YX-yaZ" secondAttribute="centerX" id="kcs-t1-LtL"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBa-px-Nst" userLabel="AllWeeksPopup">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ici-d1-de9" customClass="CustomView" customModule="Sway" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="285.5" width="382" height="325"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apply Changes to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3G-yw-KLx">
+                                                <rect key="frame" x="22" y="40" width="338" height="28"/>
+                                                <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="24"/>
+                                                <color key="textColor" name="kThemeNavyBlue"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ts-fZ-aBw">
+                                                <rect key="frame" x="22" y="110" width="130" height="24"/>
+                                                <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="7" minY="0.0" maxX="-7" maxY="0.0"/>
+                                                <state key="normal" title="This week only" image="ic_radio_btn_selected">
+                                                    <color key="titleColor" name="kThemeNavyBlue"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="actionThisWeek:" destination="GVf-52-Grz" eventType="touchUpInside" id="g18-NY-jZv"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4d-m5-Srj">
+                                                <rect key="frame" x="22" y="154" width="92" height="24"/>
+                                                <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="7" minY="0.0" maxX="-7" maxY="0.0"/>
+                                                <state key="normal" title="All weeks" image="ic_radio_btn_unselected">
+                                                    <color key="titleColor" name="kThemeNavyBlue"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="actionAllWeeks:" destination="GVf-52-Grz" eventType="touchUpInside" id="PRc-kh-42t"/>
+                                                </connections>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5dS-fi-uPb">
+                                                <rect key="frame" x="22" y="236" width="338" height="57"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d9W-hZ-Ja7" customClass="CustomButton" customModule="Sway" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="164" height="57"/>
+                                                        <color key="backgroundColor" name="k5953_0.05"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="14"/>
+                                                        <state key="normal" title="DISCARD">
+                                                            <color key="titleColor" name="kThemeNavyBlue"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="actionDiscard:" destination="GVf-52-Grz" eventType="touchUpInside" id="z8J-VX-BeP"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DRz-e5-mz9" customClass="CustomButton" customModule="Sway" customModuleProvider="target">
+                                                        <rect key="frame" x="174" y="0.0" width="164" height="57"/>
+                                                        <color key="backgroundColor" name="kThemeYellow"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="14"/>
+                                                        <state key="normal" title="UPDATE">
+                                                            <color key="titleColor" name="kThemeNavyBlue"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="actionUpdate:" destination="GVf-52-Grz" eventType="touchUpInside" id="LK4-l3-VxG"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="57" id="5Om-q3-7iz"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="L3G-yw-KLx" firstAttribute="centerX" secondItem="ici-d1-de9" secondAttribute="centerX" id="6ul-6C-kOc"/>
+                                            <constraint firstItem="5dS-fi-uPb" firstAttribute="top" secondItem="D4d-m5-Srj" secondAttribute="bottom" constant="58" id="JyI-QD-Ije"/>
+                                            <constraint firstItem="D4d-m5-Srj" firstAttribute="leading" secondItem="4Ts-fZ-aBw" secondAttribute="leading" id="Nfo-9i-7Z0"/>
+                                            <constraint firstItem="4Ts-fZ-aBw" firstAttribute="top" secondItem="L3G-yw-KLx" secondAttribute="bottom" constant="42" id="OfC-Zq-1oz"/>
+                                            <constraint firstItem="L3G-yw-KLx" firstAttribute="leading" secondItem="ici-d1-de9" secondAttribute="leading" constant="22" id="Opn-LV-TO9"/>
+                                            <constraint firstAttribute="bottom" secondItem="5dS-fi-uPb" secondAttribute="bottom" constant="32" id="OyY-WU-zOQ"/>
+                                            <constraint firstItem="D4d-m5-Srj" firstAttribute="top" secondItem="4Ts-fZ-aBw" secondAttribute="bottom" constant="20" id="Ufn-st-bKk"/>
+                                            <constraint firstItem="L3G-yw-KLx" firstAttribute="top" secondItem="ici-d1-de9" secondAttribute="top" constant="40" id="VDl-tO-DUa"/>
+                                            <constraint firstItem="5dS-fi-uPb" firstAttribute="leading" secondItem="D4d-m5-Srj" secondAttribute="leading" id="rBZ-cP-jGb"/>
+                                            <constraint firstItem="5dS-fi-uPb" firstAttribute="centerX" secondItem="ici-d1-de9" secondAttribute="centerX" id="uST-na-bya"/>
+                                            <constraint firstItem="4Ts-fZ-aBw" firstAttribute="leading" secondItem="L3G-yw-KLx" secondAttribute="leading" id="vFt-ia-FbJ"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="18"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.17254901960784313" green="0.16862745098039217" blue="0.19215686274509802" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ici-d1-de9" firstAttribute="centerY" secondItem="gBa-px-Nst" secondAttribute="centerY" id="5ke-lb-s7V"/>
+                                    <constraint firstAttribute="trailing" secondItem="ici-d1-de9" secondAttribute="trailing" constant="16" id="HUl-QE-qU7"/>
+                                    <constraint firstItem="ici-d1-de9" firstAttribute="leading" secondItem="gBa-px-Nst" secondAttribute="leading" constant="16" id="hqY-Ds-IHH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1Vl-NL-FZD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1125,19 +1229,26 @@ Trap Blast</string>
                             <constraint firstItem="0Bz-EU-tSY" firstAttribute="leading" secondItem="vMK-1W-bPn" secondAttribute="leading" constant="16" id="BJy-AQ-hZu"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="vMK-1W-bPn" secondAttribute="trailing" id="Dfv-cT-Kwe"/>
                             <constraint firstItem="0Bz-EU-tSY" firstAttribute="centerX" secondItem="1Vl-NL-FZD" secondAttribute="centerX" id="GgA-Pk-XhA"/>
+                            <constraint firstItem="gBa-px-Nst" firstAttribute="leading" secondItem="1Vl-NL-FZD" secondAttribute="leading" id="JJu-Ov-9tt"/>
+                            <constraint firstItem="gBa-px-Nst" firstAttribute="top" secondItem="b4Q-3D-Ujv" secondAttribute="top" id="MA3-vT-aax"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="fGX-6E-iuC" secondAttribute="trailing" id="McK-Xa-EUs"/>
                             <constraint firstItem="0Ap-3X-4LU" firstAttribute="top" secondItem="0Bz-EU-tSY" secondAttribute="bottom" constant="17.5" id="S5a-BF-LK5"/>
                             <constraint firstItem="fGX-6E-iuC" firstAttribute="top" secondItem="0Ap-3X-4LU" secondAttribute="bottom" id="UDQ-xr-VGZ"/>
                             <constraint firstItem="vMK-1W-bPn" firstAttribute="top" secondItem="1Vl-NL-FZD" secondAttribute="top" id="Wew-PD-cnR"/>
                             <constraint firstItem="fGX-6E-iuC" firstAttribute="leading" secondItem="1Vl-NL-FZD" secondAttribute="leading" id="eQO-Km-Fdg"/>
+                            <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="gBa-px-Nst" secondAttribute="trailing" id="hUM-ER-ShW"/>
+                            <constraint firstAttribute="bottom" secondItem="gBa-px-Nst" secondAttribute="bottom" id="m1F-xT-cUz"/>
                             <constraint firstItem="0Ap-3X-4LU" firstAttribute="trailing" secondItem="1Vl-NL-FZD" secondAttribute="trailing" id="pcM-mf-8dw"/>
                             <constraint firstItem="vMK-1W-bPn" firstAttribute="leading" secondItem="1Vl-NL-FZD" secondAttribute="leading" id="tWZ-C6-LMD"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="leading" secondItem="0Ap-3X-4LU" secondAttribute="leading" id="vtE-za-uLT"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="allWeeksAlertView" destination="gBa-px-Nst" id="Dtd-re-t4Z"/>
                         <outlet property="bottomView" destination="d3p-YX-yaZ" id="8QT-81-cgh"/>
                         <outlet property="btnAdd" destination="FoG-uW-kSP" id="Oho-LN-CUe"/>
+                        <outlet property="btnAllWeeks" destination="D4d-m5-Srj" id="7lg-nh-7df"/>
+                        <outlet property="btnThisWeek" destination="4Ts-fZ-aBw" id="gih-OX-hOs"/>
                         <outlet property="collectionViewDragItems" destination="0Ap-3X-4LU" id="PL8-BB-MXr"/>
                         <outlet property="collectionViewDragItemsHeight" destination="afG-S5-OKA" id="2oy-3A-vQ8"/>
                         <outlet property="daysStackView" destination="FT4-bS-tZ6" id="lBt-d7-boY"/>
@@ -1157,7 +1268,7 @@ Trap Blast</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vcL-do-ywP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1942" y="102"/>
+            <point key="canvasLocation" x="2850.7246376811595" y="101.78571428571428"/>
         </scene>
         <!--Planner WorkoutsVC-->
         <scene sceneID="x87-Gq-gTs">
@@ -1287,8 +1398,8 @@ Trap Blast</string>
                                             <outlet property="delegate" destination="bSg-sY-28r" id="9dV-1k-k5U"/>
                                         </connections>
                                     </collectionView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Results (12)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZyR-R7-hEm">
-                                        <rect key="frame" x="16" y="108" width="125.5" height="28"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recommended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZyR-R7-hEm">
+                                        <rect key="frame" x="16" y="108" width="165" height="28"/>
                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="24"/>
                                         <color key="textColor" name="kThemeNavyBlue"/>
                                         <nil key="highlightedColor"/>
@@ -1429,7 +1540,27 @@ Trap Blast</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ED-Xl-S80" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2933" y="114"/>
+            <point key="canvasLocation" x="3842.0289855072465" y="113.83928571428571"/>
+        </scene>
+        <!--Planner-->
+        <scene sceneID="Zja-vb-mIR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="AIH-7q-D4f" customClass="BaseNavigationController" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <tabBarItem key="tabBarItem" title="Planner" image="ic_planner_unselected" selectedImage="ic_planner_selected" id="xQ2-QU-mOB"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="p9J-R6-3i5">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="IG4-Bx-sNH" kind="relationship" relationship="rootViewController" id="gC8-FY-rwD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nix-fS-g1b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28.985507246376812" y="102.45535714285714"/>
         </scene>
     </scenes>
     <resources>
@@ -1438,12 +1569,14 @@ Trap Blast</string>
         <image name="ic_bringup" width="17.5" height="10"/>
         <image name="ic_cross" width="16.5" height="16.5"/>
         <image name="ic_cross_small" width="9" height="9"/>
-        <image name="ic_cross_white_medium" width="16.5" height="16.5"/>
         <image name="ic_dropdown" width="17.5" height="10"/>
         <image name="ic_history" width="17" height="18"/>
         <image name="ic_pile_squats" width="151.5" height="151.5"/>
         <image name="ic_planner_selected" width="21.5" height="21.5"/>
         <image name="ic_planner_unselected" width="21.5" height="21.5"/>
+        <image name="ic_radio_btn_selected" width="24" height="24"/>
+        <image name="ic_radio_btn_unselected" width="24" height="24"/>
+        <image name="ic_reschedule" width="14" height="13.5"/>
         <image name="ic_search" width="20" height="20.5"/>
         <namedColor name="White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -7,12 +7,22 @@
 
 import Foundation
 
+extension Calendar {
+    
+    static var sway:Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone.current
+        calendar.firstWeekday = 2
+        return calendar
+    }
+}
+
 class DataManager {
     static let shared = DataManager()
-    private init() {
-        
-    }
     
+    private init() {
+    }
+
     var isLoggedIn = false
     var loggedInUser:LoginResponseData? = nil
     var deviceId = "ashishadafada"

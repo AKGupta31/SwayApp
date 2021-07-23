@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 protocol ChallengeSelectionVMDelegate:BaseVMDelegate {
     
 }
@@ -84,8 +85,19 @@ extension ChallengeSelectionVM {
             }
             
         }
-
     }
+    
+    func getAllChallengeIntroUrls() -> [URL]{
+        var urls = [URL]()
+        challenges.forEach { (model) in
+            if let urlStr = model.video?.url,let url = URL(string: urlStr){
+                urls.append(url)
+            }
+        }
+        return urls
+    }
+    
+    
 }
 
 protocol ChallengeViewModelDelegate:BaseVMDelegate {
@@ -184,7 +196,7 @@ class ChallengeViewModel {
 
     func createChallenge(schedules:[Schedules],isSkip:Bool){
         let startDate = Date().millisecondsSince1970
-        let endDate = Calendar.current.date(byAdding: .weekOfYear, value: challenge.workoutDetails!.count, to: Date())?.millisecondsSince1970 ?? startDate
+        let endDate = Calendar.sway.date(byAdding: .weekOfYear, value: challenge.workoutDetails!.count, to: Date())?.millisecondsSince1970 ?? startDate
         
         ChallengesEndPoint.createChallenge(for: challenge._id!, startDate: startDate, endDate: endDate, schedules: schedules) { [weak self](response) in
             if response.type == "CHALLENGE_CREATED" && response.statusCode == 201 {
@@ -213,11 +225,11 @@ class ChallengeViewModel {
 
 
 extension Date {
-    var millisecondsSince1970:Int {
-        return Int((self.timeIntervalSince1970 * 1000.0).rounded())
+    var millisecondsSince1970:Int64 {
+        return Int64((self.timeIntervalSince1970 * 1000.0).rounded())
     }
 
-    init(milliseconds:Int) {
+    init(milliseconds:Int64) {
         self = Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
     }
 }

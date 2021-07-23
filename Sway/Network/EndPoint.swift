@@ -32,16 +32,16 @@ enum Endpoint {
     
     case getChallenges(page:Int,limit:Int)
     case getChallengeDetail(challengeId:String)
-    case createChallenge(challengeId:String,startDate:Int,endDate:Int,schedules:[Schedules])
+    case createChallenge(challengeId:String,startDate:Int64,endDate:Int64,schedules:[Schedules])
     
     case getWorkoutDetail(workoutId:String,challengeId:String)
     case markCircuitAsSeen(workoutId:String,circuitId:String,challengeId:String)
-    case rateWorkout(workoutId:String,ratings:Ratings)
+    case rateWorkout(workoutId:String,challengeId:String,ratings:Ratings)
     case getLibraryItems(page:Int,limit:Int,searchStr:String,filters:[FilterModel])
     case getFilters
     case getWorkoutSchedules //Schedules for current week
     case addWorkoutSchedule(workout:WorkoutModel,isUpdate:Bool)
-    case getPlannerWorkouts(startDateInMilis:Int,endDateInMilis:Int,dayOfWeek:Int)
+    case getPlannerWorkouts(startDateInMilis:Int64,endDateInMilis:Int64,dayOfWeek:Int)
     
     /// GET, POST or PUT method for each request
     var method:Alamofire.HTTPMethod {
@@ -214,8 +214,8 @@ enum Endpoint {
             ]
         case .markCircuitAsSeen(let workoutId,let circuitId,let challengeId):
             return ["workOutId":workoutId,"circuitId":circuitId,"challengeId":challengeId]
-        case .rateWorkout(let workoutId,let ratings):
-            return ["workOutId":workoutId,"rating":ratings.rawValue]
+        case .rateWorkout(let workoutId,let challengeId,let ratings):
+            return ["workOutId":workoutId,"challengeId":challengeId,"rating":ratings.rawValue]
         case .getLibraryItems(let page,let limit,let searchStr,let filters):
             var keyValue :[String:Any] = ["pageNo":page,"limit":limit]
             if searchStr.isEmpty == false {
@@ -239,8 +239,8 @@ enum Endpoint {
             return keyValue
         case .addWorkoutSchedule(let model,let isUpdate):
             return model.toParams(isUpdate: isUpdate)
-        case .getPlannerWorkouts(let startDateInMilis,let endDate,_):
-            return  ["startDate":startDateInMilis,"endDate":endDate]
+        case .getPlannerWorkouts(let startDateInMilis,let endDate,let dayOfWeek):
+            return  ["startDate":startDateInMilis,"endDate":endDate,"dayOfTheWeek":dayOfWeek]
         }
     }
     

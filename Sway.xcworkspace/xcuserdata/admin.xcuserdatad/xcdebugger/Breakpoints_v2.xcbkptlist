@@ -7,24 +7,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "26D030C3-38E4-41CE-AD79-0F76B4F94417"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Sway/Network/ChallengesEndPoint.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "markWorkoutAsSeen(for:circuitId:challengeId:success:failure:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8036E297-300F-4413-ADC9-D4D9A2C2753C"
-            shouldBeEnabled = "Yes"
+            uuid = "E93F26FF-E1BA-4720-91F5-DAD3EF598401"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Sway/ViewModel/ViewControllers/HIITDetailsPendingStartVC.swift"

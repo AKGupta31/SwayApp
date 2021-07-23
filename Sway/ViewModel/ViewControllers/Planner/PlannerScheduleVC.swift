@@ -12,6 +12,9 @@ import Toast_Swift
 
 class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSource {
     
+    @IBOutlet weak var btnAllWeeks: UIButton!
+    @IBOutlet weak var btnThisWeek: UIButton!
+    @IBOutlet weak var allWeeksAlertView: UIView!
     @IBOutlet weak var btnAdd: CustomButton!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var verticalLinesView: UIView!
@@ -26,10 +29,10 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
     
     var data : [[WorkoutModel]] = [[WorkoutModel]]()
     var previousSchedules = [NewScheduleModel]()
-    var itemToAddEdit:LibraryItemVM!
+    var itemToAddEdit:DayWiseScheduleVM!
     private var dragAndDropManager : KDDragAndDropManager?
     var isEditMode = false
-    var workoutIdToEdit:String?
+//    var workoutIdToEdit:String?
     var refreshData:(()->())?
     var scheduleWeekDateVM:DateViewModel! // date to get the schdules for that particular week
     var viewOnly:Bool = false
@@ -60,6 +63,7 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
     }
     
     fileprivate func setupUI(){
+        allWeeksAlertView.isHidden = true
         if viewOnly {
             lblTitle.text = "Your workout schedule"
         }
@@ -105,11 +109,11 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
             AlertView.showAlert(with: Constants.Messages.kError, message: "Something is wrong please try again and go back")
             return
         }
-        
-        let workoutScheduleDate = Calendar.current.component(.day, from: model.startDate)
-        let currentDate = Calendar.current.component(.day, from: Date())
+        let calendar = Calendar.sway
+        let workoutScheduleDate = calendar.component(.day, from: model.startDate)
+        let currentDate = calendar.component(.day, from: Date())
         if workoutScheduleDate <= currentDate{
-            let currentHour = Calendar.current.component(.hour, from: Date())
+            let currentHour = calendar.component(.hour, from: Date())
             if model.startTime <= currentHour {
                 AlertView.showAlert(with: Constants.Messages.kError, message: Constants.Messages.kCantScheduleAtThisTime)
                 return
@@ -139,6 +143,20 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
         self.dismiss(animated: true, completion: nil)
     }
     
+    //MARK: Actions Popup
+    
+    @IBAction func actionUpdate(_ sender: UIButton) {
+        
+    }
+    @IBAction func actionDiscard(_ sender: UIButton) {
+    }
+    
+    @IBAction func actionAllWeeks(_ sender: UIButton) {
+    }
+    
+    @IBAction func actionThisWeek(_ sender: UIButton) {
+    }
+    
 }
 
 //MARK: Private Methods
@@ -147,10 +165,10 @@ extension PlannerScheduleVC {
     private func setupData(){
         data.removeAll()
         if self.isEditMode == false && itemToAddEdit != nil{
-            let model = WorkoutModel(title: itemToAddEdit.name)
+            let model = WorkoutModel(title: itemToAddEdit.title ?? "")
             model.color = UIColor(named:"kThemeBlue")!
             model.isSelected = true
-            model.workoutId = itemToAddEdit.id
+            model.workoutId = itemToAddEdit.workoutId
             data.append([model])
         }else {
             data.append([WorkoutModel]())
@@ -180,7 +198,7 @@ extension PlannerScheduleVC {
             if let firstIndex = arrayOfWorkoutModels.firstIndex(where: {$0.startTime == Int(schedule.startTime! / 60)}) {
                 let model = data[schedule.dayOfWeek][firstIndex]
                 model.workoutId = schedule._id
-                if itemToAddEdit != nil,itemToAddEdit.id == schedule.workoutId {
+                if itemToAddEdit != nil,itemToAddEdit.workoutId == schedule.workoutId {
                     model.isPreviouslyScheduled = false
                     model.color = UIColor(named: "kThemeBlue")!
                     model.isSelected = true
@@ -217,7 +235,7 @@ extension PlannerScheduleVC {
             container.clipsToBounds = true
             daysStackView.addArrangedSubview(container)
             let dateLabel = UILabel()
-            let dateOfMonth = date.get(.day) // to get the date in 1,2,3 format i.e date only
+            let dateOfMonth = Calendar.sway.component(.day, from: date)//date.get(.day) // to get the date in 1,2,3 format i.e date only
             dateLabel.text = dateOfMonth.description
             dateLabel.textAlignment = .center
             dateLabel.backgroundColor = .clear

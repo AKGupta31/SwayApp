@@ -1006,7 +1006,7 @@ Summer Body</string>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bwl-PA-RQQ" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                         <rect key="frame" x="28" y="28" width="116" height="115"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-nL-Le6">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-nL-Le6">
                                                 <rect key="frame" x="0.0" y="29.5" width="116" height="56"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="48"/>
                                                 <nil key="textColor"/>
@@ -3134,7 +3134,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rLq-DG-UCr" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                         <rect key="frame" x="28" y="28" width="116" height="115"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdp-95-EK0">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdp-95-EK0">
                                                 <rect key="frame" x="0.0" y="29.5" width="116" height="56"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="48"/>
                                                 <nil key="textColor"/>
@@ -3461,7 +3461,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ws-48-ZFs" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                                             <rect key="frame" x="16" y="16" width="58" height="58"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eto-DM-8KV">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eto-DM-8KV">
                                                                     <rect key="frame" x="0.0" y="8" width="58" height="42"/>
                                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="36"/>
                                                                     <nil key="textColor"/>
@@ -3528,7 +3528,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                     <outlet property="delegate" destination="eS1-sZ-8vd" id="NvK-yp-ih8"/>
                                 </connections>
                             </tableView>
-                            <visualEffectView opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFY-Dx-CSt">
+                            <visualEffectView opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFY-Dx-CSt">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Pwa-5K-h99">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -3573,7 +3573,7 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfV-eP-Ri1" customClass="CustomView" customModule="Sway" customModuleProvider="target">
                                         <rect key="frame" x="28" y="28" width="116" height="115"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LmP-2K-Rrz">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LmP-2K-Rrz">
                                                 <rect key="frame" x="0.0" y="29.5" width="116" height="56"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="48"/>
                                                 <nil key="textColor"/>
@@ -4359,8 +4359,134 @@ While all squats work the glutes, hip flexors, quads, hamstrings and calves, the
             </objects>
             <point key="canvasLocation" x="5339" y="799"/>
         </scene>
+        <!--Challenge CompleteVC-->
+        <scene sceneID="cbr-Sc-HDi">
+            <objects>
+                <viewController storyboardIdentifier="ChallengeCompleteVC" id="1Ff-R6-tJE" customClass="ChallengeCompleteVC" customModule="Sway" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TMe-rh-VVw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Sv-Sh-nmG">
+                                <rect key="frame" x="0.0" y="44" width="414" height="666"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGT-Rc-Zb8" userLabel="MainContainer">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="509"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Work out Complete" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hg6-gY-Ye1">
+                                                <rect key="frame" x="16" y="349" width="374" height="47"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="40"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZm-Sg-zZz">
+                                                <rect key="frame" x="52" y="404" width="302" height="33"/>
+                                                <string key="text">Awesome! You have just completed 
+Dance it out Trap Blast and burned 234 calories.</string>
+                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
+                                                <color key="textColor" name="kThemeNavyBlue"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChallengeComplete" translatesAutoresizingMaskIntoConstraints="NO" id="3MP-4j-ljs">
+                                                <rect key="frame" x="78.5" y="32" width="257" height="309"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="3MP-4j-ljs" firstAttribute="top" secondItem="OGT-Rc-Zb8" secondAttribute="top" constant="32" id="0Dg-Cq-rqj"/>
+                                            <constraint firstItem="nZm-Sg-zZz" firstAttribute="leading" secondItem="hg6-gY-Ye1" secondAttribute="leading" constant="36" id="AHk-eY-CS1"/>
+                                            <constraint firstItem="nZm-Sg-zZz" firstAttribute="centerX" secondItem="hg6-gY-Ye1" secondAttribute="centerX" id="CrM-vi-K69"/>
+                                            <constraint firstItem="hg6-gY-Ye1" firstAttribute="top" secondItem="3MP-4j-ljs" secondAttribute="bottom" constant="8" id="NJe-ZX-HFv"/>
+                                            <constraint firstItem="hg6-gY-Ye1" firstAttribute="centerX" secondItem="OGT-Rc-Zb8" secondAttribute="centerX" constant="-4" id="SeB-CG-4aN"/>
+                                            <constraint firstItem="nZm-Sg-zZz" firstAttribute="top" secondItem="hg6-gY-Ye1" secondAttribute="bottom" constant="8" symbolic="YES" id="Wxl-4p-UBu"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nZm-Sg-zZz" secondAttribute="bottom" constant="16" id="jCv-k4-1lo"/>
+                                            <constraint firstAttribute="bottom" secondItem="nZm-Sg-zZz" secondAttribute="bottom" priority="251" constant="72" id="l0L-SU-gic"/>
+                                            <constraint firstItem="hg6-gY-Ye1" firstAttribute="leading" secondItem="OGT-Rc-Zb8" secondAttribute="leading" constant="16" id="uic-NX-1vj"/>
+                                            <constraint firstItem="3MP-4j-ljs" firstAttribute="centerX" secondItem="OGT-Rc-Zb8" secondAttribute="centerX" id="v5R-BN-e14"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="OGT-Rc-Zb8" secondAttribute="trailing" id="7aB-BR-dyD"/>
+                                    <constraint firstAttribute="trailing" secondItem="OGT-Rc-Zb8" secondAttribute="trailing" id="D7w-E6-0Zc"/>
+                                    <constraint firstItem="OGT-Rc-Zb8" firstAttribute="top" secondItem="6Sv-Sh-nmG" secondAttribute="top" id="Hcv-3p-EGS"/>
+                                    <constraint firstItem="OGT-Rc-Zb8" firstAttribute="leading" secondItem="6Sv-Sh-nmG" secondAttribute="leading" id="RiK-8C-wrj"/>
+                                    <constraint firstItem="OGT-Rc-Zb8" firstAttribute="width" secondItem="6Sv-Sh-nmG" secondAttribute="width" id="TaI-k3-eI7"/>
+                                    <constraint firstAttribute="bottom" secondItem="OGT-Rc-Zb8" secondAttribute="bottom" id="utL-yG-agt"/>
+                                </constraints>
+                            </scrollView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="xnu-BV-0za">
+                                <rect key="frame" x="16" y="718" width="382" height="124"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ApF-z5-RFm" customClass="CustomButton" customModule="Sway" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="56"/>
+                                        <color key="backgroundColor" name="White"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="o6j-Z3-UFD"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="14"/>
+                                        <state key="normal" title="SHARE MY WORKOUT TO SOCIALS">
+                                            <color key="titleColor" name="kThemeNavyBlue"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" name="kThemeNavyBlue_20"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4T-X8-K0w" customClass="CustomButton" customModule="Sway" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="68" width="382" height="56"/>
+                                        <color key="backgroundColor" name="kThemeYellow"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="wHn-NA-LaX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="14"/>
+                                        <state key="normal" title="SEE MY PROGRESS">
+                                            <color key="titleColor" name="kThemeNavyBlue"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="actionSeeMyProgress:" destination="1Ff-R6-tJE" eventType="touchUpInside" id="P1a-zj-nkV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="waB-gO-iXJ"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6Sv-Sh-nmG" firstAttribute="top" secondItem="waB-gO-iXJ" secondAttribute="top" id="FZY-cz-5Km"/>
+                            <constraint firstItem="xnu-BV-0za" firstAttribute="leading" secondItem="waB-gO-iXJ" secondAttribute="leading" constant="16" id="Hh2-4E-4yy"/>
+                            <constraint firstItem="xnu-BV-0za" firstAttribute="top" secondItem="6Sv-Sh-nmG" secondAttribute="bottom" constant="8" id="K1O-96-GF3"/>
+                            <constraint firstItem="waB-gO-iXJ" firstAttribute="bottom" secondItem="xnu-BV-0za" secondAttribute="bottom" constant="20" id="Xb3-ep-xrN"/>
+                            <constraint firstItem="waB-gO-iXJ" firstAttribute="trailing" secondItem="xnu-BV-0za" secondAttribute="trailing" constant="16" id="fbr-2E-ePb"/>
+                            <constraint firstAttribute="trailing" secondItem="6Sv-Sh-nmG" secondAttribute="trailing" id="mNU-eJ-GCT"/>
+                            <constraint firstItem="6Sv-Sh-nmG" firstAttribute="leading" secondItem="TMe-rh-VVw" secondAttribute="leading" id="sEb-PM-UvE"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="lblDescription" destination="nZm-Sg-zZz" id="BAR-OK-06Q"/>
+                        <outlet property="lblTitle" destination="hg6-gY-Ye1" id="Og2-sX-kjG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1d6-cl-7ne" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6130" y="799"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="ChallengeComplete" width="257" height="309"/>
         <image name="ChallengeSelection" width="308" height="520"/>
         <image name="MessageContainer" width="277" height="102"/>
         <image name="WorkoutBlur" width="375" height="812"/>

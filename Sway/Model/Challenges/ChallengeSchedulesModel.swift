@@ -9,12 +9,12 @@ import Foundation
 
 public class ChallengeSchedulesModel {
     public var challengeId : String?
-    public var startDate : Int? // time in miliseconds from now
-    public var endDate : Int? // time in miliseconds from now
+    public var startDate : Int64? // time in miliseconds from now
+    public var endDate : Int64? // time in miliseconds from now
     public var schedules : [Schedules]?
     
     
-    init(challengeId:String,startDate:Int,endDate:Int,schedules:[Schedules]) {
+    init(challengeId:String,startDate:Int64,endDate:Int64,schedules:[Schedules]) {
         self.challengeId = challengeId
         self.startDate = startDate
         self.endDate = endDate
@@ -54,8 +54,8 @@ public class ChallengeSchedulesModel {
     required public init?(dictionary: NSDictionary) {
 
         challengeId = dictionary["challengeId"] as? String
-        startDate = dictionary["startDate"] as? Int
-        endDate = dictionary["endDate"] as? Int
+        startDate = dictionary["startDate"] as? Int64
+        endDate = dictionary["endDate"] as? Int64
         if (dictionary["schedules"] != nil) { schedules = Schedules.modelsFromDictionaryArray(array: dictionary["schedules"] as! NSArray) }
     }
 

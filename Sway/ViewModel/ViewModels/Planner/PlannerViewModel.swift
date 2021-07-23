@@ -20,7 +20,7 @@ class DateViewModel {
     init(dateModel:DateModel) {
         self.dateModel = dateModel
         self.dayOfTheMonth = dateModel.date.get(.day)
-        let weekDay = Calendar.current.component(.weekday, from: dateModel.date)
+        let weekDay = Calendar.sway.component(.weekday, from: dateModel.date)
         
         //getWeekDay() - since ios takes 1 as sunday and 2 as monday but in our enum we are taking 1 as monday and 2 tuesday and 7 as sunday
         dayOfWeek = Weekday.getWeekDay(dayFromServer: weekDay)
@@ -32,10 +32,10 @@ class DateViewModel {
         return dateModel.date.getFormattedDate(format: .mmmddYYYY)
     }
     
-    var startDateEndDateInMilis:(Int,Int) {
-        let startOfDay = Calendar.current.startOfDay(for: dateModel.date)
+    var startDateEndDateInMilis:(Int64,Int64) {
+        let startOfDay = Calendar.sway.startOfDay(for: dateModel.date)
         let components = DateComponents(hour: 23, minute: 59, second: 59)
-        let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)!
+        let endOfDay = Calendar.sway.date(byAdding: components, to: startOfDay)!
         return (startOfDay.millisecondsSince1970,endOfDay.millisecondsSince1970)
     }
 }
@@ -74,7 +74,7 @@ class PlannerViewModel: NSObject {
         guard let signupDate = formatter.date(from: "2021/01/01") else {
            return
         }
-        guard let yearBeforeDate = Calendar.current.date(byAdding: .day,value:-365,to: Date()) else {
+        guard let yearBeforeDate = Calendar.sway.date(byAdding: .day,value:-365,to: Date()) else {
             return
         }
         let fromDate:Date!
@@ -84,7 +84,7 @@ class PlannerViewModel: NSObject {
             fromDate = signupDate
         }
         
-        guard let toDate = Calendar.current.date(byAdding: .day,value:90,to: Date()) else {
+        guard let toDate = Calendar.sway.date(byAdding: .day,value:90,to: Date()) else {
             return
         }
         let datesBetweenToAndFromDates = Date.dates(from: fromDate, to: toDate)
@@ -93,7 +93,7 @@ class PlannerViewModel: NSObject {
         }
         
         //set the current date index
-        currentDateIndex = calendarItems.firstIndex(where: {Calendar.current.isDate($0.date, equalTo: Date(), toGranularity: .day)}) ?? 0
+        currentDateIndex = calendarItems.firstIndex(where: {Calendar.sway.isDate($0.date, equalTo: Date(), toGranularity: .day)}) ?? 0
         self.delegate?.reloadDates(isInitial: isInitial, currentDateIndex: currentDateIndex)
         if isInitial {
             getDayWiseSchedulesForSelectedDate()
@@ -132,9 +132,61 @@ extension PlannerViewModel {
     }
 }
 
+enum Intensity:String {
+    case low = "1"
+    case medium = "2"
+    case high = "3"
+    
+    var displayName:String {
+        switch self {
+        case .low:
+            return "Low Intensity"
+        case .medium:
+            return "Medium Intensity"
+        case .high:
+            return "High Intensity"
+        }
+    }
+}
+
+enum DifficultyLevel:Int {
+    case beginner = 1
+    case regular = 2
+    case advance = 3
+    
+//    difficultyLevel - key
+    
+//    Beginner,Regular,Advanced
+}
+
 class DayWiseScheduleVM {
-    let model:PlannerDaywiseModel
+    private let model:PlannerDaywiseModel
     init(model:PlannerDaywiseModel) {
         self.model = model
     }
+    var workoutId:String?{
+        return model.workoutId
+    }
+    
+    var isPreviousSchedule:Bool {
+        let currentDateMilis = Calendar.sway.startOfDay(for: Date()).millisecondsSince1970
+        return Int64(model.startDate ?? 0) < currentDateMilis
+    }
+    
+    var thumbnail:URL? {
+        guard let url = model.imageModel?.url else {return nil}
+        return URL(string: url)
+    }
+    
+    var isCompleted:Bool {
+        return model.isCompleted
+    }
+    var title:String? {
+        return model.workoutName
+    }
+    var intensity:Intensity {
+        return Intensity(rawValue: model.intensityLevel ?? "1") ?? .medium
+    }
+    
+    
 }

@@ -14,12 +14,14 @@ class SearchPlannerVC: UIViewController {
     var searchHistory:[String]!
     @IBOutlet weak var tableViewPreviousSearches: UITableView!
     var searchAction:((_ searchString:String)->())?
+    var searchString:String?
     override func viewDidLoad() {
         super.viewDidLoad()
 
         searchHistory =  SwayUserDefaults.shared.searchList
         searchField.delegate = self
         searchField.returnKeyType = .search
+        self.searchField.text = searchString
         // Do any additional setup after loading the view.
     }
     
@@ -38,7 +40,8 @@ class SearchPlannerVC: UIViewController {
     }
     
     @IBAction func actionCancel(_ sender: UIButton) {
-        
+        searchAction?("")
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -46,7 +49,7 @@ extension SearchPlannerVC:UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = textField.text,text.isEmpty == false {
             searchAction?(text)
-            searchHistory.append(text)
+            searchHistory.insert(text, at: 0)
             SwayUserDefaults.shared.searchList = self.searchHistory
         }else {
             searchAction?("")

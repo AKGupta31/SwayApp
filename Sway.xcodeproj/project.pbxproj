@@ -167,6 +167,8 @@
 		84E9CB78263BF52E00FFEE9A /* VerifyOtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */; };
 		84E9CC0F263C11D400FFEE9A /* OTPFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CC0D263C11D400FFEE9A /* OTPFieldView.swift */; };
 		84E9CC10263C11D400FFEE9A /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */; };
+		84EDA2AC26AAFF3600A8BD1B /* ChallengeCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EDA2AB26AAFF3600A8BD1B /* ChallengeCompleteVC.swift */; };
+		84EDA2B026AB01F100A8BD1B /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EDA2AF26AB01F100A8BD1B /* ProgressViewController.swift */; };
 		84F2066A268C9EAC00C98B52 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F20659268C9EAB00C98B52 /* ColorUtils.swift */; };
 		84F2066B268C9EAC00C98B52 /* AdvancedPageControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F2065A268C9EAB00C98B52 /* AdvancedPageControlView.swift */; };
 		84F20678268C9EAC00C98B52 /* ExtendedDotDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F20668268C9EAB00C98B52 /* ExtendedDotDrawer.swift */; };
@@ -374,6 +376,8 @@
 		84E9CB77263BF52D00FFEE9A /* VerifyOtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOtpVC.swift; sourceTree = "<group>"; };
 		84E9CC0D263C11D400FFEE9A /* OTPFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
 		84E9CC0E263C11D400FFEE9A /* OTPTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
+		84EDA2AB26AAFF3600A8BD1B /* ChallengeCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCompleteVC.swift; sourceTree = "<group>"; };
+		84EDA2AF26AB01F100A8BD1B /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		84F20659268C9EAB00C98B52 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
 		84F2065A268C9EAB00C98B52 /* AdvancedPageControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedPageControlView.swift; sourceTree = "<group>"; };
 		84F20668268C9EAB00C98B52 /* ExtendedDotDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedDotDrawer.swift; sourceTree = "<group>"; };
@@ -627,6 +631,7 @@
 		8434704A2624747B00566FB2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				84EDA2AE26AB01DE00A8BD1B /* Progress */,
 				84F336D026694DDF0091B990 /* Planner */,
 				84F336CA26694CDF0091B990 /* Challange */,
 				84063849264D18EA008CFC46 /* TabBar */,
@@ -976,6 +981,14 @@
 			path = OtpFieldView;
 			sourceTree = "<group>";
 		};
+		84EDA2AE26AB01DE00A8BD1B /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				84EDA2AF26AB01F100A8BD1B /* ProgressViewController.swift */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
 		84F20657268C9EAB00C98B52 /* AdvancedPageControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -1019,6 +1032,7 @@
 				84FB7A39268090BA006D9E57 /* HIITDetailsVC.swift */,
 				846822942695840A00777CA3 /* StartWorkoutVC.swift */,
 				84DCDBC5269C5E9F00D5B4E6 /* RateChallengeVC.swift */,
+				84EDA2AB26AAFF3600A8BD1B /* ChallengeCompleteVC.swift */,
 			);
 			path = Challange;
 			sourceTree = "<group>";
@@ -1378,6 +1392,7 @@
 				84D6C55B2679D4D000A50381 /* WeeklyScheduleViewController.swift in Sources */,
 				843F52F02652382C00B3288C /* VideoResponse.swift in Sources */,
 				8426EEFE269DB28600890293 /* LibraryListingViewModel.swift in Sources */,
+				84EDA2AC26AAFF3600A8BD1B /* ChallengeCompleteVC.swift in Sources */,
 				84E9CC10263C11D400FFEE9A /* OTPTextField.swift in Sources */,
 				84FB7A3D26809E75006D9E57 /* HIITDetailsBanner.swift in Sources */,
 				84F3364926679E860091B990 /* Helper.swift in Sources */,
@@ -1387,6 +1402,7 @@
 				84FA938F267D01C100DFF918 /* ChallengeSelectionCell.swift in Sources */,
 				8498092F2637BEFE00E546A3 /* GuestNewsFeed.swift in Sources */,
 				84B6985F26A687C2001A8E30 /* GradientView.swift in Sources */,
+				84EDA2B026AB01F100A8BD1B /* ProgressViewController.swift in Sources */,
 				84B6762A2683A14200AD14FB /* ChallengeInfoHypeVideoVC.swift in Sources */,
 				84DCDBC6269C5E9F00D5B4E6 /* RateChallengeVC.swift in Sources */,
 				84F336CD26694D3A0091B990 /* HowManyTimesAWeekVC.swift in Sources */,

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PlannerItemCell: UITableViewCell {
     @IBOutlet weak var btnReschedule: UIButton!
@@ -41,6 +42,20 @@ class PlannerItemCell: UITableViewCell {
         gradientLayer.frame = self.viewContent.bounds
     }
 
+    
+    func setupData(scheduleVM:DayWiseScheduleVM){
+        imgBanner.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        imgBanner.backgroundColor = UIColor.random()
+        self.imgBanner.sd_setImage(with: scheduleVM.thumbnail, placeholderImage: UIImage(named: "Planner_Thumbnail"), options: .preloadAllFrames, context: nil)
+        if scheduleVM.isPreviousSchedule {
+            self.btnReschedule.isHidden = true
+        }else {
+            self.btnReschedule.isHidden = scheduleVM.isCompleted
+        }
+        self.viewCompleted.isHidden = !scheduleVM.isCompleted
+        lblWorkoutName.text = scheduleVM.title
+        lblIntensity.text = scheduleVM.intensity.displayName
+    }
     
 
 }

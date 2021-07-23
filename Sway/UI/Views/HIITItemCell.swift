@@ -34,6 +34,7 @@ class HIITItemCell: UITableViewCell {
                 lblDuration.textColor =
                     UIColor.white.withAlphaComponent(0.6)
                 lblName.textColor = .white
+                lblName.text = (lblName.text ?? "") + " - Completed"
             case .next:
                 btnNext.isHidden = false
                 lblName.text = (lblName.text ?? "") + " - Next"

@@ -99,9 +99,9 @@ class SyncWithCalenderVC: BaseViewController {
                             for schedule in schedules {
                                 if let dayOfTheWeek = schedule.dayOfTheWeek,let weekday = Weekday(rawValue: dayOfTheWeek) {
                                     let startDate = Date.today().next(weekday)
-                                    let startDateWithTime = Calendar.current.date(bySettingHour: schedule.startTime!, minute: 0, second: 0, of:startDate)
+                                    let startDateWithTime = Calendar.sway.date(bySettingHour: schedule.startTime!, minute: 0, second: 0, of:startDate)
                                     
-                                    let endDateWithTime = Calendar.current.date(byAdding: .hour, value: 1, to: startDateWithTime ?? startDate) ?? startDate.addingTimeInterval(60 * 60)
+                                    let endDateWithTime = Calendar.sway.date(byAdding: .hour, value: 1, to: startDateWithTime ?? startDate) ?? startDate.addingTimeInterval(60 * 60)
                                     if let date = startDateWithTime {
 //                                        let title = challengeVM.title ?? "" + "\n"
                                         self.insertEvent(title: "Workout", startDate: date, endDate: endDateWithTime, recurenceRule: rule)

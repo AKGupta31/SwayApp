@@ -157,8 +157,8 @@ protocol WorkoutContentsVMDelegate:BaseVMDelegate {
 class WorkoutContentsVM {
     
     private let content:Content
-    private let workoutId:String
-    private let challengeId:String
+    let workoutId:String
+    let challengeId:String
     var controller:ViewController = .HIITDetailsPendingStartVC
     weak var delegate:WorkoutContentsVMDelegate?
     var numberOfSections:Int {
@@ -196,9 +196,9 @@ class WorkoutContentsVM {
     func setupHeaderCell(cell:HIITDescriptionCell){
         cell.lblTitle.text = content.name
         cell.lblDescription.text = content.description
-        cell.lblEquipmentYesNo.text = content.equipmentRequired == true ? "YES" : "NO"
-        cell.lblIntensityLevel.text = intensity.name
-        cell.lblDuration.text = 0.description
+        cell.lblEquipmentYesNo.text = content.equipmentRequired == true ? "Yes" : "No"
+        cell.lblIntensityLevel.text = intensity.name.capitalized
+        cell.lblDuration.text = Int((content.duration ?? 0) / 60).description //0.description
     }
     
     func setupCell(cell:HIITVideoItemCell,for indexPath:IndexPath){
@@ -283,20 +283,20 @@ enum MovementCategories:Int {
 class MovementViewModel {
     let movement:Movement
     
-    var playerItem:AVPlayerItem!
-    var player:AVPlayer!
+//    var playerItem:AVPlayerItem!
+//    var player:AVPlayer!
     var duration :Int = 0
     init(movement:Movement) {
         self.movement = movement
         if let urlStr = movement.media?.mainVideoUrl,let url = URL(string: urlStr){
-            playerItem = AVPlayerItem(url: url)
-            player = AVPlayer(playerItem: playerItem)
-            player.volume = 0.0
-            if playerItem.duration.seconds.isNaN {
-                duration = 0
-            }else {
-                self.duration = Int(playerItem.duration.seconds)
-            }
+//            playerItem = AVPlayerItem(url: url)
+//            player = AVPlayer(playerItem: playerItem)
+//            player.volume = 0.0
+//            if playerItem.duration.seconds.isNaN {
+//                duration = 0
+//            }else {
+//                self.duration = Int(playerItem.duration.seconds)
+//            }
 //            player.play()
         }
     }

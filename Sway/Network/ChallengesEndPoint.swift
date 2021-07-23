@@ -17,7 +17,7 @@ class ChallengesEndPoint {
     }
     
     
-    static func createChallenge(for challengeId:String,startDate:Int,endDate:Int,schedules:[Schedules],success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+    static func createChallenge(for challengeId:String,startDate:Int64,endDate:Int64,schedules:[Schedules],success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock) {
         Api.requestNew(endpoint: .createChallenge(challengeId: challengeId, startDate: startDate, endDate: endDate, schedules: schedules) , type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
     }
     
@@ -34,8 +34,8 @@ class ChallengesEndPoint {
     
     
     
-    static func rateWorkout(for workoutId:String,rating:Ratings,success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock){
-        Api.requestNew(endpoint: .rateWorkout(workoutId: workoutId, ratings: rating), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
+    static func rateWorkout(for workoutId:String,challengeId:String,rating:Ratings,success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock){
+        Api.requestNew(endpoint: .rateWorkout(workoutId: workoutId,challengeId:challengeId,ratings: rating), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
     }
     
     static func getLibraryListing(page:Int,limit:Int,searchStr:String,filters:[FilterModel],success: @escaping SuccessCompletionBlock<WorkoutLibraryListingResponse>, failure: @escaping ErrorFailureCompletionBlock){

@@ -22,6 +22,10 @@ class PlannerVC: BaseViewController {
         super.viewDidLoad()
         showLoader()
         viewModel = PlannerViewModel(delegate: self)
+        tableViewSchedules.contentInsetAdjustmentBehavior  = .never
+        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
+        self.tableViewSchedules.contentInset = adjustForTabbarInsets
+        self.tableViewSchedules.scrollIndicatorInsets = adjustForTabbarInsets
     }
     
     
@@ -29,7 +33,7 @@ class PlannerVC: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
-//        self.navigationController?.push(ChallengeDescriptionVC.self)
+        //        self.navigationController?.push(ChallengeDescriptionVC.self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,6 +67,12 @@ extension PlannerVC:UITableViewDataSource, UITableViewDelegate {
             let numberOfScedules = viewModel.numberOfSchedules
             cell.viewContent.isHidden = numberOfScedules <= 0
             cell.emptyPlannerView.isHidden = numberOfScedules > 0
+            if numberOfScedules > 0 {
+                let vm = viewModel.getDayWiseScheduleVM(at: indexPath.row)
+                cell.setupData(scheduleVM: vm)
+            }
+            cell.btnReschedule.tag = indexPath.row
+            cell.btnReschedule.addTarget(self, action: #selector(rescheduleItem(_:)), for: .touchUpInside)
             return cell
         }
         let cell = UITableViewCell()
@@ -89,10 +99,20 @@ extension PlannerVC:UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            self.getNavController()?.push(PlannerWorkoutsVC.self, animated: true, pushTransition: .horizontal, configuration: { (vc) in
-                
+            self.getNavController()?.push(PlannerWorkoutsVC.self, animated: true, configuration: { (vc) in
             })
         }
+    }
+    
+    @objc func rescheduleItem(_ sender:UIButton){
+        self.navigationController?.present(PlannerScheduleVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
+            let vm = self.viewModel.getDateViewModel(at: IndexPath(row: self.viewModel.selectedDateIndex, section: 0))
+            vc.scheduleWeekDateVM = vm
+            vc.modalPresentationStyle = .fullScreen
+            vc.viewOnly = false
+            vc.itemToAddEdit = self.viewModel.getDayWiseScheduleVM(at: sender.tag)
+            vc.isEditMode = true
+        }, completion: nil)
     }
 }
 
@@ -126,13 +146,13 @@ extension PlannerVC:UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         let dateVM = viewModel.getDateViewModel(at: indexPath)
         cell.setupData(dateVM: dateVM)
         cell.type = indexPath.row == viewModel.selectedDateIndex ? .selectedItem : indexPath.row == viewModel.currentDateIndex ? .currentDate : .normal
-//        if indexPath.row == viewModel.selectedDateIndex {
-//            cell.viewContent.backgroundColor = UIColor(named: "kThemeBlue")
-//        }else if indexPath.row == viewModel.currentDateIndex {
-//            cell.viewContent.backgroundColor = UIColor(named: "kThemeYellow")
-//        }else {
-//            cell.viewContent.backgroundColor = UIColor(named: "k5953_0.05")
-//        }
+        //        if indexPath.row == viewModel.selectedDateIndex {
+        //            cell.viewContent.backgroundColor = UIColor(named: "kThemeBlue")
+        //        }else if indexPath.row == viewModel.currentDateIndex {
+        //            cell.viewContent.backgroundColor = UIColor(named: "kThemeYellow")
+        //        }else {
+        //            cell.viewContent.backgroundColor = UIColor(named: "k5953_0.05")
+        //        }
         return cell
     }
     
