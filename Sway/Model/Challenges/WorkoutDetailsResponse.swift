@@ -227,6 +227,7 @@ struct WorkoutResponseData : Codable {
     let name : String?
     let intensityLevel : String?
     let workOutType : String?
+    let difficultyLevel:String?
     let description : String?
     var contents : [Content]?
     let imageUrl : ImageUrl?
@@ -240,6 +241,7 @@ struct WorkoutResponseData : Codable {
         case name = "name"
         case intensityLevel = "intensityLevel"
         case workOutType = "workOutType"
+        case difficultyLevel = "difficultyLevel"
         case description = "description"
         case contents = "content"
         case imageUrl = "imageUrl"
@@ -259,6 +261,7 @@ struct WorkoutResponseData : Codable {
         imageUrl = try values.decodeIfPresent(ImageUrl.self, forKey: .imageUrl)
         equipmentRequired = try values.decodeIfPresent(Bool.self, forKey: .equipmentRequired) ?? false
         spaceRecommendation = try values.decodeIfPresent(String.self, forKey: .spaceRecommendation)
+        difficultyLevel = try values.decodeIfPresent(String.self, forKey: .difficultyLevel)
     }
 
 }

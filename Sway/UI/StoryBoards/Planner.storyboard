@@ -612,6 +612,25 @@ Trap Blast</string>
                                 <color key="textColor" name="kThemeNavyBlue"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZjX-RK-EFN">
+                                <rect key="frame" x="340" y="100" width="58" height="28"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X3O-h6-dCr" userLabel="PreviousWeek">
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="28"/>
+                                        <state key="normal" image="ic_previous_week"/>
+                                        <connections>
+                                            <action selector="actionPreviousWeek:" destination="GVf-52-Grz" eventType="touchUpInside" id="xXm-IC-Qqf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48L-wl-uMD" userLabel="NextWeek">
+                                        <rect key="frame" x="33" y="0.0" width="25" height="28"/>
+                                        <state key="normal" image="ic_next_week"/>
+                                        <connections>
+                                            <action selector="actionNextWeek:" destination="GVf-52-Grz" eventType="touchUpInside" id="Zq6-If-cml"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGX-6E-iuC">
                                 <rect key="frame" x="0.0" y="205.5" width="414" height="559.5"/>
                                 <subviews>
@@ -1126,13 +1145,14 @@ Trap Blast</string>
                                                 <color key="textColor" name="kThemeNavyBlue"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ts-fZ-aBw">
+                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ts-fZ-aBw">
                                                 <rect key="frame" x="22" y="110" width="130" height="24"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="16"/>
                                                 <inset key="titleEdgeInsets" minX="7" minY="0.0" maxX="-7" maxY="0.0"/>
-                                                <state key="normal" title="This week only" image="ic_radio_btn_selected">
+                                                <state key="normal" title="This week only" image="ic_radio_btn_unselected">
                                                     <color key="titleColor" name="kThemeNavyBlue"/>
                                                 </state>
+                                                <state key="selected" title="This week only" image="ic_radio_btn_selected"/>
                                                 <connections>
                                                     <action selector="actionThisWeek:" destination="GVf-52-Grz" eventType="touchUpInside" id="g18-NY-jZv"/>
                                                 </connections>
@@ -1144,6 +1164,8 @@ Trap Blast</string>
                                                 <state key="normal" title="All weeks" image="ic_radio_btn_unselected">
                                                     <color key="titleColor" name="kThemeNavyBlue"/>
                                                 </state>
+                                                <state key="disabled" title="All weeks" image="ic_radio_btn_selected"/>
+                                                <state key="selected" title="All weeks" image="ic_radio_btn_selected"/>
                                                 <connections>
                                                     <action selector="actionAllWeeks:" destination="GVf-52-Grz" eventType="touchUpInside" id="PRc-kh-42t"/>
                                                 </connections>
@@ -1224,17 +1246,21 @@ Trap Blast</string>
                             <constraint firstItem="d3p-YX-yaZ" firstAttribute="top" secondItem="fGX-6E-iuC" secondAttribute="bottom" id="19e-Lh-AzE"/>
                             <constraint firstItem="0Bz-EU-tSY" firstAttribute="top" secondItem="vMK-1W-bPn" secondAttribute="bottom" id="4Cf-OU-uyq"/>
                             <constraint firstItem="d3p-YX-yaZ" firstAttribute="leading" secondItem="1Vl-NL-FZD" secondAttribute="leading" id="6RX-RW-Fna"/>
+                            <constraint firstItem="ZjX-RK-EFN" firstAttribute="top" secondItem="0Bz-EU-tSY" secondAttribute="top" id="87j-9c-gjy"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="bottom" secondItem="d3p-YX-yaZ" secondAttribute="bottom" id="98w-Ff-fmY"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="d3p-YX-yaZ" secondAttribute="trailing" id="AB0-4Z-0sp"/>
+                            <constraint firstItem="ZjX-RK-EFN" firstAttribute="centerY" secondItem="0Bz-EU-tSY" secondAttribute="centerY" id="AfE-gT-hYr"/>
                             <constraint firstItem="0Bz-EU-tSY" firstAttribute="leading" secondItem="vMK-1W-bPn" secondAttribute="leading" constant="16" id="BJy-AQ-hZu"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="vMK-1W-bPn" secondAttribute="trailing" id="Dfv-cT-Kwe"/>
                             <constraint firstItem="0Bz-EU-tSY" firstAttribute="centerX" secondItem="1Vl-NL-FZD" secondAttribute="centerX" id="GgA-Pk-XhA"/>
                             <constraint firstItem="gBa-px-Nst" firstAttribute="leading" secondItem="1Vl-NL-FZD" secondAttribute="leading" id="JJu-Ov-9tt"/>
                             <constraint firstItem="gBa-px-Nst" firstAttribute="top" secondItem="b4Q-3D-Ujv" secondAttribute="top" id="MA3-vT-aax"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="fGX-6E-iuC" secondAttribute="trailing" id="McK-Xa-EUs"/>
+                            <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="ZjX-RK-EFN" secondAttribute="trailing" constant="16" id="PvP-T5-t9e"/>
                             <constraint firstItem="0Ap-3X-4LU" firstAttribute="top" secondItem="0Bz-EU-tSY" secondAttribute="bottom" constant="17.5" id="S5a-BF-LK5"/>
                             <constraint firstItem="fGX-6E-iuC" firstAttribute="top" secondItem="0Ap-3X-4LU" secondAttribute="bottom" id="UDQ-xr-VGZ"/>
                             <constraint firstItem="vMK-1W-bPn" firstAttribute="top" secondItem="1Vl-NL-FZD" secondAttribute="top" id="Wew-PD-cnR"/>
+                            <constraint firstItem="ZjX-RK-EFN" firstAttribute="bottom" secondItem="0Bz-EU-tSY" secondAttribute="bottom" id="cCu-oJ-5gY"/>
                             <constraint firstItem="fGX-6E-iuC" firstAttribute="leading" secondItem="1Vl-NL-FZD" secondAttribute="leading" id="eQO-Km-Fdg"/>
                             <constraint firstItem="1Vl-NL-FZD" firstAttribute="trailing" secondItem="gBa-px-Nst" secondAttribute="trailing" id="hUM-ER-ShW"/>
                             <constraint firstAttribute="bottom" secondItem="gBa-px-Nst" secondAttribute="bottom" id="m1F-xT-cUz"/>
@@ -1571,9 +1597,11 @@ Trap Blast</string>
         <image name="ic_cross_small" width="9" height="9"/>
         <image name="ic_dropdown" width="17.5" height="10"/>
         <image name="ic_history" width="17" height="18"/>
+        <image name="ic_next_week" width="25" height="24"/>
         <image name="ic_pile_squats" width="151.5" height="151.5"/>
         <image name="ic_planner_selected" width="21.5" height="21.5"/>
         <image name="ic_planner_unselected" width="21.5" height="21.5"/>
+        <image name="ic_previous_week" width="25" height="24"/>
         <image name="ic_radio_btn_selected" width="24" height="24"/>
         <image name="ic_radio_btn_unselected" width="24" height="24"/>
         <image name="ic_reschedule" width="14" height="13.5"/>

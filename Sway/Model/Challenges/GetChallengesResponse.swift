@@ -91,6 +91,8 @@ struct ChallengeModel : Codable {
     let updatedAt : Int?
     let workoutDetails : [WorkoutDetails]?
     let average:Int?
+    var workOutTypes:[String]?
+    var intensityLevel:String?
 
     enum CodingKeys: String, CodingKey {
 
@@ -109,6 +111,8 @@ struct ChallengeModel : Codable {
         case updatedAt = "updatedAt"
         case workoutDetails = "workoutDetails"
         case average = "average"
+        case workOutTypes = "workOutTypes"
+        case intensityLevel = "intensityLevel"
     }
 
     init(from decoder: Decoder) throws {
@@ -128,6 +132,13 @@ struct ChallengeModel : Codable {
         updatedAt = try values.decodeIfPresent(Int.self, forKey: .updatedAt)
         workoutDetails = try values.decodeIfPresent([WorkoutDetails].self, forKey: .workoutDetails)
         average = try values.decodeIfPresent(Int.self, forKey: .average)
+        do {
+            workOutTypes = try values.decodeIfPresent([String].self, forKey: .workOutTypes)
+            intensityLevel = try values.decodeIfPresent(String.self, forKey: .intensityLevel)
+        }catch {
+            print("erroor ",error.localizedDescription)
+        }
+       
         
     }
 

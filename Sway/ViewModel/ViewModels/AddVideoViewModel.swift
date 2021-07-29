@@ -24,6 +24,17 @@ enum WorkoutType:Int {
             return "DANCE + HIIT"
         }
     }
+    
+    var displayCaptialized:String {
+        switch self {
+        case .HIIT_WORKOUT:
+            return "HIIT"
+        case .DANCE_WORKOUT:
+            return "Dance"
+        case .OTHER_CONTENT:
+            return "Dance + HIIT"
+        }
+    }
 }
 
 protocol AddVideoViewModelDelegate:BaseVMDelegate {

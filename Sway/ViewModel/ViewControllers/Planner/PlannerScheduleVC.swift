@@ -9,6 +9,25 @@ import UIKit
 import SnapKit
 import ViewControllerDescribable
 import Toast_Swift
+import EasyTipView
+//import 
+
+enum WorkoutCategory :String{
+    case challenge = "challenge"
+    case library = "library"
+}
+
+enum PlannerScheduleVCType:Int {
+    case viewOnly
+    case rescheduleOnCurrentWeek
+    case rescheduleOnOtherWeek
+}
+
+enum ChallengeUpdateType:String {
+    case currentWeek = "current_week"
+    case allWeeks = "all_weeks"
+    
+}
 
 class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSource {
     
@@ -31,18 +50,21 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
     var previousSchedules = [NewScheduleModel]()
     var itemToAddEdit:DayWiseScheduleVM!
     private var dragAndDropManager : KDDragAndDropManager?
-    var isEditMode = false
-//    var workoutIdToEdit:String?
     var refreshData:(()->())?
-    var scheduleWeekDateVM:DateViewModel! // date to get the schdules for that particular week
-    var viewOnly:Bool = false
+    var type:PlannerScheduleVCType = .viewOnly
+    var dateOfWeek:Date!
+    private var datesForCurrentWeek:[Date]!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
     }
     
+    var tipView:EasyTipView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let currentWeek = Date.getAllDaysOfTheWeek(for: dateOfWeek)
+        datesForCurrentWeek = currentWeek
         getPreviousSchedules()
         setupUI()
         // Do any additional setup after loading the view.
@@ -50,7 +72,12 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
     
     func getPreviousSchedules(){
         showLoader()
-        ChallengesEndPoint.getSchedules { [weak self](response) in
+//        let weekDays = Date.getAllDaysOfTheWeek(for: dateOfWeek)
+        let startDateOfWeekWithStartOfTheDay = Calendar.sway.startOfDay(for: datesForCurrentWeek.first!)
+        guard let endDate = Calendar.sway.date(byAdding: .day, value: 7, to: startDateOfWeekWithStartOfTheDay) else {
+            return
+        }
+        ChallengesEndPoint.getSchedules(startDate: startDateOfWeekWithStartOfTheDay.millisecondsSince1970, endDate: endDate.millisecondsSince1970) { [weak self](response) in
             self?.hideLoader()
             if let schedules = response.data?.schedules {
                 self?.previousSchedules = schedules
@@ -64,7 +91,7 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
     
     fileprivate func setupUI(){
         allWeeksAlertView.isHidden = true
-        if viewOnly {
+        if self.type == .viewOnly {
             lblTitle.text = "Your workout schedule"
         }
         self.tabBarController?.tabBar.isHidden = true
@@ -77,7 +104,7 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
         collectionsViews?.forEach { (cv) in
             cv.isScrollEnabled = false
         }
-        if viewOnly == false {
+        if self.type != .viewOnly  {
             self.dragAndDropManager = KDDragAndDropManager(
                 canvas: self.view,
                 collectionViews: cvs
@@ -97,6 +124,14 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
     
     
     @IBAction func actionAdd(_ sender: UIButton) {
+        tipView?.removeFromSuperview()
+        //show <all weeks / this week> alert view for category type challenge
+        if itemToAddEdit.category == .challenge {
+            allWeeksAlertView.isHidden = false
+            return
+        }
+        
+        // else for library type just simply update workout id with schedule id as we need to put schedule id to update the schedule
         var wm:WorkoutModel?
         data.forEach { (workoutsArray) in
             workoutsArray.forEach { (model) in
@@ -109,10 +144,8 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
             AlertView.showAlert(with: Constants.Messages.kError, message: "Something is wrong please try again and go back")
             return
         }
-        let calendar = Calendar.sway
-        let workoutScheduleDate = calendar.component(.day, from: model.startDate)
-        let currentDate = calendar.component(.day, from: Date())
-        if workoutScheduleDate <= currentDate{
+        if model.startDate.millisecondsSince1970 <= Date().millisecondsSince1970{
+            let calendar = Calendar.sway
             let currentHour = calendar.component(.hour, from: Date())
             if model.startTime <= currentHour {
                 AlertView.showAlert(with: Constants.Messages.kError, message: Constants.Messages.kCantScheduleAtThisTime)
@@ -121,20 +154,24 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
            
         }
         showLoader()
-        ChallengesEndPoint.addSchedule(model: model, isUpdate: isEditMode) { (response) in
-            self.hideLoader()
-            if let code = response.statusCode ,code >= 200 && code < 300 {
-                self.view.makeToast(response.message, duration: 1, position: .bottom) { [weak self](completed) in
-                    self?.navigationController?.popToRootViewController(animated: true)
-                    self?.refreshData?()
-                }
-            }else {
-                AlertView.showAlert(with: Constants.Messages.kError, message: response.message)
-            }
-            
+        model.workoutId = itemToAddEdit.scheduleId // update workout id with schedule id
+        ChallengesEndPoint.addSchedule(model: model, isUpdate: self.type != .viewOnly) { [weak self](response) in
+            self?.handleEmptyDataResponse(response: response)
         } failure: { (status) in
             self.hideLoader()
             AlertView.showAlert(with: Constants.Messages.kError, message: status.msg)
+        }
+    }
+    
+    func handleEmptyDataResponse(response:EmptyDataResponse){
+        self.hideLoader()
+        if let code = response.statusCode ,code >= 200 && code < 300 {
+            self.view.makeToast(response.message, duration: 1, position: .bottom) { [weak self](completed) in
+                self?.dismiss(animated: true, completion: nil)
+                self?.refreshData?()
+            }
+        }else {
+            AlertView.showAlert(with: Constants.Messages.kError, message: response.message)
         }
     }
         
@@ -146,17 +183,101 @@ class PlannerScheduleVC: BaseViewController,KDDragAndDropCollectionViewDataSourc
     //MARK: Actions Popup
     
     @IBAction func actionUpdate(_ sender: UIButton) {
+        let updateFor :ChallengeUpdateType = btnThisWeek.isSelected ? .currentWeek : .allWeeks
+        var wm:WorkoutModel?
+        data.forEach { (workoutsArray) in
+            workoutsArray.forEach { (model) in
+                if model.isSelected {
+                    wm = model
+                }
+            }
+        }
+        guard let model = wm ,let scheduleModel = self.previousSchedules.first(where: {$0._id == itemToAddEdit.scheduleId})else {
+            AlertView.showAlert(with: Constants.Messages.kError, message: "Something is wrong please try again and go back")
+            return
+        }
+        showLoader()
+        ChallengesEndPoint.updateChallengeSchedule(updateFor: updateFor, model: model, scheduleModel:scheduleModel) { [weak self](response) in
+            self?.handleEmptyDataResponse(response: response)
+        } failure: { (status) in
+            self.hideLoader()
+            AlertView.showAlert(with: Constants.Messages.kError, message: status.msg)
+        }
         
     }
     @IBAction func actionDiscard(_ sender: UIButton) {
+        allWeeksAlertView.isHidden = true
     }
     
     @IBAction func actionAllWeeks(_ sender: UIButton) {
+        btnAllWeeks.isSelected = false
+        btnThisWeek.isSelected = false
+        sender.isSelected = true
     }
     
     @IBAction func actionThisWeek(_ sender: UIButton) {
+        btnAllWeeks.isSelected = false
+        btnThisWeek.isSelected = false
+        sender.isSelected = true
     }
     
+    @IBAction func actionPreviousWeek(_ sender: UIButton) {
+        tipView?.removeFromSuperview()
+        let todaysWeek = Date.getAllDaysOfTheCurrentWeek()
+        guard let firstDayOfThisWeek = todaysWeek.first else {return}
+        let startOfFirstDayOfThisWeek = Calendar.sway.startOfDay(for: firstDayOfThisWeek)
+        guard let previousWeekDay = Calendar.sway.date(byAdding: .day, value: -7, to: dateOfWeek) else {
+            return
+        }
+        let previousWeek = Date.getAllDaysOfTheWeek(for: previousWeekDay)
+        guard let firstDayOfNextWeek = previousWeek.first else {return}
+        let startOfFirstDayOfNextWeek = Calendar.sway.startOfDay(for: firstDayOfNextWeek)
+        if type != .viewOnly {
+            if startOfFirstDayOfNextWeek < startOfFirstDayOfThisWeek {
+                AlertView.showAlert(with: "Alert!", message: "You can't reschedule on previous weeks")
+                return
+            }else if startOfFirstDayOfNextWeek == startOfFirstDayOfThisWeek {
+                self.type = .rescheduleOnCurrentWeek
+            }else {
+                self.type = .rescheduleOnOtherWeek
+            }
+        }else {
+            // check if user can't go before signup date
+            if previousWeekDay < DataManager.shared.signupDate {
+                AlertView.showAlert(with: "Alert!", message: "You can't go before signup date")
+                return
+            }
+        }
+        self.dateOfWeek = previousWeekDay
+        datesForCurrentWeek = previousWeek
+        getPreviousSchedules()
+        setupVerticalLines()
+    }
+    
+    @IBAction func actionNextWeek(_ sender: UIButton) {
+        tipView?.removeFromSuperview()
+        guard let nextWeekStart = Calendar.sway.date(byAdding: .day, value: 7, to: dateOfWeek) else {
+            return
+        }
+        guard let next3MonthsFromNow = Calendar.sway.date(byAdding: .day, value: 90, to: Date()) else {return}
+        
+        
+        if nextWeekStart > next3MonthsFromNow {
+            AlertView.showAlert(with: "Alert!", message: "You can't go more than 90 days from today")
+            return
+        }
+        self.dateOfWeek = nextWeekStart
+        self.type = type == .viewOnly ? .viewOnly : .rescheduleOnOtherWeek
+        let currentWeek = Date.getAllDaysOfTheWeek(for: dateOfWeek)
+        datesForCurrentWeek = currentWeek
+        getPreviousSchedules()
+        setupVerticalLines()
+    }
+    
+}
+
+extension PlannerScheduleVC{
+
 }
 
 //MARK: Private Methods
@@ -164,20 +285,21 @@ extension PlannerScheduleVC {
     
     private func setupData(){
         data.removeAll()
-        if self.isEditMode == false && itemToAddEdit != nil{
+        if self.type == .rescheduleOnOtherWeek && itemToAddEdit != nil{
             let model = WorkoutModel(title: itemToAddEdit.title ?? "")
             model.color = UIColor(named:"kThemeBlue")!
             model.isSelected = true
-            model.workoutId = itemToAddEdit.workoutId
+            model.workoutId = itemToAddEdit.scheduleId ?? itemToAddEdit.workoutId
+            model.category = itemToAddEdit.category
             data.append([model])
         }else {
             data.append([WorkoutModel]())
         }
         let totalItems = 18
-        let datesOfTheWeek = Date.getAllDaysOfTheCurrentWeek()
+        let datesOfTheWeek = datesForCurrentWeek//Date.getAllDaysOfTheWeek(for: self.dateOfWeek)
         for dayOfWeek in 1...7 { // traverse through day of the weeks
             var items2 = [WorkoutModel]()
-            let date = datesOfTheWeek[dayOfWeek-1]
+            guard let date = datesOfTheWeek?[dayOfWeek-1] else {continue}
             for i in  0..<totalItems { // traverse through timings like 5 am , 6 am etc
                 let model = WorkoutModel(id:i)
                 model.dayOfTheWeek = dayOfWeek
@@ -195,13 +317,21 @@ extension PlannerScheduleVC {
         
         for schedule in previousSchedules {
             let arrayOfWorkoutModels = data[schedule.dayOfWeek]
-            if let firstIndex = arrayOfWorkoutModels.firstIndex(where: {$0.startTime == Int(schedule.startTime! / 60)}) {
+            if let firstIndex = arrayOfWorkoutModels.firstIndex(where: {($0.startTime == Int(schedule.startTime! / 60))}){
                 let model = data[schedule.dayOfWeek][firstIndex]
                 model.workoutId = schedule._id
-                if itemToAddEdit != nil,itemToAddEdit.workoutId == schedule.workoutId {
-                    model.isPreviouslyScheduled = false
-                    model.color = UIColor(named: "kThemeBlue")!
-                    model.isSelected = true
+                model.title = schedule.workoutName ?? ""
+                model.challengeTitle = schedule.challengeTitle
+                if type == .rescheduleOnCurrentWeek {
+                    if itemToAddEdit != nil,itemToAddEdit.workoutId == schedule.workoutId,itemToAddEdit.category == schedule.category{
+                        model.isPreviouslyScheduled = false
+                        model.color = UIColor(named: "kThemeBlue")!
+                        model.isSelected = true
+                        self.itemToAddEdit.scheduleId = schedule._id
+                    }else {
+                        model.isPreviouslyScheduled = true
+                        model.color = UIColor(named: "kThemeNavyBlue")!
+                    }
                 }else {
                     model.isPreviouslyScheduled = true
                     model.color = UIColor(named: "kThemeNavyBlue")!
@@ -209,16 +339,21 @@ extension PlannerScheduleVC {
                 data[schedule.dayOfWeek][firstIndex] = model
             }
         }
+        self.collectionViewDragItems.reloadData()
         self.collectionsViews.forEach({$0.reloadData()})
     }
     
     private func setupVerticalLines(){
+        daysStackView.arrangedSubviews.forEach({$0.removeFromSuperview()})
+        verticalLinesView.layer.sublayers?.removeAll()
         var x :CGFloat = 0
         let spacing:CGFloat = stackViewCVs.frame.width / 7
         
         //following line of code gets the dates for this current week
-        let datesInThisWeek = Date.getAllDaysOfTheCurrentWeek()
-        let todayIs = Date().get(.day)
+//        let datesInThisWeek = Date.getAllDaysOfTheCurrentWeek()
+        let datesInThisWeek =  datesForCurrentWeek//Date.getAllDaysOfTheWeek(for:dateOfWeek)
+//        let todaysDate = Date().get(.day)
+        let today = Date().get(.day,.month,.year)
         for i in 0..<7 {
             let layer = CALayer()
             layer.frame = CGRect(x: x, y: 0, width: 1, height: verticalLinesView.frame.height)
@@ -228,15 +363,17 @@ extension PlannerScheduleVC {
             
             /*****************SETUP DAYS**********/
             //Also setup days labels
-            let date = datesInThisWeek[i]
+            guard let date = datesInThisWeek?[i] else {
+                continue
+            }
             let containerHeight = daysStackView.frame.height
             let container = UIView(frame: CGRect(x: x, y: 0, width: spacing, height:containerHeight))
             container.layer.cornerRadius = 18.0
             container.clipsToBounds = true
             daysStackView.addArrangedSubview(container)
             let dateLabel = UILabel()
-            let dateOfMonth = Calendar.sway.component(.day, from: date)//date.get(.day) // to get the date in 1,2,3 format i.e date only
-            dateLabel.text = dateOfMonth.description
+            let dateMonthYear = date.get(.day,.month,.year)//Calendar.sway.component(.day, from: date)
+            dateLabel.text = dateMonthYear.day?.description
             dateLabel.textAlignment = .center
             dateLabel.backgroundColor = .clear
             dateLabel.font = UIFont(name: "CircularStd-Bold", size: 25)
@@ -258,7 +395,7 @@ extension PlannerScheduleVC {
                 maker.top.equalToSuperview().inset(9)
             }
             
-            if todayIs == dateOfMonth {
+            if today.day == dateMonthYear.day && today.month == dateMonthYear.month && today.year == dateMonthYear.year {
                 dateLabel.textColor = .white
                 weekDayLabel.textColor = .white
                 container.backgroundColor = .blue//UIColor(named: "kThemeBlue")
@@ -319,6 +456,7 @@ extension PlannerScheduleVC:UICollectionViewDataSource, UICollectionViewDelegate
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DragItemCell", for: indexPath) as! DragItemCell
             let model = data[collectionView.tag][indexPath.item]
             cell.lblTitle.isHidden = true
+            cell.isHidden = false
             //            cell.lblTitle.text = model.dummyDisplayName // "Workout" + indexPath.row.description
             //            cell.backgroundColor = UIColor.random()
             //            cell.lblTitle.text = data[collectionView.tag][indexPath.item].title
@@ -336,10 +474,7 @@ extension PlannerScheduleVC:UICollectionViewDataSource, UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalenderItemCell", for: indexPath) as! CalenderItemCell
         let model = data[collectionView.tag][indexPath.item]
         cell.lblTitle.isHidden = true
-        //        cell.lblTitle.text = model.dummyDisplayName//"Workout"
-        //        cell.lblTitle.text = model.title
         cell.backgroundColor = model.color
-        //cell.imageView.isHidden = model.isSelected == false
         return cell
     }
     
@@ -369,6 +504,28 @@ extension PlannerScheduleVC:UICollectionViewDataSource, UICollectionViewDelegate
         return .zero
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        tipView?.removeFromSuperview()
+        let item = data[collectionView.tag][indexPath.row]
+        guard let cell = collectionView.cellForItem(at: indexPath),item.isSelected == true || item.isPreviouslyScheduled else {
+            return
+        }
+        
+        var preferences = EasyTipView.Preferences()
+        preferences.drawing.font = UIFont(name: "Futura-Medium", size: 13)!
+        preferences.drawing.foregroundColor = UIColor.white
+        preferences.drawing.backgroundColor = UIColor(hue:0.46, saturation:0.99, brightness:0.6, alpha:1)
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top
+        
+        
+        var text = "Workout : \(item.title)"
+        if let challenge = item.challengeTitle,challenge.isEmpty == false {
+            text += "\nChallenge : \(challenge)"
+        }
+        tipView = EasyTipView(text: text, preferences: preferences)
+        tipView?.show(forView: cell, withinSuperview: self.view)
+    }
+    
 }
 
 //MARK: Drag KDDragDropView
@@ -381,12 +538,16 @@ extension PlannerScheduleVC {
         print(#function)
         if let di = dataItem as? WorkoutModel,di.isPreviouslyScheduled == false{
             data[collectionView.tag].insert(di, at: indexPath.row)
+            btnAdd.isUserInteractionEnabled = true
+            btnAdd.backgroundColor = UIColor(named: "kThemeYellow")
         }
     }
     func collectionView(_ collectionView: UICollectionView, deleteDataItemAtIndexPath indexPath : IndexPath) -> Void {
         print(#function)
         if data[collectionView.tag][indexPath.item].isPreviouslyScheduled == false {
             data[collectionView.tag].remove(at: indexPath.item)
+            btnAdd.isUserInteractionEnabled = true
+            btnAdd.backgroundColor = UIColor(named: "kThemeYellow")
         }
         
     }
@@ -443,9 +604,17 @@ extension PlannerScheduleVC {
     
 }
 
+extension PlannerScheduleVC {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        tipView?.removeFromSuperview()
+    }
+}
+
 extension PlannerScheduleVC:ViewControllerDescribable {
     static var storyboardName: StoryboardNameDescribable {
         return UIStoryboard.Name.planner
     }
 }
+
 

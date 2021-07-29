@@ -26,8 +26,7 @@ class CustomButton:UIButton {
             self.clipsToBounds = true
         }
     }
-    
-    
+
 }
 
 class CustomTextLocationButton:UIButton {

@@ -156,6 +156,24 @@ class ChallengeViewModel {
     var weeklyWorkoutCount:Int {
         return challenge.weeklyWorkoutCount ?? 0
     }
+    
+    var types:[Int] {
+        guard let workoutTypes = challenge.workOutTypes else {
+            return [Int]()
+        }
+        var ints = [Int]()
+        workoutTypes.forEach { (workoutType) in
+            if let type = Int(workoutType){
+                ints.append(type)
+            }
+        }
+        return ints
+    }
+    
+    var intensity:Intensity{
+        return Intensity(rawValue: (challenge.intensityLevel ?? "1")) ?? .medium
+    }
+    
     // reloadDataCompletion - If we pass this argument then delegate method will not be called.Only the block will be executed
     func getDetails(reloadDataCompletion:(()->())? = nil){
         if let id = challenge._id {

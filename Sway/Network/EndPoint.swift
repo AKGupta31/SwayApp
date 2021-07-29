@@ -39,9 +39,15 @@ enum Endpoint {
     case rateWorkout(workoutId:String,challengeId:String,ratings:Ratings)
     case getLibraryItems(page:Int,limit:Int,searchStr:String,filters:[FilterModel])
     case getFilters
-    case getWorkoutSchedules //Schedules for current week
+    case getWorkoutSchedules(startDate:Int64?,endDate:Int64?) //Schedules for current week
     case addWorkoutSchedule(workout:WorkoutModel,isUpdate:Bool)
     case getPlannerWorkouts(startDateInMilis:Int64,endDateInMilis:Int64,dayOfWeek:Int)
+    case updateChallengeSchedule(updateFor:ChallengeUpdateType,workout:WorkoutModel,schedule:NewScheduleModel)
+    
+    
+    
+    
+    
     
     /// GET, POST or PUT method for each request
     var method:Alamofire.HTTPMethod {
@@ -50,7 +56,7 @@ enum Endpoint {
             return isUpdate ? .put : .post
         case .login,.socialRegister,.socialLogin,.getOtpOnEmail,.signup,.resetPassword,.likeFeed,.postComment,.createChallenge,.markCircuitAsSeen,.rateWorkout:
             return .post
-        case .updateOnboardingStatus,.deleteFeed:
+        case .updateOnboardingStatus,.deleteFeed,.updateChallengeSchedule:
             return .put
         case .verifyEmail,.getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail,.getWorkoutDetail,.getLibraryItems,.getFilters,.getWorkoutSchedules,.getPlannerWorkouts:
             return .get
@@ -130,7 +136,7 @@ enum Endpoint {
         case .createChallenge:
             return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge"
         case .getWorkoutDetail(let workoutId,let challengeId):
-            return Constants.Networking.kBaseUrl + interMediate + "workout/\(workoutId)" + "?challengeId=\(challengeId)"
+            return Constants.Networking.kBaseUrl + interMediate + "workout/\(workoutId)" + (challengeId.isEmpty ? "" : "?challengeId=\(challengeId)")
         case .markCircuitAsSeen:
             return Constants.Networking.kBaseUrl + interMediate + "workout-history"
         case .rateWorkout:
@@ -148,7 +154,9 @@ enum Endpoint {
             //add
             return Constants.Networking.kBaseUrl + interMediate + "library/add-workout"
         case .getPlannerWorkouts:
-        return Constants.Networking.kBaseUrl + interMediate + "planner/workouts"
+            return Constants.Networking.kBaseUrl + interMediate + "planner/workouts"
+        case .updateChallengeSchedule:
+            return Constants.Networking.kBaseUrl + interMediate + "challenge-schedule"
         }
     }
     
@@ -182,7 +190,7 @@ enum Endpoint {
             return ["email":email,"password":password]
         case .updateOnboardingStatus(let key,let value):
             return [key:value]
-        case .getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail,.getWorkoutDetail,.getFilters,.getWorkoutSchedules:
+        case .getVideos,.getFeeds,.getPredefinedComments,.getComments,.getChallenges,.getChallengeDetail,.getWorkoutDetail,.getFilters:
             return [:]
         case .postFeed(_,let caption,let feedType,let url,let thumbnailUrl,let mediaType,let otherContentDescription):
             var mediaDic = [String:Any]()
@@ -241,6 +249,26 @@ enum Endpoint {
             return model.toParams(isUpdate: isUpdate)
         case .getPlannerWorkouts(let startDateInMilis,let endDate,let dayOfWeek):
             return  ["startDate":startDateInMilis,"endDate":endDate,"dayOfTheWeek":dayOfWeek]
+        case .getWorkoutSchedules(let startDate,let endDate):
+            guard let start = startDate,let end = endDate else {
+                return [:]
+            }
+            return ["startDate":start,"endDate":end]
+        case .updateChallengeSchedule(let updateFor,let workout,let schedule):
+            var params :[String:Any] = [String:Any]()
+            let day = Weekday(rawValue: workout.dayOfTheWeek) ?? .monday
+            
+            params["scheduleId"] = schedule._id
+            params["dayOfTheWeek"] = day.dayOfTheWeekIntWRTAndroid
+            params["startTime"] = workout.startTime * 60 // start time in minutes
+            params["endTime"] = workout.endTime * 60 // start time in minutes
+            params["updateChallengeFor"] = updateFor.rawValue
+//            params["userWorkoutId"] =
+            if updateFor == .allWeeks {
+                params["userWorkoutId"] = schedule.userWorkoutId
+            }
+            
+            return params
         }
     }
     
@@ -252,7 +280,7 @@ enum Endpoint {
             return HTTPHeaders(headers)
         case .verifyEmail:
             return HTTPHeaders(headers)
-        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment,.getChallenges,.getChallengeDetail,.createChallenge,.getWorkoutDetail,.markCircuitAsSeen,.rateWorkout,.getLibraryItems,.getFilters,.getWorkoutSchedules,.addWorkoutSchedule,.getPlannerWorkouts:
+        case .updateOnboardingStatus,.getVideos,.getFeeds,.postFeed,.deleteFeed,.likeFeed,.getPredefinedComments,.getComments,.postComment,.getChallenges,.getChallengeDetail,.createChallenge,.getWorkoutDetail,.markCircuitAsSeen,.rateWorkout,.getLibraryItems,.getFilters,.getWorkoutSchedules,.addWorkoutSchedule,.getPlannerWorkouts,.updateChallengeSchedule:
             headers["authorization"] = "bearer " + (DataManager.shared.loggedInUser?.user?.accessToken ?? "")
             return HTTPHeaders(headers)
         }

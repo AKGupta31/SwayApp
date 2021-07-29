@@ -104,6 +104,8 @@ extension ChallengeDescriptionVC:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 2 {
             return CGFloat((viewModel.weeklyWorkoutCount * 121) + 65)
+        }else if indexPath.row == 0 {
+            return tableView.frame.height * 0.64
         }
         return UITableView.automaticDimension
     }

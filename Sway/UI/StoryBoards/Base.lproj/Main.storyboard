@@ -2502,32 +2502,6 @@ profile image</string>
             <point key="canvasLocation" x="2420" y="3074"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="7z8-Ya-ivQ">
-            <size key="intrinsicContentSize" width="68.5" height="18"/>
-        </designable>
-        <designable name="GjH-Kc-3Gi">
-            <size key="intrinsicContentSize" width="90" height="18"/>
-        </designable>
-        <designable name="W63-Yi-wa9">
-            <size key="intrinsicContentSize" width="90" height="18"/>
-        </designable>
-        <designable name="aRn-2I-zF7">
-            <size key="intrinsicContentSize" width="57" height="18"/>
-        </designable>
-        <designable name="hUK-U7-0s6">
-            <size key="intrinsicContentSize" width="62" height="17"/>
-        </designable>
-        <designable name="scN-wE-MPe">
-            <size key="intrinsicContentSize" width="116" height="17"/>
-        </designable>
-        <designable name="wkB-5x-16t">
-            <size key="intrinsicContentSize" width="90" height="18"/>
-        </designable>
-        <designable name="zFj-oB-dU6">
-            <size key="intrinsicContentSize" width="62" height="17"/>
-        </designable>
-    </designables>
     <resources>
         <image name="PasswordChange" width="228" height="324"/>
         <image name="eye_close" width="24" height="24"/>

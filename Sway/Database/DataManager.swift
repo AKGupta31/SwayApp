@@ -29,6 +29,13 @@ class DataManager {
     var deviceToken = "ashish1233222"
     var predefinedComments = [PredefinedComment]()
     
+    var signupDate:Date {
+        if let dateStr = loggedInUser?.user?.createdAt {
+            return Date(milliseconds: Int64(dateStr))
+        }
+        return Calendar.sway.date(byAdding: .day, value: -365, to: Date()) ?? Date()
+    }
+    
     func setLoggedInUser(user:LoginResponseData?){
         SwayUserDefaults.shared.loggedInUser = user
         loggedInUser = user

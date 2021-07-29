@@ -43,6 +43,11 @@ class StartWorkoutVideoWithTimerCell: UITableViewCell {
         imgVideoThumb.isHidden = false
 //        pause(reason: .hidden)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        print("title view frame ",lblTitle.frame)
+    }
 
     func setupData(viewModel:MovementViewModel,indexPath:IndexPath){
         self.viewModel = viewModel

@@ -17,7 +17,7 @@ class HIITDetailsVC: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tabBarController?.tabBar.isHidden = true
         tableView.contentInsetAdjustmentBehavior  = .never
         edgesForExtendedLayout = [.bottom]
         extendedLayoutIncludesOpaqueBars = true
@@ -30,11 +30,18 @@ class HIITDetailsVC: BaseViewController {
     }
     
     @IBAction func actionContinue(_ sender: UIButton) {
-        print("action continue")
-        self.getNavController()?.push(RateChallengeVC.self, animated: true, configuration: { (vc) in
-            vc.workoutId = self.viewModel.workoutId
-            vc.challengeId = self.viewModel.challengeId
-        })
+        let numberOfRows = viewModel.getNumberOfRows(in: 1)
+        if viewModel.lastSeenItemIndex + 1 == numberOfRows {
+            self.getNavController()?.push(RateChallengeVC.self, animated: true, configuration: { (vc) in
+                vc.workoutId = self.viewModel.workoutId
+                vc.challengeId = self.viewModel.challengeId
+            })
+        }else {(
+            self.tableView(self.tableView, didSelectRowAt: IndexPath(row: viewModel.lastSeenItemIndex + 1, section: 1)))
+            print("continue")
+        }
+    
+       
     }
     
     
@@ -62,9 +69,9 @@ extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRows = viewModel.getNumberOfRows(in: 1)
-        btnContinue.isEnabled = viewModel.lastSeenItemIndex >= numberOfRows - 1
-        btnContinue.backgroundColor = UIColor(named: "kThemeYellow")?.withAlphaComponent(btnContinue.isEnabled ? 1.0 : 0.6)
+//        let numberOfRows = viewModel.getNumberOfRows(in: 1)
+      //  btnContinue.isEnabled = viewModel.lastSeenItemIndex >= numberOfRows - 1
+//        btnContinue.backgroundColor = UIColor(named: "kThemeYellow")?.withAlphaComponent(btnContinue.isEnabled ? 1.0 : 0.6)
         return viewModel.getNumberOfRows(in: section)
     }
     
@@ -73,7 +80,7 @@ extension HIITDetailsVC:UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "HIITDetailsBanner") as! HIITDetailsBanner
                 cell.lblType.text = viewModel.workoutType.displayString
-                cell.lblIntensity.text = viewModel.intensity.name
+                cell.lblIntensity.text = viewModel.intensity.displayName
                 cell.lblTitle.text = viewModel.title
                 cell.imgBanner.sd_imageIndicator = SDWebImageActivityIndicator.gray
                 cell.imgBanner.sd_setImage(with: viewModel.bannerImageUrl, completed: nil)

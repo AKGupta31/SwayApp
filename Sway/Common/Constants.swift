@@ -40,8 +40,6 @@ class Constants {
         static let kAreYouSureToDeleteThePost = "Are you sure you want to delete the post"
         static let kCantScheduleAtThisTime = "You can't schedule event at this time. Please propose new time"
     }
-    
-    
 }
 
 // MARK: - Media Enum

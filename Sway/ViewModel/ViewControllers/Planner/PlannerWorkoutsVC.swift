@@ -14,6 +14,7 @@ class PlannerWorkoutsVC: BaseViewController {
     @IBOutlet weak var tableViewWorkouts: UITableView!
     @IBOutlet weak var lblResult: UILabel!
     var libraryVM:LibraryListingViewModel!
+    var refreshData:(()->())?
     override func viewDidLoad() {
         super.viewDidLoad()
         showLoader()
@@ -131,12 +132,15 @@ extension PlannerWorkoutsVC:UITableViewDataSource, UITableViewDelegate {
         return UITableView.automaticDimension
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let workoutvm = libraryVM.libraryItemViewModel(at: indexPath.row)
-//        self.getNavController()?.push(WorkoutInfoVC.self, animated: true, pushTransition: .vertical, configuration: { (vc) in
-//
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let workoutId = libraryVM.libraryItemViewModel(at: indexPath.row).id else {
+//            return
+//        }
+//        self.getNavController()?.push(HIITDetailsVC.self, animated: true,configuration: { (vc) in
+//            vc.viewModel = WorkoutDetailsViewModel(workoutId: workoutId, challengeId: "")
 //        })
-//    }
+    }
     
     @objc func addClicked(_ sender:UIButton){
         if let cell = tableViewWorkouts.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as? ChallengeLibraryItemCell {
@@ -145,6 +149,7 @@ extension PlannerWorkoutsVC:UITableViewDataSource, UITableViewDelegate {
                 vc.isEditMode = cell.isAdded
                 vc.refreshData = { [weak self] in
                     self?.libraryVM.refreshData()
+                    self?.refreshData?()
                 }
             })
         }

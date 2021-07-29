@@ -55,7 +55,7 @@ class ChallengeSelectionVC: BaseViewController {
     }
     
     
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -81,33 +81,8 @@ class ChallengeSelectionVC: BaseViewController {
                                                indicatorColor: UIColor(named: "kThemeNavyBlue")!,
                                                dotsColor: UIColor(named: "PageControl")!,
                                                borderWidth: 0.0
-                                               )
-        
+        )
         pageControlView.addSubview(pageControl)
-        
-        //FLEXIBLE PAGE CONTROL
-        /*
-         
-         if pageControl == nil {
-         pageControl = FlexiblePageControl()
-         pageControlView.addSubview(pageControl)
-         }
-         pageControl.numberOfPages = viewModel.numberOfItems
-         pageControl.center = CGPoint(x: pageControlView.frame.width / 2, y: pageControlView.frame.height / 2)
-         
-         // color
-         pageControl.pageIndicatorTintColor = UIColor(named: "PageControl")!
-         pageControl.currentPageIndicatorTintColor = UIColor(named: "kThemeNavyBlue")!
-         
-         // size
-         let config = FlexiblePageControl.Config(
-         displayCount: 7,
-         dotSize: 10,
-         dotSpace: 4,
-         smallDotSizeRatio: 0.7,
-         mediumDotSizeRatio: 0.9
-         )
-         pageControl.setConfig(config) */
     }
     
     
@@ -154,7 +129,7 @@ extension ChallengeSelectionVC:UICollectionViewDataSource, UICollectionViewDeleg
         cell.viewContent.backgroundColor = UIColor.random()
         return cell
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == cvFilters {
@@ -199,7 +174,7 @@ extension ChallengeSelectionVC:UICollectionViewDataSource, UICollectionViewDeleg
                 pageControl.setPage(centerIndex.row)
             }
         }
-     
+        
     }
     
 }
@@ -289,10 +264,10 @@ extension CGFloat {
 extension UIColor {
     static func random() -> UIColor {
         return UIColor(
-           red:   .random(),
-           green: .random(),
-           blue:  .random(),
-           alpha: 1.0
+            red:   .random(),
+            green: .random(),
+            blue:  .random(),
+            alpha: 1.0
         )
     }
 }

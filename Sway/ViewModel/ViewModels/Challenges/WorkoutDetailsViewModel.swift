@@ -14,19 +14,19 @@ protocol WorkoutDetailsViewModelDelegate:BaseVMDelegate {
 }
 
 
-enum IntensityLevel:Int {
-    case low = 1,medium = 2,high = 3
-    var name:String {
-        switch self {
-        case .low:
-            return "LOW"
-        case .medium:
-            return "MEDIUM"
-        case .high:
-            return "HIGH"
-        }
-    }
-}
+//enum IntensityLevel:Int {
+//    case low = 1,medium = 2,high = 3
+//    var name:String {
+//        switch self {
+//        case .low:
+//            return "LOW"
+//        case .medium:
+//            return "MEDIUM"
+//        case .high:
+//            return "HIGH"
+//        }
+//    }
+//}
 
 class WorkoutDetailsViewModel {
     
@@ -74,9 +74,9 @@ class WorkoutDetailsViewModel {
         return .OTHER_CONTENT
     }
     
-    var intensity:IntensityLevel{
-        if let intensity = workout.intensityLevel,let intVal = Int(intensity) {
-            return IntensityLevel(rawValue: intVal) ?? .medium
+    var intensity:Intensity{
+        if let intensity = workout.intensityLevel{
+            return Intensity(rawValue: intensity) ?? .medium
         }
         return .medium
     }
@@ -186,9 +186,9 @@ class WorkoutContentsVM {
     }
     
 
-    var intensity:IntensityLevel{
-        if let intensity = content.intensityLevel,let intVal = Int(intensity) {
-            return IntensityLevel(rawValue: intVal) ?? .medium
+    var intensity:Intensity{
+        if let intensity = content.intensityLevel{
+            return Intensity(rawValue: intensity) ?? .medium
         }
         return .medium
     }
@@ -197,7 +197,7 @@ class WorkoutContentsVM {
         cell.lblTitle.text = content.name
         cell.lblDescription.text = content.description
         cell.lblEquipmentYesNo.text = content.equipmentRequired == true ? "Yes" : "No"
-        cell.lblIntensityLevel.text = intensity.name.capitalized
+        cell.lblIntensityLevel.text = intensity.shortName
         cell.lblDuration.text = Int((content.duration ?? 0) / 60).description //0.description
     }
     

@@ -42,10 +42,10 @@ class PlannerVC: BaseViewController {
     
     @IBAction func actionWorkoutPlanner(_ sender: UIButton) {
         self.navigationController?.present(PlannerScheduleVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
-            let vm = self.viewModel.getDateViewModel(at: IndexPath(row: self.viewModel.selectedDateIndex, section: 0))
-            vc.scheduleWeekDateVM = vm
+//            let vm = self.viewModel.getDateViewModel(at: IndexPath(row: self.viewModel.selectedDateIndex, section: 0))
             vc.modalPresentationStyle = .fullScreen
-            vc.viewOnly = true
+            vc.type = .viewOnly
+            vc.dateOfWeek = self.viewModel.getDateFromSelectedIndex()
         }, completion: nil)
     }
     
@@ -100,18 +100,20 @@ extension PlannerVC:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             self.getNavController()?.push(PlannerWorkoutsVC.self, animated: true, configuration: { (vc) in
+                vc.refreshData = {[weak self]  in
+                    self?.viewModel.getDayWiseSchedulesForSelectedDate()
+                }
             })
         }
     }
     
     @objc func rescheduleItem(_ sender:UIButton){
         self.navigationController?.present(PlannerScheduleVC.self, navigationEnabled: false, animated: true, configuration: { (vc) in
-            let vm = self.viewModel.getDateViewModel(at: IndexPath(row: self.viewModel.selectedDateIndex, section: 0))
-            vc.scheduleWeekDateVM = vm
             vc.modalPresentationStyle = .fullScreen
-            vc.viewOnly = false
+            vc.type = .rescheduleOnCurrentWeek
             vc.itemToAddEdit = self.viewModel.getDayWiseScheduleVM(at: sender.tag)
-            vc.isEditMode = true
+//            vc.isEditMode = true
+            vc.dateOfWeek = self.viewModel.getDateFromSelectedIndex()
         }, completion: nil)
     }
 }
@@ -146,13 +148,6 @@ extension PlannerVC:UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         let dateVM = viewModel.getDateViewModel(at: indexPath)
         cell.setupData(dateVM: dateVM)
         cell.type = indexPath.row == viewModel.selectedDateIndex ? .selectedItem : indexPath.row == viewModel.currentDateIndex ? .currentDate : .normal
-        //        if indexPath.row == viewModel.selectedDateIndex {
-        //            cell.viewContent.backgroundColor = UIColor(named: "kThemeBlue")
-        //        }else if indexPath.row == viewModel.currentDateIndex {
-        //            cell.viewContent.backgroundColor = UIColor(named: "kThemeYellow")
-        //        }else {
-        //            cell.viewContent.backgroundColor = UIColor(named: "k5953_0.05")
-        //        }
         return cell
     }
     

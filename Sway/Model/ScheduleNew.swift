@@ -53,18 +53,19 @@ struct ScheduleData : Codable {
 }
 
 struct NewScheduleModel : Codable {
-    let challengeId : String?
-    let challengeTitle : String?
-    let endDate : Double?
-    let endTime : Double?
-    let _id : String?
-    let startDate : Double?
-    let startTime : Double?
-    let type : String?
-    let userId : String?
-    let workoutId : String?
-    let workoutName : String?
-    private let dayOfTheWeek:Int?
+    var challengeId : String?
+    var challengeTitle : String?
+    var endDate : Double?
+    var endTime : Double?
+    var _id : String?
+    var startDate : Double?
+    var startTime : Double?
+    private var type : String?
+    var userId : String?
+    var workoutId : String?
+    var workoutName : String?
+    private var dayOfTheWeek:Int?
+    var userWorkoutId:String?
 
     enum CodingKeys: String, CodingKey {
 
@@ -80,23 +81,28 @@ struct NewScheduleModel : Codable {
         case workoutId = "workoutId"
         case workoutName = "workoutName"
         case dayOfTheWeek = "dayOfTheWeek"
+        case userWorkoutId = "userWorkoutId"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        challengeId = try values.decodeIfPresent(String.self, forKey: .challengeId)
-        challengeTitle = try values.decodeIfPresent(String.self, forKey: .challengeTitle)
-        endDate = try values.decodeIfPresent(Double.self, forKey: .endDate)
-        endTime = try values.decodeIfPresent(Double.self, forKey: .endTime)
-        _id = try values.decodeIfPresent(String.self, forKey: ._id)
-        startDate = try values.decodeIfPresent(Double.self, forKey: .startDate)
-        startTime = try values.decodeIfPresent(Double.self, forKey: .startTime)
-        type = try values.decodeIfPresent(String.self, forKey: .type)
-        userId = try values.decodeIfPresent(String.self, forKey: .userId)
-        workoutId = try values.decodeIfPresent(String.self, forKey: .workoutId)
-        workoutName = try values.decodeIfPresent(String.self, forKey: .workoutName)
-        dayOfTheWeek = try values.decodeIfPresent(Int.self, forKey: .dayOfTheWeek)
-        
+        do {
+            challengeId = try values.decodeIfPresent(String.self, forKey: .challengeId)
+            challengeTitle = try values.decodeIfPresent(String.self, forKey: .challengeTitle)
+            endDate = try values.decodeIfPresent(Double.self, forKey: .endDate)
+            endTime = try values.decodeIfPresent(Double.self, forKey: .endTime)
+            _id = try values.decodeIfPresent(String.self, forKey: ._id)
+            startDate = try values.decodeIfPresent(Double.self, forKey: .startDate)
+            startTime = try values.decodeIfPresent(Double.self, forKey: .startTime)
+            type = try values.decodeIfPresent(String.self, forKey: .type)
+            userId = try values.decodeIfPresent(String.self, forKey: .userId)
+            workoutId = try values.decodeIfPresent(String.self, forKey: .workoutId)
+            workoutName = try values.decodeIfPresent(String.self, forKey: .workoutName)
+            dayOfTheWeek = try values.decodeIfPresent(Int.self, forKey: .dayOfTheWeek)
+            userWorkoutId = try values.decodeIfPresent(String.self, forKey: .userWorkoutId)
+        }catch {
+            print("error",error.localizedDescription)
+        }
     }
     
     public func toParamsForChallengeSchedule() -> [String:Any] {
@@ -110,6 +116,13 @@ struct NewScheduleModel : Codable {
     
     var dayOfWeek:Int {
         return Weekday.getWeekDay(dayFromServer: dayOfTheWeek ?? 1).rawValue
+    }
+    
+    var category:WorkoutCategory {
+        if let type = self.type {
+            return WorkoutCategory(rawValue: type) ?? .library
+        }
+        return .library
     }
     
 }

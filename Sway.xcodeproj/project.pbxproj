@@ -154,6 +154,10 @@
 		84DCDBC6269C5E9F00D5B4E6 /* RateChallengeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DCDBC5269C5E9F00D5B4E6 /* RateChallengeVC.swift */; };
 		84DD2F7F26A7DE3B006C4B8F /* PlannerWorkoutsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD2F7E26A7DE3B006C4B8F /* PlannerWorkoutsVC.swift */; };
 		84DD2F8326A7EC78006C4B8F /* PlannerSchedulesDayWiseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD2F8226A7EC78006C4B8F /* PlannerSchedulesDayWiseResponse.swift */; };
+		84E0D47326B130D800576AD2 /* TestingDragDropPlannerSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0D47226B130D800576AD2 /* TestingDragDropPlannerSchedule.swift */; };
+		84E0D4AF26B133A100576AD2 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0D4AA26B133A100576AD2 /* InfoView.swift */; };
+		84E0D4B026B133A100576AD2 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0D4AB26B133A100576AD2 /* PlaceholderView.swift */; };
+		84E0D4B126B133A100576AD2 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0D4AC26B133A100576AD2 /* BackgroundView.swift */; };
 		84E20C4F2625D4C0002DBAF5 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E20C4E2625D4C0002DBAF5 /* Colors.xcassets */; };
 		84E20C562625D5D0002DBAF5 /* UIStoryboard+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E20C552625D5D0002DBAF5 /* UIStoryboard+Ext.swift */; };
 		84E20C5A2625D644002DBAF5 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E20C592625D644002DBAF5 /* SignupVC.swift */; };
@@ -363,6 +367,10 @@
 		84DCDBC5269C5E9F00D5B4E6 /* RateChallengeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateChallengeVC.swift; sourceTree = "<group>"; };
 		84DD2F7E26A7DE3B006C4B8F /* PlannerWorkoutsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerWorkoutsVC.swift; sourceTree = "<group>"; };
 		84DD2F8226A7EC78006C4B8F /* PlannerSchedulesDayWiseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerSchedulesDayWiseResponse.swift; sourceTree = "<group>"; };
+		84E0D47226B130D800576AD2 /* TestingDragDropPlannerSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingDragDropPlannerSchedule.swift; sourceTree = "<group>"; };
+		84E0D4AA26B133A100576AD2 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		84E0D4AB26B133A100576AD2 /* PlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		84E0D4AC26B133A100576AD2 /* BackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		84E20C4E2625D4C0002DBAF5 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		84E20C552625D5D0002DBAF5 /* UIStoryboard+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Ext.swift"; sourceTree = "<group>"; };
 		84E20C592625D644002DBAF5 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
@@ -532,6 +540,7 @@
 				84347045262473BA00566FB2 /* ViewModel */,
 				843470442624738900566FB2 /* Model */,
 				8434703D262470D900566FB2 /* Info.plist */,
+				84E0D47226B130D800576AD2 /* TestingDragDropPlannerSchedule.swift */,
 			);
 			path = Sway;
 			sourceTree = "<group>";
@@ -799,6 +808,7 @@
 		84595B8E262D57D5009605F5 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				84E0D4A526B133A000576AD2 /* InfoView */,
 				84F20657268C9EAB00C98B52 /* AdvancedPageControl */,
 				84D6C55D2679D50100A50381 /* KDDragDropCollectionViews */,
 				842364E72642FD5E001DA7E6 /* AWSUploadController.swift */,
@@ -927,6 +937,32 @@
 				84DD2F8226A7EC78006C4B8F /* PlannerSchedulesDayWiseResponse.swift */,
 			);
 			path = Planner;
+			sourceTree = "<group>";
+		};
+		84E0D4A526B133A000576AD2 /* InfoView */ = {
+			isa = PBXGroup;
+			children = (
+				84E0D4A826B133A100576AD2 /* InfoView */,
+			);
+			path = InfoView;
+			sourceTree = "<group>";
+		};
+		84E0D4A826B133A100576AD2 /* InfoView */ = {
+			isa = PBXGroup;
+			children = (
+				84E0D4A926B133A100576AD2 /* Classes */,
+			);
+			path = InfoView;
+			sourceTree = "<group>";
+		};
+		84E0D4A926B133A100576AD2 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				84E0D4AA26B133A100576AD2 /* InfoView.swift */,
+				84E0D4AB26B133A100576AD2 /* PlaceholderView.swift */,
+				84E0D4AC26B133A100576AD2 /* BackgroundView.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		84E20C582625D634002DBAF5 /* OnBoarding */ = {
@@ -1311,7 +1347,9 @@
 				843F52F62652679B00B3288C /* FeedsCell.swift in Sources */,
 				84347030262470D500566FB2 /* AppDelegate.swift in Sources */,
 				8434706326247A6A00566FB2 /* ResponseStatus.swift in Sources */,
+				84E0D4AF26B133A100576AD2 /* InfoView.swift in Sources */,
 				842AE48E265FDAE8002E9BC7 /* CommentsViewModel.swift in Sources */,
+				84E0D4B026B133A100576AD2 /* PlaceholderView.swift in Sources */,
 				84E20C562625D5D0002DBAF5 /* UIStoryboard+Ext.swift in Sources */,
 				84FCF98926A56C8900BCEADD /* DateCell.swift in Sources */,
 				84C6D2392625F9AC00DD2CBC /* UIFont+Ext.swift in Sources */,
@@ -1375,6 +1413,7 @@
 				845A301326A156410085854B /* ScheduleNew.swift in Sources */,
 				84E20C682625DAF3002DBAF5 /* RoundCornerView.swift in Sources */,
 				84B675EF2683634700AD14FB /* GetChallengesResponse.swift in Sources */,
+				84E0D4B126B133A100576AD2 /* BackgroundView.swift in Sources */,
 				84B675EB26835B2700AD14FB /* ChallengesEndPoint.swift in Sources */,
 				84FCF98D26A5F67100BCEADD /* PlannerViewModel.swift in Sources */,
 				84F336D226694DF10091B990 /* PlannerVC.swift in Sources */,
@@ -1412,6 +1451,7 @@
 				841B00A72697305E005821DB /* WorkoutHistoryResponse.swift in Sources */,
 				84F9A2B5269DC8F300C003E3 /* FiltersResponse.swift in Sources */,
 				847D64F0264BBE7E006E8F95 /* SelectGoalVC.swift in Sources */,
+				84E0D47326B130D800576AD2 /* TestingDragDropPlannerSchedule.swift in Sources */,
 				8469BB672660E15D005BCE0C /* UIViewController+Ext.swift in Sources */,
 				8453F7B326272D2700EC9B83 /* CustomButton.swift in Sources */,
 				845F366326A048F6006CDE2F /* ScheduleLibraryWorkoutVC.swift in Sources */,

@@ -49,11 +49,15 @@ class ChallengesEndPoint {
     static func addSchedule(model:WorkoutModel,isUpdate:Bool,success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock){
         Api.requestNew(endpoint: .addWorkoutSchedule(workout: model, isUpdate: isUpdate), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
     }
-    
-    static func getSchedules(success: @escaping SuccessCompletionBlock<SchedulesResponse>, failure: @escaping ErrorFailureCompletionBlock){
-        Api.requestNew(endpoint: .getWorkoutSchedules, type: SchedulesResponse.self, successHandler: success, failureHandler: failure)
-    }
 
+    static func updateChallengeSchedule(updateFor:ChallengeUpdateType,model:WorkoutModel,scheduleModel:NewScheduleModel,success: @escaping SuccessCompletionBlock<EmptyDataResponse>, failure: @escaping ErrorFailureCompletionBlock){
+        Api.requestNew(endpoint: .updateChallengeSchedule(updateFor: updateFor, workout: model, schedule: scheduleModel), type: EmptyDataResponse.self, successHandler: success, failureHandler: failure)
+    }
+    
+    static func getSchedules(startDate:Int64? = nil,endDate:Int64? = nil,success: @escaping SuccessCompletionBlock<SchedulesResponse>, failure: @escaping ErrorFailureCompletionBlock){
+        Api.requestNew(endpoint: .getWorkoutSchedules(startDate: startDate, endDate: endDate), type: SchedulesResponse.self, successHandler: success, failureHandler: failure)
+    }
+    
     
     
 }

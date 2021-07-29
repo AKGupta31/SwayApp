@@ -9,11 +9,17 @@ import UIKit
 
 final class WorkoutModel: NSObject, NSItemProviderWriting, NSItemProviderReading, Codable {
     var title:String = ""
+    var challengeTitle:String?
     var isSelected = false
     var id = 0
-    var color:UIColor = .clear
+    var color:UIColor = .clear {
+        didSet {
+            print("set color")
+        }
+    }
     var workoutId:String?
     var isPreviouslyScheduled = false
+    var category:WorkoutCategory = .library
     
     var startDate:Date!
     var endDate:Date!

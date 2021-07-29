@@ -98,8 +98,13 @@ extension Date {
     
     static func getAllDaysOfTheCurrentWeek() -> [Date] {
         let calendar = Calendar.sway
-//        calendar.firstWeekday = 2 // Start on Monday (or 1 for Sunday)
         let today = calendar.startOfDay(for: Date())
+        return getAllDaysOfTheWeek(for: today)
+    }
+    
+    static func getAllDaysOfTheWeek(for date:Date) -> [Date] {
+        let calendar = Calendar.sway
+        let today = calendar.startOfDay(for: date)
         var week = [Date]()
         if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) {
             for i in 0...6 {
@@ -109,29 +114,6 @@ extension Date {
             }
         }
         return week
-        
-//        var dates: [Date] = []
-//        var calendar = Calendar(identifier: .gregorian)
-//        calendar.firstWeekday = 2
-//        calendar.timeZone = TimeZone.current
-//        guard let dateInterval = calendar.dateInterval(of: .weekOfYear,
-//                                                               for: Date()) else {
-//            return dates
-//        }
-//
-//        calendar.enumerateDates(startingAfter: dateInterval.start,
-//                                        matching: DateComponents(hour:0),
-//                                        matchingPolicy: .nextTime) { date, _, stop in
-//            guard let date = date else {
-//                return
-//            }
-//            if date <= dateInterval.end {
-//                dates.append(date)
-//            } else {
-//                stop = true
-//            }
-//        }
-//        return dates
     }
 }
 
@@ -259,7 +241,7 @@ enum Weekday: Int {
         case .tuesday:
             return "TUE"
         case .wednesday:
-            return "WEB"
+            return "WED"
         case .thursday:
             return "THU"
         case .friday:

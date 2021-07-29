@@ -55,6 +55,8 @@ class PlannerItemCell: UITableViewCell {
         self.viewCompleted.isHidden = !scheduleVM.isCompleted
         lblWorkoutName.text = scheduleVM.title
         lblIntensity.text = scheduleVM.intensity.displayName
+        lblType1.text = scheduleVM.difficultyLevel.displayName
+        lblType2.text = scheduleVM.workoutType.displayCaptialized
     }
     
 

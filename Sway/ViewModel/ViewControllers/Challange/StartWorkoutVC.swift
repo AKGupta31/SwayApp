@@ -64,7 +64,7 @@ class StartWorkoutVC: BaseViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnPlayer(_:)))
         self.view.addGestureRecognizer(tap)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.btnCross.isEnabled = false
+//            self.btnCross.isEnabled = false
             self.setupProgressView()
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.actionTimer(_:)), userInfo: nil, repeats: true)
             self.showNextVideoName(currentCellIndex: 0)
@@ -93,6 +93,11 @@ class StartWorkoutVC: BaseViewController {
 
 
     @IBAction func actionCross(_ sender: UIButton) {
+        if self.timer != nil ,timer.isValid{
+            timer.invalidate()
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
         if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell{
             let wasPlayingBefore = playerView != nil ? (playerView.state == .playing ? true : false) : false //vm.player.timeControlStatus == .playing
             pause(reason: .userInteraction)
@@ -101,33 +106,37 @@ class StartWorkoutVC: BaseViewController {
                 vc.videoThumbnail = cell.imgVideoThumb.image
                 vc.wasPlayingBeforeComingToTheScreen = wasPlayingBefore
                 vc.actionQuit = {[weak self](wasPlayingBefore,workoutEndVC) in
-                    guard let nav = self?.navigationController else {return}
+//                    guard let nav = self?.navigationController else {return}
                     
                     //remove start workout vc from nativationcontroller i.e self instance
+                 /*
                     var vcs = nav.viewControllers
                     vcs.removeLast()
-//
                     let rateChallenge = RateChallengeVC.instantiated()
                     rateChallenge.workoutId = self!.viewModel.workoutId
                     rateChallenge.challengeId = self!.viewModel.challengeId
                     vcs.append(rateChallenge)
                     self?.navigationController?.setViewControllers(vcs, animated: true)
-//                    self?.navigationController?.popViewController(animated: true)
-//                    self?.removeObservers()
-                    
-                    
-                    
-//                    self?.getNavController()?.push(RateChallengeVC.self, animated: false, configuration: { (vc) in
-//                        vc.workoutId = self?.viewModel.workoutId
-//                    })
+ 
+                    */
+                    self?.pause(reason: .hidden)
+                    if self?.playerView != nil && self?.playerView.superview != nil {
+                        self?.playerView.removeFromSuperview()
+                        self?.playerView = nil
+                    }
+                    if var vcs = self?.navigationController?.viewControllers {
+                        vcs.removeLast()
+                        vcs.removeLast()
+                        self?.navigationController?.setViewControllers(vcs, animated: true)
+                    }
                     workoutEndVC.dismiss(animated: true, completion: nil)
+                
                 }
                 vc.actionResume = {[weak self](wasPlayingBefore,workoutEndVC) in
                     if wasPlayingBefore {
                         if self?.playerView != nil {
                             self?.playerView.resume()
                         }
-//                        vm.player.play()
                     }
                     workoutEndVC.dismiss(animated: true, completion: nil)
                 }
@@ -152,9 +161,10 @@ class StartWorkoutVC: BaseViewController {
         i -= 1
         progressCount += 1
         if i <= 0{
-            btnCross.isEnabled = true
+//            btnCross.isEnabled = true
             hideBlurOverlayView()
             timer.invalidate()
+            self.timer = nil
             play()
 //            if let cell = tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell {
 //
@@ -268,7 +278,7 @@ extension StartWorkoutVC:UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StartWorkoutVideoWithTimerCell", for: indexPath) as! StartWorkoutVideoWithTimerCell
         cell.progressViewBottomConstraint.constant = 76 + self.view.safeAreaInsets.bottom
-        cell.lblTitleTopConstraint.constant = self.btnCrossTopConstraint.constant
+        cell.lblTitleTopConstraint.constant = self.btnCrossTopConstraint.constant - 16
         cell.setupData(viewModel: viewModel.getMovementVM(at: indexPath.row), indexPath: indexPath)
         cell.btnInfo.tag = indexPath.row
         cell.btnInfo.addTarget(self, action: #selector(actionInfo(_:)), for: .touchUpInside)

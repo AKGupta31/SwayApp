@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import ViewControllerDescribable
 import Toast_Swift
+import EasyTipView
 
 class ScheduleLibraryWorkoutVC: BaseViewController,KDDragAndDropCollectionViewDataSource {
    
@@ -24,16 +25,17 @@ class ScheduleLibraryWorkoutVC: BaseViewController,KDDragAndDropCollectionViewDa
     @IBOutlet weak var collectionViewDragItems: KDDragAndDropCollectionView!
     @IBOutlet weak var stackViewCVs: UIStackView!
     @IBOutlet var collectionsViews:[KDDragAndDropCollectionView]!
+    var tipView:EasyTipView?
     
     var data : [[WorkoutModel]] = [[WorkoutModel]]()
     var previousSchedules = [NewScheduleModel]()
     var itemToAddEdit:LibraryItemVM!
     private var dragAndDropManager : KDDragAndDropManager?
-    
     var isEditMode = false
     var workoutIdToEdit:String?
-    
     var refreshData:(()->())?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,14 +174,31 @@ extension ScheduleLibraryWorkoutVC {
             if let firstIndex = arrayOfWorkoutModels.firstIndex(where: {$0.startTime == Int(schedule.startTime! / 60)}) {
                 let model = data[schedule.dayOfWeek][firstIndex]
                 model.workoutId = schedule._id
-                if itemToAddEdit.id == schedule.workoutId {
-                    model.isPreviouslyScheduled = false
-                    model.color = UIColor(named: "kThemeBlue")!
-                    model.isSelected = true
-                }else {
-                    model.isPreviouslyScheduled = true
-                    model.color = UIColor(named: "kThemeNavyBlue")!
-                }
+                model.isPreviouslyScheduled = true
+                model.color = UIColor(named: "kThemeNavyBlue")!
+                model.challengeTitle = schedule.challengeTitle
+                model.title = schedule.workoutName ?? ""
+                
+//                if itemToAddEdit != nil,itemToAddEdit.id == schedule.workoutId,schedule.category == .library{
+////                   ,itemToAddEdit.category == schedule.category{
+//                    model.isPreviouslyScheduled = false
+//                    model.color = UIColor(named: "kThemeBlue")!
+//                    model.isSelected = true
+////                    self.itemToAddEdit.scheduleId = schedule._id
+//                }else {
+//                    model.isPreviouslyScheduled = true
+//                    model.color = UIColor(named: "kThemeNavyBlue")!
+//                }
+                
+                
+//                if itemToAddEdit.id == schedule.workoutId {
+//                    model.isPreviouslyScheduled = false
+//                    model.color = UIColor(named: "kThemeBlue")!
+//                    model.isSelected = true
+//                }else {
+//                    model.isPreviouslyScheduled = true
+//                    model.color = UIColor(named: "kThemeNavyBlue")!
+//                }
                 data[schedule.dayOfWeek][firstIndex] = model
             }
         }
@@ -342,6 +361,32 @@ extension ScheduleLibraryWorkoutVC:UICollectionViewDataSource, UICollectionViewD
         }
         return .zero
     }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        tipView?.removeFromSuperview()
+        let item = data[collectionView.tag][indexPath.row]
+        guard let cell = collectionView.cellForItem(at: indexPath),item.isSelected == true || item.isPreviouslyScheduled else {
+            return
+        }
+        
+        var preferences = EasyTipView.Preferences()
+        preferences.drawing.font = UIFont(name: "Futura-Medium", size: 13)!
+        preferences.drawing.foregroundColor = UIColor.white
+        preferences.drawing.backgroundColor = UIColor(hue:0.46, saturation:0.99, brightness:0.6, alpha:1)
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top
+        
+        var text = "Workout : \(item.title)"
+        if let challenge = item.challengeTitle,challenge.isEmpty == false {
+            text += "\nChallenge : \(challenge)"
+        }
+        
+       
+        tipView = EasyTipView(text: text, preferences: preferences)
+        tipView?.show(forView: cell, withinSuperview: self.view)
+    }
+    
+    
     
 }
 

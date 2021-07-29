@@ -33,9 +33,12 @@ class DateViewModel {
     }
     
     var startDateEndDateInMilis:(Int64,Int64) {
-        let startOfDay = Calendar.sway.startOfDay(for: dateModel.date)
-        let components = DateComponents(hour: 23, minute: 59, second: 59)
-        let endOfDay = Calendar.sway.date(byAdding: components, to: startOfDay)!
+        let weekDays = Date.getAllDaysOfTheWeek(for: dateModel.date)
+        let startOfDay = Calendar.sway.startOfDay(for: weekDays.first!)//dateModel.date)
+        
+        let endDateOfWeek = Calendar.sway.startOfDay(for: weekDays.last!)//weekDays.last!
+        let components = DateComponents(hour: 0, minute: 0, second: -1)
+        let endOfDay = Calendar.sway.date(byAdding: components, to: endDateOfWeek)!
         return (startOfDay.millisecondsSince1970,endOfDay.millisecondsSince1970)
     }
 }
@@ -96,6 +99,7 @@ class PlannerViewModel: NSObject {
         currentDateIndex = calendarItems.firstIndex(where: {Calendar.sway.isDate($0.date, equalTo: Date(), toGranularity: .day)}) ?? 0
         self.delegate?.reloadDates(isInitial: isInitial, currentDateIndex: currentDateIndex)
         if isInitial {
+            selectedDateIndex = currentDateIndex
             getDayWiseSchedulesForSelectedDate()
         }
     }
@@ -106,6 +110,10 @@ class PlannerViewModel: NSObject {
     
     func getDayWiseScheduleVM(at index:Int) -> DayWiseScheduleVM {
         return DayWiseScheduleVM(model: dayWiseSchedules[index])
+    }
+    
+    func getDateFromSelectedIndex()->Date {
+        return calendarItems[selectedDateIndex].date
     }
     
 }
@@ -147,20 +155,39 @@ enum Intensity:String {
             return "High Intensity"
         }
     }
+    
+    var shortName:String {
+        switch self {
+        case .low:
+            return "Low"
+        case .medium:
+            return "Medium"
+        case .high:
+            return "High"
+        }
+    }
 }
 
-enum DifficultyLevel:Int {
-    case beginner = 1
-    case regular = 2
-    case advance = 3
+enum DifficultyLevel:String {
+    case beginner = "1"
+    case regular = "2"
+    case advance = "3"
     
-//    difficultyLevel - key
-    
-//    Beginner,Regular,Advanced
+    var displayName:String {
+        switch self {
+        case .beginner:
+            return "Beginner"
+        case .regular:
+            return "Regular"
+        case .advance:
+            return "Advanced"
+        }
+    }
 }
 
 class DayWiseScheduleVM {
     private let model:PlannerDaywiseModel
+    var scheduleId:String?
     init(model:PlannerDaywiseModel) {
         self.model = model
     }
@@ -186,6 +213,24 @@ class DayWiseScheduleVM {
     }
     var intensity:Intensity {
         return Intensity(rawValue: model.intensityLevel ?? "1") ?? .medium
+    }
+    
+    var category:WorkoutCategory {
+        return WorkoutCategory(rawValue: model.type ?? "library") ?? WorkoutCategory.library
+    }
+    
+    var difficultyLevel:DifficultyLevel {
+        if let level = model.difficultyLevel{
+            return DifficultyLevel(rawValue: level) ?? DifficultyLevel.beginner
+        }
+        return .beginner
+    }
+    
+    var workoutType:WorkoutType {
+        if let type = model.workOutType ,let typeInt = Int(type){
+            return WorkoutType(rawValue: typeInt) ?? .HIIT_WORKOUT
+        }
+        return .HIIT_WORKOUT
     }
     
     

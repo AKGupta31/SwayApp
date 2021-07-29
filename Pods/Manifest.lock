@@ -24,6 +24,7 @@ PODS:
     - AWSCore (= 2.23.3)
   - CircularCarousel (1.0.0)
   - CropViewController (2.6.0)
+  - EasyTipView (2.1.0)
   - FAPaginationLayout (2.0.1)
   - FBSDKCoreKit (9.2.0):
     - FBSDKCoreKit/Basics (= 9.2.0)
@@ -150,6 +151,7 @@ DEPENDENCIES:
   - AWSS3
   - CircularCarousel
   - CropViewController
+  - EasyTipView (~> 2.1.0)
   - FAPaginationLayout
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -186,6 +188,7 @@ SPEC REPOS:
     - AWSS3
     - CircularCarousel
     - CropViewController
+    - EasyTipView
     - FAPaginationLayout
     - FBSDKCoreKit
     - FBSDKLoginKit
@@ -232,6 +235,7 @@ SPEC CHECKSUMS:
   AWSS3: d8e8a6d7328e7fa1468788c4d7efa71d7f3a6caa
   CircularCarousel: 6248f5892c018fc2d115d4d5186be91d46bacbea
   CropViewController: 7093b39ec3cb508531b22d35773e06cecd7378d8
+  EasyTipView: a92b6edc377b81c5ac18e9fd35d5ee78e9409488
   FAPaginationLayout: 5f9d95fbd94dff12f863c196640bd797abe68907
   FBSDKCoreKit: dace5abafc2fd9272733e6d027bcf18102712117
   FBSDKLoginKit: 43f377b451d391f5bc9dd774f51a391db1072029
@@ -265,6 +269,6 @@ SPEC CHECKSUMS:
   UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: 1ac09a82db05023dcbde1b95ed31e37ee280c3af
+PODFILE CHECKSUM: 624a5dab7e1244252bdf4f134f0fe450bdb6ed65
 
 COCOAPODS: 1.10.1

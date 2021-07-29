@@ -136,7 +136,7 @@ class LibraryItemVM {
     init(libraryItem:LibraryItemModel) {
         self.model = libraryItem
     }
-
+    
     var id:String?{
         return model._id
     }
