@@ -135,8 +135,8 @@ class ChallengeViewModel {
         return challenge.description
     }
     
-    var average:Int? {
-        return challenge.average
+    var averageTimeInMinutes:Int? {
+        return Int((challenge.average ?? 0 ) / 60)
     }
     
     var bannerThumbnail:URL? {
@@ -313,6 +313,10 @@ class WorkoutViewModel {
     
     var name:String? {
         return workout.name
+    }
+    
+    var week:Int {
+        return workout.week ?? -1
     }
     
     var durationInMinutes:String {

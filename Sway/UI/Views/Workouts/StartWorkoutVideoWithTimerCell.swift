@@ -38,21 +38,22 @@ class StartWorkoutVideoWithTimerCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         progressView.isHidden = true
         imgVideoThumb.isHidden = false
 //        pause(reason: .hidden)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        print("title view frame ",lblTitle.frame)
-    }
+   
 
     func setupData(viewModel:MovementViewModel,indexPath:IndexPath){
         self.viewModel = viewModel
         self.indexPath = indexPath
-        self.imgVideoThumb.sd_setImage(with: viewModel.videoThumb, completed: nil)
+        self.imgVideoThumb.sd_setImage(with: viewModel.videoThumb) { (image, error, cacheType, url) in
+//            let resizedImage = image?.resizeImage(scaledToWidth: 50)
+            let blurImage = image?.blurImage(blurAmount: 20)
+            self.imgVideoThumb.image = blurImage
+        }
+        //        self.imgVideoThumb.sd_setImage(with: viewModel.videoThumb, completed: nil)
         lblTitle.text = viewModel.videoName
         lblReps.text = viewModel.repetetions
         
@@ -110,4 +111,49 @@ class StartWorkoutVideoWithTimerCell: UITableViewCell {
 //        progressViewInnerCircle.backgroundColor = UIColor(named: "kThemeYellow")
 //    }
 
+}
+
+
+
+extension UIImage{
+    func resizeImage(scaledToWidth: CGFloat) -> UIImage {
+        let oldWidth = self.size.width
+        let scaleFactor = scaledToWidth / oldWidth
+
+        let newHeight = self.size.height * scaleFactor
+        let newWidth = oldWidth * scaleFactor
+
+        UIGraphicsBeginImageContext(CGSize(width:newWidth, height:newHeight))
+        self.draw(in: CGRect(x:0, y:0, width:newWidth, height:newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
+    
+    
+    func blurImage(blurAmount:CGFloat) -> UIImage{
+        let context = CIContext(options: nil)
+        guard let ciImage = CIImage(image: self) else {
+            return self
+        }
+        let blurFilter = CIFilter(name: "CIGaussianBlur")
+        blurFilter?.setValue(ciImage, forKey: kCIInputImageKey)
+        blurFilter?.setValue(blurAmount, forKey: kCIInputRadiusKey)
+        guard let blurOutput = blurFilter?.outputImage else {
+            return self
+        }
+        
+        let cropFilter = CIFilter(name: "CICrop")
+        cropFilter?.setValue(blurOutput, forKey: kCIInputImageKey)
+        cropFilter?.setValue(CIVector(cgRect: ciImage.extent), forKey: "inputRectangle")
+        
+        guard let cropOutput = cropFilter?.outputImage else  {
+            return self
+        }
+        let cgimg = context.createCGImage(cropOutput, from: cropOutput.extent)
+        let processedImage = UIImage(cgImage: cgimg!)
+        return processedImage
+    }
+    
+    
 }

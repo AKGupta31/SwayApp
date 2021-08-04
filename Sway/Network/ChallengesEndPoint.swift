@@ -22,14 +22,14 @@ class ChallengesEndPoint {
     }
     
     
-    static func getWorkoutDetails(for workoutId:String,challengeId:String,success: @escaping SuccessCompletionBlock<WorkoutDetailsResponse>, failure: @escaping ErrorFailureCompletionBlock) {
-        Api.requestNew(endpoint: .getWorkoutDetail(workoutId: workoutId, challengeId: challengeId), type: WorkoutDetailsResponse.self, successHandler: success, failureHandler: failure)
+    static func getWorkoutDetails(for workoutId:String,challengeId:String,week:Int,success: @escaping SuccessCompletionBlock<WorkoutDetailsResponse>, failure: @escaping ErrorFailureCompletionBlock) {
+        Api.requestNew(endpoint: .getWorkoutDetail(workoutId: workoutId, challengeId: challengeId, week: week), type: WorkoutDetailsResponse.self, successHandler: success, failureHandler: failure)
     }
     
     
     
-    static func markWorkoutAsSeen(for workoutId:String,circuitId:String,challengeId:String,success: @escaping SuccessCompletionBlock<WorkoutHistoryResponse>, failure: @escaping ErrorFailureCompletionBlock){
-        Api.requestNew(endpoint: .markCircuitAsSeen(workoutId: workoutId, circuitId: circuitId, challengeId: challengeId), type: WorkoutHistoryResponse.self, successHandler: success, failureHandler: failure)
+    static func markWorkoutAsSeen(for workoutId:String,circuitId:String,challengeId:String,week:Int,success: @escaping SuccessCompletionBlock<WorkoutHistoryResponse>, failure: @escaping ErrorFailureCompletionBlock){
+        Api.requestNew(endpoint: .markCircuitAsSeen(workoutId: workoutId, circuitId: circuitId, challengeId: challengeId, week: week), type: WorkoutHistoryResponse.self, successHandler: success, failureHandler: failure)
     }
     
     

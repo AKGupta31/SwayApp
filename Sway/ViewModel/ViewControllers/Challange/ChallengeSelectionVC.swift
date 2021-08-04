@@ -54,9 +54,6 @@ class ChallengeSelectionVC: BaseViewController {
         // Do any additional setup after loading the view.
     }
     
-    
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
@@ -235,7 +232,7 @@ extension ChallengeSelectionVC :ChallengeSelectionVMDelegate,LibraryListingVMDel
     
     func reloadLibrary() {
         if libraryVM.isFiltersOrSearchApplied {
-            lblResults.text = "Results (\(libraryVM.numberOfItems))"
+            lblResults.text = "Results (\(libraryVM.total))"
         }else {
             lblResults.text = "Workouts"
         }

@@ -40,6 +40,11 @@ class Constants {
         static let kAreYouSureToDeleteThePost = "Are you sure you want to delete the post"
         static let kCantScheduleAtThisTime = "You can't schedule event at this time. Please propose new time"
     }
+    
+    struct AppCredentials {
+        static let AppStoreId = "1569550579"
+        static let InAppSharedSecret = "46f86e27d3a543d08671aff2c38ce1b0"
+    }
 }
 
 // MARK: - Media Enum

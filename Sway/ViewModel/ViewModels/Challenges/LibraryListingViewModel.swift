@@ -12,22 +12,22 @@ protocol LibraryListingVMDelegate:BaseVMDelegate {
     func reloadFilters()
 }
 
-class LibraryListingViewModel :NSObject{
+class LibraryListingViewModel :NSObject {
     
     var searchStr = ""
     var currentPage = 1
     var PAGE_LIMIT = 10
     var canFetchMoreData = true
     weak var delegate:LibraryListingVMDelegate?
-    
     var libraryItems:[LibraryItemModel]!
     var allFilters:[FilterModel]!
     
+    var total = 0
     
     var numberOfItems:Int {
         return libraryItems.count
     }
-
+    
     var isFiltersOrSearchApplied:Bool{
         let selectedFilters = allFilters.filter({$0.isSelected})
         if selectedFilters.count > 0 {
@@ -53,6 +53,7 @@ class LibraryListingViewModel :NSObject{
     private func getMoreLibarayItems(isRefreshData:Bool){
         ChallengesEndPoint.getLibraryListing(page: currentPage, limit: PAGE_LIMIT,searchStr:self.searchStr, filters: self.allFilters.filter({$0.isSelected})) { [weak self](response) in
             if response.statusCode >= 200 && response.statusCode < 300 {
+                self?.total = response.data?.total ?? 0
                 if isRefreshData {
                     self?.libraryItems.removeAll()
                 }

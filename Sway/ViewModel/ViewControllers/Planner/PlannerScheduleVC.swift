@@ -323,11 +323,10 @@ extension PlannerScheduleVC {
                 model.title = schedule.workoutName ?? ""
                 model.challengeTitle = schedule.challengeTitle
                 if type == .rescheduleOnCurrentWeek {
-                    if itemToAddEdit != nil,itemToAddEdit.workoutId == schedule.workoutId,itemToAddEdit.category == schedule.category{
+                    if itemToAddEdit != nil,itemToAddEdit.scheduleId == schedule._id{
                         model.isPreviouslyScheduled = false
                         model.color = UIColor(named: "kThemeBlue")!
                         model.isSelected = true
-                        self.itemToAddEdit.scheduleId = schedule._id
                     }else {
                         model.isPreviouslyScheduled = true
                         model.color = UIColor(named: "kThemeNavyBlue")!

@@ -49,6 +49,9 @@ PODS:
   - Firebase/Crashlytics (7.10.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 7.10.0)
+  - Firebase/DynamicLinks (7.10.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 7.10.0)
   - FirebaseAnalytics (7.10.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
@@ -78,6 +81,8 @@ PODS:
     - GoogleDataTransport (~> 8.4)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (~> 1.2)
+  - FirebaseDynamicLinks (7.10.0):
+    - FirebaseCore (~> 7.0)
   - FirebaseInstallations (7.10.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
@@ -158,6 +163,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Crashlytics
+  - Firebase/DynamicLinks
   - GoogleSignIn
   - GrowingTextView
   - GSPlayer
@@ -198,6 +204,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCrashlytics
+    - FirebaseDynamicLinks
     - FirebaseInstallations
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -245,6 +252,7 @@ SPEC CHECKSUMS:
   FirebaseCore: ec566d917b2195fc2610aeb148dae99f57a788f9
   FirebaseCoreDiagnostics: 5662a3823ffcc0acbaa9a21ba5ed302fac634705
   FirebaseCrashlytics: e7669d368a22d202f1d0c7546ffdfdff496e1a8c
+  FirebaseDynamicLinks: 5f898580358c4d65430a85ae96dd779efb26b098
   FirebaseInstallations: bf2ec8dbf36ff4c91af6b9a003d15855757680c1
   GoogleAppMeasurement: 1c863b1161fc3c8cf614a7460d1be6a7c262aab3
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
@@ -269,6 +277,6 @@ SPEC CHECKSUMS:
   UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
   ViewControllerDescribable: 10c8facb097b1fa8cf66b19417524a081779a28c
 
-PODFILE CHECKSUM: 624a5dab7e1244252bdf4f134f0fe450bdb6ed65
+PODFILE CHECKSUM: 029889d9de41f3a2852a525099d9d3fae905fb0a
 
 COCOAPODS: 1.10.1

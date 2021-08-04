@@ -110,7 +110,7 @@ struct ChallengeModel : Codable {
         case createdAt = "createdAt"
         case updatedAt = "updatedAt"
         case workoutDetails = "workoutDetails"
-        case average = "average"
+        case average = "minimumAverage"
         case workOutTypes = "workOutTypes"
         case intensityLevel = "intensityLevel"
     }
@@ -211,6 +211,7 @@ struct Workout : Codable {
     let name : String?
     let duration : Int?
     let imageUrl : String?
+    let week:Int?
 
     enum CodingKeys: String, CodingKey {
 
@@ -219,6 +220,7 @@ struct Workout : Codable {
         case name = "name"
         case duration = "duration"
         case imageUrl = "imageUrl"
+        case week = "week"
     }
 
     init(from decoder: Decoder) throws {
@@ -228,6 +230,7 @@ struct Workout : Codable {
         name = try values.decodeIfPresent(String.self, forKey: .name)
         duration = try values.decodeIfPresent(Int.self, forKey: .duration)
         imageUrl = try values.decodeIfPresent(String.self, forKey: .imageUrl)
+        week = try values.decodeIfPresent(Int.self, forKey: .week)
     }
 
 }

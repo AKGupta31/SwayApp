@@ -33,9 +33,8 @@ enum Endpoint {
     case getChallenges(page:Int,limit:Int)
     case getChallengeDetail(challengeId:String)
     case createChallenge(challengeId:String,startDate:Int64,endDate:Int64,schedules:[Schedules])
-    
-    case getWorkoutDetail(workoutId:String,challengeId:String)
-    case markCircuitAsSeen(workoutId:String,circuitId:String,challengeId:String)
+    case getWorkoutDetail(workoutId:String,challengeId:String,week:Int)
+    case markCircuitAsSeen(workoutId:String,circuitId:String,challengeId:String,week:Int)
     case rateWorkout(workoutId:String,challengeId:String,ratings:Ratings)
     case getLibraryItems(page:Int,limit:Int,searchStr:String,filters:[FilterModel])
     case getFilters
@@ -135,8 +134,17 @@ enum Endpoint {
             return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge-details/\(challengeId)"
         case .createChallenge:
             return Constants.Networking.kBaseUrl + interMediateChallenge + "challenge"
-        case .getWorkoutDetail(let workoutId,let challengeId):
-            return Constants.Networking.kBaseUrl + interMediate + "workout/\(workoutId)" + (challengeId.isEmpty ? "" : "?challengeId=\(challengeId)")
+        case .getWorkoutDetail(let workoutId,let challengeId,let week):
+            var url = Constants.Networking.kBaseUrl + interMediate + "workout/\(workoutId)"
+            if challengeId.isEmpty == false {
+                url += "?challengeId=\(challengeId)"
+                if week != -1 {
+                    url += "&week=\(week)"
+                }
+            }
+            
+            return url
+//            return Constants.Networking.kBaseUrl + interMediate + "workout/\(workoutId)" + (challengeId.isEmpty ? "" : "?challengeId=\(challengeId)")
         case .markCircuitAsSeen:
             return Constants.Networking.kBaseUrl + interMediate + "workout-history"
         case .rateWorkout:
@@ -220,8 +228,13 @@ enum Endpoint {
                 "endDate":endDate,
                 "schedules":scheduleDictArray
             ]
-        case .markCircuitAsSeen(let workoutId,let circuitId,let challengeId):
-            return ["workOutId":workoutId,"circuitId":circuitId,"challengeId":challengeId]
+        case .markCircuitAsSeen(let workoutId,let circuitId,let challengeId,let week):
+            var dict :[String:Any] = ["workOutId":workoutId,"circuitId":circuitId,"challengeId":challengeId]
+            if week != -1 {
+                dict["week"] = week
+            }
+            return dict
+            
         case .rateWorkout(let workoutId,let challengeId,let ratings):
             return ["workOutId":workoutId,"challengeId":challengeId,"rating":ratings.rawValue]
         case .getLibraryItems(let page,let limit,let searchStr,let filters):
@@ -274,7 +287,7 @@ enum Endpoint {
     
     /// http header for each request (if needed)
     var header:HTTPHeaders? {
-        var headers = ["platform":"2","timezone":"0","api_key":"1234","language":"en"]
+        var headers = ["platform":"2","timezone":"19800000","api_key":"1234","language":"en"]
         switch self {
         case .socialRegister,.socialLogin,.login,.getOtpOnEmail,.signup,.resetPassword:
             return HTTPHeaders(headers)

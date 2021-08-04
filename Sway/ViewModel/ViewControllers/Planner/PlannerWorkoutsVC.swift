@@ -47,7 +47,7 @@ class PlannerWorkoutsVC: BaseViewController {
 extension PlannerWorkoutsVC:LibraryListingVMDelegate {
     func reloadLibrary() {
         if libraryVM.isFiltersOrSearchApplied {
-            lblResult.text = "Results (\(libraryVM.numberOfItems))"
+            lblResult.text = "Results (\(libraryVM.total))"
         }else {
             lblResult.text = "Recommended"
         }

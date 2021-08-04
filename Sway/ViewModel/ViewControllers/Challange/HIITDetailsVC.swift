@@ -11,8 +11,6 @@ import SDWebImage
 
 class HIITDetailsVC: BaseViewController {
     @IBOutlet weak var btnContinue: CustomButton!
-    
-    
     var viewModel:WorkoutDetailsViewModel!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -33,8 +31,9 @@ class HIITDetailsVC: BaseViewController {
         let numberOfRows = viewModel.getNumberOfRows(in: 1)
         if viewModel.lastSeenItemIndex + 1 == numberOfRows {
             self.getNavController()?.push(RateChallengeVC.self, animated: true, configuration: { (vc) in
-                vc.workoutId = self.viewModel.workoutId
-                vc.challengeId = self.viewModel.challengeId
+                vc.workoutVM = self.viewModel
+//                vc.workoutId = self.viewModel.workoutId
+//                vc.challengeId = self.viewModel.challengeId
             })
         }else {(
             self.tableView(self.tableView, didSelectRowAt: IndexPath(row: viewModel.lastSeenItemIndex + 1, section: 1)))

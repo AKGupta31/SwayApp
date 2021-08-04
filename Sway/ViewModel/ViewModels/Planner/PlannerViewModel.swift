@@ -72,11 +72,7 @@ class PlannerViewModel: NSObject {
     }
     
     func setupDates(isInitial:Bool){
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        guard let signupDate = formatter.date(from: "2021/01/01") else {
-           return
-        }
+        let signupDate = DataManager.shared.signupDate
         guard let yearBeforeDate = Calendar.sway.date(byAdding: .day,value:-365,to: Date()) else {
             return
         }
@@ -188,8 +184,10 @@ enum DifficultyLevel:String {
 class DayWiseScheduleVM {
     private let model:PlannerDaywiseModel
     var scheduleId:String?
+    
     init(model:PlannerDaywiseModel) {
         self.model = model
+        self.scheduleId = model._id
     }
     var workoutId:String?{
         return model.workoutId

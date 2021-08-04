@@ -60,6 +60,7 @@ class StartWorkoutVC: BaseViewController {
         extendedLayoutIncludesOpaqueBars = true
         tableViewWorkouts.contentInsetAdjustmentBehavior  = .never
         tableViewWorkouts.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        blurView.isHidden = true
         checkPreload()
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnPlayer(_:)))
         self.view.addGestureRecognizer(tap)
@@ -338,6 +339,7 @@ extension StartWorkoutVC {
         
         guard let cell = self.tableViewWorkouts.visibleCells.first as? StartWorkoutVideoWithTimerCell else {return}
         guard let indexPath = self.tableViewWorkouts.indexPath(for: cell) else {return}
+        startActivityIndicator(style: .medium, inSelf: true, touchEnabled: true, tintColor: .white)
         /***********PLAY WITH PLAYER LAYER AND AVPLAYER ******/
         /*
          
@@ -391,6 +393,7 @@ extension StartWorkoutVC {
         self.playerView.stateDidChanged = {[weak self](state) in
             switch state {
             case .playing:
+                self?.stopActivityIndicator()
                 cell.lblProgressCounter.text = Int(self!.playerView.totalDuration).description
                 self?.setupCellProgressView(for: cell)
                 break
@@ -408,6 +411,11 @@ extension StartWorkoutVC {
                     newProgress = 1.0
                 }
                 self.videoProgress.progress = newProgress
+                var durationLeft = self.playerView.totalDuration - time.seconds
+                if durationLeft < 0 {
+                    durationLeft = 0
+                }
+                cell.lblProgressCounter.text = Int(durationLeft).description
             }
         }
         self.playerView.playToEndTime = {[weak self] in

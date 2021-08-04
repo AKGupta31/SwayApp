@@ -36,6 +36,7 @@ pod 'UPCarouselFlowLayout'
 pod 'GSPlayer'
 pod 'SnapKit', '~> 5.0.0'
 pod 'EasyTipView', '~> 2.1.0'
+pod 'Firebase/DynamicLinks'
 #pod "FlexiblePageControl"
 #pod 'AdvancedPageControl'
 

@@ -122,8 +122,7 @@ extension ChallengeDescriptionVC:WeekwiseChallengesCellDelegate {
     func viewDetails(viewModel: WorkoutViewModel) {
         if let workoutId = viewModel.id {
             self.getNavController()?.push(HIITDetailsVC.self, animated: true, configuration: { (vc) in
-                vc.viewModel = WorkoutDetailsViewModel(workoutId: workoutId,challengeId:viewModel.challengeId
-                )
+                vc.viewModel = WorkoutDetailsViewModel(workoutId: workoutId,challengeId:viewModel.challengeId,week: viewModel.week)
             })
         }else {
             showAlert(with: "Error!", message: "No workout found")

@@ -78,6 +78,7 @@ class LoginViaCredentialsVC: BaseLoginVC {
                 
             }
         } failure: { (status) in
+            self.hideLoader()
             AlertView.showAlert(with: "Error", message: status.msg)
         }
 

@@ -25,7 +25,7 @@ class ChallengeDescriptionCell: UITableViewCell {
         lblParticipants.text = viewModel.participants?.description
         lblDurationWeeks.text = viewModel.weeksCount?.description
         lblDescription.text = viewModel.description
-        lblAvgTime.text = viewModel.average?.description
+        lblAvgTime.text = viewModel.averageTimeInMinutes?.description
     }
 
 }

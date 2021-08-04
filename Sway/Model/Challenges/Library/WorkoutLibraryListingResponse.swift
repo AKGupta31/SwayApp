@@ -82,7 +82,8 @@ struct LibraryItemModel : Codable {
     let imageUrl : ImageUrl?
     let duration : Int?
     let isAddedInMyLibrary : Bool?
-
+    let workoutType:String?
+    
     enum CodingKeys: String, CodingKey {
 
         case _id = "_id"
@@ -90,6 +91,7 @@ struct LibraryItemModel : Codable {
         case imageUrl = "imageUrl"
         case duration = "duration"
         case isAddedInMyLibrary = "isAddedInMyLibrary"
+        case workoutType = "workOutType"
     }
 
     init(from decoder: Decoder) throws {
@@ -99,6 +101,7 @@ struct LibraryItemModel : Codable {
         imageUrl = try values.decodeIfPresent(ImageUrl.self, forKey: .imageUrl)
         duration = try values.decodeIfPresent(Int.self, forKey: .duration)
         isAddedInMyLibrary = try values.decodeIfPresent(Bool.self, forKey: .isAddedInMyLibrary)
+        workoutType = try values.decodeIfPresent(String.self, forKey: .workoutType)
     }
 
 }

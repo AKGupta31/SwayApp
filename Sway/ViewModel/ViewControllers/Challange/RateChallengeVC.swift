@@ -50,8 +50,7 @@ class RateChallengeVC: BaseViewController {
         return .darkContent
     }
     
-    var workoutId:String = ""
-    var challengeId:String = ""
+    var workoutVM:WorkoutDetailsViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
         rateSlider.setThumbImage(UIImage(named: "ic_rateslider_thumb"), for: .normal)
@@ -84,13 +83,13 @@ class RateChallengeVC: BaseViewController {
     
     
     @IBAction func actionFinish(_ sender: UIButton) {
-        if workoutId.isEmpty == false {
+        if workoutVM.workoutId.isEmpty == false {
             showLoader()
-            ChallengesEndPoint.rateWorkout(for: self.workoutId, challengeId: self.challengeId, rating: ratings) {[weak self] (response) in
+            ChallengesEndPoint.rateWorkout(for: self.workoutVM.workoutId, challengeId: self.workoutVM.challengeId, rating: ratings) {[weak self] (response) in
                 self?.hideLoader()
                 if let statusCode = response.statusCode, statusCode >= 200 && statusCode < 300 {
-                    self?.getNavController()?.push(ChallengeCompleteVC.self, animated: true, configuration: { (vc) in
-                        
+                    self?.getNavController()?.push(ChallengeCompleteVC.self, animated: true, configuration: { [weak self](vc) in
+                        vc.workoutVM = self?.workoutVM
                     })
 //                    if let secondVCInNavigationStack = self?.navigationController?.viewControllers[2] {
 //                        self?.navigationController?.popToViewController(secondVCInNavigationStack, animated: true)

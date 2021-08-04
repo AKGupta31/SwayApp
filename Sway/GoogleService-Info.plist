@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>819933948321-0271tmqu3v26pguuacm2lt6oju62v9hd.apps.googleusercontent.com</string>
+	<string>982225583106-m2o81offnpkt33gev0jjogj2ie9cqfnt.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.819933948321-0271tmqu3v26pguuacm2lt6oju62v9hd</string>
+	<string>com.googleusercontent.apps.982225583106-m2o81offnpkt33gev0jjogj2ie9cqfnt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>982225583106-q78his05ls8m9li4q0f3p9jurtc3hff0.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDBo0fhu_MAtXnonSxY_B0BVoVyjCza5Jc</string>
+	<string>AIzaSyCWn96R_BRUgLUhC6D4kvyCqRXlSBQ2YqM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>819933948321</string>
+	<string>982225583106</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sarah.sway</string>
+	<string>com.swaywithsarah.app</string>
 	<key>PROJECT_ID</key>
-	<string>swayapp-2aa5d</string>
+	<string>sway-4d52f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>swayapp-2aa5d.appspot.com</string>
+	<string>sway-4d52f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:819933948321:ios:1b45a501abe214dab0c3e0</string>
+	<string>1:982225583106:ios:5e75ecd8cee57682573b1b</string>
 </dict>
 </plist>

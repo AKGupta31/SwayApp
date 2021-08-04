@@ -33,6 +33,7 @@ class WorkoutDetailsViewModel {
     var workout:WorkoutResponseData!
     var workoutId:String = ""
     var challengeId:String = ""
+    var week:Int = -1
     
     weak var delegate:WorkoutDetailsViewModelDelegate?
     
@@ -47,9 +48,10 @@ class WorkoutDetailsViewModel {
         return section == 0 ? 2 : (workout.contents?.count ?? 0)
     }
     
-    init(workoutId:String,challengeId:String){
+    init(workoutId:String,challengeId:String,week:Int){
         self.workoutId = workoutId
         self.challengeId = challengeId
+        self.week = week
         getDetails()
     }
     
@@ -116,7 +118,7 @@ class WorkoutDetailsViewModel {
     
     func getContentVM(at index:Int) -> WorkoutContentsVM? {
         guard let content = workout.contents?[index] else {return nil}
-        return WorkoutContentsVM(content: content, workoutId: self.workoutId, challengeId: challengeId)
+        return WorkoutContentsVM(content: content, workoutId: self.workoutId, challengeId: challengeId, week: self.week)
     }
     
     func markWorkoutAsViewed(workoutId: String, circuitId: String) {
@@ -133,7 +135,7 @@ class WorkoutDetailsViewModel {
 
 extension WorkoutDetailsViewModel{
     func getDetails(){
-        ChallengesEndPoint.getWorkoutDetails(for: self.workoutId,challengeId: self.challengeId) { [weak self](response) in
+        ChallengesEndPoint.getWorkoutDetails(for: self.workoutId,challengeId: self.challengeId,week:self.week) { [weak self](response) in
             if let statusCode = response.statusCode,statusCode >= 200 && statusCode <= 300,let workoutData = response.data {
                 self?.workout = workoutData
                 if let lastSeenIndex = self?.workout.contents?.lastIndex(where: {$0.isSeen}) {
@@ -159,6 +161,7 @@ class WorkoutContentsVM {
     private let content:Content
     let workoutId:String
     let challengeId:String
+    let week:Int
     var controller:ViewController = .HIITDetailsPendingStartVC
     weak var delegate:WorkoutContentsVMDelegate?
     var numberOfSections:Int {
@@ -179,10 +182,11 @@ class WorkoutContentsVM {
         return content.movement?.count ?? 0
     }
     
-    init(content:Content,workoutId:String,challengeId:String) {
+    init(content:Content,workoutId:String,challengeId:String,week:Int) {
         self.content = content
         self.workoutId = workoutId
         self.challengeId = challengeId
+        self.week = week
     }
     
 
@@ -247,7 +251,7 @@ class WorkoutContentsVM {
     
     func markAsCompleted(){
         if let circuitId = content.id {
-            ChallengesEndPoint.markWorkoutAsSeen(for: self.workoutId, circuitId: circuitId,challengeId:self.challengeId) { [weak self](response) in
+            ChallengesEndPoint.markWorkoutAsSeen(for: self.workoutId, circuitId: circuitId,challengeId:self.challengeId, week: self.week) { [weak self](response) in
                 if response.statusCode == 200 {
                     self?.delegate?.workoutMarkedAsViewed(contentId: circuitId, workoutId: self!.workoutId)
                 }else {
@@ -286,19 +290,10 @@ class MovementViewModel {
 //    var playerItem:AVPlayerItem!
 //    var player:AVPlayer!
     var duration :Int = 0
+    
+    
     init(movement:Movement) {
-        self.movement = movement
-        if let urlStr = movement.media?.mainVideoUrl,let url = URL(string: urlStr){
-//            playerItem = AVPlayerItem(url: url)
-//            player = AVPlayer(playerItem: playerItem)
-//            player.volume = 0.0
-//            if playerItem.duration.seconds.isNaN {
-//                duration = 0
-//            }else {
-//                self.duration = Int(playerItem.duration.seconds)
-//            }
-//            player.play()
-        }
+        self.movement = movement        
     }
     
     var videoThumb:URL? {

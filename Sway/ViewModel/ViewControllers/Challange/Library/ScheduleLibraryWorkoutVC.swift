@@ -35,8 +35,6 @@ class ScheduleLibraryWorkoutVC: BaseViewController,KDDragAndDropCollectionViewDa
     var workoutIdToEdit:String?
     var refreshData:(()->())?
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         getPreviousSchedules()
@@ -170,25 +168,25 @@ extension ScheduleLibraryWorkoutVC {
         }
         
         for schedule in previousSchedules {
-            let arrayOfWorkoutModels = data[schedule.dayOfWeek]
+            let dayOfWeek = Weekday.getWeekDay(dayFromServer: schedule.dayOfWeek).rawValue
+            let todayDayOfWeek = Calendar.sway.component(.weekday, from: Date())
+            let arrayOfWorkoutModels = data[dayOfWeek]
             if let firstIndex = arrayOfWorkoutModels.firstIndex(where: {$0.startTime == Int(schedule.startTime! / 60)}) {
+                
                 let model = data[schedule.dayOfWeek][firstIndex]
                 model.workoutId = schedule._id
-                model.isPreviouslyScheduled = true
-                model.color = UIColor(named: "kThemeNavyBlue")!
                 model.challengeTitle = schedule.challengeTitle
                 model.title = schedule.workoutName ?? ""
                 
-//                if itemToAddEdit != nil,itemToAddEdit.id == schedule.workoutId,schedule.category == .library{
-////                   ,itemToAddEdit.category == schedule.category{
-//                    model.isPreviouslyScheduled = false
-//                    model.color = UIColor(named: "kThemeBlue")!
-//                    model.isSelected = true
-////                    self.itemToAddEdit.scheduleId = schedule._id
-//                }else {
-//                    model.isPreviouslyScheduled = true
-//                    model.color = UIColor(named: "kThemeNavyBlue")!
-//                }
+                if itemToAddEdit != nil,itemToAddEdit.id == schedule.workoutId,schedule.category == .library,schedule.dayOfWeek == todayDayOfWeek{
+                    model.isPreviouslyScheduled = false
+                    model.color = UIColor(named: "kThemeBlue")!
+                    model.isSelected = true
+//                    self.itemToAddEdit.scheduleId = schedule._id
+                }else {
+                    model.isPreviouslyScheduled = true
+                    model.color = UIColor(named: "kThemeNavyBlue")!
+                }
                 
                 
 //                if itemToAddEdit.id == schedule.workoutId {
